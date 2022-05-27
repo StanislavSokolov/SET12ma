@@ -1,0 +1,958 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/constraintLayout"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".ui.main.AdcFragment">
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical" android:padding="@android:dimen/app_icon_size">
+            <TextView
+                    android:text="@string/text_adc_0"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:id="@+id/textView_adc_0" android:textSize="18sp"
+                    android:scrollbarAlwaysDrawHorizontalTrack="false"
+                    android:scrollbarAlwaysDrawVerticalTrack="false" android:gravity="center"
+                    android:padding="@dimen/appbar_padding_top"/>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_0"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_0" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_0" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_0" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_1" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_1" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_1" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_2" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_2" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_2" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_3" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_3" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_3" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_4" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_4" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_4" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_5" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_5" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_5" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_6" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_6" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_6" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_7"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_7" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_7" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_7" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_8"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_8" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_8" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_8" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_9"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_9" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_9" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_9" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_10"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_10" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_10" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_10" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_11"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_11" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_11" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_11" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_12"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_12" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_12" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_12" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_13"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_13" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_13" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_13" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_14"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_14" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_14" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_14" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_15"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_0_15" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_0_15" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_15" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <TextView
+                    android:text="@string/text_adc_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:id="@+id/textView_adc_1" android:textSize="18sp"
+                    android:scrollbarAlwaysDrawHorizontalTrack="false"
+                    android:scrollbarAlwaysDrawVerticalTrack="false" android:gravity="center"
+                    android:padding="@dimen/appbar_padding_top"/>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_0"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_0" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_0" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_0" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_1" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_1" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_1" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_2" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_2" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_2" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_3" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_3" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_3" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_4" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_4" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_4" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_5" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_5" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_5" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_6" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_6" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_6" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_7"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_7" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_7" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_7" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_8"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_8" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_8" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_8" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_9"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_9" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_9" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_9" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_10"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_10" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_10" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_10" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_11"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_11" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_11" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_11" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_12"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_12" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_12" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_12" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_13"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_13" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_13" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_13" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_14"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_14" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_14" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_14" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_15"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_1_15" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_1_15" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_15" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <TextView
+                    android:text="@string/text_adc_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:id="@+id/textView_adc_2" android:textSize="18sp"
+                    android:scrollbarAlwaysDrawHorizontalTrack="false"
+                    android:scrollbarAlwaysDrawVerticalTrack="false" android:gravity="center"
+                    android:padding="@dimen/appbar_padding_top"/>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_0"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_0" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_0" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_0" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_1" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_1" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_1" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_2" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_2" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_2" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_3" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_3" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_3" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_4" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_4" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_4" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_5" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_5" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_5" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_6" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_6" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_6" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_7"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_7" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_7" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_7" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_8"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_8" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_8" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_8" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_9"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_9" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_9" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_9" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_10"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_10" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_10" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_10" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_11"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_11" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_11" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_11" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_12"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_12" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_12" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_12" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_13"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_13" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_13" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_13" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_14"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_14" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_14" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_14" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="@string/text_channel_15"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textView_adc_2_15" android:layout_weight="1"
+                        android:gravity="center_vertical"/>
+                <TextView
+                        android:text="@string/text_inital_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/textViewValue_adc_2_15" android:layout_weight="1"
+                        android:gravity="center|center_vertical"/>
+                <Button
+                        android:layout_width="35dp"
+                        android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_15" android:layout_weight="0"
+                        android:clickable="false"/>
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name='SET12MA'

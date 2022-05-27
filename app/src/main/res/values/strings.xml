@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">SET12MA</string>
+
+    <string name="tab_main_activity_text_1">IN</string>
+    <string name="tab_main_activity_text_2">OUT</string>
+    <string name="tab_main_activity_text_3">ADC</string>
+    <string name="tab_main_activity_text_4">TK</string>
+
+    <string name="tab_setting_activity_text_1">Bluetooth</string>
+    <string name="tab_setting_activity_text_2">COM-port</string>
+
+    <string name="text_channel_0">Channel 0</string>
+    <string name="text_channel_1">Channel 1</string>
+    <string name="text_channel_2">Channel 2</string>
+    <string name="text_channel_3">Channel 3</string>
+    <string name="text_channel_4">Channel 4</string>
+    <string name="text_channel_5">Channel 5</string>
+    <string name="text_channel_6">Channel 6</string>
+    <string name="text_channel_7">Channel 7</string>
+    <string name="text_channel_8">Channel 8</string>
+    <string name="text_channel_9">Channel 9</string>
+    <string name="text_channel_10">Channel 10</string>
+    <string name="text_channel_11">Channel 11</string>
+    <string name="text_channel_12">Channel 12</string>
+    <string name="text_channel_13">Channel 13</string>
+    <string name="text_channel_14">Channel 14</string>
+    <string name="text_channel_15">Channel 15</string>
+
+    <string name="text_out_0">OUT 0</string>
+    <string name="text_out_1">OUT 1</string>
+    <string name="text_out_2">OUT 2</string>
+
+    <string name="text_in_0">IN 0</string>
+    <string name="text_in_1">IN 1</string>
+    <string name="text_in_2">IN 2</string>
+
+    <string name="text_adc_0">ADC 0</string>
+    <string name="text_adc_1">ADC 1</string>
+    <string name="text_adc_2">ADC 2</string>
+
+    <string name="text_tk_0">TK 0</string>
+    <string name="text_tk_1">TK 1</string>
+    <string name="text_tk_2">TK 2</string>
+    <string name="text_tk_3">TK 3</string>
+    <string name="text_tk_4">TK 4</string>
+    <string name="text_tk_5">TK 5</string>
+    <string name="text_tk_6">TK 6</string>
+    <string name="text_tk_7">TK 7</string>
+
+    <string name="text_inital_value">0</string>
+
+    <string name="menu_connection">Подключение</string>
+    <string name="menu_logging">Логирование</string>
+    <!--    <string name="menu_open">Открыть</string>-->
+
+    <string name="main_connection">Bluetooth соединения</string>
+    <string name="main_text_connected_devices">Сопряженные устройства</string>
+    <string name="main_text_connected_to_device">Не удалось выполнить подключение</string>
+    <string name="main_button_connect_to_device">Подключить</string>
+    <string name="main_button_unconnect_to_device">Отключить</string>
+    <string name="main_text_available_devices">Доступные устройства</string>
+    <string name="main_button_find_new_devices">Поиск новых устройств</string>
+
+</resources>

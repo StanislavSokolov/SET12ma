@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/constraintLayout"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".ui.main.OutputFragment">
+
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical" android:padding="@android:dimen/app_icon_size">
+            <TextView
+                    android:text="@string/text_out_0"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:id="@+id/textView_out_0" android:textSize="18sp"
+                    android:scrollbarAlwaysDrawHorizontalTrack="false"
+                    android:scrollbarAlwaysDrawVerticalTrack="false" android:gravity="center"
+                    android:padding="@dimen/appbar_padding_top"/>
+            <Switch
+                    android:text="@string/text_channel_0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_0"/>
+            <Switch
+                    android:text="@string/text_channel_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_1"/>
+            <Switch
+                    android:text="@string/text_channel_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_2"/>
+            <Switch
+                    android:text="@string/text_channel_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_3"/>
+            <Switch
+                    android:text="@string/text_channel_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_4"/>
+            <Switch
+                    android:text="@string/text_channel_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_5"/>
+            <Switch
+                    android:text="@string/text_channel_6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_6"/>
+            <Switch
+                    android:text="@string/text_channel_7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_7"/>
+            <Switch
+                    android:text="@string/text_channel_8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_8"/>
+            <Switch
+                    android:text="@string/text_channel_9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_9"/>
+            <Switch
+                    android:text="@string/text_channel_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_10"/>
+            <Switch
+                    android:text="@string/text_channel_11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_11"/>
+            <Switch
+                    android:text="@string/text_channel_12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_12"/>
+            <Switch
+                    android:text="@string/text_channel_13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_13"/>
+            <Switch
+                    android:text="@string/text_channel_14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_14"/>
+            <Switch
+                    android:text="@string/text_channel_15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_0_15"/>
+            <TextView
+                    android:text="@string/text_out_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:id="@+id/textView_out_1" android:textSize="18sp"
+                    android:scrollbarAlwaysDrawHorizontalTrack="false"
+                    android:scrollbarAlwaysDrawVerticalTrack="false" android:gravity="center"
+                    android:padding="@dimen/appbar_padding_top"/>
+            <Switch
+                    android:text="@string/text_channel_0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_0"/>
+            <Switch
+                    android:text="@string/text_channel_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_1"/>
+            <Switch
+                    android:text="@string/text_channel_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_2"/>
+            <Switch
+                    android:text="@string/text_channel_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_3"/>
+            <Switch
+                    android:text="@string/text_channel_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_4"/>
+            <Switch
+                    android:text="@string/text_channel_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_5"/>
+            <Switch
+                    android:text="@string/text_channel_6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_6"/>
+            <Switch
+                    android:text="@string/text_channel_7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_7"/>
+            <Switch
+                    android:text="@string/text_channel_8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_8"/>
+            <Switch
+                    android:text="@string/text_channel_9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_9"/>
+            <Switch
+                    android:text="@string/text_channel_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_10"/>
+            <Switch
+                    android:text="@string/text_channel_11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_11"/>
+            <Switch
+                    android:text="@string/text_channel_12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_12"/>
+            <Switch
+                    android:text="@string/text_channel_13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_13"/>
+            <Switch
+                    android:text="@string/text_channel_14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_14"/>
+            <Switch
+                    android:text="@string/text_channel_15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_1_15"/>
+            <TextView
+                    android:text="@string/text_out_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:id="@+id/textView_out_2" android:textSize="18sp"
+                    android:scrollbarAlwaysDrawHorizontalTrack="false"
+                    android:scrollbarAlwaysDrawVerticalTrack="false" android:gravity="center"
+                    android:padding="@dimen/appbar_padding_top"/>
+            <Switch
+                    android:text="@string/text_channel_0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_0"/>
+            <Switch
+                    android:text="@string/text_channel_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_1"/>
+            <Switch
+                    android:text="@string/text_channel_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_2"/>
+            <Switch
+                    android:text="@string/text_channel_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_3"/>
+            <Switch
+                    android:text="@string/text_channel_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_4"/>
+            <Switch
+                    android:text="@string/text_channel_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_5"/>
+            <Switch
+                    android:text="@string/text_channel_6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_6"/>
+            <Switch
+                    android:text="@string/text_channel_7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_7"/>
+            <Switch
+                    android:text="@string/text_channel_8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_8"/>
+            <Switch
+                    android:text="@string/text_channel_9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_9"/>
+            <Switch
+                    android:text="@string/text_channel_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_10"/>
+            <Switch
+                    android:text="@string/text_channel_11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_11"/>
+            <Switch
+                    android:text="@string/text_channel_12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_12"/>
+            <Switch
+                    android:text="@string/text_channel_13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_13"/>
+            <Switch
+                    android:text="@string/text_channel_14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_14"/>
+            <Switch
+                    android:text="@string/text_channel_15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/switch_out_2_15"/>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

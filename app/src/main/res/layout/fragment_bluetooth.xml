@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/constraintLayout"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".ui.main.BluetoothFragment">
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <TextView
+                    android:id="@+id/section_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:layout_constraintTop_creator="1"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    tools:layout_constraintLeft_creator="1"
+            />
+            <TextView
+                    android:text="@string/main_connection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView_connection" android:textSize="24sp"
+                    android:gravity="center" android:padding="20dp"/>
+            <TextView
+                    android:text="@string/main_text_connected_devices"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView_connected_devices"
+                    android:textSize="14sp" android:gravity="center" android:padding="5dp"/>
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/spinner_connected_devices"
+                    android:padding="10dp"/>
+            <Button
+                    android:text="@string/main_button_connect_to_device"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/button_connect_to_device"
+                    android:gravity="center" android:padding="5dp"/>
+            <ProgressBar
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBar_connected_to_device" android:visibility="invisible"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView_connected_to_device"
+                    android:text="@string/main_text_connected_to_device" android:visibility="invisible"
+                    android:gravity="center"/>
+            <TextView
+                    android:text="@string/main_text_available_devices"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView_available_devices"
+                    android:textSize="14sp" android:gravity="center" android:padding="5dp"/>
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/spinner_available_devices"
+                    android:padding="10dp"/>
+            <Button
+                    android:text="@string/main_button_find_new_devices"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/button_find_new_devices"
+                    android:gravity="center" android:padding="5dp"/>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
