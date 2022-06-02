@@ -1,13 +1,30 @@
 <resources>
     <string name="app_name">SET12MA</string>
 
-    <string name="tab_main_activity_text_1">IN</string>
-    <string name="tab_main_activity_text_2">OUT</string>
-    <string name="tab_main_activity_text_3">ADC</string>
-    <string name="tab_main_activity_text_4">TK</string>
+    <string name="tab_SET12MA_text_0">IN</string>
+    <string name="tab_SET12MA_text_1">OUT</string>
+    <string name="tab_SET12MA_text_2">ADC</string>
+    <string name="tab_SET12MA_text_3">TK</string>
 
-    <string name="tab_setting_activity_text_1">Bluetooth</string>
-    <string name="tab_setting_activity_text_2">COM-port</string>
+    <string name="tab_SET12MA_text_4">Bluetooth</string>
+    <string name="tab_SET12MA_text_5">COM-port</string>
+
+    <string name="tab_SET12MA_text_6">TMS</string>
+    <string name="tab_SET12MA_text_7">SP2MAIN</string>
+    <string name="tab_SET12MA_text_8">SP2</string>
+    <string name="tab_SET12MA_text_9">SP6</string>
+
+    <string name="tab_SET12MA_text_10">Скачать</string>
+    <string name="tab_SET12MA_text_11">Посмотреть</string>
+
+    <string name="tip_text_0">Выберите файл для загрузки</string>
+    <string name="tip_text_1">Путь не указан</string>
+    <string name="tip_text_2">Выберите адрес устройства</string>
+    <string name="tip_text_3">Выполните</string>
+
+    <string name="name_button_0">Путь к файлу</string>
+    <string name="name_button_1">Загрузить в память</string>
+
 
     <string name="text_channel_0">Channel 0</string>
     <string name="text_channel_1">Channel 1</string>
@@ -49,9 +66,10 @@
 
     <string name="text_inital_value">0</string>
 
+    <string name="menu_dataExchange">Данные</string>
     <string name="menu_connection">Подключение</string>
     <string name="menu_logging">Логирование</string>
-    <!--    <string name="menu_open">Открыть</string>-->
+    <string name="menu_loadingSoftware">Загрузка ПО</string>
 
     <string name="main_connection">Bluetooth соединения</string>
     <string name="main_text_connected_devices">Сопряженные устройства</string>

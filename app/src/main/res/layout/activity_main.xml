@@ -13,20 +13,53 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
         <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs"
+                android:id="@+id/tabs_SET12MA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"/>
+<!--        <com.google.android.material.tabs.TabLayout-->
+<!--                android:id="@+id/tabs_LoadSoftware"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="?attr/colorPrimary" android:visibility="invisible"/>-->
+<!--        <com.google.android.material.tabs.TabLayout-->
+<!--                android:id="@+id/tabs_Logging"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="?attr/colorPrimary" android:visibility="invisible"/>-->
+<!--        <com.google.android.material.tabs.TabLayout-->
+<!--                android:id="@+id/tabs_Connection"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="?attr/colorPrimary" android:visibility="invisible"/>-->
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager"
+            android:id="@+id/view_pager_dataExchange"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager_loadingSoftware"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager_logging"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager_connecting"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/fab_SET12MA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"

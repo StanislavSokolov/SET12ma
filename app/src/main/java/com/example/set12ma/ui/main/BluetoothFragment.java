@@ -187,11 +187,11 @@ public class BluetoothFragment extends Fragment {
 
         addressSpace = resultReceiver.getAddressSpace();
 
-        textViewConnectedDevices = root.findViewById(R.id.textView_connected_devices);
+        textViewConnectedDevices = root.findViewById(R.id.textView_tip_find_file);
         spinnerConnectedDevices = root.findViewById(R.id.spinner_connected_devices);
         buttonConnectToDevice = root.findViewById(R.id.button_connect_to_device);
-        textViewConnectedToDevice = root.findViewById(R.id.textView_connected_to_device);
-        progressBarConnectedToDevice = root.findViewById(R.id.progressBar_connected_to_device);
+        textViewConnectedToDevice = root.findViewById(R.id.textView_path_to_load_file);
+        progressBarConnectedToDevice = root.findViewById(R.id.progressBar_loading_to_flesh);
         textViewAvailableDevices = root.findViewById(R.id.textView_available_devices);
         spinnerAvailableDevices = root.findViewById(R.id.spinner_available_devices);
         buttonFindNewDevices = root.findViewById(R.id.button_find_new_devices);

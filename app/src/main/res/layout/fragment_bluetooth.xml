@@ -23,12 +23,12 @@
             <TextView
                     android:text="@string/main_connection"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/textView_connection" android:textSize="24sp"
+                    android:layout_height="wrap_content" android:id="@+id/textView_SP6" android:textSize="24sp"
                     android:gravity="center" android:padding="20dp"/>
             <TextView
                     android:text="@string/main_text_connected_devices"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/textView_connected_devices"
+                    android:layout_height="wrap_content" android:id="@+id/textView_tip_find_file"
                     android:textSize="14sp" android:gravity="center" android:padding="5dp"/>
             <Spinner
                     android:layout_width="match_parent"
@@ -43,10 +43,10 @@
                     style="?android:attr/progressBarStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/progressBar_connected_to_device" android:visibility="invisible"/>
+                    android:id="@+id/progressBar_loading_to_flesh" android:visibility="invisible"/>
             <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/textView_connected_to_device"
+                    android:layout_height="wrap_content" android:id="@+id/textView_path_to_load_file"
                     android:text="@string/main_text_connected_to_device" android:visibility="invisible"
                     android:gravity="center"/>
             <TextView

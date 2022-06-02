@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
-            android:id="@+id/menu_connection"
+            android:id="@+id/menu_dataExchange"
             android:orderInCategory="1"
+            android:title="@string/menu_dataExchange" android:visible="true"/>
+    <item
+            android:id="@+id/menu_connecting"
+            android:orderInCategory="2"
             android:title="@string/menu_connection" android:visible="true"/>
     <item
             android:id="@+id/menu_logging"
-            android:orderInCategory="2"
+            android:orderInCategory="3"
             android:title="@string/menu_logging" android:visible="true"/>
-    <!--    <item-->
-    <!--            android:id="@+id/menu_save"-->
-    <!--            android:orderInCategory="2"-->
-    <!--            android:title="@string/menu_save" android:visible="true"/>-->
+    <item
+            android:id="@+id/menu_loadingSoftware"
+            android:orderInCategory="4"
+            android:title="@string/menu_loadingSoftware" android:visible="true"/>
 
 </menu>

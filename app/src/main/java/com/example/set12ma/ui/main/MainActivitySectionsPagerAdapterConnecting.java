@@ -12,13 +12,13 @@ import com.example.set12ma.R;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class MainActivitySectionsPagerAdapter extends FragmentPagerAdapter {
+public class MainActivitySectionsPagerAdapterConnecting extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_setting_activity_text_1, R.string.tab_main_activity_text_1, R.string.tab_main_activity_text_2, R.string.tab_main_activity_text_3, R.string.tab_main_activity_text_4};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_SET12MA_text_4, R.string.tab_SET12MA_text_5};
     private final Context mContext;
 
-    public MainActivitySectionsPagerAdapter(Context context, FragmentManager fm) {
+    public MainActivitySectionsPagerAdapterConnecting(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }
@@ -30,14 +30,8 @@ public class MainActivitySectionsPagerAdapter extends FragmentPagerAdapter {
 //        return PlaceholderFragment.newInstance(position + 1);
         if (position == 0) {
             return BluetoothFragment.newInstance(position + 1);
-        } else if (position == 1) {
-            return InputFragment.newInstance(position + 1);
-        } else if (position == 2) {
-            return OutputFragment.newInstance(position + 1);
-        } else if (position == 3) {
-            return AdcFragment.newInstance(position + 1);
         } else {
-            return TkFragment.newInstance(position + 1);
+            return ComPortFragment.newInstance(position + 1);
         }
     }
 
@@ -50,6 +44,6 @@ public class MainActivitySectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 4 total pages.
-        return 5;
+        return 2;
     }
 }
