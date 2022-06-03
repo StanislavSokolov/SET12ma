@@ -3,7 +3,6 @@ package com.example.set12ma.ui.main;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +23,12 @@ public class AdcFragment extends Fragment {
     private int startCellNumber = 96;
     private int stopCellNumber = 208;
     private AddressSpace addressSpace;
-    private ResultReceiver resultReceiver;
+    private ResultReceiverAddressSpace resultReceiverAddressSpace;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        resultReceiver = (ResultReceiver) context;
+        resultReceiverAddressSpace = (ResultReceiverAddressSpace) context;
     }
 
     private PageViewModel pageViewModel;
@@ -260,7 +259,7 @@ public class AdcFragment extends Fragment {
         Button indicator_button_adc_2_15 = root.findViewById(R.id.indicator_button_adc_2_15);
         arrayListButton.add(indicator_button_adc_2_15);
 
-        addressSpace = resultReceiver.getAddressSpace();
+        addressSpace = resultReceiverAddressSpace.getAddressSpace();
 
         upDateValues();
         return root;

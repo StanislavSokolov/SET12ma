@@ -23,14 +23,14 @@ public class TkFragment extends Fragment implements View.OnClickListener {
     private int startCellNumber = 144;
     private int stopCellNumber = 208;
     private AddressSpace addressSpace;
-    private ResultReceiver resultReceiver;
+    private ResultReceiverAddressSpace resultReceiverAddressSpace;
 
     private ArrayList<Switch> arrayList;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        resultReceiver = (ResultReceiver) context;
+        resultReceiverAddressSpace = (ResultReceiverAddressSpace) context;
     }
 
     private PageViewModel pageViewModel;
@@ -62,7 +62,7 @@ public class TkFragment extends Fragment implements View.OnClickListener {
 
         arrayList = new ArrayList();
 
-        addressSpace = resultReceiver.getAddressSpace();
+        addressSpace = resultReceiverAddressSpace.getAddressSpace();
 
         Switch switch_tk_0_0 = root.findViewById(R.id.switch_tk_0_0);
         switch_tk_0_0.setOnClickListener(this);

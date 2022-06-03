@@ -1,15 +1,12 @@
 package com.example.set12ma.ui.main;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Switch;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
@@ -28,12 +25,12 @@ public class OutputFragment extends Fragment implements View.OnClickListener {
     private AddressSpace addressSpace;
     private int startCellNumber = 48;
 
-    private ResultReceiver resultReceiver;
+    private ResultReceiverAddressSpace resultReceiverAddressSpace;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        resultReceiver = (ResultReceiver) context;
+        resultReceiverAddressSpace = (ResultReceiverAddressSpace) context;
     }
 
     private PageViewModel pageViewModel;
@@ -212,7 +209,7 @@ public class OutputFragment extends Fragment implements View.OnClickListener {
         switch_out_2_15.setOnClickListener(this);
         arrayList.add(switch_out_2_15);
 
-        addressSpace = resultReceiver.getAddressSpace();
+        addressSpace = resultReceiverAddressSpace.getAddressSpace();
 
 
 

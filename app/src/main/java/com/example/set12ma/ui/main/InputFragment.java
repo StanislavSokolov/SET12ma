@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Switch;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -23,12 +22,12 @@ public class InputFragment extends Fragment {
 
     private ArrayList<Button> arrayList;
     private AddressSpace addressSpace;
-    private ResultReceiver resultReceiver;
+    private ResultReceiverAddressSpace resultReceiverAddressSpace;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        resultReceiver = (ResultReceiver) context;
+        resultReceiverAddressSpace = (ResultReceiverAddressSpace) context;
     }
 
     private PageViewModel pageViewModel;
@@ -162,7 +161,7 @@ public class InputFragment extends Fragment {
         Button indicator_button_in_2_15 = root.findViewById(R.id.indicator_button_in_2_15);
         arrayList.add(indicator_button_in_2_15);
 
-        addressSpace = resultReceiver.getAddressSpace();
+        addressSpace = resultReceiverAddressSpace.getAddressSpace();
 
         upDateValues();
 
@@ -172,7 +171,7 @@ public class InputFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        addressSpace = resultReceiver.getAddressSpace();
+        addressSpace = resultReceiverAddressSpace.getAddressSpace();
         upDateValues();
     }
 

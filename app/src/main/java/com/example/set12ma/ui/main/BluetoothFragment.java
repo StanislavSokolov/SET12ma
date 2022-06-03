@@ -31,11 +31,15 @@ import static java.lang.Thread.sleep;
 
 public class BluetoothFragment extends Fragment {
 
+    int mode = 0;
+
+    ArrayList<byte[]> arrayList;
+
     // for BluetoothSoketThread
     final String PBAP_UUID = "00001101-0000-1000-8000-00805f9b34fb";
     private BluetoothSocket bluetoothSocket;
     private BluetoothDevice bluetoothDevice;
-    private long timer = 1000;
+    private long timer = 5000;
 
 
     // for BluetoothConnectedThread
@@ -62,7 +66,10 @@ public class BluetoothFragment extends Fragment {
     private static final String LOG_TAG = "AndroidExample";
     private String stringConnectedToDevice;
     private AddressSpace addressSpace;
-    private ResultReceiver resultReceiver;
+    private ResultReceiverAddressSpace resultReceiverAddressSpace;
+
+    MemorySpace memorySpace;
+    ResultReceiverMemorySpace resultReceiverMemorySpace;
 
     private ArrayList<BluetoothDevice> arrayListAvailableDevices;                               // список устройств, доступных к сопряжению
     private ArrayList<BluetoothDevice> arrayListConnectedDevices;                               // список устройств, доступных к сопряжению
@@ -88,7 +95,8 @@ public class BluetoothFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        resultReceiver = (ResultReceiver) context;
+        resultReceiverAddressSpace = (ResultReceiverAddressSpace) context;
+        resultReceiverMemorySpace = (ResultReceiverMemorySpace) context;
     }
 
 
@@ -185,7 +193,8 @@ public class BluetoothFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_bluetooth, container, false);
         bluetooth = BluetoothAdapter.getDefaultAdapter();
 
-        addressSpace = resultReceiver.getAddressSpace();
+        addressSpace = resultReceiverAddressSpace.getAddressSpace();
+        memorySpace = resultReceiverMemorySpace.getMemorySpace();
 
         textViewConnectedDevices = root.findViewById(R.id.textView_tip_find_file);
         spinnerConnectedDevices = root.findViewById(R.id.spinner_connected_devices);
@@ -349,7 +358,7 @@ public class BluetoothFragment extends Fragment {
                 try {
                     manageConnectedSocket();
                     Log.i(LOG_TAG,"try to manage");
-                } catch (InterruptedException e) {
+                } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
                 }
             } else {
@@ -362,13 +371,19 @@ public class BluetoothFragment extends Fragment {
             } catch (IOException e) { }
         }
 
-        private void manageConnectedSocket() throws InterruptedException {
+        private void manageConnectedSocket() throws InterruptedException, IOException {
             BluetoothConnectedThread bluetoothConnectedThread = new BluetoothConnectedThread();
             bluetoothConnectedThread.start();
 
             while (true) {
-                BluetoothSoketThread.sleep(timer);
-                bluetoothConnectedThread.write();
+                if (memorySpace.isReadyFlag()) {
+                    BluetoothSoketThread.sleep(timer);
+                    bluetoothConnectedThread.initLoad();
+                } else {
+                    BluetoothSoketThread.sleep(timer);
+                    bluetoothConnectedThread.write();
+                }
+
             }
         }
     }
@@ -391,102 +406,102 @@ public class BluetoothFragment extends Fragment {
         public void run() {
             byte[] buffer = new byte[8];  // buffer store for the stream
             int bytes = 20; // bytes returned from read()
-            while (true) {
-                try {
-                    // Read from the InputStream
-                    bytes = inputStream.read(buffer);
-                    // Send the obtained bytes to the UI activity
-//                    mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
-//                            .sendToTarget();
-                    if (bytes == 8) {
-                        bytesFromBuffer = new byte[bytes];
-                        bytesToCreateCRC = new byte[bytes - 2];
-                        for (int i = 0; i < bytesFromBuffer.length; i++) {
-//                        if (buffer[i] < 0) bytesFromBuffer[i] = (buffer[i] + 256); else bytesFromBuffer[i] = buffer[i];
-                            bytesFromBuffer[i] = buffer[i];
-                        }
-                        for (int i = 0; i < bytesToCreateCRC.length; i++) {
-                            bytesToCreateCRC[i] = bytesFromBuffer[i];
-                        }
-                        int crc = (CRC16.getCRC4(bytesToCreateCRC));
-
-                        int high = crc/256;
-
-//                        Log.i(LOG_TAG, String.valueOf(crc - high*256));
-//                        Log.i(LOG_TAG, String.valueOf(high));
-
-                        if ((bytesFromBuffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bytesFromBuffer[bytesToCreateCRC.length + 1] == (byte) high)) {
-                            if (isStatusConnecting) {
-                                addressSpace.setAddressSpace(currentByte, bytesFromBuffer[2]);
-                                // Это счетчик битов, ктр увеличивает значение при каждом удачном приеме;
-                                String answerTest = "";
-                                for (byte readByte: bytesFromBuffer) {
-                                    int bufInt = 0;
-                                    if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
-                                    answerTest = answerTest + " " + bufInt;
-                                }
-                                Log.i(LOG_TAG, answerTest);
-                                if (currentByte == 255) currentByte = 0; else currentByte++;
-                            } else {
-                                textViewConnectedToDevice.setText("Поключено к " + stringConnectedToDevice);
-                                progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
-                                isStatusConnecting = true;
-                            }
-                            isStatusReading = true;
-                        } else {
-                            Log.i(LOG_TAG, "CRC не совпало");
-                            textViewConnectedToDevice.setText("CRC не совпало");
-                        }
-                    } else if (bytes == 6) {
-                        bytesFromBuffer = new byte[bytes];
-                        bytesToCreateCRC = new byte[bytes - 4];
-                        for (int i = 0; i < bytesFromBuffer.length; i++) {
-//                        if (buffer[i] < 0) bytesFromBuffer[i] = (buffer[i] + 256); else bytesFromBuffer[i] = buffer[i];
-                            bytesFromBuffer[i] = buffer[i];
-                        }
-                        for (int i = 0; i < bytesToCreateCRC.length; i++) {
-                            bytesToCreateCRC[i] = bytesFromBuffer[i];
-                        }
-                        int crc = (CRC16.getCRC4(bytesToCreateCRC));
-
-                        int high = crc/256;
-
-//                        Log.i(LOG_TAG, String.valueOf(crc - high*256));
-//                        Log.i(LOG_TAG, String.valueOf(high));
-
-                        if ((bytesFromBuffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bytesFromBuffer[bytesToCreateCRC.length + 1] == (byte) high)) {
-                            if (isStatusConnecting) {
-                                // Это счетчик битов, ктр увеличивает значение при каждом удачном приеме;
-
-                                String answerTest = "";
-                                for (byte readByte: bytesFromBuffer) {
-                                    int bufInt = 0;
-                                    if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
-                                    answerTest = answerTest + " " + bufInt;
-                                }
-                                Log.i(LOG_TAG, answerTest);
-                                if (currentByte == 255) currentByte = 0; else currentByte++;
-                            } else {
-                                textViewConnectedToDevice.setText("Поключено к " + stringConnectedToDevice);
-                                progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
-                                isStatusConnecting = true;
-                            }
-
-                            isStatusReading = true;
-                        } else {
-                            Log.i(LOG_TAG, "CRC не совпало");
-                            textViewConnectedToDevice.setText("CRC не совпало");
-                        }
-                    }
-
-
-
-
-                } catch (IOException e) {
-                    Log.i(LOG_TAG,e.toString());
-                    break;
-                }
-            }
+//            while (true) {
+//                try {
+//                    // Read from the InputStream
+//                    bytes = inputStream.read(buffer);
+//                    // Send the obtained bytes to the UI activity
+////                    mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
+////                            .sendToTarget();
+//                    if (bytes == 8) {
+//                        bytesFromBuffer = new byte[bytes];
+//                        bytesToCreateCRC = new byte[bytes - 2];
+//                        for (int i = 0; i < bytesFromBuffer.length; i++) {
+////                        if (buffer[i] < 0) bytesFromBuffer[i] = (buffer[i] + 256); else bytesFromBuffer[i] = buffer[i];
+//                            bytesFromBuffer[i] = buffer[i];
+//                        }
+//                        for (int i = 0; i < bytesToCreateCRC.length; i++) {
+//                            bytesToCreateCRC[i] = bytesFromBuffer[i];
+//                        }
+//                        int crc = (CRC16.getCRC4(bytesToCreateCRC));
+//
+//                        int high = crc/256;
+//
+////                        Log.i(LOG_TAG, String.valueOf(crc - high*256));
+////                        Log.i(LOG_TAG, String.valueOf(high));
+//
+//                        if ((bytesFromBuffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bytesFromBuffer[bytesToCreateCRC.length + 1] == (byte) high)) {
+//                            if (isStatusConnecting) {
+//                                addressSpace.setAddressSpace(currentByte, bytesFromBuffer[2]);
+//                                // Это счетчик битов, ктр увеличивает значение при каждом удачном приеме;
+//                                String answerTest = "";
+//                                for (byte readByte: bytesFromBuffer) {
+//                                    int bufInt = 0;
+//                                    if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
+//                                    answerTest = answerTest + " " + bufInt;
+//                                }
+//                                Log.i(LOG_TAG, answerTest);
+//                                if (currentByte == 255) currentByte = 0; else currentByte++;
+//                            } else {
+//                                textViewConnectedToDevice.setText("Поключено к " + stringConnectedToDevice);
+//                                progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+//                                isStatusConnecting = true;
+//                            }
+//                            isStatusReading = true;
+//                        } else {
+//                            Log.i(LOG_TAG, "CRC не совпало");
+//                            textViewConnectedToDevice.setText("CRC не совпало");
+//                        }
+//                    } else if (bytes == 6) {
+//                        bytesFromBuffer = new byte[bytes];
+//                        bytesToCreateCRC = new byte[bytes - 4];
+//                        for (int i = 0; i < bytesFromBuffer.length; i++) {
+////                        if (buffer[i] < 0) bytesFromBuffer[i] = (buffer[i] + 256); else bytesFromBuffer[i] = buffer[i];
+//                            bytesFromBuffer[i] = buffer[i];
+//                        }
+//                        for (int i = 0; i < bytesToCreateCRC.length; i++) {
+//                            bytesToCreateCRC[i] = bytesFromBuffer[i];
+//                        }
+//                        int crc = (CRC16.getCRC4(bytesToCreateCRC));
+//
+//                        int high = crc/256;
+//
+////                        Log.i(LOG_TAG, String.valueOf(crc - high*256));
+////                        Log.i(LOG_TAG, String.valueOf(high));
+//
+//                        if ((bytesFromBuffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bytesFromBuffer[bytesToCreateCRC.length + 1] == (byte) high)) {
+//                            if (isStatusConnecting) {
+//                                // Это счетчик битов, ктр увеличивает значение при каждом удачном приеме;
+//
+//                                String answerTest = "";
+//                                for (byte readByte: bytesFromBuffer) {
+//                                    int bufInt = 0;
+//                                    if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
+//                                    answerTest = answerTest + " " + bufInt;
+//                                }
+//                                Log.i(LOG_TAG, answerTest);
+//                                if (currentByte == 255) currentByte = 0; else currentByte++;
+//                            } else {
+//                                textViewConnectedToDevice.setText("Поключено к " + stringConnectedToDevice);
+//                                progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+//                                isStatusConnecting = true;
+//                            }
+//
+//                            isStatusReading = true;
+//                        } else {
+//                            Log.i(LOG_TAG, "CRC не совпало");
+//                            textViewConnectedToDevice.setText("CRC не совпало");
+//                        }
+//                    }
+//
+//
+//
+//
+//                } catch (IOException e) {
+//                    Log.i(LOG_TAG,e.toString());
+//                    break;
+//                }
+//            }
         }
 
         public void write() {
@@ -648,6 +663,12 @@ public class BluetoothFragment extends Fragment {
             try {
                 bluetoothSocket.close();
             } catch (IOException e) { }
+        }
+
+        public void initLoad() throws IOException {
+//            Log.i(LOG_TAG, String.valueOf(memorySpace.getMemorySpaceArrayList()));
+//            Log.i(LOG_TAG, String.valueOf(memorySpace.getMemorySpaceByte(0)));
+            outputStream.write(memorySpace.getMemorySpaceByte(0));
         }
 
 //        public boolean checkStatusConnecting() {

@@ -1,5 +1,5 @@
 package com.example.set12ma.ui.main;
 
-public interface ResultReceiver {
+public interface ResultReceiverAddressSpace {
     AddressSpace getAddressSpace();
 }

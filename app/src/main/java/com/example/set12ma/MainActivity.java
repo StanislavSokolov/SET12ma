@@ -17,10 +17,12 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements ResultReceiver {
+public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace {
 
     // Адресное пространство приложения
     AddressSpace addressSpace;
+    // Пространство памяти для загрузки бинарных файлов в железо
+    MemorySpace memorySpace;
     // SET12MA
     TabLayout tabsSET12MA;
     ViewPager viewPagerDataExchange;
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiver {
         FloatingActionButton fab = findViewById(R.id.fab_SET12MA);
 
         addressSpace = new AddressSpace(300);
+        memorySpace = new MemorySpace();
 //        addressSpace.setAddressSpace(150, 1);
 //        addressSpace.setAddressSpace(210, 150);
 
@@ -181,5 +184,10 @@ public class MainActivity extends AppCompatActivity implements ResultReceiver {
     @Override
     public AddressSpace getAddressSpace() {
         return addressSpace;
+    }
+
+    @Override
+    public MemorySpace getMemorySpace() {
+        return memorySpace;
     }
 }
