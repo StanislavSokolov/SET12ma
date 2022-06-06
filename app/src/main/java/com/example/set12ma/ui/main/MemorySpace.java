@@ -2,14 +2,17 @@ package com.example.set12ma.ui.main;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 public class MemorySpace implements Parcelable {
 
     private ArrayList<byte[]> memorySpaceArrayList;
-    int memorySpaceByteSize = 4096;
-    boolean readyFlag = false;
+    private int memorySpaceByteLength = 4096;
+    private boolean readyFlag = false;
+
+    private static final String LOG_TAG = "AndroidExample";
 
     public boolean isReadyFlag() {
         return readyFlag;
@@ -19,7 +22,7 @@ public class MemorySpace implements Parcelable {
         this.readyFlag = readyFlag;
     }
 
-    public int getMemorySpaceArrayList() {
+    public int getMemorySpaceArrayListSize() {
         return memorySpaceArrayList.size();
     }
 
@@ -27,12 +30,20 @@ public class MemorySpace implements Parcelable {
         return memorySpaceArrayList.get(number);
     }
 
-    public int getMemorySpaceByteSize() {
-        return memorySpaceByteSize;
+    public int getMemorySpaceByteLength(int number) {
+        return memorySpaceArrayList.get(number).length;
+    }
+
+    public int getMemorySpaceByteLength() {
+        return memorySpaceByteLength;
     }
 
     public void setMemorySpaceArrayListByte(byte[] memorySpaceByte) {
         memorySpaceArrayList.add(memorySpaceByte);
+    }
+
+    public void setMemorySpaceArrayListByte(int i, byte[] memorySpaceByte) {
+        memorySpaceArrayList.add(i, memorySpaceByte);
     }
 
     public void setMemorySpaceByte() {

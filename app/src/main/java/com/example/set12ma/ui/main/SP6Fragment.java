@@ -99,37 +99,22 @@ public class SP6Fragment extends Fragment {
     private void loadFile() {
         try {
             InputStream inputStream = getContext().getContentResolver().openInputStream(selectedFile);
-//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-//            StringBuilder stringBuilder = new StringBuilder();
-//            String line;
-
-//            ArrayList<Byte> arrayList = new ArrayList<>();
-
-//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//            DataOutputStream dos = new DataOutputStream(byteArrayOutputStream);
-//            ArrayList<byte[]> arrayList = new ArrayList<>();
             memorySpace.setMemorySpaceByte();
-            byte[] data = new byte[memorySpace.getMemorySpaceByteSize()];
-            inputStream.read(data);
+            byte[] data = new byte[memorySpace.getMemorySpaceByteLength()];
             int count = inputStream.read(data);
 
             while (count != -1) {
-                if (count < memorySpace.getMemorySpaceByteSize()) {
-                    byte[] dataLastByte = new byte[count];
-                    for (int i = 0; i < count; i++) {
-                        dataLastByte[i] = data[i];
-                    }
-                    memorySpace.setMemorySpaceArrayListByte(dataLastByte);
-                } else {
-                    memorySpace.setMemorySpaceArrayListByte(data);
+                byte[] dataLastByte = new byte[count];
+                for (int i = 0; i < count; i++) {
+                    dataLastByte[i] = data[i];
                 }
+                memorySpace.setMemorySpaceArrayListByte(dataLastByte);
                 count = inputStream.read(data);
             }
 
             memorySpace.setReadyFlag(true);
-
-            Log.i(LOG_TAG, String.valueOf(memorySpace.getMemorySpaceArrayList()));
-            Log.i(LOG_TAG, String.valueOf(memorySpace.getMemorySpaceByte(memorySpace.getMemorySpaceArrayList()-1).length));
+            Log.i(LOG_TAG, String.valueOf(memorySpace.getMemorySpaceArrayListSize()));
+            Log.i(LOG_TAG, String.valueOf(memorySpace.getMemorySpaceByte(memorySpace.getMemorySpaceArrayListSize()-1).length));
 
 
 
