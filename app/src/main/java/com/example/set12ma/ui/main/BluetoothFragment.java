@@ -51,6 +51,7 @@ public class BluetoothFragment extends Fragment {
     private byte writeCommand = 57;
     private byte initLoadCommand = 58;
     private byte loadCommand = 51;
+    private byte extendCommand = 60;
     private int countBytes = 8;
     private int addressSpaceNumber = 0;
     // isStatusConnecting waits the answer from controller to start the communication
@@ -741,20 +742,22 @@ public class BluetoothFragment extends Fragment {
             bytesToSend[3] = 0;
             bytesToSend[4] = 10;
             bytesToSend[5] = 0;
-//            int i = (memorySpace.getMemorySpaceArrayListSize() - 1)*memorySpace.getMemorySpaceByteLength() + memorySpace.getMemorySpaceByteLength(memorySpace.getMemorySpaceArrayListSize() - 1);
-//            int highH = i/16777216;
-//            bytesToSend[9] = (byte) highH;
-//            int highL = (i - (highH*16777216))/65536;
-//            bytesToSend[8] = (byte) highL;
-//            int lowH = (i - (highH*16777216) - (highL*65536))/256;
-//            bytesToSend[7] = (byte) lowH;
-//            int lowL = i - (highH*16777216) - (highL*65536) - (lowH*256);
-//            bytesToSend[6] = (byte) lowL;
+            int i = (memorySpace.getMemorySpaceArrayListSize() - 1)*memorySpace.getMemorySpaceByteLength() + memorySpace.getMemorySpaceByteLength(memorySpace.getMemorySpaceArrayListSize() - 1);
+            int highH = i/16777216;
+            bytesToSend[9] = (byte) highH;
+            int highL = (i - (highH*16777216))/65536;
+            bytesToSend[8] = (byte) highL;
+            int lowH = (i - (highH*16777216) - (highL*65536))/256;
+            bytesToSend[7] = (byte) lowH;
+            int lowL = i - (highH*16777216) - (highL*65536) - (lowH*256);
+            bytesToSend[6] = (byte) lowL;
 
-            bytesToSend[6] = 2;
-            bytesToSend[7] = 0;
-            bytesToSend[8] = 0;
-            bytesToSend[9] = 0;
+            Log.i(LOG_TAG, String.valueOf(i));
+
+//            bytesToSend[6] = 2;
+//            bytesToSend[7] = 0;
+//            bytesToSend[8] = 0;
+//            bytesToSend[9] = 0;
 
             for (int j = 0; j < bytesToCreateCRC.length; j++) {
                 bytesToCreateCRC[j] = bytesToSend[j];
@@ -764,6 +767,10 @@ public class BluetoothFragment extends Fragment {
             high = crc / 256;
             bytesToSend[10] = (byte) (crc - high * 256);
             bytesToSend[11] = (byte) high;
+
+            for (int j = 0; j < bytesToSend.length; j++) {
+                Log.i(LOG_TAG, String.valueOf(bytesToSend[j]));
+            }
 
 //            Log.i(LOG_TAG, String.valueOf(memorySpace.getMemorySpaceArrayList()));
 //            Log.i(LOG_TAG, String.valueOf(memorySpace.getMemorySpaceByte(0)));
@@ -779,25 +786,25 @@ public class BluetoothFragment extends Fragment {
 
         public void load() throws IOException {
 
-//            bytesToSend = new byte[2 + (memorySpace.getMemorySpaceArrayListSize() - 1)*memorySpace.getMemorySpaceByteLength() + memorySpace.getMemorySpaceByteLength(memorySpace.getMemorySpaceArrayListSize() - 1) + 2];
+            bytesToSend = new byte[2 + (memorySpace.getMemorySpaceArrayListSize() - 1)*memorySpace.getMemorySpaceByteLength() + memorySpace.getMemorySpaceByteLength(memorySpace.getMemorySpaceArrayListSize() - 1) + 2];
 
-//            bytesToCreateCRC = new byte[bytesToSend.length - 2];
-            bytesToSend = new byte[6];
+            bytesToCreateCRC = new byte[bytesToSend.length - 2];
+//            bytesToSend = new byte[6];
             bytesToSend[0] = addressDevice;
             bytesToSend[1] = loadCommand;
-            bytesToCreateCRC = new byte[4];
-//            for (int i = 0; i < memorySpace.getMemorySpaceArrayListSize(); i++) {
-//                byte[] bytesBuffer = memorySpace.getMemorySpaceByte(i);
-//                for (int j = 0; j < bytesBuffer.length; j++) {
-//                    bytesToSend[i*memorySpace.getMemorySpaceByteLength()+j+2] = bytesBuffer[j];
-//                }
-//            }
-            bytesToSend[2] = 1;
-            bytesToSend[3] = 1;
+//            bytesToCreateCRC = new byte[4];
+            for (int i = 0; i < memorySpace.getMemorySpaceArrayListSize(); i++) {
+                byte[] bytesBuffer = memorySpace.getMemorySpaceByte(i);
+                for (int j = 0; j < bytesBuffer.length; j++) {
+                    bytesToSend[i*memorySpace.getMemorySpaceByteLength()+j+2] = bytesBuffer[j];
+                }
+            }
+//            bytesToSend[2] = 1;
+//            bytesToSend[3] = 1;
             for (int i = 0; i < bytesToCreateCRC.length; i++) {
                 bytesToCreateCRC[i] = bytesToSend[i];
             }
-
+            Log.i(LOG_TAG, "Загрузка в память - длина");
             Log.i(LOG_TAG, String.valueOf(bytesToSend.length));
 //            Log.i(LOG_TAG, String.valueOf(bytesToCreateCRC.length));
 
@@ -806,7 +813,8 @@ public class BluetoothFragment extends Fragment {
             bytesToSend[bytesToSend.length-2] = (byte) (crc - high * 256);
             bytesToSend[bytesToSend.length-1] = (byte) high;
 
-//            for (int i = 0; i < bytesToSend.length; i++) {
+            Log.i(LOG_TAG, "Загрузка в память");
+//            for (int i = 0; i < 10; i++) {
 //                Log.i(LOG_TAG, String.valueOf(bytesToSend[i]));
 //            }
 
@@ -817,76 +825,65 @@ public class BluetoothFragment extends Fragment {
 //            Log.i(LOG_TAG, String.valueOf(bytesToSend[bytesToSend.length-2]));
 //            Log.i(LOG_TAG, String.valueOf(bytesToSend[bytesToSend.length-1]));
 
-//            Log.i(LOG_TAG, String.valueOf(bytesToSend[0]));
-//            Log.i(LOG_TAG, String.valueOf(bytesToSend[1]));
-//            Log.i(LOG_TAG, String.valueOf(bytesToSend[2]));
-//            Log.i(LOG_TAG, String.valueOf(bytesToSend[3]));
-//            Log.i(LOG_TAG, String.valueOf(bytesToSend[18]));
-//            Log.i(LOG_TAG, String.valueOf(bytesToSend[19]));
-//            Log.i(LOG_TAG, String.valueOf(bytesToSend[bytesToSend.length-4]));
-//            Log.i(LOG_TAG, String.valueOf(bytesToSend[bytesToSend.length-3]));
-//            Log.i(LOG_TAG, String.valueOf(bytesToSend[bytesToSend.length-2]));
-//            Log.i(LOG_TAG, String.valueOf(bytesToSend[bytesToSend.length-1]));
+            Log.i(LOG_TAG, String.valueOf(bytesToSend[0]));
+            Log.i(LOG_TAG, String.valueOf(bytesToSend[1]));
+            Log.i(LOG_TAG, String.valueOf(bytesToSend[2]));
+            Log.i(LOG_TAG, String.valueOf(bytesToSend[3]));
+            Log.i(LOG_TAG, String.valueOf(bytesToSend[18]));
+            Log.i(LOG_TAG, String.valueOf(bytesToSend[19]));
+            Log.i(LOG_TAG, String.valueOf(bytesToSend[bytesToSend.length-4]));
+            Log.i(LOG_TAG, String.valueOf(bytesToSend[bytesToSend.length-3]));
+            Log.i(LOG_TAG, String.valueOf(bytesToSend[bytesToSend.length-2]));
+            Log.i(LOG_TAG, String.valueOf(bytesToSend[bytesToSend.length-1]));
             outputStream.write(bytesToSend);
         }
 
         public void startToLoad() throws IOException {
+            Log.i(LOG_TAG, "start");
 
-//            bytesToSend = new byte[2 + (memorySpace.getMemorySpaceArrayListSize() - 1)*memorySpace.getMemorySpaceByteLength() + memorySpace.getMemorySpaceByteLength(memorySpace.getMemorySpaceArrayListSize() - 1) + 2];
+            bytesToSend = new byte[18];
+            bytesToCreateCRC = new byte[16];
 
-//            bytesToCreateCRC = new byte[bytesToSend.length - 2];
-//            bytesToSend = new byte[6];
-//            bytesToSend[0] = addressDevice;
-//            bytesToSend[1] = loadCommand;
-//            bytesToCreateCRC = new byte[4];
-////            for (int i = 0; i < memorySpace.getMemorySpaceArrayListSize(); i++) {
-////                byte[] bytesBuffer = memorySpace.getMemorySpaceByte(i);
-////                for (int j = 0; j < bytesBuffer.length; j++) {
-////                    bytesToSend[i*memorySpace.getMemorySpaceByteLength()+j+2] = bytesBuffer[j];
-////                }
-////            }
-//            bytesToSend[2] = 1;
-//            bytesToSend[3] = 1;
-//            for (int i = 0; i < bytesToCreateCRC.length; i++) {
-//                bytesToCreateCRC[i] = bytesToSend[i];
-//            }
-//
-//            Log.i(LOG_TAG, String.valueOf(bytesToSend.length));
-////            Log.i(LOG_TAG, String.valueOf(bytesToCreateCRC.length));
-//
-//            int crc = (CRC16.getCRC4(bytesToCreateCRC));
-//            int high = crc / 256;
-//            bytesToSend[bytesToSend.length-2] = (byte) (crc - high * 256);
-//            bytesToSend[bytesToSend.length-1] = (byte) high;
-//            outputStream.write(bytesToSend);
+            bytesToSend[0] = addressDevice;
+            bytesToSend[1] = extendCommand;
+
+            bytesToSend[2] = 0;
+            bytesToSend[3] = 0;
+            bytesToSend[4] = 10;
+            bytesToSend[5] = 0;
+
+            bytesToSend[6] = 0;
+            bytesToSend[7] = 0;
+            bytesToSend[8] = 0;
+            bytesToSend[9] = 0;
+
+            int i = (memorySpace.getMemorySpaceArrayListSize() - 1)*memorySpace.getMemorySpaceByteLength() + memorySpace.getMemorySpaceByteLength(memorySpace.getMemorySpaceArrayListSize() - 1);
+            int highH = i/16777216;
+            bytesToSend[13] = (byte) highH;
+            int highL = (i - (highH*16777216))/65536;
+            bytesToSend[12] = (byte) highL;
+            int lowH = (i - (highH*16777216) - (highL*65536))/256;
+            bytesToSend[11] = (byte) lowH;
+            int lowL = i - (highH*16777216) - (highL*65536) - (lowH*256);
+            bytesToSend[10] = (byte) lowL;
+
+            bytesToSend[14] = 10;
+            bytesToSend[15] = 5;
+
+            for (int j = 0; j < bytesToCreateCRC.length; j++) {
+                bytesToCreateCRC[j] = bytesToSend[j];
+            }
+
+            int crc = (CRC16.getCRC4(bytesToCreateCRC));
+            int high = crc / 256;
+            bytesToSend[bytesToSend.length-2] = (byte) (crc - high * 256);
+            bytesToSend[bytesToSend.length-1] = (byte) high;
+            for (int o = 0; o < bytesToSend.length; o++) {
+                Log.i(LOG_TAG, String.valueOf(bytesToSend[o]));
+            }
+
+            outputStream.write(bytesToSend);
         }
-
-//        public boolean checkStatusConnecting() {
-//            return statusConnecting;
-//        }
     }
-
-//    class ConnectingTask extends AsyncTaskLoader {
-//
-//        public ConnectingTask(@NonNull Context context) {
-//            super(context);
-//        }
-//
-//        @Nullable
-//        @Override
-//        public String loadInBackground() {
-//            try {
-////                sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            bluetoothSoketThread = new BluetoothSoketThread();
-//            bluetoothSoketThread.start();
-//            return "Подключено";
-//        }
-//
-//
-//    }
-
 }
 
