@@ -86,11 +86,10 @@
                     android:layout_height="wrap_content" android:id="@+id/textView_available_devices"
                     android:textSize="14sp" android:gravity="center" android:padding="5dp"/>
             <Button
-                    android:text="@string/main_button_find_new_devices"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/button_find_new_devices"
-                    android:padding="5dp" style="@style/Widget.AppCompat.Button.Small"
-                    android:gravity="center"/>
+                    android:text="@string/name_button_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/button_start_load_sp6"
+            />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

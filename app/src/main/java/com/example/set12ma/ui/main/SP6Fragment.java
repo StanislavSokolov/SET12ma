@@ -30,6 +30,7 @@ public class SP6Fragment extends Fragment {
     private TextView textViewPathToLoadFile;
     private Button buttonChoicePath;
     private Button buttonLoadToFlesh;
+    private Button buttonStartLoadSP6;
     Uri selectedFile;
     MemorySpace memorySpace;
     ResultReceiverMemorySpace resultReceiverMemorySpace;
@@ -82,6 +83,13 @@ public class SP6Fragment extends Fragment {
             public void onClick(View v) { loadFile();
             }
         });
+        buttonStartLoadSP6 = root.findViewById(R.id.button_start_load_sp6);
+        buttonStartLoadSP6.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+            @Override
+            public void onClick(View v) { startLoad();
+            }
+        });
         textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file);
 
         memorySpace = resultReceiverMemorySpace.getMemorySpace();
@@ -98,23 +106,29 @@ public class SP6Fragment extends Fragment {
 
     private void loadFile() {
         try {
-            InputStream inputStream = getContext().getContentResolver().openInputStream(selectedFile);
-            memorySpace.setMemorySpaceByte();
-            byte[] data = new byte[memorySpace.getMemorySpaceByteLength()];
-            int count = inputStream.read(data);
+            if (memorySpace.isReadyFlagToLoad()) {
+                memorySpace.setReadyFlagToLoad(false);
+                Log.i(LOG_TAG, "back to communication");
+            } else {
+                InputStream inputStream = getContext().getContentResolver().openInputStream(selectedFile);
+                memorySpace.setMemorySpaceByte();
+                byte[] data = new byte[memorySpace.getMemorySpaceByteLength()];
+                int count = inputStream.read(data);
 
-            while (count != -1) {
-                byte[] dataLastByte = new byte[count];
-                for (int i = 0; i < count; i++) {
-                    dataLastByte[i] = data[i];
+                while (count != -1) {
+                    byte[] dataLastByte = new byte[count];
+                    for (int i = 0; i < count; i++) {
+                        dataLastByte[i] = data[i];
+                    }
+                    memorySpace.setMemorySpaceArrayListByte(dataLastByte);
+                    count = inputStream.read(data);
                 }
-                memorySpace.setMemorySpaceArrayListByte(dataLastByte);
-                count = inputStream.read(data);
+
+                memorySpace.setReadyFlagToLoad(true);
+                Log.i(LOG_TAG, String.valueOf(memorySpace.getMemorySpaceArrayListSize()));
+                Log.i(LOG_TAG, String.valueOf(memorySpace.getMemorySpaceByte(memorySpace.getMemorySpaceArrayListSize()-1).length));
             }
 
-            memorySpace.setReadyFlag(true);
-            Log.i(LOG_TAG, String.valueOf(memorySpace.getMemorySpaceArrayListSize()));
-            Log.i(LOG_TAG, String.valueOf(memorySpace.getMemorySpaceByte(memorySpace.getMemorySpaceArrayListSize()-1).length));
 
 
 
@@ -201,6 +215,10 @@ public class SP6Fragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void startLoad() {
+        memorySpace.setReadyFlagToStart(true);
     }
 
         @Override

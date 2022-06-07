@@ -24,6 +24,7 @@
 
     <string name="name_button_0">Путь к файлу</string>
     <string name="name_button_1">Загрузить в память</string>
+    <string name="name_button_2">Прошить</string>
 
 
     <string name="text_channel_0">Channel 0</string>

@@ -10,16 +10,25 @@ public class MemorySpace implements Parcelable {
 
     private ArrayList<byte[]> memorySpaceArrayList;
     private int memorySpaceByteLength = 4096;
-    private boolean readyFlag = false;
+    private boolean readyFlagToLoad = false;
+    private boolean readyFlagToStart = false;
 
     private static final String LOG_TAG = "AndroidExample";
 
-    public boolean isReadyFlag() {
-        return readyFlag;
+    public boolean isReadyFlagToLoad() {
+        return readyFlagToLoad;
     }
 
-    public void setReadyFlag(boolean readyFlag) {
-        this.readyFlag = readyFlag;
+    public void setReadyFlagToLoad(boolean readyFlagToLoad) {
+        this.readyFlagToLoad = readyFlagToLoad;
+    }
+
+    public boolean isReadyFlagToStart() {
+        return readyFlagToStart;
+    }
+
+    public void setReadyFlagToStart(boolean readyFlagToStart) {
+        this.readyFlagToStart = readyFlagToStart;
     }
 
     public int getMemorySpaceArrayListSize() {
