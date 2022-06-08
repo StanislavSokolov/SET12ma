@@ -19,8 +19,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
 
 import java.io.*;
-import java.net.URI;
-import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -100,116 +98,25 @@ public class SP6Fragment extends Fragment {
         Intent intent = new Intent()
                 .setType("*/*")
                 .setAction(Intent.ACTION_GET_CONTENT);
-
         startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
     }
 
     private void loadFile() {
         try {
-            if (memorySpace.isReadyFlagToLoad()) {
-                memorySpace.setReadyFlagToLoad(false);
-                Log.i(LOG_TAG, "back to communication");
-            } else {
-                InputStream inputStream = getContext().getContentResolver().openInputStream(selectedFile);
-                memorySpace.setMemorySpaceByte();
-                byte[] data = new byte[memorySpace.getMemorySpaceByteLength()];
-                int count = inputStream.read(data);
-
-                while (count != -1) {
-                    byte[] dataLastByte = new byte[count];
-                    for (int i = 0; i < count; i++) {
-                        dataLastByte[i] = data[i];
-                    }
-                    memorySpace.setMemorySpaceArrayListByte(dataLastByte);
-                    count = inputStream.read(data);
+            InputStream inputStream = getContext().getContentResolver().openInputStream(selectedFile);
+            memorySpace.setMemorySpaceByte();
+            byte[] data = new byte[memorySpace.getMemorySpaceByteLength()];
+            int count = inputStream.read(data);
+            while (count != -1) {
+                byte[] dataLastByte = new byte[count];
+                for (int i = 0; i < count; i++) {
+                    dataLastByte[i] = data[i];
                 }
-
-                memorySpace.setReadyFlagToLoad(true);
-                Log.i(LOG_TAG, String.valueOf(memorySpace.getMemorySpaceArrayListSize()));
-                Log.i(LOG_TAG, String.valueOf(memorySpace.getMemorySpaceByte(memorySpace.getMemorySpaceArrayListSize()-1).length));
+                memorySpace.setMemorySpaceArrayListByte(dataLastByte);
+                count = inputStream.read(data);
             }
-
-
-
-
-
-//            for (int i = 0; i < 100; i++) {
-//                Log.i(LOG_TAG, String.valueOf(data[i]));
-//                count = i;
-//            }
-//            Log.i(LOG_TAG, String.valueOf(count));
-//            int count = inputStream.read(data);
-//            int countByte = 0;
-//            while (count != -1) {
-////                dos.write(data, 0, count);
-//                count = inputStream.read(data);
-//                for (int i = 0; i < count; i++) {
-//                    arrayList.add(data[i]);
-//                    countByte++;
-//                }
-//                Log.i(LOG_TAG, String.valueOf(count));
-//                Log.i(LOG_TAG, String.valueOf(data[0]));
-//                Log.i(LOG_TAG, String.valueOf(countByte));
-//                countByte++;
-//                for (int i = 0; i < data.length; i++) {
-//                    Log.i(LOG_TAG, "byte number    " + String.valueOf(i));
-//                    Log.i(LOG_TAG, String.valueOf(data[i]));
-//                    countByte++;
-//                }
-//            }
-//            Log.i(LOG_TAG, String.valueOf(countByte));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.size()));
-//
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(0)));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(1)));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(2)));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(3)));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(4).byteValue()));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(5).byteValue()));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(6).byteValue()));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(7).byteValue()));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(8).byteValue()));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(9).byteValue()));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(10).byteValue()));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(11).byteValue()));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(12).byteValue()));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(13).byteValue()));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(14).byteValue()));
-//            Log.i(LOG_TAG, String.valueOf(arrayList.get(15).byteValue()));
-
-
-//            Log.i(LOG_TAG, String.valueOf(baos.toByteArray()));
-//            try {
-//
-////                while ((line = bufferedReader.readLine()) != null){
-////                    stringBuilder.append(line);
-////                    Log.i(LOG_TAG, String.valueOf(i));
-////                    Log.i(LOG_TAG, line);
-////                    i++;
-////                }
-////            } catch (IOException e) {
-////                e.printStackTrace();
-////            }
-//        } catch (FileNotFoundException | UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-
-//        try {
-//            FileInputStream inputStream = new FileInputStream(myFile);
-//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-//            StringBuilder stringBuilder = new StringBuilder();
-//            String line;
-//            try {
-//                while ((line = bufferedReader.readLine()) != null){
-//                    stringBuilder.append(line);
-//                }
-//                Log.i(LOG_TAG, stringBuilder.toString());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
+            memorySpace.setReadyFlagToLoad(true);
+            memorySpace.setDevice("SP6");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
