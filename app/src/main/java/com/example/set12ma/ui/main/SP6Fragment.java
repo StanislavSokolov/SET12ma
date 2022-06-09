@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +24,16 @@ public class SP6Fragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "SP6";
     private static final String LOG_TAG = "AndroidExample";
     private TextView textViewPathToLoadFile;
+    private TextView textViewStatusOfLoading;
+    private TextView textViewInformationAboutDevice;
+
     private Button buttonChoicePath;
     private Button buttonLoadToFlesh;
     private Button buttonStartLoadSP6;
+
+    private ProgressBar progressBarLoadToFlesh;
+    private ProgressBar progressBarLoadToDevice;
+
     Uri selectedFile;
     Uri selectedFile0;
     private MemorySpace memorySpace;
@@ -35,7 +43,9 @@ public class SP6Fragment extends Fragment {
     private ArrayAdapter<String> adapterAddressOfDevice;
     private int itemSelectedFromConnectedDevices = 0;
 
-    private TextView textViewInformationAboutDevice;
+
+
+    private UpDateGraphicalDisplay upDateGraphicalDisplay;
 
     @Override
     public void onAttach(Context context) {
@@ -64,6 +74,8 @@ public class SP6Fragment extends Fragment {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
         pageViewModel.setIndex(index);
+        upDateGraphicalDisplay = new UpDateGraphicalDisplay();
+        upDateGraphicalDisplay.start();
     }
 
     @Override
@@ -98,7 +110,11 @@ public class SP6Fragment extends Fragment {
             }
         });
         textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file);
+        textViewStatusOfLoading = root.findViewById(R.id.textView_status_of_loading);
         textViewInformationAboutDevice = root.findViewById(R.id.textView_information_about_device);
+
+        progressBarLoadToFlesh = root.findViewById(R.id.progressBar_load_to_flesh);
+        progressBarLoadToDevice = root.findViewById(R.id.progressBar_load_to_device);
 
         spinnerAddressOfDevice = root.findViewById(R.id.spinner_address_of_device_sp6);
         adapterAddressOfDevice = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
@@ -171,6 +187,54 @@ public class SP6Fragment extends Fragment {
             selectedFile0 = selectedFile;
             Toast.makeText(getContext(), selectedFile.toString(), Toast.LENGTH_LONG).show();
             textViewPathToLoadFile.setText(data.getDataString());
+        }
+    }
+
+    public class UpDateGraphicalDisplay extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            while (true) {
+                try {
+                    UpDateGraphicalDisplay.sleep(300);
+                    Log.i(LOG_TAG, "start thread");
+                    if (memorySpace.isStatusLoadToDevice()) {
+                        progressBarLoadToDevice.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBarLoadToDevice.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    } else {
+                        progressBarLoadToDevice.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                    }
+                    if (memorySpace.isStatusLoadToFlesh()) {
+                        progressBarLoadToFlesh.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBarLoadToFlesh.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    } else {
+                        progressBarLoadToFlesh.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        public UpDateGraphicalDisplay() {
         }
     }
 }

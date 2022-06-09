@@ -57,11 +57,11 @@
                     style="?android:attr/progressBarStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/progressBar_loading_to_flesh" android:visibility="invisible"/>
+                    android:id="@+id/progressBar_load_to_flesh" android:visibility="invisible"/>
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/textView_status_of_loading"
-                    android:text="@string/tip_text_3" android:visibility="visible"
+                    android:text="@string/tip_text_3" android:visibility="invisible"
                     android:gravity="center" android:padding="5dp"/>
             <TextView
                     android:id="@+id/section_label4"
@@ -94,7 +94,7 @@
                     style="?android:attr/progressBarStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/progressBar"/>
+                    android:id="@+id/progressBar_load_to_device" tools:visibility="invisible"/>
             <TextView
                     android:text="@string/tip_text_4"
                     android:layout_width="match_parent"

@@ -13,6 +13,27 @@ public class MemorySpace implements Parcelable {
     private boolean readyFlagToLoad = false;
     private boolean readyFlagToStart = false;
 
+    public boolean isStatusLoadToFlesh() {
+        return statusLoadToFlesh;
+    }
+
+    public void setStatusLoadToFlesh(boolean statusLoadToFlesh) {
+        this.statusLoadToFlesh = statusLoadToFlesh;
+    }
+
+    public boolean isStatusLoadToDevice() {
+        return statusLoadToDevice;
+    }
+
+    public void setStatusLoadToDevice(boolean statusLoadToDevice) {
+        this.statusLoadToDevice = statusLoadToDevice;
+    }
+
+    private boolean statusLoadToFlesh = false;
+    private boolean statusLoadToDevice = false;
+
+    private int addressOfDevice = 0;
+
     public int getAddressOfDevice() {
         return addressOfDevice;
     }
@@ -21,7 +42,6 @@ public class MemorySpace implements Parcelable {
         this.addressOfDevice = addressOfDevice;
     }
 
-    private int addressOfDevice = 0;
 
     public String getDevice() {
         return device;

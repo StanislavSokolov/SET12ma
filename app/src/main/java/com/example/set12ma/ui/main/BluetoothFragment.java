@@ -90,8 +90,8 @@ public class BluetoothFragment extends Fragment {
     private AddressSpace addressSpace;
     private ResultReceiverAddressSpace resultReceiverAddressSpace;
 
-    MemorySpace memorySpace;
-    ResultReceiverMemorySpace resultReceiverMemorySpace;
+    private MemorySpace memorySpace;
+    private ResultReceiverMemorySpace resultReceiverMemorySpace;
 
     private ArrayList<BluetoothDevice> arrayListAvailableDevices;                               // список устройств, доступных к сопряжению
     private ArrayList<BluetoothDevice> arrayListConnectedDevices;                               // список устройств, доступных к сопряжению
@@ -497,6 +497,7 @@ public class BluetoothFragment extends Fragment {
                             answerTest = answerTest + " " + bufInt;
                         }
                         Log.i(LOG_TAG, answerTest);
+                        memorySpace.setStatusLoadToFlesh(false);
                     } else if (flagWaitingAnswerFinishLoad) {
                         bytesToCreateCRC = new byte[bytes-4];
                         for (int i = 0; i < bytesToCreateCRC.length; i++) {
@@ -519,6 +520,7 @@ public class BluetoothFragment extends Fragment {
                             answerTest = answerTest + " " + bufInt;
                         }
                         Log.i(LOG_TAG, answerTest);
+                        memorySpace.setStatusLoadToDevice(false);
                     } else {
                         if (bytes == 8) {
                             bytesFromBuffer = new byte[bytes];
@@ -774,6 +776,7 @@ public class BluetoothFragment extends Fragment {
 
             statusInitLoad = false;
             flagWaitingAnswerInitLoad = true;
+            memorySpace.setStatusLoadToFlesh(true);
             outputStream.write(bytesToSend);
         }
 
@@ -837,6 +840,7 @@ public class BluetoothFragment extends Fragment {
 
             statusFinishLoad = false;
             flagWaitingAnswerFinishLoad = true;
+            memorySpace.setStatusLoadToDevice(true);
             outputStream.write(bytesToSend);
         }
     }
