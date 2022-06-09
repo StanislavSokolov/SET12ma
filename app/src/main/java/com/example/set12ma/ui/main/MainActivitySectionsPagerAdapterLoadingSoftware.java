@@ -33,7 +33,7 @@ public class MainActivitySectionsPagerAdapterLoadingSoftware extends FragmentPag
         } else if (position == 1) {
             return OutputFragment.newInstance(position + 1);
         } else if (position == 2) {
-            return AdcFragment.newInstance(position + 1);
+            return SP2Fragment.newInstance(position + 1);
         } else {
             return SP6Fragment.newInstance(position + 1);
         }

@@ -221,7 +221,7 @@ public class BluetoothFragment extends Fragment {
         textViewConnectedDevices = root.findViewById(R.id.textView_tip_find_file);
         spinnerConnectedDevices = root.findViewById(R.id.spinner_connected_devices);
         buttonConnectToDevice = root.findViewById(R.id.button_connect_to_device);
-        textViewConnectedToDevice = root.findViewById(R.id.textView_path_to_load_file);
+        textViewConnectedToDevice = root.findViewById(R.id.textView_path_to_load_file_for_sp6);
         progressBarConnectedToDevice = root.findViewById(R.id.progressBar_loading_to_flesh);
         textViewAvailableDevices = root.findViewById(R.id.textView_available_devices);
         spinnerAvailableDevices = root.findViewById(R.id.spinner_available_devices);
@@ -413,7 +413,13 @@ public class BluetoothFragment extends Fragment {
                             latchFinish = true;
                         } else {
                             if (statusFinishLoad) {
-
+                                latchLoad = false;
+                                latchFinish = false;
+                                memorySpace.setReadyFlagToStart(false);
+                                memorySpace.setReadyFlagToLoad(false);
+                                statusFinishLoad = false;
+                                statusInitLoad = false;
+                                statusLoad = false;
                             }
                         }
 
@@ -520,7 +526,7 @@ public class BluetoothFragment extends Fragment {
                             answerTest = answerTest + " " + bufInt;
                         }
                         Log.i(LOG_TAG, answerTest);
-                        memorySpace.setStatusLoadToDevice(false);
+                        statusFinishLoad = true;
                     } else {
                         if (bytes == 8) {
                             bytesFromBuffer = new byte[bytes];
