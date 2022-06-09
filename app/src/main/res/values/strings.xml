@@ -20,11 +20,12 @@
     <string name="tip_text_0">Выберите файл для загрузки</string>
     <string name="tip_text_1">Путь не указан</string>
     <string name="tip_text_2">Выберите адрес устройства</string>
-    <string name="tip_text_3">Выполните</string>
+    <string name="tip_text_3">Файл успешно загружен в память</string>
+    <string name="tip_text_4">Устройство с адресом 0 готово к обновлению ПО</string>
 
     <string name="name_button_0">Путь к файлу</string>
     <string name="name_button_1">Загрузить в память</string>
-    <string name="name_button_2">Прошить</string>
+    <string name="name_button_2">Обновить ПО</string>
 
 
     <string name="text_channel_0">Channel 0</string>

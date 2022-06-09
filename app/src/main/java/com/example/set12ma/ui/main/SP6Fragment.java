@@ -5,13 +5,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -30,8 +27,15 @@ public class SP6Fragment extends Fragment {
     private Button buttonLoadToFlesh;
     private Button buttonStartLoadSP6;
     Uri selectedFile;
-    MemorySpace memorySpace;
-    ResultReceiverMemorySpace resultReceiverMemorySpace;
+    Uri selectedFile0;
+    private MemorySpace memorySpace;
+    private ResultReceiverMemorySpace resultReceiverMemorySpace;
+
+    private Spinner spinnerAddressOfDevice;
+    private ArrayAdapter<String> adapterAddressOfDevice;
+    private int itemSelectedFromConnectedDevices = 0;
+
+    private TextView textViewInformationAboutDevice;
 
     @Override
     public void onAttach(Context context) {
@@ -78,7 +82,12 @@ public class SP6Fragment extends Fragment {
         buttonLoadToFlesh.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
-            public void onClick(View v) { loadFile();
+            public void onClick(View v) {
+                try {
+                    loadFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         buttonStartLoadSP6 = root.findViewById(R.id.button_start_load_sp6);
@@ -89,6 +98,29 @@ public class SP6Fragment extends Fragment {
             }
         });
         textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file);
+        textViewInformationAboutDevice = root.findViewById(R.id.textView_information_about_device);
+
+        spinnerAddressOfDevice = root.findViewById(R.id.spinner_address_of_device_sp6);
+        adapterAddressOfDevice = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapterAddressOfDevice.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        for (int i = 0; i < 16; i++) {
+            adapterAddressOfDevice.add(String.valueOf(i));
+        }
+        spinnerAddressOfDevice.setAdapter(adapterAddressOfDevice);
+        AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                itemSelectedFromConnectedDevices = spinnerAddressOfDevice.getSelectedItemPosition();
+                textViewInformationAboutDevice.setText("Устройство с адресом " + itemSelectedFromConnectedDevices + " готово к обновлению ПО");
+                memorySpace.setAddressOfDevice(itemSelectedFromConnectedDevices);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinnerAddressOfDevice.setOnItemSelectedListener(itemSelectedListener);
+
 
         memorySpace = resultReceiverMemorySpace.getMemorySpace();
         return root;
@@ -101,9 +133,10 @@ public class SP6Fragment extends Fragment {
         startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
     }
 
-    private void loadFile() {
+    private void loadFile() throws IOException {
+        InputStream inputStream = null;
         try {
-            InputStream inputStream = getContext().getContentResolver().openInputStream(selectedFile);
+            inputStream = getContext().getContentResolver().openInputStream(selectedFile0);
             memorySpace.setMemorySpaceByte();
             byte[] data = new byte[memorySpace.getMemorySpaceByteLength()];
             int count = inputStream.read(data);
@@ -121,6 +154,8 @@ public class SP6Fragment extends Fragment {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            inputStream.close();
         }
     }
 
@@ -133,7 +168,7 @@ public class SP6Fragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 123 && resultCode == RESULT_OK) {
             selectedFile = data.getData(); //The uri with the location of the file
-//            selectedFile = (URI) data.getData();
+            selectedFile0 = selectedFile;
             Toast.makeText(getContext(), selectedFile.toString(), Toast.LENGTH_LONG).show();
             textViewPathToLoadFile.setText(data.getDataString());
         }

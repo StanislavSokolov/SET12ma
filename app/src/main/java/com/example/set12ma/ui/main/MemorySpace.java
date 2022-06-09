@@ -13,6 +13,16 @@ public class MemorySpace implements Parcelable {
     private boolean readyFlagToLoad = false;
     private boolean readyFlagToStart = false;
 
+    public int getAddressOfDevice() {
+        return addressOfDevice;
+    }
+
+    public void setAddressOfDevice(int addressOfDevice) {
+        this.addressOfDevice = addressOfDevice;
+    }
+
+    private int addressOfDevice = 0;
+
     public String getDevice() {
         return device;
     }

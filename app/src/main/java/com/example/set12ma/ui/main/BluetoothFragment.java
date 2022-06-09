@@ -826,7 +826,7 @@ public class BluetoothFragment extends Fragment {
             int lowL = i - (highH*16777216) - (highL*65536) - (lowH*256);
             bytesToSend[10] = (byte) lowL;
             bytesToSend[14] = 10;
-            bytesToSend[15] = 5;
+            bytesToSend[15] = (byte) memorySpace.getAddressOfDevice();
             for (int j = 0; j < bytesToCreateCRC.length; j++) {
                 bytesToCreateCRC[j] = bytesToSend[j];
             }
