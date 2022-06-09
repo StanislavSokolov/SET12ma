@@ -171,7 +171,7 @@ public class SP2Fragment extends Fragment {
                 count = inputStream.read(data);
             }
             memorySpace.setReadyFlagToLoad(true);
-            memorySpace.setDevice("SP2");
+            memorySpace.setDevice(ARG_SECTION_NUMBER);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +15,24 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import static android.app.Activity.RESULT_OK;
 
-public class SP6Fragment extends Fragment {
-    private static final String ARG_SECTION_NUMBER = "SP6";
+public class TMS2812Fragment extends Fragment {
+    private static final String ARG_SECTION_NUMBER = "TMS2812";
     private static final String LOG_TAG = "AndroidExample";
     private TextView textViewPathToLoadFile;
     private TextView textViewStatusLoadToFlesh;
     private TextView textViewStatusLoadToDevice;
     private TextView textViewInformationAboutDevice;
-    private TextView textViewTipChoiseAddressOfDeviceForSp6;
+    private TextView textViewTipChoiseAddressOfDeviceForTMS2812;
 
     private Button buttonChoicePath;
     private Button buttonLoadToFlesh;
-    private Button buttonStartLoadSP6;
+    private Button buttonStartLoadTMS2812;
 
     private ProgressBar progressBarLoadToFlesh;
     private ProgressBar progressBarLoadToDevice;
@@ -58,8 +59,8 @@ public class SP6Fragment extends Fragment {
 
     private PageViewModel pageViewModel;
 
-    public static SP6Fragment newInstance(int index) {
-        SP6Fragment fragment = new SP6Fragment();
+    public static TMS2812Fragment newInstance(int index) {
+        TMS2812Fragment fragment = new TMS2812Fragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -85,15 +86,15 @@ public class SP6Fragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_sp6, container, false);
-        buttonChoicePath = root.findViewById(R.id.button_choice_path_for_sp6);
+        View root = inflater.inflate(R.layout.fragment_tms2812, container, false);
+        buttonChoicePath = root.findViewById(R.id.button_choice_path_for_tms2812);
         buttonChoicePath.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
             public void onClick(View v) { openFile();
             }
         });
-        buttonLoadToFlesh = root.findViewById(R.id.button_load_to_flesh_for_sp6);
+        buttonLoadToFlesh = root.findViewById(R.id.button_load_to_flesh_for_tms2812);
         buttonLoadToFlesh.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
@@ -105,23 +106,23 @@ public class SP6Fragment extends Fragment {
                 }
             }
         });
-        buttonStartLoadSP6 = root.findViewById(R.id.button_start_load_for_sp6);
-        buttonStartLoadSP6.setOnClickListener(new View.OnClickListener() {
+        buttonStartLoadTMS2812 = root.findViewById(R.id.button_start_load_for_tms2812);
+        buttonStartLoadTMS2812.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
             public void onClick(View v) { startLoad();
             }
         });
-        textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file_for_sp6);
-        textViewStatusLoadToFlesh = root.findViewById(R.id.textView_status_load_to_flesh_for_sp6);
-        textViewInformationAboutDevice = root.findViewById(R.id.textView_information_about_device_for_sp6);
-        textViewStatusLoadToDevice = root.findViewById(R.id.textView_status_load_to_device_for_sp6);
-        textViewTipChoiseAddressOfDeviceForSp6 = root.findViewById(R.id.textView_tip_choise_address_of_device_for_sp6);
+        textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file_for_tms2812);
+        textViewStatusLoadToFlesh = root.findViewById(R.id.textView_status_load_to_flesh_for_tms2812);
+        textViewInformationAboutDevice = root.findViewById(R.id.textView_information_about_device_for_tms2812);
+        textViewStatusLoadToDevice = root.findViewById(R.id.textView_status_load_to_device_for_tms2812);
+        textViewTipChoiseAddressOfDeviceForTMS2812 = root.findViewById(R.id.textView_tip_choise_address_of_device_for_tms2812);
 
-        progressBarLoadToFlesh = root.findViewById(R.id.progressBar_load_to_flesh_for_sp6);
-        progressBarLoadToDevice = root.findViewById(R.id.progressBar_load_to_device_for_sp6);
+        progressBarLoadToFlesh = root.findViewById(R.id.progressBar_load_to_flesh_for_tms2812);
+        progressBarLoadToDevice = root.findViewById(R.id.progressBar_load_to_device_for_tms2812);
 
-        spinnerAddressOfDevice = root.findViewById(R.id.spinner_address_of_device_for_sp6);
+        spinnerAddressOfDevice = root.findViewById(R.id.spinner_address_of_device_for_tms2812);
         adapterAddressOfDevice = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapterAddressOfDevice.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         for (int i = 0; i < 16; i++) {
@@ -268,10 +269,10 @@ public class SP6Fragment extends Fragment {
                                 if (latchLoadToFlesh) {
                                     textViewStatusLoadToFlesh.setText("Загрузка завершена");
                                     latchLoadToFlesh = false;
-                                    textViewTipChoiseAddressOfDeviceForSp6.setVisibility(View.VISIBLE);
+                                    textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.VISIBLE);
                                     spinnerAddressOfDevice.setVisibility(View.VISIBLE);
                                     textViewInformationAboutDevice.setVisibility(View.VISIBLE);
-                                    buttonStartLoadSP6.setVisibility(View.VISIBLE);
+                                    buttonStartLoadTMS2812.setVisibility(View.VISIBLE);
                                 }
                             }
                         });

@@ -29,9 +29,9 @@ public class MainActivitySectionsPagerAdapterLoadingSoftware extends FragmentPag
         // Return a PlaceholderFragment (defined as a static inner class below).
 //        return PlaceholderFragment.newInstance(position + 1);
         if (position == 0) {
-            return InputFragment.newInstance(position + 1);
+            return TMS2812Fragment.newInstance(position + 1);
         } else if (position == 1) {
-            return OutputFragment.newInstance(position + 1);
+            return SP2mainFragment.newInstance(position + 1);
         } else if (position == 2) {
             return SP2Fragment.newInstance(position + 1);
         } else {
