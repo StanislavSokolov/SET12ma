@@ -80,6 +80,7 @@ public class TMS2812Fragment extends Fragment {
         pageViewModel.setIndex(index);
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
         upDateGraphicalDisplay.start();
+        setRetainInstance(true);
     }
 
     @Override

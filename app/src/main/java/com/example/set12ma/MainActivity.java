@@ -1,5 +1,7 @@
 package com.example.set12ma;
 
+import android.util.Log;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -38,9 +40,16 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     MainActivitySectionsPagerAdapterLogging sectionsPagerAdapterLogging;
     MainActivitySectionsPagerAdapterConnecting sectionsPagerAdapterConnecting;
 
+    String selectedTabPosition = "selectedTabPosition";
+
+    int viewPagerNumber = 0;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("AndroidExample", "onCreate");
         setContentView(R.layout.activity_main);
         sectionsPagerAdapterDataExchange = new MainActivitySectionsPagerAdapterDataExchange(this, getSupportFragmentManager());
         sectionsPagerAdapterLoadingSoftware = new MainActivitySectionsPagerAdapterLoadingSoftware(this, getSupportFragmentManager());
@@ -50,23 +59,25 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         // Terminal
         viewPagerDataExchange = findViewById(R.id.view_pager_dataExchange);
         viewPagerDataExchange.setAdapter(sectionsPagerAdapterDataExchange);
+        viewPagerNumber = 0;
         // LoadingSoftware
         viewPagerLoadingSoftware = findViewById(R.id.view_pager_loadingSoftware);
         viewPagerLoadingSoftware.setAdapter(sectionsPagerAdapterLoadingSoftware);
-        viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
+//        viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
         // Logging
         viewPagerLogging = findViewById(R.id.view_pager_logging);
         viewPagerLogging.setAdapter(sectionsPagerAdapterLogging);
-        viewPagerLogging.setVisibility(View.INVISIBLE);
+//        viewPagerLogging.setVisibility(View.INVISIBLE);
         // Connecting
         viewPagerConnecting = findViewById(R.id.view_pager_connecting);
         viewPagerConnecting.setAdapter(sectionsPagerAdapterConnecting);
-        viewPagerConnecting.setVisibility(View.INVISIBLE);
+//        viewPagerConnecting.setVisibility(View.INVISIBLE);
 
         // main tab
         tabsSET12MA = findViewById(R.id.tabs_SET12MA);
         tabsSET12MA.setupWithViewPager(viewPagerDataExchange);
 
+        upDateViewPager(viewPagerNumber);
 
         FloatingActionButton fab = findViewById(R.id.fab_SET12MA);
 
@@ -126,7 +137,18 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+//        outState.putInt("selectedTabPosition", tabsSET12MA.getSelectedTabPosition());
+        outState.putInt("viewPagerNumber", viewPagerNumber);
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+//        int selectedTabPosition = savedInstanceState.getInt("selectedTabPosition");
+        upDateViewPager(savedInstanceState.getInt("viewPagerNumber"));
+    }
 
 
 
@@ -145,40 +167,59 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 //        TextView headerView = findViewById(R.id.selectedMenuItem);
         switch(id){
             case R.id.menu_dataExchange:
-                tabsSET12MA.setupWithViewPager(viewPagerDataExchange);
-                viewPagerConnecting.setVisibility(View.INVISIBLE);
-                viewPagerLogging.setVisibility(View.INVISIBLE);
-                viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
-                viewPagerDataExchange.setVisibility(View.VISIBLE);
-                getSupportActionBar().setTitle("Данные");
+                upDateViewPager(0);
                 return true;
             case R.id.menu_connecting:
-                tabsSET12MA.setupWithViewPager(viewPagerConnecting);
-                viewPagerConnecting.setVisibility(View.VISIBLE);
-                viewPagerLogging.setVisibility(View.INVISIBLE);
-                viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
-                viewPagerDataExchange.setVisibility(View.INVISIBLE);
-                getSupportActionBar().setTitle("Подключение");
+                upDateViewPager(1);
                 return true;
             case R.id.menu_logging:
-                tabsSET12MA.setupWithViewPager(viewPagerLogging);
-                viewPagerConnecting.setVisibility(View.INVISIBLE);
-                viewPagerLogging.setVisibility(View.VISIBLE);
-                viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
-                viewPagerDataExchange.setVisibility(View.INVISIBLE);
-                getSupportActionBar().setTitle("Логирование");
+                upDateViewPager(2);
                 return true;
             case R.id.menu_loadingSoftware:
-                tabsSET12MA.setupWithViewPager(viewPagerLoadingSoftware);
-                viewPagerConnecting.setVisibility(View.INVISIBLE);
-                viewPagerLogging.setVisibility(View.INVISIBLE);
-                viewPagerLoadingSoftware.setVisibility(View.VISIBLE);
-                viewPagerDataExchange.setVisibility(View.INVISIBLE);
-                getSupportActionBar().setTitle("Загрузка ПО");
+                upDateViewPager(3);
                 return true;
         }
 //        headerView.setText(item.getTitle());
         return super.onOptionsItemSelected(item);
+    }
+
+    private void upDateViewPager(int value) {
+        if (value == 0) {
+            tabsSET12MA.setupWithViewPager(viewPagerDataExchange);
+            viewPagerConnecting.setVisibility(View.INVISIBLE);
+            viewPagerLogging.setVisibility(View.INVISIBLE);
+            viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
+            viewPagerDataExchange.setVisibility(View.VISIBLE);
+            getSupportActionBar().setTitle("Данные");
+            viewPagerNumber = 0;
+        }
+        if (value == 1) {
+            tabsSET12MA.setupWithViewPager(viewPagerConnecting);
+            viewPagerConnecting.setVisibility(View.VISIBLE);
+            viewPagerLogging.setVisibility(View.INVISIBLE);
+            viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
+            viewPagerDataExchange.setVisibility(View.INVISIBLE);
+            getSupportActionBar().setTitle("Подключение");
+            viewPagerNumber = 1;
+        }
+        if (value == 2) {
+            tabsSET12MA.setupWithViewPager(viewPagerLogging);
+            viewPagerConnecting.setVisibility(View.INVISIBLE);
+            viewPagerLogging.setVisibility(View.VISIBLE);
+            viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
+            viewPagerDataExchange.setVisibility(View.INVISIBLE);
+            getSupportActionBar().setTitle("Логирование");
+            viewPagerNumber = 2;
+        }
+        if (value == 3) {
+            tabsSET12MA.setupWithViewPager(viewPagerLoadingSoftware);
+            viewPagerConnecting.setVisibility(View.INVISIBLE);
+            viewPagerLogging.setVisibility(View.INVISIBLE);
+            viewPagerLoadingSoftware.setVisibility(View.VISIBLE);
+            viewPagerDataExchange.setVisibility(View.INVISIBLE);
+            getSupportActionBar().setTitle("Загрузка ПО");
+            viewPagerNumber = 3;
+        }
     }
 
     @Override
