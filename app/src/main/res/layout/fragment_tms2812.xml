@@ -95,7 +95,7 @@
                     style="?android:attr/progressBarStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/progressBar_load_to_device_for_tms2812" tools:visibility="invisible"/>
+                    android:id="@+id/progressBar_load_to_device_for_tms2812" android:visibility="invisible"/>
             <TextView
                     android:text="@string/tip_text_4"
                     android:layout_width="match_parent"

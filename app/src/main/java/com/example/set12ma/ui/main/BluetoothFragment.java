@@ -93,6 +93,9 @@ public class BluetoothFragment extends Fragment {
     private MemorySpace memorySpace;
     private ResultReceiverMemorySpace resultReceiverMemorySpace;
 
+    private StatusSpace statusSpace;
+    private ResultReceiverStatusSpace resultReceiverStatusSpace;
+
     private ArrayList<BluetoothDevice> arrayListAvailableDevices;                               // список устройств, доступных к сопряжению
     private ArrayList<BluetoothDevice> arrayListConnectedDevices;                               // список устройств, доступных к сопряжению
     private int itemSelectedFromConnectedDevices = 0;
@@ -119,6 +122,7 @@ public class BluetoothFragment extends Fragment {
         super.onAttach(context);
         resultReceiverAddressSpace = (ResultReceiverAddressSpace) context;
         resultReceiverMemorySpace = (ResultReceiverMemorySpace) context;
+        resultReceiverStatusSpace = (ResultReceiverStatusSpace) context;
     }
 
 
@@ -217,6 +221,7 @@ public class BluetoothFragment extends Fragment {
 
         addressSpace = resultReceiverAddressSpace.getAddressSpace();
         memorySpace = resultReceiverMemorySpace.getMemorySpace();
+        statusSpace = resultReceiverStatusSpace.getStatusSpace();
 
         textViewConnectedDevices = root.findViewById(R.id.textView_tip_find_file);
         spinnerConnectedDevices = root.findViewById(R.id.spinner_connected_devices);
@@ -406,8 +411,8 @@ public class BluetoothFragment extends Fragment {
 
             while (true) {
                 BluetoothSoketThread.sleep(timer);
-                if (memorySpace.isReadyFlagToLoad()) {
-                    if (memorySpace.isReadyFlagToStart()) {
+                if (statusSpace.isReadyFlagToLoad()) {
+                    if (statusSpace.isReadyFlagToStart()) {
                         if (!latchFinish) {
                             bluetoothConnectedThread.startToLoad();
                             latchFinish = true;
@@ -415,8 +420,8 @@ public class BluetoothFragment extends Fragment {
                             if (statusFinishLoad) {
                                 latchLoad = false;
                                 latchFinish = false;
-                                memorySpace.setReadyFlagToStart(false);
-                                memorySpace.setReadyFlagToLoad(false);
+                                statusSpace.setReadyFlagToStart(false);
+                                statusSpace.setReadyFlagToLoad(false);
                                 statusFinishLoad = false;
                                 statusInitLoad = false;
                                 statusLoad = false;
@@ -503,7 +508,7 @@ public class BluetoothFragment extends Fragment {
                             answerTest = answerTest + " " + bufInt;
                         }
                         Log.i(LOG_TAG, answerTest);
-                        memorySpace.setStatusLoadToFlesh(false);
+                        statusSpace.setStatusLoadToFlesh(false);
                     } else if (flagWaitingAnswerFinishLoad) {
                         bytesToCreateCRC = new byte[bytes-4];
                         for (int i = 0; i < bytesToCreateCRC.length; i++) {
@@ -782,7 +787,7 @@ public class BluetoothFragment extends Fragment {
 
             statusInitLoad = false;
             flagWaitingAnswerInitLoad = true;
-            memorySpace.setStatusLoadToFlesh(true);
+            statusSpace.setStatusLoadToFlesh(true);
             outputStream.write(bytesToSend);
         }
 
@@ -835,7 +840,7 @@ public class BluetoothFragment extends Fragment {
             int lowL = i - (highH*16777216) - (highL*65536) - (lowH*256);
             bytesToSend[10] = (byte) lowL;
             bytesToSend[14] = 10;
-            bytesToSend[15] = (byte) memorySpace.getAddressOfDevice();
+            bytesToSend[15] = (byte) statusSpace.getAddressOfDevice();
             for (int j = 0; j < bytesToCreateCRC.length; j++) {
                 bytesToCreateCRC[j] = bytesToSend[j];
             }
@@ -846,7 +851,7 @@ public class BluetoothFragment extends Fragment {
 
             statusFinishLoad = false;
             flagWaitingAnswerFinishLoad = true;
-            memorySpace.setStatusLoadToDevice(true);
+            statusSpace.setStatusLoadToDevice(true);
             outputStream.write(bytesToSend);
         }
     }

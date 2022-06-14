@@ -10,66 +10,6 @@ public class MemorySpace implements Parcelable {
 
     private ArrayList<byte[]> memorySpaceArrayList;
     private int memorySpaceByteLength = 4096;
-    private boolean readyFlagToLoad = false;
-    private boolean readyFlagToStart = false;
-
-    public boolean isStatusLoadToFlesh() {
-        return statusLoadToFlesh;
-    }
-
-    public void setStatusLoadToFlesh(boolean statusLoadToFlesh) {
-        this.statusLoadToFlesh = statusLoadToFlesh;
-    }
-
-    public boolean isStatusLoadToDevice() {
-        return statusLoadToDevice;
-    }
-
-    public void setStatusLoadToDevice(boolean statusLoadToDevice) {
-        this.statusLoadToDevice = statusLoadToDevice;
-    }
-
-    private boolean statusLoadToFlesh = false;
-    private boolean statusLoadToDevice = false;
-
-    private int addressOfDevice = 0;
-
-    public int getAddressOfDevice() {
-        return addressOfDevice;
-    }
-
-    public void setAddressOfDevice(int addressOfDevice) {
-        this.addressOfDevice = addressOfDevice;
-    }
-
-
-    public String getDevice() {
-        return device;
-    }
-
-    public void setDevice(String device) {
-        this.device = device;
-    }
-
-    private String device = "";
-
-    private static final String LOG_TAG = "AndroidExample";
-
-    public boolean isReadyFlagToLoad() {
-        return readyFlagToLoad;
-    }
-
-    public void setReadyFlagToLoad(boolean readyFlagToLoad) {
-        this.readyFlagToLoad = readyFlagToLoad;
-    }
-
-    public boolean isReadyFlagToStart() {
-        return readyFlagToStart;
-    }
-
-    public void setReadyFlagToStart(boolean readyFlagToStart) {
-        this.readyFlagToStart = readyFlagToStart;
-    }
 
     public int getMemorySpaceArrayListSize() {
         return memorySpaceArrayList.size();
@@ -100,8 +40,6 @@ public class MemorySpace implements Parcelable {
             memorySpaceArrayList = null;
         }
     }
-
-
 
     public MemorySpace() {
         memorySpaceArrayList = new ArrayList<>();

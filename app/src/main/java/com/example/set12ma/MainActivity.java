@@ -19,12 +19,14 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace {
+public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace, ResultReceiverStatusSpace {
 
     // Адресное пространство приложения
     AddressSpace addressSpace;
     // Пространство памяти для загрузки бинарных файлов в железо
     MemorySpace memorySpace;
+    // Пространство памяти для отображения состояния приложения
+    StatusSpace statusSpace;
     // SET12MA
     TabLayout tabsSET12MA;
     ViewPager viewPagerDataExchange;
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
         addressSpace = new AddressSpace(300);
         memorySpace = new MemorySpace();
+        statusSpace = new StatusSpace();
 //        addressSpace.setAddressSpace(150, 1);
 //        addressSpace.setAddressSpace(210, 150);
 
@@ -230,5 +233,10 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     @Override
     public MemorySpace getMemorySpace() {
         return memorySpace;
+    }
+
+    @Override
+    public StatusSpace getStatusSpace() {
+        return statusSpace;
     }
 }
