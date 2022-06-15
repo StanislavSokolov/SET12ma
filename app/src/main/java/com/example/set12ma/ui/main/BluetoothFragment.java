@@ -56,16 +56,10 @@ public class BluetoothFragment extends Fragment {
     private int addressSpaceNumber = 0;
     // isStatusConnecting waits the answer from controller to start the communication
     private boolean statusConnecting = false;
-    // isStatusInitLoad waits the answer from controller to start the loading to memory
-    private boolean statusInitLoad = false;
     // setFlagWaitingAnswerInitLoad sets the flag to wait the answer from controller to start the loading to memory
     private boolean flagWaitingAnswerInitLoad = false;
     //
-    private boolean statusLoad = false;
-    //
     private boolean flagWaitingAnswerLoad = false;
-    //
-    private boolean statusFinishLoad = false;
     //
     private boolean flagWaitingAnswerFinishLoad = false;
 
@@ -256,6 +250,17 @@ public class BluetoothFragment extends Fragment {
 
     private void setConnecting(){
         if (!adapterConnectedDevices.getItem(itemSelectedFromConnectedDevices + 1).equals("Выберите устройство")) {
+            statusConnecting = false;
+
+            statusSpace.setReadyFlagToLoadSoftware(false);
+            statusSpace.setReadyFlagToUpdateSoftware(false);
+            statusSpace.setReadyFlagToFinishOfLoadingSoftware(false);
+            statusSpace.setReadyFlagToFinishOfUpdatingSoftware(false);
+            statusSpace.setStatusProcessOfLoadingSoftware(false);
+            statusSpace.setStatusProcessOfUpdatingSoftware(false);
+
+            latchLoad = false;
+            latchFinish = false;
             if (buttonConnectToDevice.getText().equals("Подключить")) {
                 stringConnectedToDevice = arrayListConnectedDevices.get(itemSelectedFromConnectedDevices).getName();
                 bluetoothDevice = arrayListConnectedDevices.get(itemSelectedFromConnectedDevices);
@@ -272,13 +277,6 @@ public class BluetoothFragment extends Fragment {
                 textViewConnectedToDevice.setText("Отключено от " + stringConnectedToDevice);
                 progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
             }
-            statusConnecting = false;
-            statusInitLoad = false;
-            statusLoad = false;
-            statusFinishLoad = false;
-
-            latchLoad = false;
-
         }
     }
 
@@ -412,34 +410,69 @@ public class BluetoothFragment extends Fragment {
             while (true) {
                 BluetoothSoketThread.sleep(timer);
                 if (statusSpace.isReadyFlagToLoadSoftware()) {
+                    if (statusSpace.isStatusProcessOfLoadingSoftware()) {
+                        if (!latchLoad) {
+                            bluetoothConnectedThread.load();
+                            latchLoad = true;
+                        } else {
+                            if (statusSpace.isReadyFlagToFinishOfLoadingSoftware()) {
+                                statusSpace.setReadyFlagToLoadSoftware(false);
+                                statusSpace.setStatusProcessOfLoadingSoftware(false);
+//                                statusSpace.setReadyFlagToFinishOfLoadingSoftware(false);
+                            }
+                        }
+                    } else {
+                        statusSpace.setStatusProcessOfLoadingSoftware(true);
+                        bluetoothConnectedThread.initLoad();
+                    }
+                } else if (statusSpace.isReadyFlagToFinishOfLoadingSoftware()) {
                     if (statusSpace.isReadyFlagToUpdateSoftware()) {
                         if (!latchFinish) {
+                            statusSpace.setStatusProcessOfUpdatingSoftware(true);
                             bluetoothConnectedThread.startToLoad();
                             latchFinish = true;
                         } else {
-                            if (statusFinishLoad) {
+                            if (statusSpace.isReadyFlagToFinishOfUpdatingSoftware()) {
                                 latchLoad = false;
                                 latchFinish = false;
                                 statusSpace.setReadyFlagToUpdateSoftware(false);
+                                statusSpace.setStatusProcessOfUpdatingSoftware(false);
                                 statusSpace.setReadyFlagToLoadSoftware(false);
-                                statusFinishLoad = false;
-                                statusInitLoad = false;
-                                statusLoad = false;
+//                                statusSpace.setReadyFlagToFinishOfLoadingSoftware(false);
                             }
                         }
+                    } else bluetoothConnectedThread.communication();
+                } bluetoothConnectedThread.communication();
 
-                    } else {
-                        if (statusInitLoad) {
-                            if (!latchLoad) {
-                                bluetoothConnectedThread.load();
-                                latchLoad = true;
-                            }
-                            // возможно здесь нужен таймер, чтобы вернуться к коммуникации
-                        } else bluetoothConnectedThread.initLoad();
-                    }
-                } else {
-                    bluetoothConnectedThread.communication();
-                }
+//                if (statusSpace.isReadyFlagToLoadSoftware()) {
+//                    if (statusSpace.isReadyFlagToUpdateSoftware()) {
+//                        if (!latchFinish) {
+//                            bluetoothConnectedThread.startToLoad();
+//                            latchFinish = true;
+//                        } else {
+//                            if (statusFinishLoad) {
+//                                latchLoad = false;
+//                                latchFinish = false;
+//                                statusSpace.setReadyFlagToUpdateSoftware(false);
+//                                statusSpace.setReadyFlagToLoadSoftware(false);
+//                                statusFinishLoad = false;
+//                                statusInitLoad = false;
+//                                statusLoad = false;
+//                            }
+//                        }
+//
+//                    } else {
+//                        if (statusInitLoad) {
+//                            if (!latchLoad) {
+//                                bluetoothConnectedThread.load();
+//                                latchLoad = true;
+//                            }
+//                            // возможно здесь нужен таймер, чтобы вернуться к коммуникации
+//                        } else bluetoothConnectedThread.initLoad();
+//                    }
+//                } else {
+//                    bluetoothConnectedThread.communication();
+//                }
             }
         }
     }
@@ -473,7 +506,6 @@ public class BluetoothFragment extends Fragment {
                         int high = crc/256;
                         if ((buffer[2] == (byte) (crc - high*256)) & (buffer[3] == (byte) high)) {
                             Log.i(LOG_TAG, "CRC is good from InitLoad");
-                            statusInitLoad = true;
                             flagWaitingAnswerInitLoad = false;
                         } else {
                             Log.i(LOG_TAG, "CRC is bed from InitLoad");
@@ -495,7 +527,7 @@ public class BluetoothFragment extends Fragment {
                         int high = crc/256;
                         if ((buffer[2] == (byte) (crc - high*256)) & (buffer[3] == (byte) high)) {
                             Log.i(LOG_TAG, "CRC is good from Load");
-                            statusLoad = true;
+                            statusSpace.setReadyFlagToFinishOfLoadingSoftware(true);
                             flagWaitingAnswerLoad = false;
                         } else {
                             Log.i(LOG_TAG, "CRC is bed from Load");
@@ -508,7 +540,6 @@ public class BluetoothFragment extends Fragment {
                             answerTest = answerTest + " " + bufInt;
                         }
                         Log.i(LOG_TAG, answerTest);
-                        statusSpace.setStatusLoadToFlesh(false);
                     } else if (flagWaitingAnswerFinishLoad) {
                         bytesToCreateCRC = new byte[bytes-4];
                         for (int i = 0; i < bytesToCreateCRC.length; i++) {
@@ -518,7 +549,6 @@ public class BluetoothFragment extends Fragment {
                         int high = crc/256;
                         if ((buffer[2] == (byte) (crc - high*256)) & (buffer[3] == (byte) high)) {
                             Log.i(LOG_TAG, "CRC is good from FinishLoad");
-                            statusFinishLoad = true;
                             flagWaitingAnswerFinishLoad = false;
                         } else {
                             Log.i(LOG_TAG, "CRC is bed from FinishLoad");
@@ -531,7 +561,7 @@ public class BluetoothFragment extends Fragment {
                             answerTest = answerTest + " " + bufInt;
                         }
                         Log.i(LOG_TAG, answerTest);
-                        statusFinishLoad = true;
+                        statusSpace.setStatusProcessOfUpdatingSoftware(false);
                     } else {
                         if (bytes == 8) {
                             bytesFromBuffer = new byte[bytes];
@@ -785,9 +815,7 @@ public class BluetoothFragment extends Fragment {
             bytesToSend[10] = (byte) (crc - high * 256);
             bytesToSend[11] = (byte) high;
 
-            statusInitLoad = false;
             flagWaitingAnswerInitLoad = true;
-            statusSpace.setStatus(true);
             outputStream.write(bytesToSend);
         }
 
@@ -811,7 +839,6 @@ public class BluetoothFragment extends Fragment {
             bytesToSend[bytesToSend.length-1] = (byte) high;
             Log.i(LOG_TAG, "Загрузка в память");
 
-            statusLoad = false;
             flagWaitingAnswerLoad = true;
             outputStream.write(bytesToSend);
         }
@@ -849,9 +876,8 @@ public class BluetoothFragment extends Fragment {
             bytesToSend[bytesToSend.length-2] = (byte) (crc - high * 256);
             bytesToSend[bytesToSend.length-1] = (byte) high;
 
-            statusFinishLoad = false;
             flagWaitingAnswerFinishLoad = true;
-            statusSpace.setStatusLoadToDevice(true);
+            statusSpace.setStatusProcessOfUpdatingSoftware(true);
             outputStream.write(bytesToSend);
         }
     }

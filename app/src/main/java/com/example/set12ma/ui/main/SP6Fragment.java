@@ -182,7 +182,7 @@ public class SP6Fragment extends Fragment {
                     memorySpace.setMemorySpaceArrayListByte(dataLastByte);
                     count = inputStream.read(data);
                 }
-                statusSpace.setReadyFlagToLoad(true);
+//                statusSpace.setReadyFlagToLoad(true);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -196,7 +196,7 @@ public class SP6Fragment extends Fragment {
     }
 
     private void startLoad() {
-        statusSpace.setReadyFlagToStart(true);
+//        statusSpace.setReadyFlagToStart(true);
     }
 
         @Override
@@ -218,82 +218,82 @@ public class SP6Fragment extends Fragment {
             while (true) {
                 try {
                     UpDateGraphicalDisplay.sleep(150);
-                    if (statusSpace.getDevice().equals(ARG_SECTION_NUMBER)) {
-                        if (statusSpace.isStatusLoadToDevice()) {
-                            progressBarLoadToDevice.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    progressBarLoadToDevice.setVisibility(View.VISIBLE);
-                                }
-                            });
-                            textViewStatusLoadToDevice.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (!latchLoadToDevice) {
-                                        textViewStatusLoadToDevice.setText("Обновление...");
-                                        textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
-                                        latchLoadToDevice = true;
-                                    }
-
-                                }
-                            });
-                        } else {
-                            progressBarLoadToDevice.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
-                                }
-                            });
-                            textViewStatusLoadToDevice.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (latchLoadToDevice) {
-                                        textViewStatusLoadToDevice.setText("Обновление завершено");
-                                        latchLoadToDevice = false;
-                                    }
-
-                                }
-                            });
-                        }
-                        if (statusSpace.isStatusLoadToFlesh()) {
-                            progressBarLoadToFlesh.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    progressBarLoadToFlesh.setVisibility(View.VISIBLE);
-                                }
-                            });
-                            textViewStatusLoadToFlesh.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (!latchLoadToFlesh) {
-                                        textViewStatusLoadToFlesh.setText("Загрузка...");
-                                        textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                                        latchLoadToFlesh = true;
-                                    }
-                                }
-                            });
-                        } else {
-                            progressBarLoadToFlesh.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
-                                }
-                            });
-                            textViewStatusLoadToFlesh.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (latchLoadToFlesh) {
-                                        textViewStatusLoadToFlesh.setText("Загрузка завершена");
-                                        latchLoadToFlesh = false;
-                                        textViewTipChoiseAddressOfDeviceForSp6.setVisibility(View.VISIBLE);
-                                        spinnerAddressOfDevice.setVisibility(View.VISIBLE);
-                                        textViewInformationAboutDevice.setVisibility(View.VISIBLE);
-                                        buttonStartLoadSP6.setVisibility(View.VISIBLE);
-                                    }
-                                }
-                            });
-                        }
-                    }
+//                    if (statusSpace.getDevice().equals(ARG_SECTION_NUMBER)) {
+//                        if (statusSpace.isStatusLoadToDevice()) {
+//                            progressBarLoadToDevice.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    progressBarLoadToDevice.setVisibility(View.VISIBLE);
+//                                }
+//                            });
+//                            textViewStatusLoadToDevice.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    if (!latchLoadToDevice) {
+//                                        textViewStatusLoadToDevice.setText("Обновление...");
+//                                        textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
+//                                        latchLoadToDevice = true;
+//                                    }
+//
+//                                }
+//                            });
+//                        } else {
+//                            progressBarLoadToDevice.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+//                                }
+//                            });
+//                            textViewStatusLoadToDevice.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    if (latchLoadToDevice) {
+//                                        textViewStatusLoadToDevice.setText("Обновление завершено");
+//                                        latchLoadToDevice = false;
+//                                    }
+//
+//                                }
+//                            });
+//                        }
+//                        if (statusSpace.isStatusLoadToFlesh()) {
+//                            progressBarLoadToFlesh.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    progressBarLoadToFlesh.setVisibility(View.VISIBLE);
+//                                }
+//                            });
+//                            textViewStatusLoadToFlesh.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    if (!latchLoadToFlesh) {
+//                                        textViewStatusLoadToFlesh.setText("Загрузка...");
+//                                        textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+//                                        latchLoadToFlesh = true;
+//                                    }
+//                                }
+//                            });
+//                        } else {
+//                            progressBarLoadToFlesh.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+//                                }
+//                            });
+//                            textViewStatusLoadToFlesh.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    if (latchLoadToFlesh) {
+//                                        textViewStatusLoadToFlesh.setText("Загрузка завершена");
+//                                        latchLoadToFlesh = false;
+//                                        textViewTipChoiseAddressOfDeviceForSp6.setVisibility(View.VISIBLE);
+//                                        spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+//                                        textViewInformationAboutDevice.setVisibility(View.VISIBLE);
+//                                        buttonStartLoadSP6.setVisibility(View.VISIBLE);
+//                                    }
+//                                }
+//                            });
+//                        }
+//                    }
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
