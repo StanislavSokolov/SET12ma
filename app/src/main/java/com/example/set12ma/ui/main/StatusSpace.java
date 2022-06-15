@@ -6,25 +6,6 @@ import android.util.Log;
 
 public class StatusSpace implements Parcelable {
 
-    private boolean statusLoadToFlesh = false;
-    private boolean statusLoadToDevice = false;
-
-    public boolean isStatusLoadToFlesh() {
-        return statusLoadToFlesh;
-    }
-
-    public void setStatusLoadToFlesh(boolean statusLoadToFlesh) {
-        this.statusLoadToFlesh = statusLoadToFlesh;
-    }
-
-    public boolean isStatusLoadToDevice() {
-        return statusLoadToDevice;
-    }
-
-    public void setStatusLoadToDevice(boolean statusLoadToDevice) {
-        this.statusLoadToDevice = statusLoadToDevice;
-    }
-
     private int addressOfDevice = 0;
     public int getAddressOfDevice() {
         return addressOfDevice;
@@ -33,21 +14,40 @@ public class StatusSpace implements Parcelable {
         this.addressOfDevice = addressOfDevice;
     }
 
-    private boolean readyFlagToLoad = false;
-    private boolean readyFlagToStart = false;
-    public boolean isReadyFlagToLoad() {
-        return readyFlagToLoad;
+
+    // переходит в true если нажали кнопку "Загрузить в память", смогли прочитать файл и начался процесс загрузки в память TMS
+    // переходит в false если получили ответ от процессора об успешном завершении ВНИМАНИЕ!! загруки ПО в переферию.
+    private boolean readyFlagToLoadSoftware = false;
+    public boolean isReadyFlagToLoadSoftware() {
+        return readyFlagToLoadSoftware;
     }
-    public void setReadyFlagToLoad(boolean readyFlagToLoad) {
-        this.readyFlagToLoad = readyFlagToLoad;
+    public void setReadyFlagToLoadSoftware(boolean readyFlagToLoadSoftware) { this.readyFlagToLoadSoftware = readyFlagToLoadSoftware; }
+
+    // переходит в true если нажали кнопку "Обновить ПО"
+    // переходит в false если получили ответ от процессора об успешном завершении ВНИМАНИЕ!! загруки ПО в переферию.
+    private boolean readyFlagToUpdateSoftware = false;
+    public boolean isReadyFlagToUpdateSoftware() {
+        return readyFlagToUpdateSoftware;
     }
-    public boolean isReadyFlagToStart() {
-        return readyFlagToStart;
-    }
-    public void setReadyFlagToStart(boolean readyFlagToStart) {
-        this.readyFlagToStart = readyFlagToStart;
+    public void setReadyFlagToUpdateSoftware(boolean readyFlagToUpdateSoftware) {
+        this.readyFlagToUpdateSoftware = readyFlagToUpdateSoftware;
     }
 
+    private boolean statusProcessOfLoadingSoftware = false;
+    public boolean isStatusProcessOfLoadingSoftware() { return statusProcessOfLoadingSoftware; }
+    public void setStatusProcessOfLoadingSoftware(boolean statusProcessOfLoadingSoftware) { this.statusProcessOfLoadingSoftware = statusProcessOfLoadingSoftware; }
+
+    private boolean statusProcessOfUpdatingSoftware = false;
+    public boolean isStatusProcessOfUpdatingSoftware() { return statusProcessOfUpdatingSoftware; }
+    public void setStatusProcessOfUpdatingSoftware(boolean statusProcessOfUpdatingSoftware) { this.statusProcessOfUpdatingSoftware = statusProcessOfUpdatingSoftware; }
+
+    private boolean readyFlagToFinishOfLoadingSoftware = false;
+    public boolean isReadyFlagToFinishOfLoadingSoftware() { return readyFlagToFinishOfLoadingSoftware; }
+    public void setReadyFlagToFinishOfLoadingSoftware(boolean readyFlagToFinishOfLoadingSoftware) { this.readyFlagToFinishOfLoadingSoftware = readyFlagToFinishOfLoadingSoftware; }
+
+    private boolean readyFlagToFinishOfUpdatingSoftware = false;
+    public boolean isReadyFlagToFinishOfUpdatingSoftware() { return readyFlagToFinishOfUpdatingSoftware; }
+    public void setReadyFlagToFinishOfUpdatingSoftware(boolean readyFlagToFinishOfUpdatingSoftware) { this.readyFlagToFinishOfUpdatingSoftware = readyFlagToFinishOfUpdatingSoftware; }
 
     private String device = "";
     public String getDevice() {

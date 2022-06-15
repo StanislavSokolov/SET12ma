@@ -411,8 +411,8 @@ public class BluetoothFragment extends Fragment {
 
             while (true) {
                 BluetoothSoketThread.sleep(timer);
-                if (statusSpace.isReadyFlagToLoad()) {
-                    if (statusSpace.isReadyFlagToStart()) {
+                if (statusSpace.isReadyFlagToLoadSoftware()) {
+                    if (statusSpace.isReadyFlagToUpdateSoftware()) {
                         if (!latchFinish) {
                             bluetoothConnectedThread.startToLoad();
                             latchFinish = true;
@@ -420,8 +420,8 @@ public class BluetoothFragment extends Fragment {
                             if (statusFinishLoad) {
                                 latchLoad = false;
                                 latchFinish = false;
-                                statusSpace.setReadyFlagToStart(false);
-                                statusSpace.setReadyFlagToLoad(false);
+                                statusSpace.setReadyFlagToUpdateSoftware(false);
+                                statusSpace.setReadyFlagToLoadSoftware(false);
                                 statusFinishLoad = false;
                                 statusInitLoad = false;
                                 statusLoad = false;
@@ -787,7 +787,7 @@ public class BluetoothFragment extends Fragment {
 
             statusInitLoad = false;
             flagWaitingAnswerInitLoad = true;
-            statusSpace.setStatusLoadToFlesh(true);
+            statusSpace.setStatus(true);
             outputStream.write(bytesToSend);
         }
 
