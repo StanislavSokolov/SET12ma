@@ -381,7 +381,16 @@ public class BluetoothFragment extends Fragment {
                 bluetoothSocket.connect();
                 connect = true;
             } catch (IOException e) {
-                Log.i(LOG_TAG, e.toString());
+                textViewConnectedToDevice.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        textViewConnectedToDevice.setText("Не удалось подключиться к устройству. Проверьте питание " + spinnerConnectedDevices.getSelectedItem());
+                        Toast.makeText(getContext(), "Не удалось подключиться к устройству. Проверьте питание " + spinnerConnectedDevices.getSelectedItem(), Toast.LENGTH_LONG).show();
+                        progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+                        buttonConnectToDevice.setText("Подключить");
+                    }
+                });
+                cancel();
             }
             // If a connection was accepted
             if (connect) {

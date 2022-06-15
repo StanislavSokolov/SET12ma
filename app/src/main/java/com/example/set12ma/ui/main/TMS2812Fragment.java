@@ -145,6 +145,9 @@ public class TMS2812Fragment extends Fragment {
                 itemSelectedFromConnectedDevices = spinnerAddressOfDevice.getSelectedItemPosition();
                 textViewInformationAboutDevice.setText("Устройство с адресом " + itemSelectedFromConnectedDevices + " готово к обновлению ПО");
                 statusSpace.setAddressOfDevice(itemSelectedFromConnectedDevices);
+                if (statusSpace.isReadyFlagToFinishOfUpdatingSoftware()) {
+                    textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
@@ -247,7 +250,12 @@ public class TMS2812Fragment extends Fragment {
 //            inputStream.close();
                 }
             } else {
-                Toast.makeText(getContext(), "Дождитесь завершения загрузки ПО", Toast.LENGTH_LONG).show();
+                if (statusSpace.isReadyFlagToLoadSoftware() || statusSpace.isStatusProcessOfLoadingSoftware()) {
+                    Toast.makeText(getContext(), "Дождитесь завершения загрузки ПО", Toast.LENGTH_LONG).show();
+                } else if (statusSpace.isReadyFlagToUpdateSoftware() || statusSpace.isStatusProcessOfUpdatingSoftware()) {
+                    Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
+                }
+
             }
         } else {
             Toast.makeText(getContext(), "Укажите путь для загрузки ПО", Toast.LENGTH_LONG).show();
@@ -258,7 +266,7 @@ public class TMS2812Fragment extends Fragment {
         if (!statusSpace.isStatusProcessOfUpdatingSoftware() & !statusSpace.isStatusProcessOfLoadingSoftware()) {
             statusSpace.setReadyFlagToUpdateSoftware(true);
         } else {
-
+            Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -282,12 +290,13 @@ public class TMS2812Fragment extends Fragment {
             while (true) {
                 try {
                     UpDateGraphicalDisplay.sleep(550);
-                    Log.i(LOG_TAG, "UpDateGraphicalDisplay");
+
                     if (statusSpace.getDevice().equals(ARG_SECTION_NUMBER)) {
                         if (statusSpace.isStatusProcessOfUpdatingSoftware()) {
                             progressBarLoadToDevice.post(new Runnable() {
                                 @Override
                                 public void run() {
+                                    Log.i(LOG_TAG, "UpDateGraphicalDisplay");
                                     progressBarLoadToDevice.setVisibility(View.VISIBLE);
                                 }
                             });
