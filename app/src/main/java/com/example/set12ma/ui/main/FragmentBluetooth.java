@@ -431,31 +431,31 @@ public class FragmentBluetooth extends Fragment {
                             if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
                                 spaceStatus.setReadyFlagToLoadSoftware(false);
                                 spaceStatus.setStatusProcessOfLoadingSoftware(false);
-//                                statusSpace.setReadyFlagToFinishOfLoadingSoftware(false);
+                                latchLoad = false;
                             }
                         }
                     } else {
                         spaceStatus.setStatusProcessOfLoadingSoftware(true);
                         bluetoothConnectedThread.initLoad();
                     }
-                } else if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
-                    if (spaceStatus.isReadyFlagToUpdateSoftware()) {
-                        if (!latchFinish) {
-                            spaceStatus.setStatusProcessOfUpdatingSoftware(true);
-                            bluetoothConnectedThread.startToLoad();
-                            latchFinish = true;
-                        } else {
-                            if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
-                                latchLoad = false;
-                                latchFinish = false;
-                                spaceStatus.setReadyFlagToUpdateSoftware(false);
-                                spaceStatus.setStatusProcessOfUpdatingSoftware(false);
-                                spaceStatus.setReadyFlagToLoadSoftware(false);
-//                                statusSpace.setReadyFlagToFinishOfLoadingSoftware(false);
-                            }
+                } else if (spaceStatus.isReadyFlagToUpdateSoftware()) {
+                    if (!latchFinish) {
+                        spaceStatus.setStatusProcessOfUpdatingSoftware(true);
+                        bluetoothConnectedThread.startToLoad();
+                        latchFinish = true;
+                    } else {
+                        if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
+                            latchFinish = false;
+                            spaceStatus.setReadyFlagToUpdateSoftware(false);
+                            spaceStatus.setStatusProcessOfUpdatingSoftware(false);
+                            spaceStatus.setReadyFlagToLoadSoftware(false);
+                            spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+                            Log.i(LOG_TAG, "всё в ноль!!!!");
                         }
-                    } else bluetoothConnectedThread.communication();
-                } bluetoothConnectedThread.communication();
+                    }
+                } else {
+                    bluetoothConnectedThread.communication();
+                }
 
 //                if (statusSpace.isReadyFlagToLoadSoftware()) {
 //                    if (statusSpace.isReadyFlagToUpdateSoftware()) {
@@ -562,9 +562,11 @@ public class FragmentBluetooth extends Fragment {
                         int high = crc/256;
                         if ((buffer[2] == (byte) (crc - high*256)) & (buffer[3] == (byte) high)) {
                             Log.i(LOG_TAG, "CRC is good from FinishLoad");
+                            spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(true);
                             flagWaitingAnswerFinishLoad = false;
                         } else {
                             Log.i(LOG_TAG, "CRC is bed from FinishLoad");
+                            spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(true);
                             flagWaitingAnswerFinishLoad = false;
                         }
                         String answerTest = "";

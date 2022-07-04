@@ -160,7 +160,7 @@ public class FragmentTMS2812 extends Fragment {
             textViewPathToLoadFile.setText(stringSelectedFile);
             textViewPathToLoadFile.setVisibility(View.VISIBLE);
             if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware())) {
-                textViewStatusLoadToFlesh.setText("Загрузка...");
+                textViewStatusLoadToFlesh.setText("Загрузка в память...");
                 textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
                 progressBarLoadToFlesh.setVisibility(View.VISIBLE);
                 textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.INVISIBLE);
@@ -275,6 +275,9 @@ public class FragmentTMS2812 extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 123 && resultCode == RESULT_OK) {
+
+            // если путь файла изменен, то надо разрешать загружать еще раз
+
             selectedFile = data.getData(); //The uri with the location of the file
             spaceStatus.setDevice(ARG_SECTION_NUMBER);
             Toast.makeText(getContext(), selectedFile.toString(), Toast.LENGTH_LONG).show();
@@ -340,7 +343,7 @@ public class FragmentTMS2812 extends Fragment {
                                 @Override
                                 public void run() {
                                     if (!latchLoadToFlesh) {
-                                        textViewStatusLoadToFlesh.setText("Загрузка GJH...");
+                                        textViewStatusLoadToFlesh.setText("Загрузка в память...");
                                         textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
                                         latchLoadToFlesh = true;
                                     }
