@@ -1,5 +1,6 @@
 package com.example.set12ma.ui.main;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -7,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelUuid;
@@ -17,8 +19,10 @@ import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import com.example.set12ma.MainActivity;
 import com.example.set12ma.R;
 
 import java.io.IOException;
@@ -234,7 +238,8 @@ public class FragmentBluetooth extends Fragment {
         buttonConnectToDevice.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
-            public void onClick(View v) { setConnecting();
+            public void onClick(View v) {         if (bluetooth.isEnabled()) setConnecting(); else
+                Toast.makeText(getActivity(), "Необходимо включить Bluetooth", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -247,6 +252,7 @@ public class FragmentBluetooth extends Fragment {
 
         return root;
     }
+
 
     private void setConnecting(){
         if (!adapterConnectedDevices.getItem(itemSelectedFromConnectedDevices + 1).equals("Выберите устройство")) {
@@ -277,6 +283,8 @@ public class FragmentBluetooth extends Fragment {
                 textViewConnectedToDevice.setText("Отключено от " + stringConnectedToDevice);
                 progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
             }
+        } else {
+            Toast.makeText(getActivity(), "Для подключения необходимо выбрать сопряженное устройство", Toast.LENGTH_SHORT).show();
         }
     }
 
