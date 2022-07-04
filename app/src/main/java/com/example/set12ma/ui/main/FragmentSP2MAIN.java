@@ -41,7 +41,7 @@ public class FragmentSP2MAIN extends Fragment {
     private String stringSelectedFile = "";
     private SpaceMemory spaceMemory;
     private ResultReceiverMemorySpace resultReceiverMemorySpace;
-    private StatusSpace statusSpace;
+    private SpaceStatus spaceStatus;
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
     private Spinner spinnerAddressOfDevice;
@@ -84,7 +84,7 @@ public class FragmentSP2MAIN extends Fragment {
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
         upDateGraphicalDisplay.start();
         spaceMemory = resultReceiverMemorySpace.getSpaceMemory();
-        statusSpace = resultReceiverStatusSpace.getStatusSpace();
+        spaceStatus = resultReceiverStatusSpace.getSpaceStatus();
     }
 
     @Override
@@ -112,7 +112,7 @@ public class FragmentSP2MAIN extends Fragment {
             }
         });
         textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file_for_sp2main);
-        if (statusSpace.getDevice().equals(ARG_SECTION_NUMBER)) textViewPathToLoadFile.setText(stringSelectedFile);
+        if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) textViewPathToLoadFile.setText(stringSelectedFile);
 
         buttonStartLoadSP2main = root.findViewById(R.id.button_start_load_for_sp2main);
 //        buttonStartLoadSP2main.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +141,7 @@ public class FragmentSP2MAIN extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 itemSelectedFromConnectedDevices = spinnerAddressOfDevice.getSelectedItemPosition();
                 textViewInformationAboutDevice.setText("Устройство с адресом " + itemSelectedFromConnectedDevices + " готово к обновлению ПО");
-                statusSpace.setAddressOfDevice(itemSelectedFromConnectedDevices);
+                spaceStatus.setAddressOfDevice(itemSelectedFromConnectedDevices);
             }
 
             @Override
@@ -160,7 +160,7 @@ public class FragmentSP2MAIN extends Fragment {
     }
 
     private void loadFile() throws IOException {
-        if (statusSpace.getDevice().equals(ARG_SECTION_NUMBER)) {
+        if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
             InputStream inputStream = null;
             try {
                 inputStream = getContext().getContentResolver().openInputStream(selectedFile);
@@ -198,7 +198,7 @@ public class FragmentSP2MAIN extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 123 && resultCode == RESULT_OK) {
             selectedFile = data.getData(); //The uri with the location of the file
-            statusSpace.setDevice(ARG_SECTION_NUMBER);
+            spaceStatus.setDevice(ARG_SECTION_NUMBER);
             Toast.makeText(getContext(), selectedFile.toString(), Toast.LENGTH_LONG).show();
             stringSelectedFile = data.getDataString();
             textViewPathToLoadFile.setText(stringSelectedFile);

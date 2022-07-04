@@ -1,6 +1,5 @@
 package com.example.set12ma.ui.main;
 
-import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -8,7 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelUuid;
@@ -19,10 +17,8 @@ import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import com.example.set12ma.MainActivity;
 import com.example.set12ma.R;
 
 import java.io.IOException;
@@ -91,7 +87,7 @@ public class FragmentBluetooth extends Fragment {
     private SpaceMemory spaceMemory;
     private ResultReceiverMemorySpace resultReceiverMemorySpace;
 
-    private StatusSpace statusSpace;
+    private SpaceStatus spaceStatus;
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
     private ArrayList<BluetoothDevice> arrayListAvailableDevices;                               // список устройств, доступных к сопряжению
@@ -219,7 +215,7 @@ public class FragmentBluetooth extends Fragment {
 
         spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
         spaceMemory = resultReceiverMemorySpace.getSpaceMemory();
-        statusSpace = resultReceiverStatusSpace.getStatusSpace();
+        spaceStatus = resultReceiverStatusSpace.getSpaceStatus();
 
         textViewConnectedDevices = root.findViewById(R.id.textView_tip_find_file);
         spinnerConnectedDevices = root.findViewById(R.id.spinner_connected_devices);
@@ -258,12 +254,12 @@ public class FragmentBluetooth extends Fragment {
         if (!adapterConnectedDevices.getItem(itemSelectedFromConnectedDevices + 1).equals("Выберите устройство")) {
             statusConnecting = false;
 
-            statusSpace.setReadyFlagToLoadSoftware(false);
-            statusSpace.setReadyFlagToUpdateSoftware(false);
-            statusSpace.setReadyFlagToFinishOfLoadingSoftware(false);
-            statusSpace.setReadyFlagToFinishOfUpdatingSoftware(false);
-            statusSpace.setStatusProcessOfLoadingSoftware(false);
-            statusSpace.setStatusProcessOfUpdatingSoftware(false);
+            spaceStatus.setReadyFlagToLoadSoftware(false);
+            spaceStatus.setReadyFlagToUpdateSoftware(false);
+            spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+            spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(false);
+            spaceStatus.setStatusProcessOfLoadingSoftware(false);
+            spaceStatus.setStatusProcessOfUpdatingSoftware(false);
 
             latchLoad = false;
             latchFinish = false;
@@ -426,35 +422,35 @@ public class FragmentBluetooth extends Fragment {
 
             while (true) {
                 BluetoothSoketThread.sleep(timer);
-                if (statusSpace.isReadyFlagToLoadSoftware()) {
-                    if (statusSpace.isStatusProcessOfLoadingSoftware()) {
+                if (spaceStatus.isReadyFlagToLoadSoftware()) {
+                    if (spaceStatus.isStatusProcessOfLoadingSoftware()) {
                         if (!latchLoad) {
                             bluetoothConnectedThread.load();
                             latchLoad = true;
                         } else {
-                            if (statusSpace.isReadyFlagToFinishOfLoadingSoftware()) {
-                                statusSpace.setReadyFlagToLoadSoftware(false);
-                                statusSpace.setStatusProcessOfLoadingSoftware(false);
+                            if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
+                                spaceStatus.setReadyFlagToLoadSoftware(false);
+                                spaceStatus.setStatusProcessOfLoadingSoftware(false);
 //                                statusSpace.setReadyFlagToFinishOfLoadingSoftware(false);
                             }
                         }
                     } else {
-                        statusSpace.setStatusProcessOfLoadingSoftware(true);
+                        spaceStatus.setStatusProcessOfLoadingSoftware(true);
                         bluetoothConnectedThread.initLoad();
                     }
-                } else if (statusSpace.isReadyFlagToFinishOfLoadingSoftware()) {
-                    if (statusSpace.isReadyFlagToUpdateSoftware()) {
+                } else if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
+                    if (spaceStatus.isReadyFlagToUpdateSoftware()) {
                         if (!latchFinish) {
-                            statusSpace.setStatusProcessOfUpdatingSoftware(true);
+                            spaceStatus.setStatusProcessOfUpdatingSoftware(true);
                             bluetoothConnectedThread.startToLoad();
                             latchFinish = true;
                         } else {
-                            if (statusSpace.isReadyFlagToFinishOfUpdatingSoftware()) {
+                            if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
                                 latchLoad = false;
                                 latchFinish = false;
-                                statusSpace.setReadyFlagToUpdateSoftware(false);
-                                statusSpace.setStatusProcessOfUpdatingSoftware(false);
-                                statusSpace.setReadyFlagToLoadSoftware(false);
+                                spaceStatus.setReadyFlagToUpdateSoftware(false);
+                                spaceStatus.setStatusProcessOfUpdatingSoftware(false);
+                                spaceStatus.setReadyFlagToLoadSoftware(false);
 //                                statusSpace.setReadyFlagToFinishOfLoadingSoftware(false);
                             }
                         }
@@ -544,7 +540,7 @@ public class FragmentBluetooth extends Fragment {
                         int high = crc/256;
                         if ((buffer[2] == (byte) (crc - high*256)) & (buffer[3] == (byte) high)) {
                             Log.i(LOG_TAG, "CRC is good from Load");
-                            statusSpace.setReadyFlagToFinishOfLoadingSoftware(true);
+                            spaceStatus.setReadyFlagToFinishOfLoadingSoftware(true);
                             flagWaitingAnswerLoad = false;
                         } else {
                             Log.i(LOG_TAG, "CRC is bed from Load");
@@ -578,7 +574,7 @@ public class FragmentBluetooth extends Fragment {
                             answerTest = answerTest + " " + bufInt;
                         }
                         Log.i(LOG_TAG, answerTest);
-                        statusSpace.setStatusProcessOfUpdatingSoftware(false);
+                        spaceStatus.setStatusProcessOfUpdatingSoftware(false);
                     } else {
                         if (bytes == 8) {
                             bytesFromBuffer = new byte[bytes];
@@ -884,7 +880,7 @@ public class FragmentBluetooth extends Fragment {
             int lowL = i - (highH*16777216) - (highL*65536) - (lowH*256);
             bytesToSend[10] = (byte) lowL;
             bytesToSend[14] = 10;
-            bytesToSend[15] = (byte) statusSpace.getAddressOfDevice();
+            bytesToSend[15] = (byte) spaceStatus.getAddressOfDevice();
             for (int j = 0; j < bytesToCreateCRC.length; j++) {
                 bytesToCreateCRC[j] = bytesToSend[j];
             }
@@ -894,7 +890,7 @@ public class FragmentBluetooth extends Fragment {
             bytesToSend[bytesToSend.length-1] = (byte) high;
 
             flagWaitingAnswerFinishLoad = true;
-            statusSpace.setStatusProcessOfUpdatingSoftware(true);
+            spaceStatus.setStatusProcessOfUpdatingSoftware(true);
             outputStream.write(bytesToSend);
         }
     }

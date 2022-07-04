@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     // Пространство памяти для загрузки бинарных файлов в железо
     SpaceMemory spaceMemory;
     // Пространство памяти для отображения состояния приложения
-    StatusSpace statusSpace;
+    SpaceStatus spaceStatus;
     // SET12MA
     TabLayout tabsSET12MA;
     ViewPager viewPagerDataExchange;
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
         spaceAddress = new SpaceAddress(300);
         spaceMemory = new SpaceMemory();
-        statusSpace = new StatusSpace();
+        spaceStatus = new SpaceStatus();
 //        addressSpace.setAddressSpace(150, 1);
 //        addressSpace.setAddressSpace(210, 150);
 
@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     }
 
     @Override
-    public StatusSpace getStatusSpace() {
-        return statusSpace;
+    public SpaceStatus getSpaceStatus() {
+        return spaceStatus;
     }
 }

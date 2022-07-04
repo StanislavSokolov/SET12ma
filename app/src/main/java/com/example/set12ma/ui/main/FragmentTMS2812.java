@@ -22,7 +22,7 @@ import java.io.InputStream;
 
 import static android.app.Activity.RESULT_OK;
 
-public class TMS2812Fragment extends Fragment {
+public class FragmentTMS2812 extends Fragment {
     private static final String ARG_SECTION_NUMBER = "TMS2812";
     private static final String LOG_TAG = "AndroidExample";
     private TextView textViewPathToLoadFile;
@@ -42,7 +42,7 @@ public class TMS2812Fragment extends Fragment {
     private String stringSelectedFile = "";
     private SpaceMemory spaceMemory;
     private ResultReceiverMemorySpace resultReceiverMemorySpace;
-    private StatusSpace statusSpace;
+    private SpaceStatus spaceStatus;
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
     private Spinner spinnerAddressOfDevice;
@@ -65,8 +65,8 @@ public class TMS2812Fragment extends Fragment {
 
     private PageViewModel pageViewModel;
 
-    public static TMS2812Fragment newInstance(int index) {
-        TMS2812Fragment fragment = new TMS2812Fragment();
+    public static FragmentTMS2812 newInstance(int index) {
+        FragmentTMS2812 fragment = new FragmentTMS2812();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -87,7 +87,7 @@ public class TMS2812Fragment extends Fragment {
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
         upDateGraphicalDisplay.start();
         spaceMemory = resultReceiverMemorySpace.getSpaceMemory();
-        statusSpace = resultReceiverStatusSpace.getStatusSpace();
+        spaceStatus = resultReceiverStatusSpace.getSpaceStatus();
     }
 
     @Override
@@ -144,8 +144,8 @@ public class TMS2812Fragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 itemSelectedFromConnectedDevices = spinnerAddressOfDevice.getSelectedItemPosition();
                 textViewInformationAboutDevice.setText("Устройство с адресом " + itemSelectedFromConnectedDevices + " готово к обновлению ПО");
-                statusSpace.setAddressOfDevice(itemSelectedFromConnectedDevices);
-                if (statusSpace.isReadyFlagToFinishOfUpdatingSoftware()) {
+                spaceStatus.setAddressOfDevice(itemSelectedFromConnectedDevices);
+                if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
                     textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
                 }
             }
@@ -156,10 +156,10 @@ public class TMS2812Fragment extends Fragment {
         };
         spinnerAddressOfDevice.setOnItemSelectedListener(itemSelectedListener);
 
-        if (statusSpace.getDevice().equals(ARG_SECTION_NUMBER)) {
+        if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
             textViewPathToLoadFile.setText(stringSelectedFile);
             textViewPathToLoadFile.setVisibility(View.VISIBLE);
-            if (statusSpace.isReadyFlagToLoadSoftware() || (statusSpace.isStatusProcessOfLoadingSoftware())) {
+            if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware())) {
                 textViewStatusLoadToFlesh.setText("Загрузка...");
                 textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
                 progressBarLoadToFlesh.setVisibility(View.VISIBLE);
@@ -169,7 +169,7 @@ public class TMS2812Fragment extends Fragment {
                 textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
                 progressBarLoadToDevice.setVisibility(View.INVISIBLE);
             }
-            if (statusSpace.isReadyFlagToFinishOfLoadingSoftware()) {
+            if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
                 textViewStatusLoadToFlesh.setText("Загрузка завершена");
                 textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
                 progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
@@ -180,7 +180,7 @@ public class TMS2812Fragment extends Fragment {
                 buttonStartLoadTMS2812.setVisibility(View.VISIBLE);
                 progressBarLoadToDevice.setVisibility(View.INVISIBLE);
             }
-            if (statusSpace.isReadyFlagToUpdateSoftware() || statusSpace.isStatusProcessOfUpdatingSoftware()) {
+            if (spaceStatus.isReadyFlagToUpdateSoftware() || spaceStatus.isStatusProcessOfUpdatingSoftware()) {
                 textViewStatusLoadToFlesh.setText("Загрузка завершена");
                 textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
                 progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
@@ -192,7 +192,7 @@ public class TMS2812Fragment extends Fragment {
                 buttonStartLoadTMS2812.setVisibility(View.VISIBLE);
                 progressBarLoadToDevice.setVisibility(View.VISIBLE);
             }
-            if (statusSpace.isReadyFlagToFinishOfUpdatingSoftware()) {
+            if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
                 textViewStatusLoadToFlesh.setText("Загрузка завершена");
                 textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
                 progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
@@ -207,8 +207,8 @@ public class TMS2812Fragment extends Fragment {
         } else {
             textViewPathToLoadFile.setText("Путь не указан");
             textViewPathToLoadFile.setVisibility(View.VISIBLE);
-            if (statusSpace.isReadyFlagToLoadSoftware() || (statusSpace.isStatusProcessOfLoadingSoftware()) || (statusSpace.isReadyFlagToUpdateSoftware()) || (statusSpace.isStatusProcessOfUpdatingSoftware())) {
-                textViewStatusLoadToFlesh.setText("Дождитесь завершения загрузки ПО для " + statusSpace.getDevice());
+            if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware()) || (spaceStatus.isReadyFlagToUpdateSoftware()) || (spaceStatus.isStatusProcessOfUpdatingSoftware())) {
+                textViewStatusLoadToFlesh.setText("Дождитесь завершения загрузки ПО для " + spaceStatus.getDevice());
                 textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
                 buttonStartLoadTMS2812.setVisibility(View.INVISIBLE);
                 progressBarLoadToFlesh.setVisibility(View.VISIBLE);
@@ -225,8 +225,8 @@ public class TMS2812Fragment extends Fragment {
     }
 
     private void loadFile() throws IOException {
-        if (statusSpace.getDevice().equals(ARG_SECTION_NUMBER)) {
-            if (!statusSpace.isReadyFlagToLoadSoftware() & (!statusSpace.isStatusProcessOfLoadingSoftware() & (!statusSpace.isReadyFlagToFinishOfLoadingSoftware()))) {
+        if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
+            if (!spaceStatus.isReadyFlagToLoadSoftware() & (!spaceStatus.isStatusProcessOfLoadingSoftware() & (!spaceStatus.isReadyFlagToFinishOfLoadingSoftware()))) {
                 InputStream inputStream = null;
                 try {
                     inputStream = getContext().getContentResolver().openInputStream(selectedFile);
@@ -241,7 +241,7 @@ public class TMS2812Fragment extends Fragment {
                         spaceMemory.setMemorySpaceArrayListByte(dataLastByte);
                         count = inputStream.read(data);
                     }
-                    statusSpace.setReadyFlagToLoadSoftware(true);
+                    spaceStatus.setReadyFlagToLoadSoftware(true);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -250,9 +250,9 @@ public class TMS2812Fragment extends Fragment {
 //            inputStream.close();
                 }
             } else {
-                if (statusSpace.isReadyFlagToLoadSoftware() || statusSpace.isStatusProcessOfLoadingSoftware()) {
+                if (spaceStatus.isReadyFlagToLoadSoftware() || spaceStatus.isStatusProcessOfLoadingSoftware()) {
                     Toast.makeText(getContext(), "Дождитесь завершения загрузки ПО", Toast.LENGTH_LONG).show();
-                } else if (statusSpace.isReadyFlagToUpdateSoftware() || statusSpace.isStatusProcessOfUpdatingSoftware()) {
+                } else if (spaceStatus.isReadyFlagToUpdateSoftware() || spaceStatus.isStatusProcessOfUpdatingSoftware()) {
                     Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
                 }
 
@@ -263,8 +263,8 @@ public class TMS2812Fragment extends Fragment {
     }
 
     private void startLoad() {
-        if (!statusSpace.isStatusProcessOfUpdatingSoftware() & !statusSpace.isStatusProcessOfLoadingSoftware()) {
-            statusSpace.setReadyFlagToUpdateSoftware(true);
+        if (!spaceStatus.isStatusProcessOfUpdatingSoftware() & !spaceStatus.isStatusProcessOfLoadingSoftware()) {
+            spaceStatus.setReadyFlagToUpdateSoftware(true);
         } else {
             Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
         }
@@ -276,7 +276,7 @@ public class TMS2812Fragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 123 && resultCode == RESULT_OK) {
             selectedFile = data.getData(); //The uri with the location of the file
-            statusSpace.setDevice(ARG_SECTION_NUMBER);
+            spaceStatus.setDevice(ARG_SECTION_NUMBER);
             Toast.makeText(getContext(), selectedFile.toString(), Toast.LENGTH_LONG).show();
             stringSelectedFile = data.getDataString();
             textViewPathToLoadFile.setText(stringSelectedFile);
@@ -291,8 +291,8 @@ public class TMS2812Fragment extends Fragment {
                 try {
                     UpDateGraphicalDisplay.sleep(550);
 
-                    if (statusSpace.getDevice().equals(ARG_SECTION_NUMBER)) {
-                        if (statusSpace.isStatusProcessOfUpdatingSoftware()) {
+                    if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
+                        if (spaceStatus.isStatusProcessOfUpdatingSoftware()) {
                             progressBarLoadToDevice.post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -329,7 +329,7 @@ public class TMS2812Fragment extends Fragment {
                                 }
                             });
                         }
-                        if (statusSpace.isStatusProcessOfLoadingSoftware()) {
+                        if (spaceStatus.isStatusProcessOfLoadingSoftware()) {
                             progressBarLoadToFlesh.post(new Runnable() {
                                 @Override
                                 public void run() {

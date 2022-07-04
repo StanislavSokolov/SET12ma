@@ -15,7 +15,7 @@ import com.example.set12ma.R;
 
 import java.util.ArrayList;
 
-public class TkFragment extends Fragment implements View.OnClickListener {
+public class FragmentTK extends Fragment implements View.OnClickListener {
     private static final String ARG_SECTION_NUMBER = "TK";
 
     private ArrayList<Button> arrayListButton;
@@ -35,8 +35,8 @@ public class TkFragment extends Fragment implements View.OnClickListener {
 
     private PageViewModel pageViewModel;
 
-    public static TkFragment newInstance(int index) {
-        TkFragment fragment = new TkFragment();
+    public static FragmentTK newInstance(int index) {
+        FragmentTK fragment = new FragmentTK();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);

@@ -35,7 +35,7 @@ public class MainActivitySectionsPagerAdapterDataExchange extends FragmentPagerA
         } else if (position == 2) {
             return FragmentADC.newInstance(position + 1);
         } else {
-            return TkFragment.newInstance(position + 1);
+            return FragmentTK.newInstance(position + 1);
         }
     }
 

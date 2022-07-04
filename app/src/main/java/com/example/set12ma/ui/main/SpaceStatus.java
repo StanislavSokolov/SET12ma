@@ -2,9 +2,8 @@ package com.example.set12ma.ui.main;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
-public class StatusSpace implements Parcelable {
+public class SpaceStatus implements Parcelable {
 
     private int addressOfDevice = 0;
     public int getAddressOfDevice() {
@@ -57,21 +56,21 @@ public class StatusSpace implements Parcelable {
         this.device = device;
     }
 
-    public StatusSpace() {
+    public SpaceStatus() {
     }
 
-    public StatusSpace(Parcel in) {
+    public SpaceStatus(Parcel in) {
     }
 
-    public static final Creator<StatusSpace> CREATOR = new Creator<StatusSpace>() {
+    public static final Creator<SpaceStatus> CREATOR = new Creator<SpaceStatus>() {
         @Override
-        public StatusSpace createFromParcel(Parcel in) {
-            return new StatusSpace(in);
+        public SpaceStatus createFromParcel(Parcel in) {
+            return new SpaceStatus(in);
         }
 
         @Override
-        public StatusSpace[] newArray(int size) {
-            return new StatusSpace[size];
+        public SpaceStatus[] newArray(int size) {
+            return new SpaceStatus[size];
         }
     };
 
