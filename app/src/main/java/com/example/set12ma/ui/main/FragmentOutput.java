@@ -13,7 +13,7 @@ import com.example.set12ma.R;
 
 import java.util.ArrayList;
 
-public class OutputFragment extends Fragment implements View.OnClickListener {
+public class FragmentOutput extends Fragment implements View.OnClickListener {
 //    static BluetoothConnectedThread bluetoothConnectedThread;
 
 
@@ -22,7 +22,7 @@ public class OutputFragment extends Fragment implements View.OnClickListener {
     private ArrayList<Switch> arrayList;
     private byte[] bytes;
 
-    private AddressSpace addressSpace;
+    private SpaceAddress spaceAddress;
     private int startCellNumber = 48;
 
     private ResultReceiverAddressSpace resultReceiverAddressSpace;
@@ -35,8 +35,8 @@ public class OutputFragment extends Fragment implements View.OnClickListener {
 
     private PageViewModel pageViewModel;
 
-    public static OutputFragment newInstance(int index) {
-        OutputFragment fragment = new OutputFragment();
+    public static FragmentOutput newInstance(int index) {
+        FragmentOutput fragment = new FragmentOutput();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -209,7 +209,7 @@ public class OutputFragment extends Fragment implements View.OnClickListener {
         switch_out_2_15.setOnClickListener(this);
         arrayList.add(switch_out_2_15);
 
-        addressSpace = resultReceiverAddressSpace.getAddressSpace();
+        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
 
 
 
@@ -220,10 +220,10 @@ public class OutputFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v){
         for (int i = 0; i < arrayList.size(); i++) {
             if (arrayList.get(i).isChecked()) {
-                addressSpace.setAddressSpace(startCellNumber + i, 1);
+                spaceAddress.setAddressSpace(startCellNumber + i, 1);
             }
             else {
-                addressSpace.setAddressSpace(startCellNumber + i, 0);
+                spaceAddress.setAddressSpace(startCellNumber + i, 0);
             }
         }
     }

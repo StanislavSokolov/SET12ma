@@ -31,11 +31,11 @@ public class MainActivitySectionsPagerAdapterLoadingSoftware extends FragmentPag
         if (position == 0) {
             return TMS2812Fragment.newInstance(position + 1);
         } else if (position == 1) {
-            return SP2mainFragment.newInstance(position + 1);
+            return FragmentSP2MAIN.newInstance(position + 1);
         } else if (position == 2) {
-            return SP2Fragment.newInstance(position + 1);
+            return FragmentSP2.newInstance(position + 1);
         } else {
-            return SP6Fragment.newInstance(position + 1);
+            return FragmentSP6.newInstance(position + 1);
         }
     }
 

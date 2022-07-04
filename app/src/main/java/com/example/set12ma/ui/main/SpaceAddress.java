@@ -3,27 +3,27 @@ package com.example.set12ma.ui.main;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class AddressSpace implements Parcelable {
+public class SpaceAddress implements Parcelable {
     private int[] addressSpace;
 
-    public AddressSpace(int addressSpaceNumber) {
+    public SpaceAddress(int addressSpaceNumber) {
         addressSpace = new int[addressSpaceNumber];
     }
 
-    protected AddressSpace(Parcel in) {
+    protected SpaceAddress(Parcel in) {
         addressSpace = in.createIntArray();
     }
 
-    public static final Creator<AddressSpace> CREATOR = new Creator<AddressSpace>() {
+    public static final Creator<SpaceAddress> CREATOR = new Creator<SpaceAddress>() {
         @Override
-        public AddressSpace createFromParcel(Parcel in) {
+        public SpaceAddress createFromParcel(Parcel in) {
 //            int[] addressSpace = in.readIntArray(addressSpace);
-            return new AddressSpace(in);
+            return new SpaceAddress(in);
         }
 
         @Override
-        public AddressSpace[] newArray(int size) {
-            return new AddressSpace[size];
+        public SpaceAddress[] newArray(int size) {
+            return new SpaceAddress[size];
         }
     };
 

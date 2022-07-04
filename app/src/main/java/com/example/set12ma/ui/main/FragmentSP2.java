@@ -21,25 +21,25 @@ import java.io.InputStream;
 
 import static android.app.Activity.RESULT_OK;
 
-public class SP2mainFragment extends Fragment {
-    private static final String ARG_SECTION_NUMBER = "SP2MAIN";
+public class FragmentSP2 extends Fragment {
+    private static final String ARG_SECTION_NUMBER = "SP2";
     private static final String LOG_TAG = "AndroidExample";
     private TextView textViewPathToLoadFile;
     private TextView textViewStatusLoadToFlesh;
     private TextView textViewStatusLoadToDevice;
     private TextView textViewInformationAboutDevice;
-    private TextView textViewTipChoiseAddressOfDeviceForSP2main;
+    private TextView textViewTipChoiseAddressOfDeviceForSp2;
 
     private Button buttonChoicePath;
     private Button buttonLoadToFlesh;
-    private Button buttonStartLoadSP2main;
+    private Button buttonStartLoadSP2;
 
     private ProgressBar progressBarLoadToFlesh;
     private ProgressBar progressBarLoadToDevice;
 
     private Uri selectedFile;
     private String stringSelectedFile = "";
-    private MemorySpace memorySpace;
+    private SpaceMemory spaceMemory;
     private ResultReceiverMemorySpace resultReceiverMemorySpace;
     private StatusSpace statusSpace;
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
@@ -62,8 +62,8 @@ public class SP2mainFragment extends Fragment {
 
     private PageViewModel pageViewModel;
 
-    public static SP2mainFragment newInstance(int index) {
-        SP2mainFragment fragment = new SP2mainFragment();
+    public static FragmentSP2 newInstance(int index) {
+        FragmentSP2 fragment = new FragmentSP2();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -83,7 +83,7 @@ public class SP2mainFragment extends Fragment {
         pageViewModel.setIndex(index);
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
         upDateGraphicalDisplay.start();
-        memorySpace = resultReceiverMemorySpace.getMemorySpace();
+        spaceMemory = resultReceiverMemorySpace.getSpaceMemory();
         statusSpace = resultReceiverStatusSpace.getStatusSpace();
     }
 
@@ -91,15 +91,15 @@ public class SP2mainFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_sp2main, container, false);
-        buttonChoicePath = root.findViewById(R.id.button_choice_path_for_sp2main);
+        View root = inflater.inflate(R.layout.fragment_sp2, container, false);
+        buttonChoicePath = root.findViewById(R.id.button_choice_path_for_sp2);
         buttonChoicePath.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
             public void onClick(View v) { openFile();
             }
         });
-        buttonLoadToFlesh = root.findViewById(R.id.button_load_to_flesh_for_sp2main);
+        buttonLoadToFlesh = root.findViewById(R.id.button_load_to_flesh_for_sp2);
         buttonLoadToFlesh.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
@@ -111,25 +111,26 @@ public class SP2mainFragment extends Fragment {
                 }
             }
         });
-        textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file_for_sp2main);
+        textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file_for_sp2);
         if (statusSpace.getDevice().equals(ARG_SECTION_NUMBER)) textViewPathToLoadFile.setText(stringSelectedFile);
 
-        buttonStartLoadSP2main = root.findViewById(R.id.button_start_load_for_sp2main);
-//        buttonStartLoadSP2main.setOnClickListener(new View.OnClickListener() {
+        buttonStartLoadSP2 = root.findViewById(R.id.button_start_load_for_sp2);
+//        buttonStartLoadSP2.setOnClickListener(new View.OnClickListener() {
 //            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
 //            @Override
 //            public void onClick(View v) { startLoad();
 //            }
 //        });
-        textViewStatusLoadToFlesh = root.findViewById(R.id.textView_status_load_to_flesh_for_sp2main);
-        textViewInformationAboutDevice = root.findViewById(R.id.textView_information_about_device_for_sp2main);
-        textViewStatusLoadToDevice = root.findViewById(R.id.textView_status_load_to_device_for_sp2main);
-        textViewTipChoiseAddressOfDeviceForSP2main = root.findViewById(R.id.textView_tip_choise_address_of_device_for_sp2main);
 
-        progressBarLoadToFlesh = root.findViewById(R.id.progressBar_load_to_flesh_for_sp2main);
-        progressBarLoadToDevice = root.findViewById(R.id.progressBar_load_to_device_for_sp2main);
+        textViewStatusLoadToFlesh = root.findViewById(R.id.textView_status_load_to_flesh_for_sp2);
+        textViewInformationAboutDevice = root.findViewById(R.id.textView_information_about_device_for_sp2);
+        textViewStatusLoadToDevice = root.findViewById(R.id.textView_status_load_to_device_for_sp2);
+        textViewTipChoiseAddressOfDeviceForSp2 = root.findViewById(R.id.textView_tip_choise_address_of_device_for_sp2);
 
-        spinnerAddressOfDevice = root.findViewById(R.id.spinner_address_of_device_for_sp2main);
+        progressBarLoadToFlesh = root.findViewById(R.id.progressBar_load_to_flesh_for_sp2);
+        progressBarLoadToDevice = root.findViewById(R.id.progressBar_load_to_device_for_sp2);
+
+        spinnerAddressOfDevice = root.findViewById(R.id.spinner_address_of_device_for_sp2);
         adapterAddressOfDevice = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapterAddressOfDevice.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         for (int i = 0; i < 16; i++) {
@@ -164,15 +165,15 @@ public class SP2mainFragment extends Fragment {
             InputStream inputStream = null;
             try {
                 inputStream = getContext().getContentResolver().openInputStream(selectedFile);
-                memorySpace.setMemorySpaceByte();
-                byte[] data = new byte[memorySpace.getMemorySpaceByteLength()];
+                spaceMemory.setMemorySpaceByte();
+                byte[] data = new byte[spaceMemory.getMemorySpaceByteLength()];
                 int count = inputStream.read(data);
                 while (count != -1) {
                     byte[] dataLastByte = new byte[count];
                     for (int i = 0; i < count; i++) {
                         dataLastByte[i] = data[i];
                     }
-                    memorySpace.setMemorySpaceArrayListByte(dataLastByte);
+                    spaceMemory.setMemorySpaceArrayListByte(dataLastByte);
                     count = inputStream.read(data);
                 }
 //                statusSpace.setReadyFlagToLoad(true);
@@ -186,7 +187,6 @@ public class SP2mainFragment extends Fragment {
         } else {
             Toast.makeText(getContext(), "Укажите путь для загрузки ПО", Toast.LENGTH_LONG).show();
         }
-
     }
 
 //    private void startLoad() {
@@ -279,10 +279,10 @@ public class SP2mainFragment extends Fragment {
 //                                    if (latchLoadToFlesh) {
 //                                        textViewStatusLoadToFlesh.setText("Загрузка завершена");
 //                                        latchLoadToFlesh = false;
-//                                        textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.VISIBLE);
+//                                        textViewTipChoiseAddressOfDeviceForSp2.setVisibility(View.VISIBLE);
 //                                        spinnerAddressOfDevice.setVisibility(View.VISIBLE);
 //                                        textViewInformationAboutDevice.setVisibility(View.VISIBLE);
-//                                        buttonStartLoadSP2main.setVisibility(View.VISIBLE);
+//                                        buttonStartLoadSP2.setVisibility(View.VISIBLE);
 //                                    }
 //                                }
 //                            });

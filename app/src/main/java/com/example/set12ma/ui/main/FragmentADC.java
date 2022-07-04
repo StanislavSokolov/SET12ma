@@ -15,14 +15,14 @@ import com.example.set12ma.R;
 
 import java.util.ArrayList;
 
-public class AdcFragment extends Fragment {
+public class FragmentADC extends Fragment {
     private static final String ARG_SECTION_NUMBER = "ADC";
 
     private ArrayList<Button> arrayListButton;
     private ArrayList<TextView> arrayListTextView;
     private int startCellNumber = 96;
     private int stopCellNumber = 208;
-    private AddressSpace addressSpace;
+    private SpaceAddress spaceAddress;
     private ResultReceiverAddressSpace resultReceiverAddressSpace;
 
     @Override
@@ -33,8 +33,8 @@ public class AdcFragment extends Fragment {
 
     private PageViewModel pageViewModel;
 
-    public static AdcFragment newInstance(int index) {
-        AdcFragment fragment = new AdcFragment();
+    public static FragmentADC newInstance(int index) {
+        FragmentADC fragment = new FragmentADC();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -259,7 +259,7 @@ public class AdcFragment extends Fragment {
         Button indicator_button_adc_2_15 = root.findViewById(R.id.indicator_button_adc_2_15);
         arrayListButton.add(indicator_button_adc_2_15);
 
-        addressSpace = resultReceiverAddressSpace.getAddressSpace();
+        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
 
         upDateValues();
         return root;
@@ -267,8 +267,8 @@ public class AdcFragment extends Fragment {
 
     public void upDateValues() {
         for (int i = 0; i < 48; i++) {
-            arrayListTextView.get(i).setText(String.valueOf(addressSpace.getAddressSpace(stopCellNumber + i)));
-            if (addressSpace.getAddressSpace(startCellNumber + i) == 0)
+            arrayListTextView.get(i).setText(String.valueOf(spaceAddress.getAddressSpace(stopCellNumber + i)));
+            if (spaceAddress.getAddressSpace(startCellNumber + i) == 0)
                 arrayListButton.get(i).setBackgroundColor(Color.RED);
             else arrayListButton.get(i).setBackgroundColor(Color.GREEN);
         }

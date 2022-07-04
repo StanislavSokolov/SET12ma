@@ -22,7 +22,7 @@ public class TkFragment extends Fragment implements View.OnClickListener {
     private ArrayList<TextView> arrayListTextView;
     private int startCellNumber = 144;
     private int stopCellNumber = 208;
-    private AddressSpace addressSpace;
+    private SpaceAddress spaceAddress;
     private ResultReceiverAddressSpace resultReceiverAddressSpace;
 
     private ArrayList<Switch> arrayList;
@@ -62,7 +62,7 @@ public class TkFragment extends Fragment implements View.OnClickListener {
 
         arrayList = new ArrayList();
 
-        addressSpace = resultReceiverAddressSpace.getAddressSpace();
+        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
 
         Switch switch_tk_0_0 = root.findViewById(R.id.switch_tk_0_0);
         switch_tk_0_0.setOnClickListener(this);
@@ -271,10 +271,10 @@ public class TkFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v){
         for (int i = 0; i < arrayList.size(); i++) {
             if (arrayList.get(i).isChecked()) {
-                addressSpace.setAddressSpace(startCellNumber + i, 1);
+                spaceAddress.setAddressSpace(startCellNumber + i, 1);
             }
             else {
-                addressSpace.setAddressSpace(startCellNumber + i, 0);
+                spaceAddress.setAddressSpace(startCellNumber + i, 0);
             }
         }
     }

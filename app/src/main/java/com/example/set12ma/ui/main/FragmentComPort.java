@@ -10,13 +10,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
 
-public class ComPortFragment extends Fragment {
+public class FragmentComPort extends Fragment {
     private static final String ARG_SECTION_NUMBER = "CP";
 
     private PageViewModel pageViewModel;
 
-    public static ComPortFragment newInstance(int index) {
-        ComPortFragment fragment = new ComPortFragment();
+    public static FragmentComPort newInstance(int index) {
+        FragmentComPort fragment = new FragmentComPort();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);

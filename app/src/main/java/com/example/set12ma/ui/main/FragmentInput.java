@@ -14,14 +14,14 @@ import com.example.set12ma.R;
 
 import java.util.ArrayList;
 
-public class InputFragment extends Fragment {
+public class FragmentInput extends Fragment {
     private static final String ARG_SECTION_NUMBER = "Input";
 
     private int startCellNumber = 0;
     private int stopCellNumber = 48;
 
     private ArrayList<Button> arrayList;
-    private AddressSpace addressSpace;
+    private SpaceAddress spaceAddress;
     private ResultReceiverAddressSpace resultReceiverAddressSpace;
 
     @Override
@@ -32,8 +32,8 @@ public class InputFragment extends Fragment {
 
     private PageViewModel pageViewModel;
 
-    public static InputFragment newInstance(int index) {
-        InputFragment fragment = new InputFragment();
+    public static FragmentInput newInstance(int index) {
+        FragmentInput fragment = new FragmentInput();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -161,7 +161,7 @@ public class InputFragment extends Fragment {
         Button indicator_button_in_2_15 = root.findViewById(R.id.indicator_button_in_2_15);
         arrayList.add(indicator_button_in_2_15);
 
-        addressSpace = resultReceiverAddressSpace.getAddressSpace();
+        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
 
         upDateValues();
 
@@ -171,13 +171,13 @@ public class InputFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        addressSpace = resultReceiverAddressSpace.getAddressSpace();
+        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
         upDateValues();
     }
 
     public void upDateValues() {
         for (int i = 0; i < stopCellNumber; i++) {
-            if (addressSpace.getAddressSpace(startCellNumber + i) == 0)
+            if (spaceAddress.getAddressSpace(startCellNumber + i) == 0)
                 arrayList.get(i).setBackgroundColor(Color.RED);
             else arrayList.get(i).setBackgroundColor(Color.GREEN);
         }

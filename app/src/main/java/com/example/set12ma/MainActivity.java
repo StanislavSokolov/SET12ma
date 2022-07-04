@@ -1,7 +1,6 @@
 package com.example.set12ma;
 
 import android.util.Log;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -22,9 +21,9 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace, ResultReceiverStatusSpace {
 
     // Адресное пространство приложения
-    AddressSpace addressSpace;
+    SpaceAddress spaceAddress;
     // Пространство памяти для загрузки бинарных файлов в железо
-    MemorySpace memorySpace;
+    SpaceMemory spaceMemory;
     // Пространство памяти для отображения состояния приложения
     StatusSpace statusSpace;
     // SET12MA
@@ -83,8 +82,8 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
         FloatingActionButton fab = findViewById(R.id.fab_SET12MA);
 
-        addressSpace = new AddressSpace(300);
-        memorySpace = new MemorySpace();
+        spaceAddress = new SpaceAddress(300);
+        spaceMemory = new SpaceMemory();
         statusSpace = new StatusSpace();
 //        addressSpace.setAddressSpace(150, 1);
 //        addressSpace.setAddressSpace(210, 150);
@@ -226,13 +225,13 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     }
 
     @Override
-    public AddressSpace getAddressSpace() {
-        return addressSpace;
+    public SpaceAddress getSpaceAddress() {
+        return spaceAddress;
     }
 
     @Override
-    public MemorySpace getMemorySpace() {
-        return memorySpace;
+    public SpaceMemory getSpaceMemory() {
+        return spaceMemory;
     }
 
     @Override

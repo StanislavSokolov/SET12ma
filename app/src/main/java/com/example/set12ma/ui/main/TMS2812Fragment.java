@@ -40,7 +40,7 @@ public class TMS2812Fragment extends Fragment {
 
     private Uri selectedFile = null;
     private String stringSelectedFile = "";
-    private MemorySpace memorySpace;
+    private SpaceMemory spaceMemory;
     private ResultReceiverMemorySpace resultReceiverMemorySpace;
     private StatusSpace statusSpace;
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
@@ -86,7 +86,7 @@ public class TMS2812Fragment extends Fragment {
         pageViewModel.setIndex(index);
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
         upDateGraphicalDisplay.start();
-        memorySpace = resultReceiverMemorySpace.getMemorySpace();
+        spaceMemory = resultReceiverMemorySpace.getSpaceMemory();
         statusSpace = resultReceiverStatusSpace.getStatusSpace();
     }
 
@@ -230,15 +230,15 @@ public class TMS2812Fragment extends Fragment {
                 InputStream inputStream = null;
                 try {
                     inputStream = getContext().getContentResolver().openInputStream(selectedFile);
-                    memorySpace.setMemorySpaceByte();
-                    byte[] data = new byte[memorySpace.getMemorySpaceByteLength()];
+                    spaceMemory.setMemorySpaceByte();
+                    byte[] data = new byte[spaceMemory.getMemorySpaceByteLength()];
                     int count = inputStream.read(data);
                     while (count != -1) {
                         byte[] dataLastByte = new byte[count];
                         for (int i = 0; i < count; i++) {
                             dataLastByte[i] = data[i];
                         }
-                        memorySpace.setMemorySpaceArrayListByte(dataLastByte);
+                        spaceMemory.setMemorySpaceArrayListByte(dataLastByte);
                         count = inputStream.read(data);
                     }
                     statusSpace.setReadyFlagToLoadSoftware(true);

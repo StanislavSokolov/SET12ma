@@ -29,9 +29,9 @@ public class MainActivitySectionsPagerAdapterConnecting extends FragmentPagerAda
         // Return a PlaceholderFragment (defined as a static inner class below).
 //        return PlaceholderFragment.newInstance(position + 1);
         if (position == 0) {
-            return BluetoothFragment.newInstance(position + 1);
+            return FragmentBluetooth.newInstance(position + 1);
         } else {
-            return ComPortFragment.newInstance(position + 1);
+            return FragmentComPort.newInstance(position + 1);
         }
     }
 

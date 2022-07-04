@@ -29,11 +29,11 @@ public class MainActivitySectionsPagerAdapterDataExchange extends FragmentPagerA
         // Return a PlaceholderFragment (defined as a static inner class below).
 //        return PlaceholderFragment.newInstance(position + 1);
         if (position == 0) {
-            return InputFragment.newInstance(position + 1);
+            return FragmentInput.newInstance(position + 1);
         } else if (position == 1) {
-            return OutputFragment.newInstance(position + 1);
+            return FragmentOutput.newInstance(position + 1);
         } else if (position == 2) {
-            return AdcFragment.newInstance(position + 1);
+            return FragmentADC.newInstance(position + 1);
         } else {
             return TkFragment.newInstance(position + 1);
         }

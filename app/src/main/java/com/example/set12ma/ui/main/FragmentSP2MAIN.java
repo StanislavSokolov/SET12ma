@@ -5,41 +5,41 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import static android.app.Activity.RESULT_OK;
 
-public class SP6Fragment extends Fragment {
-    private static final String ARG_SECTION_NUMBER = "SP6";
+public class FragmentSP2MAIN extends Fragment {
+    private static final String ARG_SECTION_NUMBER = "SP2MAIN";
     private static final String LOG_TAG = "AndroidExample";
     private TextView textViewPathToLoadFile;
     private TextView textViewStatusLoadToFlesh;
     private TextView textViewStatusLoadToDevice;
     private TextView textViewInformationAboutDevice;
-    private TextView textViewTipChoiseAddressOfDeviceForSp6;
+    private TextView textViewTipChoiseAddressOfDeviceForSP2main;
 
     private Button buttonChoicePath;
     private Button buttonLoadToFlesh;
-    private Button buttonStartLoadSP6;
+    private Button buttonStartLoadSP2main;
 
     private ProgressBar progressBarLoadToFlesh;
     private ProgressBar progressBarLoadToDevice;
 
     private Uri selectedFile;
     private String stringSelectedFile = "";
-    private MemorySpace memorySpace;
+    private SpaceMemory spaceMemory;
     private ResultReceiverMemorySpace resultReceiverMemorySpace;
     private StatusSpace statusSpace;
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
@@ -62,8 +62,8 @@ public class SP6Fragment extends Fragment {
 
     private PageViewModel pageViewModel;
 
-    public static SP6Fragment newInstance(int index) {
-        SP6Fragment fragment = new SP6Fragment();
+    public static FragmentSP2MAIN newInstance(int index) {
+        FragmentSP2MAIN fragment = new FragmentSP2MAIN();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -83,7 +83,7 @@ public class SP6Fragment extends Fragment {
         pageViewModel.setIndex(index);
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
         upDateGraphicalDisplay.start();
-        memorySpace = resultReceiverMemorySpace.getMemorySpace();
+        spaceMemory = resultReceiverMemorySpace.getSpaceMemory();
         statusSpace = resultReceiverStatusSpace.getStatusSpace();
     }
 
@@ -91,16 +91,15 @@ public class SP6Fragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-//        Log.i(LOG_TAG, "onCreateViewSP6");
-        View root = inflater.inflate(R.layout.fragment_sp6, container, false);
-        buttonChoicePath = root.findViewById(R.id.button_choice_path_for_sp6);
+        View root = inflater.inflate(R.layout.fragment_sp2main, container, false);
+        buttonChoicePath = root.findViewById(R.id.button_choice_path_for_sp2main);
         buttonChoicePath.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
             public void onClick(View v) { openFile();
             }
         });
-        buttonLoadToFlesh = root.findViewById(R.id.button_load_to_flesh_for_sp6);
+        buttonLoadToFlesh = root.findViewById(R.id.button_load_to_flesh_for_sp2main);
         buttonLoadToFlesh.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
@@ -112,26 +111,25 @@ public class SP6Fragment extends Fragment {
                 }
             }
         });
-        buttonStartLoadSP6 = root.findViewById(R.id.button_start_load_for_sp6);
-        buttonStartLoadSP6.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-            @Override
-            public void onClick(View v) { startLoad();
-            }
-        });
-
-        textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file_for_sp6);
+        textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file_for_sp2main);
         if (statusSpace.getDevice().equals(ARG_SECTION_NUMBER)) textViewPathToLoadFile.setText(stringSelectedFile);
 
-        textViewStatusLoadToFlesh = root.findViewById(R.id.textView_status_load_to_flesh_for_sp6);
-        textViewInformationAboutDevice = root.findViewById(R.id.textView_information_about_device_for_sp6);
-        textViewStatusLoadToDevice = root.findViewById(R.id.textView_status_load_to_device_for_sp6);
-        textViewTipChoiseAddressOfDeviceForSp6 = root.findViewById(R.id.textView_tip_choise_address_of_device_for_sp6);
+        buttonStartLoadSP2main = root.findViewById(R.id.button_start_load_for_sp2main);
+//        buttonStartLoadSP2main.setOnClickListener(new View.OnClickListener() {
+//            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+//            @Override
+//            public void onClick(View v) { startLoad();
+//            }
+//        });
+        textViewStatusLoadToFlesh = root.findViewById(R.id.textView_status_load_to_flesh_for_sp2main);
+        textViewInformationAboutDevice = root.findViewById(R.id.textView_information_about_device_for_sp2main);
+        textViewStatusLoadToDevice = root.findViewById(R.id.textView_status_load_to_device_for_sp2main);
+        textViewTipChoiseAddressOfDeviceForSP2main = root.findViewById(R.id.textView_tip_choise_address_of_device_for_sp2main);
 
-        progressBarLoadToFlesh = root.findViewById(R.id.progressBar_load_to_flesh_for_sp6);
-        progressBarLoadToDevice = root.findViewById(R.id.progressBar_load_to_device_for_sp6);
+        progressBarLoadToFlesh = root.findViewById(R.id.progressBar_load_to_flesh_for_sp2main);
+        progressBarLoadToDevice = root.findViewById(R.id.progressBar_load_to_device_for_sp2main);
 
-        spinnerAddressOfDevice = root.findViewById(R.id.spinner_address_of_device_for_sp6);
+        spinnerAddressOfDevice = root.findViewById(R.id.spinner_address_of_device_for_sp2main);
         adapterAddressOfDevice = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapterAddressOfDevice.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         for (int i = 0; i < 16; i++) {
@@ -154,11 +152,6 @@ public class SP6Fragment extends Fragment {
         return root;
     }
 
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-    }
-
     private void openFile() {
         Intent intent = new Intent()
                 .setType("*/*")
@@ -171,15 +164,15 @@ public class SP6Fragment extends Fragment {
             InputStream inputStream = null;
             try {
                 inputStream = getContext().getContentResolver().openInputStream(selectedFile);
-                memorySpace.setMemorySpaceByte();
-                byte[] data = new byte[memorySpace.getMemorySpaceByteLength()];
+                spaceMemory.setMemorySpaceByte();
+                byte[] data = new byte[spaceMemory.getMemorySpaceByteLength()];
                 int count = inputStream.read(data);
                 while (count != -1) {
                     byte[] dataLastByte = new byte[count];
                     for (int i = 0; i < count; i++) {
                         dataLastByte[i] = data[i];
                     }
-                    memorySpace.setMemorySpaceArrayListByte(dataLastByte);
+                    spaceMemory.setMemorySpaceArrayListByte(dataLastByte);
                     count = inputStream.read(data);
                 }
 //                statusSpace.setReadyFlagToLoad(true);
@@ -193,11 +186,12 @@ public class SP6Fragment extends Fragment {
         } else {
             Toast.makeText(getContext(), "Укажите путь для загрузки ПО", Toast.LENGTH_LONG).show();
         }
+
     }
 
-    private void startLoad() {
+//    private void startLoad() {
 //        statusSpace.setReadyFlagToStart(true);
-    }
+//    }
 
         @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -285,10 +279,10 @@ public class SP6Fragment extends Fragment {
 //                                    if (latchLoadToFlesh) {
 //                                        textViewStatusLoadToFlesh.setText("Загрузка завершена");
 //                                        latchLoadToFlesh = false;
-//                                        textViewTipChoiseAddressOfDeviceForSp6.setVisibility(View.VISIBLE);
+//                                        textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.VISIBLE);
 //                                        spinnerAddressOfDevice.setVisibility(View.VISIBLE);
 //                                        textViewInformationAboutDevice.setVisibility(View.VISIBLE);
-//                                        buttonStartLoadSP6.setVisibility(View.VISIBLE);
+//                                        buttonStartLoadSP2main.setVisibility(View.VISIBLE);
 //                                    }
 //                                }
 //                            });

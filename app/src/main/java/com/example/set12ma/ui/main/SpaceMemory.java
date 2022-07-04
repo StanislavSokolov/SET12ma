@@ -2,11 +2,10 @@ package com.example.set12ma.ui.main;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import java.util.ArrayList;
 
-public class MemorySpace implements Parcelable {
+public class SpaceMemory implements Parcelable {
 
     private ArrayList<byte[]> memorySpaceArrayList;
     private int memorySpaceByteLength = 4096;
@@ -41,11 +40,11 @@ public class MemorySpace implements Parcelable {
         }
     }
 
-    public MemorySpace() {
+    public SpaceMemory() {
         memorySpaceArrayList = new ArrayList<>();
     }
 
-    protected MemorySpace(Parcel in) {
+    protected SpaceMemory(Parcel in) {
 //        byteArray = in.createByteArray();
     }
 
@@ -58,15 +57,15 @@ public class MemorySpace implements Parcelable {
         return 0;
     }
 
-    public static final Creator<MemorySpace> CREATOR = new Creator<MemorySpace>() {
+    public static final Creator<SpaceMemory> CREATOR = new Creator<SpaceMemory>() {
         @Override
-        public MemorySpace createFromParcel(Parcel in) {
-            return new MemorySpace(in);
+        public SpaceMemory createFromParcel(Parcel in) {
+            return new SpaceMemory(in);
         }
 
         @Override
-        public MemorySpace[] newArray(int size) {
-            return new MemorySpace[size];
+        public SpaceMemory[] newArray(int size) {
+            return new SpaceMemory[size];
         }
     };
 }

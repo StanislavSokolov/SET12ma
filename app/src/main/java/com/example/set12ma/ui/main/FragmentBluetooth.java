@@ -29,7 +29,7 @@ import java.util.Set;
 
 import static java.lang.Thread.sleep;
 
-public class BluetoothFragment extends Fragment {
+public class FragmentBluetooth extends Fragment {
 
     int mode = 0;
 
@@ -81,10 +81,10 @@ public class BluetoothFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "BT";
     private static final String LOG_TAG = "AndroidExample";
     private String stringConnectedToDevice;
-    private AddressSpace addressSpace;
+    private SpaceAddress spaceAddress;
     private ResultReceiverAddressSpace resultReceiverAddressSpace;
 
-    private MemorySpace memorySpace;
+    private SpaceMemory spaceMemory;
     private ResultReceiverMemorySpace resultReceiverMemorySpace;
 
     private StatusSpace statusSpace;
@@ -172,8 +172,8 @@ public class BluetoothFragment extends Fragment {
     };
 
 
-    public static BluetoothFragment newInstance(int index) {
-        BluetoothFragment fragment = new BluetoothFragment();
+    public static FragmentBluetooth newInstance(int index) {
+        FragmentBluetooth fragment = new FragmentBluetooth();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -213,8 +213,8 @@ public class BluetoothFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_bluetooth, container, false);
         bluetooth = BluetoothAdapter.getDefaultAdapter();
 
-        addressSpace = resultReceiverAddressSpace.getAddressSpace();
-        memorySpace = resultReceiverMemorySpace.getMemorySpace();
+        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
+        spaceMemory = resultReceiverMemorySpace.getSpaceMemory();
         statusSpace = resultReceiverStatusSpace.getStatusSpace();
 
         textViewConnectedDevices = root.findViewById(R.id.textView_tip_find_file);
@@ -585,7 +585,7 @@ public class BluetoothFragment extends Fragment {
                             int high = crc/256;
                             if ((bytesFromBuffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bytesFromBuffer[bytesToCreateCRC.length + 1] == (byte) high)) {
                                 if (statusConnecting) {
-                                    addressSpace.setAddressSpace(currentByte, bytesFromBuffer[2]);
+                                    spaceAddress.setAddressSpace(currentByte, bytesFromBuffer[2]);
                                     // Это счетчик битов, ктр увеличивает значение при каждом удачном приеме;
                                     String answerTest = "";
                                     for (byte readByte: bytesFromBuffer) {
@@ -770,7 +770,7 @@ public class BluetoothFragment extends Fragment {
                 bytesToSend[3] = 0;
                 bytesToSend[4] = 0;
                 bytesToSend[5] = 0;
-                int data = addressSpace.getAddressSpace(currentByte);
+                int data = spaceAddress.getAddressSpace(currentByte);
                 int high = data / 256;
                 bytesToSend[6] = (byte) (data - high * 256);
                 bytesToSend[7] = (byte) high;
@@ -807,7 +807,7 @@ public class BluetoothFragment extends Fragment {
             bytesToSend[3] = 0;
             bytesToSend[4] = 10;
             bytesToSend[5] = 0;
-            int i = (memorySpace.getMemorySpaceArrayListSize() - 1)*memorySpace.getMemorySpaceByteLength() + memorySpace.getMemorySpaceByteLength(memorySpace.getMemorySpaceArrayListSize() - 1);
+            int i = (spaceMemory.getMemorySpaceArrayListSize() - 1)* spaceMemory.getMemorySpaceByteLength() + spaceMemory.getMemorySpaceByteLength(spaceMemory.getMemorySpaceArrayListSize() - 1);
             int highH = i/16777216;
             bytesToSend[9] = (byte) highH;
             int highL = (i - (highH*16777216))/65536;
@@ -829,14 +829,14 @@ public class BluetoothFragment extends Fragment {
         }
 
         public void load() throws IOException {
-            bytesToSend = new byte[2 + (memorySpace.getMemorySpaceArrayListSize() - 1)*memorySpace.getMemorySpaceByteLength() + memorySpace.getMemorySpaceByteLength(memorySpace.getMemorySpaceArrayListSize() - 1) + 2];
+            bytesToSend = new byte[2 + (spaceMemory.getMemorySpaceArrayListSize() - 1)* spaceMemory.getMemorySpaceByteLength() + spaceMemory.getMemorySpaceByteLength(spaceMemory.getMemorySpaceArrayListSize() - 1) + 2];
             bytesToCreateCRC = new byte[bytesToSend.length - 2];
             bytesToSend[0] = addressDevice;
             bytesToSend[1] = loadCommand;
-            for (int i = 0; i < memorySpace.getMemorySpaceArrayListSize(); i++) {
-                byte[] bytesBuffer = memorySpace.getMemorySpaceByte(i);
+            for (int i = 0; i < spaceMemory.getMemorySpaceArrayListSize(); i++) {
+                byte[] bytesBuffer = spaceMemory.getMemorySpaceByte(i);
                 for (int j = 0; j < bytesBuffer.length; j++) {
-                    bytesToSend[i*memorySpace.getMemorySpaceByteLength()+j+2] = bytesBuffer[j];
+                    bytesToSend[i* spaceMemory.getMemorySpaceByteLength()+j+2] = bytesBuffer[j];
                 }
             }
             for (int i = 0; i < bytesToCreateCRC.length; i++) {
@@ -866,7 +866,7 @@ public class BluetoothFragment extends Fragment {
             bytesToSend[7] = 0;
             bytesToSend[8] = 0;
             bytesToSend[9] = 0;
-            int i = (memorySpace.getMemorySpaceArrayListSize() - 1)*memorySpace.getMemorySpaceByteLength() + memorySpace.getMemorySpaceByteLength(memorySpace.getMemorySpaceArrayListSize() - 1);
+            int i = (spaceMemory.getMemorySpaceArrayListSize() - 1)* spaceMemory.getMemorySpaceByteLength() + spaceMemory.getMemorySpaceByteLength(spaceMemory.getMemorySpaceArrayListSize() - 1);
             int highH = i/16777216;
             bytesToSend[13] = (byte) highH;
             int highL = (i - (highH*16777216))/65536;
