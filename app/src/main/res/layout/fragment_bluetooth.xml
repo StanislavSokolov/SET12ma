@@ -50,6 +50,15 @@
                     android:text="@string/main_text_connected_to_device" android:visibility="invisible"
                     android:gravity="center"/>
             <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/section_label_7"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/section_label_8"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/section_label_9"/>
+            <TextView
                     android:text="@string/main_text_available_devices"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/textView_available_devices"
