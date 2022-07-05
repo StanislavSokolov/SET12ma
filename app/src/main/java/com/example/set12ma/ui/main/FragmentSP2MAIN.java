@@ -29,6 +29,7 @@ public class FragmentSP2MAIN extends Fragment {
     private TextView textViewStatusLoadToDevice;
     private TextView textViewInformationAboutDevice;
     private TextView textViewTipChoiseAddressOfDeviceForSP2main;
+    private TextView textViewTipFindFile;
 
     private Button buttonChoicePath;
     private Button buttonLoadToFlesh;
@@ -93,6 +94,7 @@ public class FragmentSP2MAIN extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_sp2main, container, false);
+        textViewTipFindFile = root.findViewById(R.id.textView_tip_find_file);
         buttonChoicePath = root.findViewById(R.id.button_choice_path_for_sp2main);
         buttonChoicePath.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
@@ -154,69 +156,79 @@ public class FragmentSP2MAIN extends Fragment {
         };
         spinnerAddressOfDevice.setOnItemSelectedListener(itemSelectedListener);
 
-        if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
-            textViewPathToLoadFile.setText(stringSelectedFile);
-            textViewPathToLoadFile.setVisibility(View.VISIBLE);
-            if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware())) {
-                textViewStatusLoadToFlesh.setText("Загрузка в память...");
-                textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                progressBarLoadToFlesh.setVisibility(View.VISIBLE);
-                textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.INVISIBLE);
-                spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
-                textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
-                textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
-                progressBarLoadToDevice.setVisibility(View.INVISIBLE);
-            }
-            if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
-                textViewStatusLoadToFlesh.setText("Загрузка завершена");
-                textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
-                textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.VISIBLE);
-                spinnerAddressOfDevice.setVisibility(View.VISIBLE);
-                textViewInformationAboutDevice.setVisibility(View.VISIBLE);
-                textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
-                buttonStartLoadSP2main.setVisibility(View.VISIBLE);
-                progressBarLoadToDevice.setVisibility(View.INVISIBLE);
-            }
-            if (spaceStatus.isReadyFlagToUpdateSoftware() || spaceStatus.isStatusProcessOfUpdatingSoftware()) {
-                textViewStatusLoadToFlesh.setText("Загрузка завершена");
-                textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
-                textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.VISIBLE);
-                spinnerAddressOfDevice.setVisibility(View.VISIBLE);
-                textViewInformationAboutDevice.setVisibility(View.VISIBLE);
-                textViewStatusLoadToDevice.setText("Обновление ПО...");
-                textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
-                buttonStartLoadSP2main.setVisibility(View.VISIBLE);
-                progressBarLoadToDevice.setVisibility(View.VISIBLE);
-            }
-            if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
-                textViewStatusLoadToFlesh.setText("Загрузка завершена");
-                textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
-                textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.VISIBLE);
-                spinnerAddressOfDevice.setVisibility(View.VISIBLE);
-                textViewInformationAboutDevice.setVisibility(View.VISIBLE);
-                textViewStatusLoadToDevice.setText("Обновление завершено");
-                textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
-                buttonStartLoadSP2main.setVisibility(View.VISIBLE);
-                progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+        if (spaceStatus.isReadyFlagToExchangeData()){
+            if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
+                textViewTipFindFile.setText("Выберите файл для загрузки");
+                textViewPathToLoadFile.setText(stringSelectedFile);
+                textViewPathToLoadFile.setVisibility(View.VISIBLE);
+                if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware())) {
+                    textViewStatusLoadToFlesh.setText("Загрузка в память...");
+                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                    progressBarLoadToFlesh.setVisibility(View.VISIBLE);
+                    textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.INVISIBLE);
+                    spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
+                    textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
+                    textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+                }
+                if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
+                    textViewStatusLoadToFlesh.setText("Загрузка завершена");
+                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                    textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.VISIBLE);
+                    spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+                    textViewInformationAboutDevice.setVisibility(View.VISIBLE);
+                    textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+                    buttonStartLoadSP2main.setVisibility(View.VISIBLE);
+                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+                }
+                if (spaceStatus.isReadyFlagToUpdateSoftware() || spaceStatus.isStatusProcessOfUpdatingSoftware()) {
+                    textViewStatusLoadToFlesh.setText("Загрузка завершена");
+                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                    textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.VISIBLE);
+                    spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+                    textViewInformationAboutDevice.setVisibility(View.VISIBLE);
+                    textViewStatusLoadToDevice.setText("Обновление ПО...");
+                    textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
+                    buttonStartLoadSP2main.setVisibility(View.VISIBLE);
+                    progressBarLoadToDevice.setVisibility(View.VISIBLE);
+                }
+                if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
+                    textViewStatusLoadToFlesh.setText("Загрузка завершена");
+                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                    textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.VISIBLE);
+                    spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+                    textViewInformationAboutDevice.setVisibility(View.VISIBLE);
+                    textViewStatusLoadToDevice.setText("Обновление завершено");
+                    textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
+                    buttonStartLoadSP2main.setVisibility(View.VISIBLE);
+                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+                }
+            } else {
+                textViewPathToLoadFile.setText("Путь не указан");
+                textViewPathToLoadFile.setVisibility(View.VISIBLE);
+                buttonChoicePath.setVisibility(View.VISIBLE);
+                buttonLoadToFlesh.setVisibility(View.VISIBLE);
+                if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware()) || (spaceStatus.isReadyFlagToUpdateSoftware()) || (spaceStatus.isStatusProcessOfUpdatingSoftware())) {
+                    textViewPathToLoadFile.setVisibility(View.INVISIBLE);
+                    buttonChoicePath.setVisibility(View.INVISIBLE);
+                    buttonLoadToFlesh.setVisibility(View.INVISIBLE);
+                    textViewStatusLoadToFlesh.setText("Дождитесь завершения загрузки ПО для " + spaceStatus.getDevice());
+                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                    buttonStartLoadSP2main.setVisibility(View.INVISIBLE);
+                    progressBarLoadToFlesh.setVisibility(View.VISIBLE);
+                }
             }
         } else {
-            textViewPathToLoadFile.setText("Путь не указан");
-            textViewPathToLoadFile.setVisibility(View.VISIBLE);
-            buttonChoicePath.setVisibility(View.VISIBLE);
-            buttonLoadToFlesh.setVisibility(View.VISIBLE);
-            if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware()) || (spaceStatus.isReadyFlagToUpdateSoftware()) || (spaceStatus.isStatusProcessOfUpdatingSoftware())) {
-                textViewPathToLoadFile.setVisibility(View.INVISIBLE);
-                buttonChoicePath.setVisibility(View.INVISIBLE);
-                buttonLoadToFlesh.setVisibility(View.INVISIBLE);
-                textViewStatusLoadToFlesh.setText("Дождитесь завершения загрузки ПО для " + spaceStatus.getDevice());
-                textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                buttonStartLoadSP2main.setVisibility(View.INVISIBLE);
-                progressBarLoadToFlesh.setVisibility(View.VISIBLE);
-            }
+            buttonChoicePath.setVisibility(View.INVISIBLE);
+            buttonLoadToFlesh.setVisibility(View.INVISIBLE);
+            textViewPathToLoadFile.setVisibility(View.INVISIBLE);
+            textViewTipFindFile.setText("Подключитесь к устройству");
+            Toast.makeText(getContext(), "Подключитесь к устройству", Toast.LENGTH_LONG).show();
         }
+
         return root;
     }
 
@@ -297,104 +309,123 @@ public class FragmentSP2MAIN extends Fragment {
                 try {
                     FragmentTMS2812.UpDateGraphicalDisplay.sleep(timer);
 
-                    if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
-                        if (spaceStatus.isStatusProcessOfUpdatingSoftware()) {
-                            progressBarLoadToDevice.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    progressBarLoadToDevice.setVisibility(View.VISIBLE);
-                                }
-                            });
-                            textViewStatusLoadToDevice.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (!latchLoadToDevice) {
-                                        textViewStatusLoadToDevice.setText("Обновление ПО...");
-                                        textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
-                                        latchLoadToDevice = true;
+                    if (spaceStatus.isReadyFlagToExchangeData()) {
+                        textViewTipFindFile.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                textViewTipFindFile.setText("Выберите файл для загрузки");
+                            }
+                        });
+                        if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
+                            if (spaceStatus.isStatusProcessOfUpdatingSoftware()) {
+                                progressBarLoadToDevice.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        progressBarLoadToDevice.setVisibility(View.VISIBLE);
                                     }
+                                });
+                                textViewStatusLoadToDevice.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (!latchLoadToDevice) {
+                                            textViewStatusLoadToDevice.setText("Обновление ПО...");
+                                            textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
+                                            latchLoadToDevice = true;
+                                        }
 
-                                }
-                            });
+                                    }
+                                });
+                            } else {
+                                progressBarLoadToDevice.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+                                    }
+                                });
+                                textViewStatusLoadToDevice.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (latchLoadToDevice) {
+                                            textViewStatusLoadToDevice.setText("Обновление завершено");
+                                            latchLoadToDevice = false;
+                                        }
+
+                                    }
+                                });
+                            }
+                            if (spaceStatus.isStatusProcessOfLoadingSoftware()) {
+                                progressBarLoadToFlesh.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        progressBarLoadToFlesh.setVisibility(View.VISIBLE);
+                                    }
+                                });
+                                textViewStatusLoadToFlesh.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (!latchLoadToFlesh) {
+                                            textViewStatusLoadToFlesh.setText("Загрузка в память...");
+                                            textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                                            latchLoadToFlesh = true;
+                                        }
+                                    }
+                                });
+                            } else {
+                                progressBarLoadToFlesh.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                                    }
+                                });
+                                textViewStatusLoadToFlesh.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (latchLoadToFlesh) {
+                                            textViewStatusLoadToFlesh.setText("Загрузка завершена");
+                                            latchLoadToFlesh = false;
+                                            textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.VISIBLE);
+                                            spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+                                            textViewInformationAboutDevice.setVisibility(View.VISIBLE);
+                                            buttonStartLoadSP2main.setVisibility(View.VISIBLE);
+                                        }
+                                    }
+                                });
+                            }
+
                         } else {
-                            progressBarLoadToDevice.post(new Runnable() {
+                            textViewPathToLoadFile.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
-                                }
-                            });
-                            textViewStatusLoadToDevice.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (latchLoadToDevice) {
-                                        textViewStatusLoadToDevice.setText("Обновление завершено");
-                                        latchLoadToDevice = false;
-                                    }
 
-                                }
-                            });
-                        }
-                        if (spaceStatus.isStatusProcessOfLoadingSoftware()) {
-                            progressBarLoadToFlesh.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    progressBarLoadToFlesh.setVisibility(View.VISIBLE);
-                                }
-                            });
-                            textViewStatusLoadToFlesh.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (!latchLoadToFlesh) {
-                                        textViewStatusLoadToFlesh.setText("Загрузка в память...");
+                                    if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware()) || (spaceStatus.isReadyFlagToUpdateSoftware()) || (spaceStatus.isStatusProcessOfUpdatingSoftware())) {
+                                        textViewPathToLoadFile.setVisibility(View.INVISIBLE);
+                                        buttonChoicePath.setVisibility(View.INVISIBLE);
+                                        buttonLoadToFlesh.setVisibility(View.INVISIBLE);
+                                        textViewStatusLoadToFlesh.setText("Дождитесь завершения загрузки ПО для " + spaceStatus.getDevice());
                                         textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                                        latchLoadToFlesh = true;
-                                    }
-                                }
-                            });
-                        } else {
-                            progressBarLoadToFlesh.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
-                                }
-                            });
-                            textViewStatusLoadToFlesh.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (latchLoadToFlesh) {
-                                        textViewStatusLoadToFlesh.setText("Загрузка завершена");
-                                        latchLoadToFlesh = false;
-                                        textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.VISIBLE);
-                                        spinnerAddressOfDevice.setVisibility(View.VISIBLE);
-                                        textViewInformationAboutDevice.setVisibility(View.VISIBLE);
-                                        buttonStartLoadSP2main.setVisibility(View.VISIBLE);
+                                        buttonStartLoadSP2main.setVisibility(View.INVISIBLE);
+                                        progressBarLoadToFlesh.setVisibility(View.VISIBLE);
+                                    } else {
+                                        textViewPathToLoadFile.setText("Путь не указан");
+                                        textViewPathToLoadFile.setVisibility(View.VISIBLE);
+                                        buttonChoicePath.setVisibility(View.VISIBLE);
+                                        buttonLoadToFlesh.setVisibility(View.VISIBLE);
+                                        textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
+                                        buttonStartLoadSP2main.setVisibility(View.INVISIBLE);
+                                        progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
                                     }
                                 }
                             });
                         }
-
                     } else {
-                        textViewPathToLoadFile.post(new Runnable() {
+                        textViewTipFindFile.post(new Runnable() {
                             @Override
                             public void run() {
 
-                                if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware()) || (spaceStatus.isReadyFlagToUpdateSoftware()) || (spaceStatus.isStatusProcessOfUpdatingSoftware())) {
-                                    textViewPathToLoadFile.setVisibility(View.INVISIBLE);
-                                    buttonChoicePath.setVisibility(View.INVISIBLE);
-                                    buttonLoadToFlesh.setVisibility(View.INVISIBLE);
-                                    textViewStatusLoadToFlesh.setText("Дождитесь завершения загрузки ПО для " + spaceStatus.getDevice());
-                                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                                    buttonStartLoadSP2main.setVisibility(View.INVISIBLE);
-                                    progressBarLoadToFlesh.setVisibility(View.VISIBLE);
-                                } else {
-                                    textViewPathToLoadFile.setText("Путь не указан");
-                                    textViewPathToLoadFile.setVisibility(View.VISIBLE);
-                                    buttonChoicePath.setVisibility(View.VISIBLE);
-                                    buttonLoadToFlesh.setVisibility(View.VISIBLE);
-                                    textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
-                                    buttonStartLoadSP2main.setVisibility(View.INVISIBLE);
-                                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
-                                }
+                                buttonChoicePath.setVisibility(View.INVISIBLE);
+                                buttonLoadToFlesh.setVisibility(View.INVISIBLE);
+                                textViewPathToLoadFile.setVisibility(View.INVISIBLE);
+                                textViewTipFindFile.setText("Подключитесь к устройству");
                             }
                         });
                     }

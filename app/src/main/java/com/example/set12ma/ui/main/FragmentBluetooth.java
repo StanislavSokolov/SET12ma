@@ -272,6 +272,7 @@ public class FragmentBluetooth extends Fragment {
                 textViewConnectedToDevice.setText("Отключено от " + stringConnectedToDevice);
                 progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
                 spaceStatus.setReadyFlagToExchangeData(false);
+                spaceStatus.setDevice("");
             }
         } else {
             Toast.makeText(getActivity(), "Для подключения необходимо выбрать сопряженное устройство", Toast.LENGTH_SHORT).show();
