@@ -226,7 +226,7 @@ public class FragmentSP2MAIN extends Fragment {
             buttonLoadToFlesh.setVisibility(View.INVISIBLE);
             textViewPathToLoadFile.setVisibility(View.INVISIBLE);
             textViewTipFindFile.setText("Подключитесь к устройству");
-            Toast.makeText(getContext(), "Подключитесь к устройству", Toast.LENGTH_LONG).show();
+//            Toast.makeText(getContext(), "Подключитесь к устройству", Toast.LENGTH_LONG).show();
         }
 
         return root;

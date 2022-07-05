@@ -1,5 +1,6 @@
 package com.example.set12ma;
 
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     ViewPager viewPagerLogging;
     // Connection
     ViewPager viewPagerConnecting;
+
+    MenuItem indicator;
 
     MainActivitySectionsPagerAdapterDataExchange sectionsPagerAdapterDataExchange;
     MainActivitySectionsPagerAdapterLoadingSoftware sectionsPagerAdapterLoadingSoftware;
@@ -88,7 +91,8 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 //        addressSpace.setAddressSpace(150, 1);
 //        addressSpace.setAddressSpace(210, 150);
 
-
+//        indicator = findViewById(R.id.menu_indicator);
+//        indicator.setEnabled(false);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,16 +162,21 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 //        TextView headerView = findViewById(R.id.selectedMenuItem);
         switch(id){
+            case R.id.menu_indicator:
+                if (!spaceStatus.isReadyFlagToExchangeData()) {
+                    Toast.makeText(MainActivity.this, "Нет обмена данными", Toast.LENGTH_SHORT).show();
+                }
+                return true;
             case R.id.menu_dataExchange:
                 upDateViewPager(0);
                 return true;

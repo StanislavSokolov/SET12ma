@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelUuid;
@@ -273,6 +274,7 @@ public class FragmentBluetooth extends Fragment {
                 progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
                 spaceStatus.setReadyFlagToExchangeData(false);
                 spaceStatus.setDevice("");
+                getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
             }
         } else {
             Toast.makeText(getActivity(), "Для подключения необходимо выбрать сопряженное устройство", Toast.LENGTH_SHORT).show();
@@ -571,6 +573,7 @@ public class FragmentBluetooth extends Fragment {
                                     spaceStatus.setReadyFlagToExchangeData(true);
                                 }
                                 isStatusReading = true;
+                                changeStateIndicator();
                             } else {
                                 Log.i(LOG_TAG, "CRC не совпало");
                                 textViewConnectedToDevice.setText("CRC не совпало");
@@ -604,6 +607,7 @@ public class FragmentBluetooth extends Fragment {
                                     spaceStatus.setReadyFlagToExchangeData(true);
                                 }
                                 isStatusReading = true;
+                                changeStateIndicator();
                             } else {
                                 Log.i(LOG_TAG, "CRC не совпало");
                                 textViewConnectedToDevice.setText("CRC не совпало");
@@ -614,6 +618,14 @@ public class FragmentBluetooth extends Fragment {
                     Log.i(LOG_TAG,e.toString());
                     break;
                 }
+            }
+        }
+
+        private void changeStateIndicator() {
+            if (getActivity().findViewById(R.id.menu_indicator).getVisibility() == View.VISIBLE) {
+                getActivity().findViewById(R.id.menu_indicator).setVisibility(View.INVISIBLE);
+            } else {
+                getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
             }
         }
 
