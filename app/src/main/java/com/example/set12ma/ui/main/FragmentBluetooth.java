@@ -39,7 +39,7 @@ public class FragmentBluetooth extends Fragment {
     final String PBAP_UUID = "00001101-0000-1000-8000-00805f9b34fb";
     private BluetoothSocket bluetoothSocket;
     private BluetoothDevice bluetoothDevice;
-    private long timer = 1010;
+    private long timer = 100;
 
 
     // for BluetoothConnectedThread
@@ -456,36 +456,6 @@ public class FragmentBluetooth extends Fragment {
                 } else {
                     bluetoothConnectedThread.communication();
                 }
-
-//                if (statusSpace.isReadyFlagToLoadSoftware()) {
-//                    if (statusSpace.isReadyFlagToUpdateSoftware()) {
-//                        if (!latchFinish) {
-//                            bluetoothConnectedThread.startToLoad();
-//                            latchFinish = true;
-//                        } else {
-//                            if (statusFinishLoad) {
-//                                latchLoad = false;
-//                                latchFinish = false;
-//                                statusSpace.setReadyFlagToUpdateSoftware(false);
-//                                statusSpace.setReadyFlagToLoadSoftware(false);
-//                                statusFinishLoad = false;
-//                                statusInitLoad = false;
-//                                statusLoad = false;
-//                            }
-//                        }
-//
-//                    } else {
-//                        if (statusInitLoad) {
-//                            if (!latchLoad) {
-//                                bluetoothConnectedThread.load();
-//                                latchLoad = true;
-//                            }
-//                            // возможно здесь нужен таймер, чтобы вернуться к коммуникации
-//                        } else bluetoothConnectedThread.initLoad();
-//                    }
-//                } else {
-//                    bluetoothConnectedThread.communication();
-//                }
             }
         }
     }
@@ -576,7 +546,6 @@ public class FragmentBluetooth extends Fragment {
                             answerTest = answerTest + " " + bufInt;
                         }
                         Log.i(LOG_TAG, answerTest);
-                        spaceStatus.setStatusProcessOfUpdatingSoftware(false);
                     } else {
                         if (bytes == 8) {
                             bytesFromBuffer = new byte[bytes];
@@ -859,7 +828,7 @@ public class FragmentBluetooth extends Fragment {
         }
 
         public void startToLoad() throws IOException {
-            Log.i(LOG_TAG, "start");
+            Log.i(LOG_TAG, "startToLoad");
             bytesToSend = new byte[18];
             bytesToCreateCRC = new byte[16];
             bytesToSend[0] = addressDevice;
@@ -891,9 +860,10 @@ public class FragmentBluetooth extends Fragment {
             bytesToSend[bytesToSend.length-2] = (byte) (crc - high * 256);
             bytesToSend[bytesToSend.length-1] = (byte) high;
 
-            flagWaitingAnswerFinishLoad = true;
             spaceStatus.setStatusProcessOfUpdatingSoftware(true);
+
             outputStream.write(bytesToSend);
+            flagWaitingAnswerFinishLoad = true;
         }
     }
 }
