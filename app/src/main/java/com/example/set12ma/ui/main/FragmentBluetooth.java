@@ -31,16 +31,11 @@ import static java.lang.Thread.sleep;
 
 public class FragmentBluetooth extends Fragment {
 
-    int mode = 0;
-
-    ArrayList<byte[]> arrayList;
-
     // for BluetoothSoketThread
     final String PBAP_UUID = "00001101-0000-1000-8000-00805f9b34fb";
     private BluetoothSocket bluetoothSocket;
     private BluetoothDevice bluetoothDevice;
     private long timer = 100;
-
 
     // for BluetoothConnectedThread
     private InputStream inputStream;
@@ -54,8 +49,6 @@ public class FragmentBluetooth extends Fragment {
     private byte extendCommand = 60;
     private int countBytes = 8;
     private int addressSpaceNumber = 0;
-    // isStatusConnecting waits the answer from controller to start the communication
-    private boolean statusConnecting = false;
     // setFlagWaitingAnswerInitLoad sets the flag to wait the answer from controller to start the loading to memory
     private boolean flagWaitingAnswerInitLoad = false;
     //
@@ -252,8 +245,8 @@ public class FragmentBluetooth extends Fragment {
 
     private void setConnecting(){
         if (!adapterConnectedDevices.getItem(itemSelectedFromConnectedDevices + 1).equals("Выберите устройство")) {
-            statusConnecting = false;
 
+            spaceStatus.setReadyFlagToExchangeData(false);
             spaceStatus.setReadyFlagToLoadSoftware(false);
             spaceStatus.setReadyFlagToUpdateSoftware(false);
             spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
@@ -278,6 +271,7 @@ public class FragmentBluetooth extends Fragment {
                 buttonConnectToDevice.setText("Подключить");
                 textViewConnectedToDevice.setText("Отключено от " + stringConnectedToDevice);
                 progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+                spaceStatus.setReadyFlagToExchangeData(false);
             }
         } else {
             Toast.makeText(getActivity(), "Для подключения необходимо выбрать сопряженное устройство", Toast.LENGTH_SHORT).show();
@@ -559,7 +553,7 @@ public class FragmentBluetooth extends Fragment {
                             int crc = (CRC16.getCRC4(bytesToCreateCRC));
                             int high = crc/256;
                             if ((bytesFromBuffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bytesFromBuffer[bytesToCreateCRC.length + 1] == (byte) high)) {
-                                if (statusConnecting) {
+                                if (spaceStatus.isReadyFlagToExchangeData()) {
                                     spaceAddress.setAddressSpace(currentByte, bytesFromBuffer[2]);
                                     // Это счетчик битов, ктр увеличивает значение при каждом удачном приеме;
                                     String answerTest = "";
@@ -573,7 +567,7 @@ public class FragmentBluetooth extends Fragment {
                                 } else {
                                     textViewConnectedToDevice.setText("Поключено к " + stringConnectedToDevice);
                                     progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
-                                    statusConnecting = true;
+                                    spaceStatus.setReadyFlagToExchangeData(true);
                                 }
                                 isStatusReading = true;
                             } else {
@@ -592,7 +586,7 @@ public class FragmentBluetooth extends Fragment {
                             int crc = (CRC16.getCRC4(bytesToCreateCRC));
                             int high = crc/256;
                             if ((bytesFromBuffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bytesFromBuffer[bytesToCreateCRC.length + 1] == (byte) high)) {
-                                if (statusConnecting) {
+                                if (spaceStatus.isReadyFlagToExchangeData()) {
                                     // Это счетчик битов, ктр увеличивает значение при каждом удачном приеме;
 
                                     String answerTest = "";
@@ -606,7 +600,7 @@ public class FragmentBluetooth extends Fragment {
                                 } else {
                                     textViewConnectedToDevice.setText("Поключено к " + stringConnectedToDevice);
                                     progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
-                                    statusConnecting = true;
+                                    spaceStatus.setReadyFlagToExchangeData(true);
                                 }
                                 isStatusReading = true;
                             } else {
@@ -623,7 +617,7 @@ public class FragmentBluetooth extends Fragment {
         }
 
         public void communication() {
-            if (statusConnecting) {
+            if (spaceStatus.isReadyFlagToExchangeData()) {
                 if (counterUnsuccessfulSending < maxValueUnsuccessfulSending) {
                     switch (statement) {
                         // чтение IN

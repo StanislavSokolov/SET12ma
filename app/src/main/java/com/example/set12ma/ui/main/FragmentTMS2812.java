@@ -53,6 +53,7 @@ public class FragmentTMS2812 extends Fragment {
     private boolean latchLoadToDevice = false;
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
+    private long timer = 500;
 
 
     // как и onCreate вызывается только один раз
@@ -207,7 +208,12 @@ public class FragmentTMS2812 extends Fragment {
         } else {
             textViewPathToLoadFile.setText("Путь не указан");
             textViewPathToLoadFile.setVisibility(View.VISIBLE);
+            buttonChoicePath.setVisibility(View.VISIBLE);
+            buttonLoadToFlesh.setVisibility(View.VISIBLE);
             if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware()) || (spaceStatus.isReadyFlagToUpdateSoftware()) || (spaceStatus.isStatusProcessOfUpdatingSoftware())) {
+                textViewPathToLoadFile.setVisibility(View.INVISIBLE);
+                buttonChoicePath.setVisibility(View.INVISIBLE);
+                buttonLoadToFlesh.setVisibility(View.INVISIBLE);
                 textViewStatusLoadToFlesh.setText("Дождитесь завершения загрузки ПО для " + spaceStatus.getDevice());
                 textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
                 buttonStartLoadTMS2812.setVisibility(View.INVISIBLE);
@@ -218,10 +224,14 @@ public class FragmentTMS2812 extends Fragment {
     }
 
     private void openFile() {
-        Intent intent = new Intent()
-                .setType("*/*")
-                .setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
+        if (!spaceStatus.isStatusProcessOfUpdatingSoftware() & !spaceStatus.isStatusProcessOfLoadingSoftware()) {
+            Intent intent = new Intent()
+                    .setType("*/*")
+                    .setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
+        } else {
+            Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void loadFile() throws IOException {
@@ -268,7 +278,6 @@ public class FragmentTMS2812 extends Fragment {
         } else {
             Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
         }
-
     }
 
         @Override
@@ -277,6 +286,12 @@ public class FragmentTMS2812 extends Fragment {
         if(requestCode == 123 && resultCode == RESULT_OK) {
 
             // если путь файла изменен, то надо разрешать загружать еще раз
+            // сейчас это не работает
+
+            // так же корректно не работает повторная прошивка по этому или любому другому адресу
+            // здесь какие-то проблемы в логике
+            // на самом деле прошивка стартует
+            // но в приложении ее статус затирается
 
             selectedFile = data.getData(); //The uri with the location of the file
             spaceStatus.setDevice(ARG_SECTION_NUMBER);
@@ -292,14 +307,13 @@ public class FragmentTMS2812 extends Fragment {
             super.run();
             while (true) {
                 try {
-                    UpDateGraphicalDisplay.sleep(550);
+                    UpDateGraphicalDisplay.sleep(timer);
 
                     if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
                         if (spaceStatus.isStatusProcessOfUpdatingSoftware()) {
                             progressBarLoadToDevice.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Log.i(LOG_TAG, "UpDateGraphicalDisplay");
                                     progressBarLoadToDevice.setVisibility(View.VISIBLE);
                                 }
                             });
@@ -371,7 +385,33 @@ public class FragmentTMS2812 extends Fragment {
                             });
                         }
 
+                    } else {
+                        textViewPathToLoadFile.post(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware()) || (spaceStatus.isReadyFlagToUpdateSoftware()) || (spaceStatus.isStatusProcessOfUpdatingSoftware())) {
+                                    textViewPathToLoadFile.setVisibility(View.INVISIBLE);
+                                    buttonChoicePath.setVisibility(View.INVISIBLE);
+                                    buttonLoadToFlesh.setVisibility(View.INVISIBLE);
+                                    textViewStatusLoadToFlesh.setText("Дождитесь завершения загрузки ПО для " + spaceStatus.getDevice());
+                                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                                    buttonStartLoadTMS2812.setVisibility(View.INVISIBLE);
+                                    progressBarLoadToFlesh.setVisibility(View.VISIBLE);
+                                } else {
+                                    textViewPathToLoadFile.setText("Путь не указан");
+                                    textViewPathToLoadFile.setVisibility(View.VISIBLE);
+                                    buttonChoicePath.setVisibility(View.VISIBLE);
+                                    buttonLoadToFlesh.setVisibility(View.VISIBLE);
+                                    textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
+                                    buttonStartLoadTMS2812.setVisibility(View.INVISIBLE);
+                                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        });
+
                     }
+
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();

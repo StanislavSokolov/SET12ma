@@ -37,7 +37,7 @@ public class FragmentSP2MAIN extends Fragment {
     private ProgressBar progressBarLoadToFlesh;
     private ProgressBar progressBarLoadToDevice;
 
-    private Uri selectedFile;
+    private Uri selectedFile = null;
     private String stringSelectedFile = "";
     private SpaceMemory spaceMemory;
     private ResultReceiverMemorySpace resultReceiverMemorySpace;
@@ -52,6 +52,7 @@ public class FragmentSP2MAIN extends Fragment {
     private boolean latchLoadToDevice = false;
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
+    private long timer = 500;
 
     @Override
     public void onAttach(Context context) {
@@ -111,17 +112,17 @@ public class FragmentSP2MAIN extends Fragment {
                 }
             }
         });
-        textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file_for_sp2main);
-        if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) textViewPathToLoadFile.setText(stringSelectedFile);
 
         buttonStartLoadSP2main = root.findViewById(R.id.button_start_load_for_sp2main);
-//        buttonStartLoadSP2main.setOnClickListener(new View.OnClickListener() {
-//            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-//            @Override
-//            public void onClick(View v) { startLoad();
-//            }
-//        });
+        buttonStartLoadSP2main.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+            @Override
+            public void onClick(View v) { startLoad();
+            }
+        });
+        textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file_for_sp2main);
         textViewStatusLoadToFlesh = root.findViewById(R.id.textView_status_load_to_flesh_for_sp2main);
+
         textViewInformationAboutDevice = root.findViewById(R.id.textView_information_about_device_for_sp2main);
         textViewStatusLoadToDevice = root.findViewById(R.id.textView_status_load_to_device_for_sp2main);
         textViewTipChoiseAddressOfDeviceForSP2main = root.findViewById(R.id.textView_tip_choise_address_of_device_for_sp2main);
@@ -142,6 +143,9 @@ public class FragmentSP2MAIN extends Fragment {
                 itemSelectedFromConnectedDevices = spinnerAddressOfDevice.getSelectedItemPosition();
                 textViewInformationAboutDevice.setText("Устройство с адресом " + itemSelectedFromConnectedDevices + " готово к обновлению ПО");
                 spaceStatus.setAddressOfDevice(itemSelectedFromConnectedDevices);
+                if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
+                    textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
@@ -149,49 +153,129 @@ public class FragmentSP2MAIN extends Fragment {
             }
         };
         spinnerAddressOfDevice.setOnItemSelectedListener(itemSelectedListener);
+
+        if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
+            textViewPathToLoadFile.setText(stringSelectedFile);
+            textViewPathToLoadFile.setVisibility(View.VISIBLE);
+            if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware())) {
+                textViewStatusLoadToFlesh.setText("Загрузка в память...");
+                textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                progressBarLoadToFlesh.setVisibility(View.VISIBLE);
+                textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.INVISIBLE);
+                spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
+                textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
+                textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+                progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+            }
+            if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
+                textViewStatusLoadToFlesh.setText("Загрузка завершена");
+                textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.VISIBLE);
+                spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+                textViewInformationAboutDevice.setVisibility(View.VISIBLE);
+                textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+                buttonStartLoadSP2main.setVisibility(View.VISIBLE);
+                progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+            }
+            if (spaceStatus.isReadyFlagToUpdateSoftware() || spaceStatus.isStatusProcessOfUpdatingSoftware()) {
+                textViewStatusLoadToFlesh.setText("Загрузка завершена");
+                textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.VISIBLE);
+                spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+                textViewInformationAboutDevice.setVisibility(View.VISIBLE);
+                textViewStatusLoadToDevice.setText("Обновление ПО...");
+                textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
+                buttonStartLoadSP2main.setVisibility(View.VISIBLE);
+                progressBarLoadToDevice.setVisibility(View.VISIBLE);
+            }
+            if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
+                textViewStatusLoadToFlesh.setText("Загрузка завершена");
+                textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.VISIBLE);
+                spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+                textViewInformationAboutDevice.setVisibility(View.VISIBLE);
+                textViewStatusLoadToDevice.setText("Обновление завершено");
+                textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
+                buttonStartLoadSP2main.setVisibility(View.VISIBLE);
+                progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+            }
+        } else {
+            textViewPathToLoadFile.setText("Путь не указан");
+            textViewPathToLoadFile.setVisibility(View.VISIBLE);
+            buttonChoicePath.setVisibility(View.VISIBLE);
+            buttonLoadToFlesh.setVisibility(View.VISIBLE);
+            if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware()) || (spaceStatus.isReadyFlagToUpdateSoftware()) || (spaceStatus.isStatusProcessOfUpdatingSoftware())) {
+                textViewPathToLoadFile.setVisibility(View.INVISIBLE);
+                buttonChoicePath.setVisibility(View.INVISIBLE);
+                buttonLoadToFlesh.setVisibility(View.INVISIBLE);
+                textViewStatusLoadToFlesh.setText("Дождитесь завершения загрузки ПО для " + spaceStatus.getDevice());
+                textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                buttonStartLoadSP2main.setVisibility(View.INVISIBLE);
+                progressBarLoadToFlesh.setVisibility(View.VISIBLE);
+            }
+        }
         return root;
     }
 
     private void openFile() {
-        Intent intent = new Intent()
-                .setType("*/*")
-                .setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
+        if (!spaceStatus.isStatusProcessOfUpdatingSoftware() & !spaceStatus.isStatusProcessOfLoadingSoftware()) {
+            Intent intent = new Intent()
+                    .setType("*/*")
+                    .setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
+        } else {
+            Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void loadFile() throws IOException {
         if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
-            InputStream inputStream = null;
-            try {
-                inputStream = getContext().getContentResolver().openInputStream(selectedFile);
-                spaceMemory.setMemorySpaceByte();
-                byte[] data = new byte[spaceMemory.getMemorySpaceByteLength()];
-                int count = inputStream.read(data);
-                while (count != -1) {
-                    byte[] dataLastByte = new byte[count];
-                    for (int i = 0; i < count; i++) {
-                        dataLastByte[i] = data[i];
+            if (!spaceStatus.isReadyFlagToLoadSoftware() & (!spaceStatus.isStatusProcessOfLoadingSoftware() & (!spaceStatus.isReadyFlagToFinishOfLoadingSoftware()))) {
+                InputStream inputStream = null;
+                try {
+                    inputStream = getContext().getContentResolver().openInputStream(selectedFile);
+                    spaceMemory.setMemorySpaceByte();
+                    byte[] data = new byte[spaceMemory.getMemorySpaceByteLength()];
+                    int count = inputStream.read(data);
+                    while (count != -1) {
+                        byte[] dataLastByte = new byte[count];
+                        for (int i = 0; i < count; i++) {
+                            dataLastByte[i] = data[i];
+                        }
+                        spaceMemory.setMemorySpaceArrayListByte(dataLastByte);
+                        count = inputStream.read(data);
                     }
-                    spaceMemory.setMemorySpaceArrayListByte(dataLastByte);
-                    count = inputStream.read(data);
+                    spaceStatus.setReadyFlagToLoadSoftware(true);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+//            inputStream.close();
                 }
-//                statusSpace.setReadyFlagToLoad(true);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                inputStream.close();
+            } else {
+                if (spaceStatus.isReadyFlagToLoadSoftware() || spaceStatus.isStatusProcessOfLoadingSoftware()) {
+                    Toast.makeText(getContext(), "Дождитесь завершения загрузки ПО", Toast.LENGTH_LONG).show();
+                } else if (spaceStatus.isReadyFlagToUpdateSoftware() || spaceStatus.isStatusProcessOfUpdatingSoftware()) {
+                    Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
+                }
+
             }
         } else {
             Toast.makeText(getContext(), "Укажите путь для загрузки ПО", Toast.LENGTH_LONG).show();
         }
-
     }
 
-//    private void startLoad() {
-//        statusSpace.setReadyFlagToStart(true);
-//    }
+    private void startLoad() {
+        if (!spaceStatus.isStatusProcessOfUpdatingSoftware() & !spaceStatus.isStatusProcessOfLoadingSoftware()) {
+            spaceStatus.setReadyFlagToUpdateSoftware(true);
+        } else {
+            Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
+        }
+    }
 
         @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -211,83 +295,109 @@ public class FragmentSP2MAIN extends Fragment {
             super.run();
             while (true) {
                 try {
-                    UpDateGraphicalDisplay.sleep(150);
-//                    if (statusSpace.getDevice().equals(ARG_SECTION_NUMBER)) {
-//                        if (statusSpace.isStatusLoadToDevice()) {
-//                            progressBarLoadToDevice.post(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    progressBarLoadToDevice.setVisibility(View.VISIBLE);
-//                                }
-//                            });
-//                            textViewStatusLoadToDevice.post(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    if (!latchLoadToDevice) {
-//                                        textViewStatusLoadToDevice.setText("Обновление...");
-//                                        textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
-//                                        latchLoadToDevice = true;
-//                                    }
-//
-//                                }
-//                            });
-//                        } else {
-//                            progressBarLoadToDevice.post(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
-//                                }
-//                            });
-//                            textViewStatusLoadToDevice.post(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    if (latchLoadToDevice) {
-//                                        textViewStatusLoadToDevice.setText("Обновление завершено");
-//                                        latchLoadToDevice = false;
-//                                    }
-//
-//                                }
-//                            });
-//                        }
-//                        if (statusSpace.isStatusLoadToFlesh()) {
-//                            progressBarLoadToFlesh.post(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    progressBarLoadToFlesh.setVisibility(View.VISIBLE);
-//                                }
-//                            });
-//                            textViewStatusLoadToFlesh.post(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    if (!latchLoadToFlesh) {
-//                                        textViewStatusLoadToFlesh.setText("Загрузка...");
-//                                        textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-//                                        latchLoadToFlesh = true;
-//                                    }
-//                                }
-//                            });
-//                        } else {
-//                            progressBarLoadToFlesh.post(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
-//                                }
-//                            });
-//                            textViewStatusLoadToFlesh.post(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    if (latchLoadToFlesh) {
-//                                        textViewStatusLoadToFlesh.setText("Загрузка завершена");
-//                                        latchLoadToFlesh = false;
-//                                        textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.VISIBLE);
-//                                        spinnerAddressOfDevice.setVisibility(View.VISIBLE);
-//                                        textViewInformationAboutDevice.setVisibility(View.VISIBLE);
-//                                        buttonStartLoadSP2main.setVisibility(View.VISIBLE);
-//                                    }
-//                                }
-//                            });
-//                        }
-//                    }
+                    FragmentTMS2812.UpDateGraphicalDisplay.sleep(timer);
+
+                    if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
+                        if (spaceStatus.isStatusProcessOfUpdatingSoftware()) {
+                            progressBarLoadToDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBarLoadToDevice.setVisibility(View.VISIBLE);
+                                }
+                            });
+                            textViewStatusLoadToDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (!latchLoadToDevice) {
+                                        textViewStatusLoadToDevice.setText("Обновление ПО...");
+                                        textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
+                                        latchLoadToDevice = true;
+                                    }
+
+                                }
+                            });
+                        } else {
+                            progressBarLoadToDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                            textViewStatusLoadToDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (latchLoadToDevice) {
+                                        textViewStatusLoadToDevice.setText("Обновление завершено");
+                                        latchLoadToDevice = false;
+                                    }
+
+                                }
+                            });
+                        }
+                        if (spaceStatus.isStatusProcessOfLoadingSoftware()) {
+                            progressBarLoadToFlesh.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBarLoadToFlesh.setVisibility(View.VISIBLE);
+                                }
+                            });
+                            textViewStatusLoadToFlesh.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (!latchLoadToFlesh) {
+                                        textViewStatusLoadToFlesh.setText("Загрузка в память...");
+                                        textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                                        latchLoadToFlesh = true;
+                                    }
+                                }
+                            });
+                        } else {
+                            progressBarLoadToFlesh.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                            textViewStatusLoadToFlesh.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (latchLoadToFlesh) {
+                                        textViewStatusLoadToFlesh.setText("Загрузка завершена");
+                                        latchLoadToFlesh = false;
+                                        textViewTipChoiseAddressOfDeviceForSP2main.setVisibility(View.VISIBLE);
+                                        spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+                                        textViewInformationAboutDevice.setVisibility(View.VISIBLE);
+                                        buttonStartLoadSP2main.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            });
+                        }
+
+                    } else {
+                        textViewPathToLoadFile.post(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware()) || (spaceStatus.isReadyFlagToUpdateSoftware()) || (spaceStatus.isStatusProcessOfUpdatingSoftware())) {
+                                    textViewPathToLoadFile.setVisibility(View.INVISIBLE);
+                                    buttonChoicePath.setVisibility(View.INVISIBLE);
+                                    buttonLoadToFlesh.setVisibility(View.INVISIBLE);
+                                    textViewStatusLoadToFlesh.setText("Дождитесь завершения загрузки ПО для " + spaceStatus.getDevice());
+                                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                                    buttonStartLoadSP2main.setVisibility(View.INVISIBLE);
+                                    progressBarLoadToFlesh.setVisibility(View.VISIBLE);
+                                } else {
+                                    textViewPathToLoadFile.setText("Путь не указан");
+                                    textViewPathToLoadFile.setVisibility(View.VISIBLE);
+                                    buttonChoicePath.setVisibility(View.VISIBLE);
+                                    buttonLoadToFlesh.setVisibility(View.VISIBLE);
+                                    textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
+                                    buttonStartLoadSP2main.setVisibility(View.INVISIBLE);
+                                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        });
+                    }
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
