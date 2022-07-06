@@ -94,6 +94,7 @@ public class FragmentBluetooth extends Fragment {
     private String firstStringAdapterAvailableDevices = "Выберите устройство";
 
     private BluetoothSoketThread bluetoothSoketThread;
+    private BluetoothConnectedThread bluetoothConnectedThread;
 
     private PageViewModel pageViewModel;
     private TextView textViewConnectedDevices;
@@ -367,6 +368,7 @@ public class FragmentBluetooth extends Fragment {
     }
 
     public class BluetoothSoketThread extends Thread {
+
         public BluetoothSoketThread() {
             try {
                 bluetoothSocket = bluetoothDevice.createRfcommSocketToServiceRecord(ParcelUuid.fromString(PBAP_UUID).getUuid());
@@ -399,7 +401,6 @@ public class FragmentBluetooth extends Fragment {
                 // Do work to manage the connection (in a separate thread)
                 try {
                     manageConnectedSocket();
-                    Log.i(LOG_TAG,"try to manage");
                 } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
                 }
@@ -409,12 +410,13 @@ public class FragmentBluetooth extends Fragment {
 
         public void cancel() {
             try {
+                bluetoothConnectedThread.interrupt();
                 bluetoothSocket.close();
             } catch (IOException e) { }
         }
 
         private void manageConnectedSocket() throws InterruptedException, IOException {
-            BluetoothConnectedThread bluetoothConnectedThread = new BluetoothConnectedThread();
+            bluetoothConnectedThread = new BluetoothConnectedThread();
             bluetoothConnectedThread.start();
             BluetoothSoketThread.sleep(2000);
 
@@ -471,7 +473,7 @@ public class FragmentBluetooth extends Fragment {
         public void run() {
             byte[] buffer = new byte[8];  // buffer store for the stream
             int bytes = 20; // bytes returned from read()
-            while (true) {
+            while (!isInterrupted()) {
                 try {
                     // Read from the InputStream
                     bytes = inputStream.read(buffer);
@@ -619,6 +621,12 @@ public class FragmentBluetooth extends Fragment {
                     Log.i(LOG_TAG,e.toString());
                     break;
                 }
+            }
+            try {
+                inputStream.close();
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 
@@ -777,7 +785,8 @@ public class FragmentBluetooth extends Fragment {
         /* Call this from the main activity to shutdown the connection */
         public void cancel() {
             try {
-                bluetoothSocket.close();
+                inputStream.close();
+                outputStream.close();
             } catch (IOException e) { }
         }
 
