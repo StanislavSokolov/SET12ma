@@ -3,11 +3,29 @@ package com.example.set12ma.ui.main;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.lang.annotation.ElementType;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class SpaceAddress implements Parcelable {
     private int[] addressSpace;
+    private Queue<ElementQueue> queue;
+
+    public ElementQueue getElementQueue() {
+        return queue.remove();
+    }
+
+    public void setElementQueue(ElementQueue elementQueue) {
+        queue.add(elementQueue);
+    }
+
+    public boolean isEmptyQueue(){
+        return queue.isEmpty();
+    }
 
     public SpaceAddress(int addressSpaceNumber) {
         addressSpace = new int[addressSpaceNumber];
+        queue = new LinkedList<>();
     }
 
     protected SpaceAddress(Parcel in) {

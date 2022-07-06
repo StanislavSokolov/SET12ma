@@ -13,11 +13,11 @@ import com.example.set12ma.R;
 
 import java.util.ArrayList;
 
-public class FragmentOutput extends Fragment implements View.OnClickListener {
+public class FragmentOutput extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "Output";
 
-    private int startCellNumber = 48;
+    private int sectionNumber = 0;
 
     private ArrayList<Switch> arrayList;
     private SpaceAddress spaceAddress;
@@ -63,165 +63,345 @@ public class FragmentOutput extends Fragment implements View.OnClickListener {
 
         bytes = new byte[48];
 
-        Switch switch_out_0_0 = root.findViewById(R.id.switch_out_0_0);
-        switch_out_0_0.setOnClickListener(this);
-        arrayList.add(switch_out_0_0);
-        Switch switch_out_0_1 = root.findViewById(R.id.switch_out_0_1);
-        switch_out_0_1.setOnClickListener(this);
-        arrayList.add(switch_out_0_1);
-        Switch switch_out_0_2 = root.findViewById(R.id.switch_out_0_2);
-        switch_out_0_2.setOnClickListener(this);
-        arrayList.add(switch_out_0_2);
-        Switch switch_out_0_3 = root.findViewById(R.id.switch_out_0_3);
-        switch_out_0_3.setOnClickListener(this);
-        arrayList.add(switch_out_0_3);
-        Switch switch_out_0_4 = root.findViewById(R.id.switch_out_0_4);
-        switch_out_0_4.setOnClickListener(this);
-        arrayList.add(switch_out_0_4);
-        Switch switch_out_0_5 = root.findViewById(R.id.switch_out_0_5);
-        switch_out_0_5.setOnClickListener(this);
-        arrayList.add(switch_out_0_5);
-        Switch switch_out_0_6 = root.findViewById(R.id.switch_out_0_6);
-        switch_out_0_6.setOnClickListener(this);
-        arrayList.add(switch_out_0_6);
-        Switch switch_out_0_7 = root.findViewById(R.id.switch_out_0_7);
-        switch_out_0_7.setOnClickListener(this);
-        arrayList.add(switch_out_0_7);
-        Switch switch_out_0_8 = root.findViewById(R.id.switch_out_0_8);
-        switch_out_0_8.setOnClickListener(this);
-        arrayList.add(switch_out_0_8);
-        Switch switch_out_0_9 = root.findViewById(R.id.switch_out_0_9);
-        switch_out_0_9.setOnClickListener(this);
-        arrayList.add(switch_out_0_9);
-        Switch switch_out_0_10 = root.findViewById(R.id.switch_out_0_10);
-        switch_out_0_10.setOnClickListener(this);
-        arrayList.add(switch_out_0_10);
-        Switch switch_out_0_11 = root.findViewById(R.id.switch_out_0_11);
-        switch_out_0_11.setOnClickListener(this);
-        arrayList.add(switch_out_0_11);
-        Switch switch_out_0_12 = root.findViewById(R.id.switch_out_0_12);
-        switch_out_0_12.setOnClickListener(this);
-        arrayList.add(switch_out_0_12);
-        Switch switch_out_0_13 = root.findViewById(R.id.switch_out_0_13);
-        switch_out_0_13.setOnClickListener(this);
-        arrayList.add(switch_out_0_13);
-        Switch switch_out_0_14 = root.findViewById(R.id.switch_out_0_14);
-        switch_out_0_14.setOnClickListener(this);
-        arrayList.add(switch_out_0_14);
-        Switch switch_out_0_15 = root.findViewById(R.id.switch_out_0_15);
-        switch_out_0_15.setOnClickListener(this);
-        arrayList.add(switch_out_0_15);
+        final Switch switch_out_0_0 = root.findViewById(R.id.switch_out_0_0);
+        switch_out_0_0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_0.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
+            }
+        });
+        final Switch switch_out_0_1 = root.findViewById(R.id.switch_out_0_1);
+        switch_out_0_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_1.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber,1, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,1, 0));
+            }
+        });
+        final Switch switch_out_0_2 = root.findViewById(R.id.switch_out_0_2);
+        switch_out_0_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_2.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 2, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,2, 0));
+            }
+        });
+        final Switch switch_out_0_3 = root.findViewById(R.id.switch_out_0_3);
+        switch_out_0_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_3.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 3, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,3, 0));
+            }
+        });
+        final Switch switch_out_0_4 = root.findViewById(R.id.switch_out_0_4);
+        switch_out_0_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_4.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 4, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,4, 0));
+            }
+        });
+        final Switch switch_out_0_5 = root.findViewById(R.id.switch_out_0_5);
+        switch_out_0_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_5.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 5, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,5, 0));
+            }
+        });
+        final Switch switch_out_0_6 = root.findViewById(R.id.switch_out_0_6);
+        switch_out_0_6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_6.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 6, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,6, 0));
+            }
+        });
+        final Switch switch_out_0_7 = root.findViewById(R.id.switch_out_0_7);
+        switch_out_0_7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_7.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 7, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,7, 0));
+            }
+        });
+        final Switch switch_out_0_8 = root.findViewById(R.id.switch_out_0_8);
+        switch_out_0_8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_8.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 8, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,8, 0));
+            }
+        });
+        final Switch switch_out_0_9 = root.findViewById(R.id.switch_out_0_9);
+        switch_out_0_9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_9.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 9, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,9, 0));
+            }
+        });
+        final Switch switch_out_0_10 = root.findViewById(R.id.switch_out_0_10);
+        switch_out_0_10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_10.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 10, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,10, 0));
+            }
+        });
+        final Switch switch_out_0_11 = root.findViewById(R.id.switch_out_0_11);
+        switch_out_0_11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_11.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 11, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,11, 0));
+            }
+        });
+        final Switch switch_out_0_12 = root.findViewById(R.id.switch_out_0_12);
+        switch_out_0_12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_12.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 12, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,12, 0));
+            }
+        });
+        final Switch switch_out_0_13 = root.findViewById(R.id.switch_out_0_13);
+        switch_out_0_13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_13.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 13, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,13, 0));
+            }
+        });
+        final Switch switch_out_0_14 = root.findViewById(R.id.switch_out_0_14);
+        switch_out_0_14.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_14.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 14, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,14, 0));
+            }
+        });
+        final Switch switch_out_0_15 = root.findViewById(R.id.switch_out_0_15);
+        switch_out_0_15.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_0_15.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 15, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,15, 0));
+            }
+        });
 
-        Switch switch_out_1_0 = root.findViewById(R.id.switch_out_1_0);
-        switch_out_1_0.setOnClickListener(this);
-        arrayList.add(switch_out_1_0);
-        Switch switch_out_1_1 = root.findViewById(R.id.switch_out_1_1);
-        switch_out_1_1.setOnClickListener(this);
-        arrayList.add(switch_out_1_1);
-        Switch switch_out_1_2 = root.findViewById(R.id.switch_out_1_2);
-        switch_out_1_2.setOnClickListener(this);
-        arrayList.add(switch_out_1_2);
-        Switch switch_out_1_3 = root.findViewById(R.id.switch_out_1_3);
-        switch_out_1_3.setOnClickListener(this);
-        arrayList.add(switch_out_1_3);
-        Switch switch_out_1_4 = root.findViewById(R.id.switch_out_1_4);
-        switch_out_1_4.setOnClickListener(this);
-        arrayList.add(switch_out_1_4);
-        Switch switch_out_1_5 = root.findViewById(R.id.switch_out_1_5);
-        switch_out_1_5.setOnClickListener(this);
-        arrayList.add(switch_out_1_5);
-        Switch switch_out_1_6 = root.findViewById(R.id.switch_out_1_6);
-        switch_out_1_6.setOnClickListener(this);
-        arrayList.add(switch_out_1_6);
-        Switch switch_out_1_7 = root.findViewById(R.id.switch_out_1_7);
-        switch_out_1_7.setOnClickListener(this);
-        arrayList.add(switch_out_1_7);
-        Switch switch_out_1_8 = root.findViewById(R.id.switch_out_1_8);
-        switch_out_1_8.setOnClickListener(this);
-        arrayList.add(switch_out_1_8);
-        Switch switch_out_1_9 = root.findViewById(R.id.switch_out_1_9);
-        switch_out_1_9.setOnClickListener(this);
-        arrayList.add(switch_out_1_9);
-        Switch switch_out_1_10 = root.findViewById(R.id.switch_out_1_10);
-        switch_out_1_10.setOnClickListener(this);
-        arrayList.add(switch_out_1_10);
-        Switch switch_out_1_11 = root.findViewById(R.id.switch_out_1_11);
-        switch_out_1_11.setOnClickListener(this);
-        arrayList.add(switch_out_1_11);
-        Switch switch_out_1_12 = root.findViewById(R.id.switch_out_1_12);
-        switch_out_1_12.setOnClickListener(this);
-        arrayList.add(switch_out_1_12);
-        Switch switch_out_1_13 = root.findViewById(R.id.switch_out_1_13);
-        switch_out_1_13.setOnClickListener(this);
-        arrayList.add(switch_out_1_13);
-        Switch switch_out_1_14 = root.findViewById(R.id.switch_out_1_14);
-        switch_out_1_14.setOnClickListener(this);
-        arrayList.add(switch_out_1_14);
-        Switch switch_out_1_15 = root.findViewById(R.id.switch_out_1_15);
-        switch_out_1_15.setOnClickListener(this);
-        arrayList.add(switch_out_1_15);
+        final Switch switch_out_1_0 = root.findViewById(R.id.switch_out_1_0);
+        switch_out_1_0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_0.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 16, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,16, 0));
+            }
+        });
+        final Switch switch_out_1_1 = root.findViewById(R.id.switch_out_1_1);
+        switch_out_1_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_1.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 17, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,17, 0));
+            }
+        });
+        final Switch switch_out_1_2 = root.findViewById(R.id.switch_out_1_2);
+        switch_out_1_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_2.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 18, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,18, 0));
+            }
+        });
+        final Switch switch_out_1_3 = root.findViewById(R.id.switch_out_1_3);
+        switch_out_1_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_3.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 19, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,19, 0));
+            }
+        });
+        final Switch switch_out_1_4 = root.findViewById(R.id.switch_out_1_4);
+        switch_out_1_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_4.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 20, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,20, 0));
+            }
+        });
+        final Switch switch_out_1_5 = root.findViewById(R.id.switch_out_1_5);
+        switch_out_1_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_5.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 21, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,21, 0));
+            }
+        });
+        final Switch switch_out_1_6 = root.findViewById(R.id.switch_out_1_6);
+        switch_out_1_6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_6.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 22, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,22, 0));
+            }
+        });
+        final Switch switch_out_1_7 = root.findViewById(R.id.switch_out_1_7);
+        switch_out_1_7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_7.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 23, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,23, 0));
+            }
+        });
+        final Switch switch_out_1_8 = root.findViewById(R.id.switch_out_1_8);
+        switch_out_1_8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_8.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 24, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,24, 0));
+            }
+        });
+        final Switch switch_out_1_9 = root.findViewById(R.id.switch_out_1_9);
+        switch_out_1_9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_9.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 25, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,25, 0));
+            }
+        });
+        final Switch switch_out_1_10 = root.findViewById(R.id.switch_out_1_10);
+        switch_out_1_10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_10.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 26, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,26, 0));
+            }
+        });
+        final Switch switch_out_1_11 = root.findViewById(R.id.switch_out_1_11);
+        switch_out_1_11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_11.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 27, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,27, 0));
+            }
+        });
+        final Switch switch_out_1_12 = root.findViewById(R.id.switch_out_1_12);
+        switch_out_1_12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_12.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 28, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,28, 0));
+            }
+        });
+        final Switch switch_out_1_13 = root.findViewById(R.id.switch_out_1_13);
+        switch_out_1_13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_13.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 29, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,29, 0));
+            }
+        });
+        final Switch switch_out_1_14 = root.findViewById(R.id.switch_out_1_14);
+        switch_out_1_14.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_14.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 30, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,30, 0));
+            }
+        });
+        final Switch switch_out_1_15 = root.findViewById(R.id.switch_out_1_15);
+        switch_out_1_15.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_1_15.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 31, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,31, 0));
+            }
+        });
 
-        Switch switch_out_2_0 = root.findViewById(R.id.switch_out_2_0);
-        switch_out_2_0.setOnClickListener(this);
-        arrayList.add(switch_out_2_0);
-        Switch switch_out_2_1 = root.findViewById(R.id.switch_out_2_1);
-        switch_out_2_1.setOnClickListener(this);
-        arrayList.add(switch_out_2_1);
-        Switch switch_out_2_2 = root.findViewById(R.id.switch_out_2_2);
-        switch_out_2_2.setOnClickListener(this);
-        arrayList.add(switch_out_2_2);
-        Switch switch_out_2_3 = root.findViewById(R.id.switch_out_2_3);
-        switch_out_2_3.setOnClickListener(this);
-        arrayList.add(switch_out_2_3);
-        Switch switch_out_2_4 = root.findViewById(R.id.switch_out_2_4);
-        switch_out_2_4.setOnClickListener(this);
-        arrayList.add(switch_out_2_4);
-        Switch switch_out_2_5 = root.findViewById(R.id.switch_out_2_5);
-        switch_out_2_5.setOnClickListener(this);
-        arrayList.add(switch_out_2_5);
-        Switch switch_out_2_6 = root.findViewById(R.id.switch_out_2_6);
-        switch_out_2_6.setOnClickListener(this);
-        arrayList.add(switch_out_2_6);
-        Switch switch_out_2_7 = root.findViewById(R.id.switch_out_2_7);
-        switch_out_2_7.setOnClickListener(this);
-        arrayList.add(switch_out_2_7);
-        Switch switch_out_2_8 = root.findViewById(R.id.switch_out_2_8);
-        switch_out_2_8.setOnClickListener(this);
-        arrayList.add(switch_out_2_8);
-        Switch switch_out_2_9 = root.findViewById(R.id.switch_out_2_9);
-        switch_out_2_9.setOnClickListener(this);
-        arrayList.add(switch_out_2_9);
-        Switch switch_out_2_10 = root.findViewById(R.id.switch_out_2_10);
-        switch_out_2_10.setOnClickListener(this);
-        arrayList.add(switch_out_2_10);
-        Switch switch_out_2_11 = root.findViewById(R.id.switch_out_2_11);
-        switch_out_2_11.setOnClickListener(this);
-        arrayList.add(switch_out_2_11);
-        Switch switch_out_2_12 = root.findViewById(R.id.switch_out_2_12);
-        switch_out_2_12.setOnClickListener(this);
-        arrayList.add(switch_out_2_12);
-        Switch switch_out_2_13 = root.findViewById(R.id.switch_out_2_13);
-        switch_out_2_13.setOnClickListener(this);
-        arrayList.add(switch_out_2_13);
-        Switch switch_out_2_14 = root.findViewById(R.id.switch_out_2_14);
-        switch_out_2_14.setOnClickListener(this);
-        arrayList.add(switch_out_2_14);
-        Switch switch_out_2_15 = root.findViewById(R.id.switch_out_2_15);
-        switch_out_2_15.setOnClickListener(this);
-        arrayList.add(switch_out_2_15);
+        final Switch switch_out_2_0 = root.findViewById(R.id.switch_out_2_0);
+        switch_out_2_0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_0.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 32, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,32, 0));
+            }
+        });
+        final Switch switch_out_2_1 = root.findViewById(R.id.switch_out_2_1);
+        switch_out_2_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_1.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 33, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,33, 0));
+            }
+        });
+        final Switch switch_out_2_2 = root.findViewById(R.id.switch_out_2_2);
+        switch_out_2_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_2.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 34, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,34, 0));
+            }
+        });
+        final Switch switch_out_2_3 = root.findViewById(R.id.switch_out_2_3);
+        switch_out_2_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_3.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 35, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,35, 0));
+            }
+        });
+        final Switch switch_out_2_4 = root.findViewById(R.id.switch_out_2_4);
+        switch_out_2_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_4.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 36, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,36, 0));
+            }
+        });
+        final Switch switch_out_2_5 = root.findViewById(R.id.switch_out_2_5);
+        switch_out_2_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_5.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 37, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,37, 0));
+            }
+        });
+        final Switch switch_out_2_6 = root.findViewById(R.id.switch_out_2_6);
+        switch_out_2_6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_6.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 38, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,38, 0));
+            }
+        });
+        final Switch switch_out_2_7 = root.findViewById(R.id.switch_out_2_7);
+        switch_out_2_7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_7.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 39, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,39, 0));
+            }
+        });
+        final Switch switch_out_2_8 = root.findViewById(R.id.switch_out_2_8);
+        switch_out_2_8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_8.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 40, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,40, 0));
+            }
+        });
+        final Switch switch_out_2_9 = root.findViewById(R.id.switch_out_2_9);
+        switch_out_2_9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_9.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 41, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,41, 0));
+            }
+        });
+        final Switch switch_out_2_10 = root.findViewById(R.id.switch_out_2_10);
+        switch_out_2_10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_10.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 42, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,42, 0));
+            }
+        });
+        final Switch switch_out_2_11 = root.findViewById(R.id.switch_out_2_11);
+        switch_out_2_11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_11.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 43, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,43, 0));
+            }
+        });
+        final Switch switch_out_2_12 = root.findViewById(R.id.switch_out_2_12);
+        switch_out_2_12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_12.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 44, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,44, 0));
+            }
+        });
+        final Switch switch_out_2_13 = root.findViewById(R.id.switch_out_2_13);
+        switch_out_2_13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_13.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 45, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,45, 0));
+            }
+        });
+        final Switch switch_out_2_14 = root.findViewById(R.id.switch_out_2_14);
+        switch_out_2_14.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_14.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 46, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,46, 0));
+            }
+        });
+        final Switch switch_out_2_15 = root.findViewById(R.id.switch_out_2_15);
+        switch_out_2_15.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_out_2_15.isChecked()) spaceAddress.setElementQueue(new ElementQueue(sectionNumber, 47, 1)); else spaceAddress.setElementQueue(new ElementQueue(sectionNumber,47, 0));
+            }
+        });
 
         return root;
-    }
-
-    @Override
-    public void onClick(View v){
-        for (int i = 0; i < arrayList.size(); i++) {
-            if (arrayList.get(i).isChecked()) {
-                spaceAddress.setAddressSpace(startCellNumber + i, 1);
-            }
-            else {
-                spaceAddress.setAddressSpace(startCellNumber + i, 0);
-            }
-        }
     }
 }

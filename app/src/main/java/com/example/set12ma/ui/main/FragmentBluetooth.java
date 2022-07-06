@@ -36,7 +36,7 @@ public class FragmentBluetooth extends Fragment {
     final String PBAP_UUID = "00001101-0000-1000-8000-00805f9b34fb";
     private BluetoothSocket bluetoothSocket;
     private BluetoothDevice bluetoothDevice;
-    private long timer = 100;
+    private long timer = 50;
 
     // for BluetoothConnectedThread
     private InputStream inputStream;
