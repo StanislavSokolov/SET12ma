@@ -274,7 +274,7 @@ public class FragmentADC extends Fragment {
     public void upDateValues() {
         for (int i = 0; i < 48; i++) {
             arrayListTextView.get(i).setText(String.valueOf(spaceAddress.getAddressSpace(stopCellNumber + i)));
-            if (spaceAddress.getAddressSpace(startCellNumber + i) > 0)
+            if (spaceAddress.getAddressSpace(stopCellNumber + i) > 0)
                 arrayListButton.get(i).setBackgroundColor(Color.RED);
             else arrayListButton.get(i).setBackgroundColor(Color.GREEN);
         }

@@ -268,13 +268,14 @@ public class FragmentBluetooth extends Fragment {
                 bluetoothSoketThread.start();
 //                new ConnectingTask(getContext()).loadInBackground();
             } else {
-                bluetoothSoketThread.cancel();
                 buttonConnectToDevice.setText("Подключить");
                 textViewConnectedToDevice.setText("Отключено от " + stringConnectedToDevice);
                 progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
                 spaceStatus.setReadyFlagToExchangeData(false);
                 spaceStatus.setDevice("");
                 getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                bluetoothSoketThread.cancel();
+                bluetoothSoketThread.interrupt();
             }
         } else {
             Toast.makeText(getActivity(), "Для подключения необходимо выбрать сопряженное устройство", Toast.LENGTH_SHORT).show();
@@ -417,7 +418,7 @@ public class FragmentBluetooth extends Fragment {
             bluetoothConnectedThread.start();
             BluetoothSoketThread.sleep(2000);
 
-            while (true) {
+            while (!isInterrupted()) {
                 BluetoothSoketThread.sleep(timer);
                 if (spaceStatus.isReadyFlagToLoadSoftware()) {
                     if (spaceStatus.isStatusProcessOfLoadingSoftware()) {
@@ -702,7 +703,7 @@ public class FragmentBluetooth extends Fragment {
                         default:
                             break;
                     }
-
+                    Log.i(LOG_TAG, String.valueOf(counterUnsuccessfulSending));
                 } else Log.i(LOG_TAG, "множественные неудачные попытки прочитать значение");
             } else {
                 bytesToSend = new byte[countBytes];
