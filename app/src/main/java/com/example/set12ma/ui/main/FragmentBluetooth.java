@@ -265,6 +265,8 @@ public class FragmentBluetooth extends Fragment {
                 buttonConnectToDevice.setText("Отключить");
                 textViewConnectedToDevice.setText("Подключение к " + stringConnectedToDevice);
                 textViewConnectedToDevice.setVisibility(View.VISIBLE);
+                currentByte = 0;
+                statement = 0;
                 bluetoothSoketThread = new BluetoothSoketThread();
                 bluetoothSoketThread.start();
 //                new ConnectingTask(getContext()).loadInBackground();
@@ -279,7 +281,19 @@ public class FragmentBluetooth extends Fragment {
                 bluetoothSoketThread.interrupt();
             }
         } else {
-            Toast.makeText(getActivity(), "Для подключения необходимо выбрать сопряженное устройство", Toast.LENGTH_SHORT).show();
+            if (buttonConnectToDevice.getText().equals("Подключить")) {
+                Toast.makeText(getActivity(), "Для подключения необходимо выбрать сопряженное устройство", Toast.LENGTH_SHORT).show();
+            } else {
+                buttonConnectToDevice.setText("Подключить");
+                textViewConnectedToDevice.setText("Отключено от " + stringConnectedToDevice);
+                progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+                spaceStatus.setReadyFlagToExchangeData(false);
+                spaceStatus.setDevice("");
+                getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                bluetoothSoketThread.cancel();
+                bluetoothSoketThread.interrupt();
+            }
+
         }
     }
 
