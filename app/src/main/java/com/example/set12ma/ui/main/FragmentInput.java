@@ -24,6 +24,9 @@ public class FragmentInput extends Fragment {
     private SpaceAddress spaceAddress;
     private ResultReceiverAddressSpace resultReceiverAddressSpace;
 
+    private UpDateGraphicalDisplay upDateGraphicalDisplay;
+    private long timer = 500;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -40,8 +43,6 @@ public class FragmentInput extends Fragment {
         return fragment;
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +52,9 @@ public class FragmentInput extends Fragment {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
         pageViewModel.setIndex(index);
+        upDateGraphicalDisplay = new UpDateGraphicalDisplay();
+        upDateGraphicalDisplay.start();
+        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
     }
 
     @Override
@@ -60,7 +64,6 @@ public class FragmentInput extends Fragment {
         View root = inflater.inflate(R.layout.fragment_input, container, false);
 
         arrayList = new ArrayList<>();
-
 
         Button indicator_button_in_0_0 = root.findViewById(R.id.indicator_button_in_0_0);
         arrayList.add(indicator_button_in_0_0);
@@ -161,18 +164,9 @@ public class FragmentInput extends Fragment {
         Button indicator_button_in_2_15 = root.findViewById(R.id.indicator_button_in_2_15);
         arrayList.add(indicator_button_in_2_15);
 
-        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
-
         upDateValues();
 
         return root;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
-        upDateValues();
     }
 
     public void upDateValues() {
@@ -180,6 +174,24 @@ public class FragmentInput extends Fragment {
             if (spaceAddress.getAddressSpace(startCellNumber + i) == 0)
                 arrayList.get(i).setBackgroundColor(Color.RED);
             else arrayList.get(i).setBackgroundColor(Color.GREEN);
+        }
+    }
+
+    public class UpDateGraphicalDisplay extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            while (true) {
+                try {
+                    UpDateGraphicalDisplay.sleep(timer);
+                    upDateValues();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        public UpDateGraphicalDisplay() {
         }
     }
 }

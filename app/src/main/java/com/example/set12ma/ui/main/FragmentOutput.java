@@ -14,18 +14,16 @@ import com.example.set12ma.R;
 import java.util.ArrayList;
 
 public class FragmentOutput extends Fragment implements View.OnClickListener {
-//    static BluetoothConnectedThread bluetoothConnectedThread;
-
 
     private static final String ARG_SECTION_NUMBER = "Output";
-    private static final String LOG_TAG = "AndroidExample";
-    private ArrayList<Switch> arrayList;
-    private byte[] bytes;
 
-    private SpaceAddress spaceAddress;
     private int startCellNumber = 48;
 
+    private ArrayList<Switch> arrayList;
+    private SpaceAddress spaceAddress;
     private ResultReceiverAddressSpace resultReceiverAddressSpace;
+
+    private byte[] bytes;
 
     @Override
     public void onAttach(Context context) {
@@ -52,6 +50,7 @@ public class FragmentOutput extends Fragment implements View.OnClickListener {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
         pageViewModel.setIndex(index);
+        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
     }
 
     @Override
@@ -59,7 +58,9 @@ public class FragmentOutput extends Fragment implements View.OnClickListener {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_output, container, false);
+
         arrayList = new ArrayList();
+
         bytes = new byte[48];
 
         Switch switch_out_0_0 = root.findViewById(R.id.switch_out_0_0);
@@ -209,10 +210,6 @@ public class FragmentOutput extends Fragment implements View.OnClickListener {
         switch_out_2_15.setOnClickListener(this);
         arrayList.add(switch_out_2_15);
 
-        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
-
-
-
         return root;
     }
 
@@ -227,10 +224,4 @@ public class FragmentOutput extends Fragment implements View.OnClickListener {
             }
         }
     }
-
-//    public static void setBluetoothConnectedTread(BluetoothConnectedThread btConnectedThread) {
-////        bluetoothConnectedThread = btConnectedThread;
-//    }
-
-
 }

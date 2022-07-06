@@ -18,12 +18,16 @@ import java.util.ArrayList;
 public class FragmentADC extends Fragment {
     private static final String ARG_SECTION_NUMBER = "ADC";
 
-    private ArrayList<Button> arrayListButton;
-    private ArrayList<TextView> arrayListTextView;
     private int startCellNumber = 96;
     private int stopCellNumber = 208;
+
+    private ArrayList<Button> arrayListButton;
+    private ArrayList<TextView> arrayListTextView;
     private SpaceAddress spaceAddress;
     private ResultReceiverAddressSpace resultReceiverAddressSpace;
+
+    private UpDateGraphicalDisplay upDateGraphicalDisplay;
+    private long timer = 500;
 
     @Override
     public void onAttach(Context context) {
@@ -50,6 +54,9 @@ public class FragmentADC extends Fragment {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
         pageViewModel.setIndex(index);
+        upDateGraphicalDisplay = new UpDateGraphicalDisplay();
+        upDateGraphicalDisplay.start();
+        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
     }
 
     @Override
@@ -259,18 +266,35 @@ public class FragmentADC extends Fragment {
         Button indicator_button_adc_2_15 = root.findViewById(R.id.indicator_button_adc_2_15);
         arrayListButton.add(indicator_button_adc_2_15);
 
-        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
-
         upDateValues();
+
         return root;
     }
 
     public void upDateValues() {
         for (int i = 0; i < 48; i++) {
             arrayListTextView.get(i).setText(String.valueOf(spaceAddress.getAddressSpace(stopCellNumber + i)));
-            if (spaceAddress.getAddressSpace(startCellNumber + i) == 0)
+            if (spaceAddress.getAddressSpace(startCellNumber + i) > 0)
                 arrayListButton.get(i).setBackgroundColor(Color.RED);
             else arrayListButton.get(i).setBackgroundColor(Color.GREEN);
+        }
+    }
+
+    public class UpDateGraphicalDisplay extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            while (true) {
+                try {
+                    UpDateGraphicalDisplay.sleep(timer);
+                    upDateValues();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        public UpDateGraphicalDisplay() {
         }
     }
 }

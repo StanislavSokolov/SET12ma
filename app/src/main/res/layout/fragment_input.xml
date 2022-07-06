@@ -31,8 +31,7 @@
                 <Button
                         android:layout_width="35dp"
                         android:layout_height="25dp" android:id="@+id/indicator_button_in_0_0" android:layout_weight="0"
-                        android:clickable="false" android:foreground="@color/colorAccent"
-                        android:foregroundGravity="fill_horizontal"/>
+                        android:clickable="false"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"

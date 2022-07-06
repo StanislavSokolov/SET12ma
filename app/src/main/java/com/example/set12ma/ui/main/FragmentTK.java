@@ -16,16 +16,18 @@ import com.example.set12ma.R;
 import java.util.ArrayList;
 
 public class FragmentTK extends Fragment implements View.OnClickListener {
+
     private static final String ARG_SECTION_NUMBER = "TK";
 
     private ArrayList<Button> arrayListButton;
     private ArrayList<TextView> arrayListTextView;
+
     private int startCellNumber = 144;
     private int stopCellNumber = 208;
-    private SpaceAddress spaceAddress;
-    private ResultReceiverAddressSpace resultReceiverAddressSpace;
 
     private ArrayList<Switch> arrayList;
+    private SpaceAddress spaceAddress;
+    private ResultReceiverAddressSpace resultReceiverAddressSpace;
 
     @Override
     public void onAttach(Context context) {
@@ -52,6 +54,7 @@ public class FragmentTK extends Fragment implements View.OnClickListener {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
         pageViewModel.setIndex(index);
+        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
     }
 
     @Override
@@ -61,8 +64,6 @@ public class FragmentTK extends Fragment implements View.OnClickListener {
         View root = inflater.inflate(R.layout.fragment_tk, container, false);
 
         arrayList = new ArrayList();
-
-        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
 
         Switch switch_tk_0_0 = root.findViewById(R.id.switch_tk_0_0);
         switch_tk_0_0.setOnClickListener(this);
