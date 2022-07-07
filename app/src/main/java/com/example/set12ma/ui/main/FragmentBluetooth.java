@@ -60,10 +60,14 @@ public class FragmentBluetooth extends Fragment {
     // latchFinish
     private boolean latchFinish = false;
 
+    private boolean latchQueue = false;
+
     private boolean isStatusReading = false;
+    private boolean isModeSending = false;
     private int statement = 0;
+    private int previousByte = 0;
     private int currentByte = 0;
-    private int futureByte = 0;
+    private int nextByte = 0;
     private int counterUnsuccessfulSending = 0;
     private int maxValueUnsuccessfulSending = 1000;
     byte[] bytesToSend;
@@ -263,6 +267,7 @@ public class FragmentBluetooth extends Fragment {
 
             latchLoad = false;
             latchFinish = false;
+            latchQueue = false;
             if (buttonConnectToDevice.getText().equals("Подключить")) {
                 stringConnectedToDevice = arrayListConnectedDevices.get(itemSelectedFromConnectedDevices).getName();
                 bluetoothDevice = arrayListConnectedDevices.get(itemSelectedFromConnectedDevices);
@@ -593,7 +598,7 @@ public class FragmentBluetooth extends Fragment {
                                     if (currentByte == 207) {
                                         spaceStatus.setReadyFlagRecordingInitialValues(false);
                                     }
-                                    if ((currentByte == 47) || (currentByte == 95) || (currentByte == 143) || (currentByte == 207) || (currentByte == 255)) currentByte = futureByte;
+                                    if ((currentByte == 47) || (currentByte == 95) || (currentByte == 143) || (currentByte == 207) || (currentByte == 255)) currentByte = nextByte;
                                     else currentByte++;
                                 } else {
                                     textViewConnectedToDevice.setText("Поключено к " + stringConnectedToDevice);
@@ -629,7 +634,7 @@ public class FragmentBluetooth extends Fragment {
                                     if (currentByte == 207) {
                                         spaceStatus.setReadyFlagRecordingInitialValues(false);
                                     }
-                                    if ((currentByte == 47) || (currentByte == 95) || (currentByte == 143) || (currentByte == 207) || (currentByte == 255)) currentByte = futureByte;
+                                    if ((currentByte == 47) || (currentByte == 95) || (currentByte == 143) || (currentByte == 207) || (currentByte == 255)) currentByte = nextByte;
                                     else currentByte++;
                                 } else {
                                     textViewConnectedToDevice.setText("Поключено к " + stringConnectedToDevice);
@@ -669,103 +674,105 @@ public class FragmentBluetooth extends Fragment {
             if (spaceStatus.isReadyFlagToExchangeData()) {
                 if (counterUnsuccessfulSending < maxValueUnsuccessfulSending) {
                     if (spaceStatus.isReadyFlagRecordingInitialValues()) {
-                        switch (statement) {
-                            // запись out
-                            case 1:
-                                if (isStatusReading) {
-                                    counterUnsuccessfulSending = 0;
+                        if (isStatusReading) {
+                            counterUnsuccessfulSending = 0;
+                            switch (statement) {
+                                // запись out
+                                case 1:
                                     Log.i(LOG_TAG, "statement 1");
                                     sending(1);
                                     isStatusReading = false;
                                     if (currentByte == 95) {
                                         statement = 3;
-                                        futureByte = 144;
+                                        nextByte = 144;
                                     }
-                                } else {
-                                    sending(1);
-                                    counterUnsuccessfulSending++;
-                                }
-                                break;
-                            // запись ТК
-                            case 3:
-                                if (isStatusReading) {
-                                    counterUnsuccessfulSending = 0;
+                                    break;
+                                // запись ТК
+                                case 3:
                                     Log.i(LOG_TAG, "statement 3");
                                     sending(1);
                                     isStatusReading = false;
                                     if (currentByte == 207) {
                                         statement = 0;
                                         spaceStatus.setReadyFlagRecordingInitialValues(false);
-                                        futureByte = 0;
-                                    }
-                                } else {
-                                    sending(1);
-                                    counterUnsuccessfulSending++;
-                                }
-                                break;
-                            default:
-                                break;
-                        }
-                    } else {
-                        if (!spaceAddress.isEmptyQueue()) {
-                            Log.i(LOG_TAG, String.valueOf(spaceAddress.getElementQueue().getId()));
-                        } else {
-                            switch (statement) {
-                                // чтение IN
-                                case 0:
-                                    if (isStatusReading) {
-                                        counterUnsuccessfulSending = 0;
-                                        Log.i(LOG_TAG, "statement 0");
-                                        sending(0);
-                                        isStatusReading = false;
-                                        if (currentByte == 47) {
-                                            statement = 2;
-                                            futureByte = 96;
-                                        }
-                                    } else {
-                                        sending(0);
-                                        counterUnsuccessfulSending++;
-                                    }
-
-                                    break;
-                                // чтение ADC
-                                case 2:
-                                    if (isStatusReading) {
-                                        counterUnsuccessfulSending = 0;
-                                        Log.i(LOG_TAG, "statement 2");
-                                        sending(0);
-                                        isStatusReading = false;
-                                        if (currentByte == 143) {
-                                            statement = 4;
-                                            futureByte = 208;
-                                        }
-                                    } else {
-                                        sending(0);
-                                        counterUnsuccessfulSending++;
-                                    }
-                                    break;
-                                // чтение ADC
-                                case 4:
-                                    if (isStatusReading) {
-                                        counterUnsuccessfulSending = 0;
-                                        Log.i(LOG_TAG, "statement 4");
-                                        sending(0);
-                                        isStatusReading = false;
-                                        if (currentByte == 255) {
-                                            statement = 0;
-                                            futureByte = 0;
-                                        }
-                                    } else {
-                                        sending(0);
-                                        counterUnsuccessfulSending++;
+                                        nextByte = 0;
                                     }
                                     break;
                                 default:
                                     break;
                             }
+                        } else {
+                            sending(1);
+                            counterUnsuccessfulSending++;
+                        }
+
+                    } else {
+                        if (isStatusReading) {
+                            counterUnsuccessfulSending = 0;
+                            if (!spaceAddress.isEmptyQueue()) {
+                                if (!latchQueue) {
+                                    previousByte = currentByte;
+                                    latchQueue = true;
+                                }
+                                ElementQueue elementQueue = spaceAddress.getElementQueue();
+                                if (elementQueue.getSectionNumber() == 0) {
+                                    currentByte = 48;
+                                }
+                                if (elementQueue.getSectionNumber() == 1) {
+                                    currentByte = 144;
+                                }
+                                currentByte = currentByte + elementQueue.getId();
+                                Log.i(LOG_TAG, "SUPRIM");
+                                sending(1);
+                                isStatusReading = false;
+                                isModeSending = true;
+                            } else {
+                                latchQueue = false;
+                                if (isModeSending) {
+                                    currentByte = previousByte;
+                                    isModeSending = false;
+                                }
+                                switch (statement) {
+                                    // чтение IN
+                                    case 0:
+                                            Log.i(LOG_TAG, "statement 0");
+                                            sending(0);
+                                            isStatusReading = false;
+                                            if (currentByte == 47) {
+                                                statement = 2;
+                                                nextByte = 96;
+                                            }
+                                        break;
+                                    // чтение ADC
+                                    case 2:
+                                            Log.i(LOG_TAG, "statement 2");
+                                            sending(0);
+                                            isStatusReading = false;
+                                            if (currentByte == 143) {
+                                                statement = 4;
+                                                nextByte = 208;
+                                            }
+                                        break;
+                                    // чтение ADC
+                                    case 4:
+                                            Log.i(LOG_TAG, "statement 4");
+                                            sending(0);
+                                            isStatusReading = false;
+                                            if (currentByte == 255) {
+                                                statement = 0;
+                                                nextByte = 0;
+                                            }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        } else {
+                            if (isModeSending) sending(1); else sending(0);
+                            counterUnsuccessfulSending++;
                         }
                     }
-                    Log.i(LOG_TAG, String.valueOf(counterUnsuccessfulSending));
+                    Log.i(LOG_TAG, String.valueOf(currentByte));
                 } else Log.i(LOG_TAG, "множественные неудачные попытки прочитать значение");
             } else {
                 bytesToSend = new byte[countBytes];

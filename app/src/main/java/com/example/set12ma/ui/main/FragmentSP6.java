@@ -307,7 +307,7 @@ public class FragmentSP6 extends Fragment {
             super.run();
             while (true) {
                 try {
-                    FragmentTMS2812.UpDateGraphicalDisplay.sleep(timer);
+                    UpDateGraphicalDisplay.sleep(timer);
 
                     if (spaceStatus.isReadyFlagToExchangeData()) {
                         textViewTipFindFile.post(new Runnable() {
