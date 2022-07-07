@@ -274,9 +274,9 @@ public class FragmentBluetooth extends Fragment {
                 currentByte = 48;
                 statement = 1;
                 spaceStatus.setReadyFlagRecordingInitialValues(true);
-                initialValuesThread = new InitialValuesThread(true);
-                initialValuesThread.start();
-                initialValuesThread.join();
+//                initialValuesThread = new InitialValuesThread(true);
+//                initialValuesThread.start();
+//                initialValuesThread.join();
                 bluetoothSoketThread = new BluetoothSoketThread();
                 bluetoothSoketThread.start();
 //                new ConnectingTask(getContext()).loadInBackground();
@@ -408,6 +408,7 @@ public class FragmentBluetooth extends Fragment {
 
         @Override
         public void run() {
+            bluetoothConnectedThread = new BluetoothConnectedThread();
             boolean connect = false;
             try {
                 bluetoothSocket.connect();
@@ -444,7 +445,6 @@ public class FragmentBluetooth extends Fragment {
         }
 
         private void manageConnectedSocket() throws InterruptedException, IOException {
-            bluetoothConnectedThread = new BluetoothConnectedThread();
             bluetoothConnectedThread.start();
             BluetoothSoketThread.sleep(2000);
 
