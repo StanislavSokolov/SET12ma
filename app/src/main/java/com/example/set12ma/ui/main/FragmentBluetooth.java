@@ -279,7 +279,6 @@ public class FragmentBluetooth extends Fragment {
 //                initialValuesThread.join();
                 bluetoothSoketThread = new BluetoothSoketThread();
                 bluetoothSoketThread.start();
-//                new ConnectingTask(getContext()).loadInBackground();
             } else {
                 buttonConnectToDevice.setText("Подключить");
                 textViewConnectedToDevice.setText("Отключено от " + stringConnectedToDevice);
@@ -446,7 +445,9 @@ public class FragmentBluetooth extends Fragment {
 
         private void manageConnectedSocket() throws InterruptedException, IOException {
             bluetoothConnectedThread.start();
-            BluetoothSoketThread.sleep(2000);
+            while (!bluetoothConnectedThread.isAlive()) {
+                BluetoothSoketThread.sleep(1);
+            }
 
             while (!isInterrupted()) {
                 BluetoothSoketThread.sleep(timer);
