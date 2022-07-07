@@ -94,7 +94,6 @@ public class FragmentBluetooth extends Fragment {
 
     private BluetoothSoketThread bluetoothSoketThread;
     private BluetoothConnectedThread bluetoothConnectedThread;
-    private InitialValuesThread initialValuesThread;
 
     private PageViewModel pageViewModel;
     private TextView textViewConnectedDevices;
@@ -274,9 +273,6 @@ public class FragmentBluetooth extends Fragment {
                 currentByte = 48;
                 statement = 1;
                 spaceStatus.setReadyFlagRecordingInitialValues(true);
-//                initialValuesThread = new InitialValuesThread(true);
-//                initialValuesThread.start();
-//                initialValuesThread.join();
                 bluetoothSoketThread = new BluetoothSoketThread();
                 bluetoothSoketThread.start();
             } else {
@@ -287,11 +283,7 @@ public class FragmentBluetooth extends Fragment {
                 spaceStatus.setDevice("");
                 getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
                 spaceStatus.setReadyFlagRecordingInitialValues(false);
-                initialValuesThread = new InitialValuesThread(false);
-                initialValuesThread.start();
-                initialValuesThread.join();
                 bluetoothSoketThread.cancel();
-                bluetoothSoketThread.interrupt();
             }
         } else {
             if (buttonConnectToDevice.getText().equals("Подключить")) {
@@ -304,7 +296,6 @@ public class FragmentBluetooth extends Fragment {
                 spaceStatus.setDevice("");
                 getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
                 bluetoothSoketThread.cancel();
-                bluetoothSoketThread.interrupt();
             }
 
         }
@@ -438,7 +429,7 @@ public class FragmentBluetooth extends Fragment {
 
         public void cancel() {
             try {
-                bluetoothConnectedThread.interrupt();
+                interrupt();
                 bluetoothSocket.close();
             } catch (IOException e) { }
         }
@@ -486,6 +477,7 @@ public class FragmentBluetooth extends Fragment {
                     bluetoothConnectedThread.communication();
                 }
             }
+            bluetoothConnectedThread.interrupt();
         }
     }
 
@@ -599,9 +591,7 @@ public class FragmentBluetooth extends Fragment {
                                     }
                                     Log.i(LOG_TAG, answerTest);
                                     if (currentByte == 207) {
-                                        initialValuesThread = new InitialValuesThread(false);
-                                        initialValuesThread.start();
-                                        initialValuesThread.join();
+                                        spaceStatus.setReadyFlagRecordingInitialValues(false);
                                     }
                                     if ((currentByte == 47) || (currentByte == 95) || (currentByte == 143) || (currentByte == 207) || (currentByte == 255)) currentByte = futureByte;
                                     else currentByte++;
@@ -637,9 +627,7 @@ public class FragmentBluetooth extends Fragment {
                                     }
                                     Log.i(LOG_TAG, answerTest);
                                     if (currentByte == 207) {
-                                        initialValuesThread = new InitialValuesThread(false);
-                                        initialValuesThread.start();
-                                        initialValuesThread.join();
+                                        spaceStatus.setReadyFlagRecordingInitialValues(false);
                                     }
                                     if ((currentByte == 47) || (currentByte == 95) || (currentByte == 143) || (currentByte == 207) || (currentByte == 255)) currentByte = futureByte;
                                     else currentByte++;
@@ -656,7 +644,7 @@ public class FragmentBluetooth extends Fragment {
                             }
                         }
                     }
-                } catch (IOException | InterruptedException e) {
+                } catch (IOException e) {
                     Log.i(LOG_TAG,e.toString());
                     break;
                 }
@@ -947,123 +935,6 @@ public class FragmentBluetooth extends Fragment {
 
             outputStream.write(bytesToSend);
             flagWaitingAnswerFinishLoad = true;
-        }
-    }
-
-    public class InitialValuesThread extends Thread {
-
-        boolean b;
-
-        public InitialValuesThread(boolean b) {
-            this.b = b;
-        }
-
-        @Override
-        public void run() {
-            super.run();
-            if (b) {
-                getActivity().findViewById(R.id.switch_out_0_0).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_0_1).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_0_2).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_0_3).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_0_4).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_0_5).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_0_6).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_0_7).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_0_8).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_0_9).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_0_10).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_0_11).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_0_12).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_0_13).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_0_14).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_0_15).setEnabled(false);
-
-                getActivity().findViewById(R.id.switch_out_1_0).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_1_1).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_1_2).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_1_3).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_1_4).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_1_5).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_1_6).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_1_7).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_1_8).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_1_9).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_1_10).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_1_11).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_1_12).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_1_13).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_1_14).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_1_15).setEnabled(false);
-
-                getActivity().findViewById(R.id.switch_out_2_0).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_2_1).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_2_2).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_2_3).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_2_4).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_2_5).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_2_6).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_2_7).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_2_8).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_2_9).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_2_10).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_2_11).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_2_12).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_2_13).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_2_14).setEnabled(false);
-                getActivity().findViewById(R.id.switch_out_2_15).setEnabled(false);
-            } else {
-                getActivity().findViewById(R.id.switch_out_0_0).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_0_1).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_0_2).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_0_3).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_0_4).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_0_5).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_0_6).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_0_7).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_0_8).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_0_9).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_0_10).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_0_11).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_0_12).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_0_13).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_0_14).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_0_15).setEnabled(true);
-
-                getActivity().findViewById(R.id.switch_out_1_0).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_1_1).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_1_2).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_1_3).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_1_4).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_1_5).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_1_6).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_1_7).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_1_8).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_1_9).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_1_10).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_1_11).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_1_12).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_1_13).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_1_14).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_1_15).setEnabled(true);
-
-                getActivity().findViewById(R.id.switch_out_2_0).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_2_1).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_2_2).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_2_3).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_2_4).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_2_5).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_2_6).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_2_7).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_2_8).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_2_9).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_2_10).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_2_11).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_2_12).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_2_13).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_2_14).setEnabled(true);
-                getActivity().findViewById(R.id.switch_out_2_15).setEnabled(true);
-            }
         }
     }
 }
