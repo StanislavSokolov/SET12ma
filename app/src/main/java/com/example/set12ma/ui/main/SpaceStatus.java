@@ -19,6 +19,11 @@ public class SpaceStatus implements Parcelable {
     }
     public void setReadyFlagToExchangeData(boolean readyFlagToExchangeData) { this.readyFlagToExchangeData = readyFlagToExchangeData; }
 
+    private boolean readyFlagRecordingInitialValues;
+    public boolean isReadyFlagRecordingInitialValues() {
+        return readyFlagRecordingInitialValues;
+    }
+    public void setReadyFlagRecordingInitialValues(boolean readyFlagRecordingInitialValues) { this.readyFlagRecordingInitialValues = readyFlagRecordingInitialValues; }
 
     // переходит в true если нажали кнопку "Загрузить в память", смогли прочитать файл и начался процесс загрузки в память TMS
     // переходит в false если получили ответ от процессора об успешном завершении ВНИМАНИЕ!! загруки ПО в переферию.
