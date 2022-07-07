@@ -28,7 +28,59 @@ public class FragmentOutput extends Fragment {
     private ResultReceiverAddressSpace resultReceiverAddressSpace;
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
-    private byte[] bytes;
+    private UpDateGraphicalDisplay upDateGraphicalDisplay;
+    private long timer = 500;
+
+    private Switch switch_out_0_0;
+    private Switch switch_out_0_1;
+    private Switch switch_out_0_2;
+    private Switch switch_out_0_3;
+    private Switch switch_out_0_4;
+    private Switch switch_out_0_5;
+    private Switch switch_out_0_6;
+    private Switch switch_out_0_7;
+    private Switch switch_out_0_8;
+    private Switch switch_out_0_9;
+    private Switch switch_out_0_10;
+    private Switch switch_out_0_11;
+    private Switch switch_out_0_12;
+    private Switch switch_out_0_13;
+    private Switch switch_out_0_14;
+    private Switch switch_out_0_15;
+
+    private Switch switch_out_1_0;
+    private Switch switch_out_1_1;
+    private Switch switch_out_1_2;
+    private Switch switch_out_1_3;
+    private Switch switch_out_1_4;
+    private Switch switch_out_1_5;
+    private Switch switch_out_1_6;
+    private Switch switch_out_1_7;
+    private Switch switch_out_1_8;
+    private Switch switch_out_1_9;
+    private Switch switch_out_1_10;
+    private Switch switch_out_1_11;
+    private Switch switch_out_1_12;
+    private Switch switch_out_1_13;
+    private Switch switch_out_1_14;
+    private Switch switch_out_1_15;
+
+    private Switch switch_out_2_0;
+    private Switch switch_out_2_1;
+    private Switch switch_out_2_2;
+    private Switch switch_out_2_3;
+    private Switch switch_out_2_4;
+    private Switch switch_out_2_5;
+    private Switch switch_out_2_6;
+    private Switch switch_out_2_7;
+    private Switch switch_out_2_8;
+    private Switch switch_out_2_9;
+    private Switch switch_out_2_10;
+    private Switch switch_out_2_11;
+    private Switch switch_out_2_12;
+    private Switch switch_out_2_13;
+    private Switch switch_out_2_14;
+    private Switch switch_out_2_15;
 
     @Override
     public void onAttach(Context context) {
@@ -68,9 +120,7 @@ public class FragmentOutput extends Fragment {
 
         arrayList = new ArrayList();
 
-        bytes = new byte[48];
-
-        final Switch switch_out_0_0 = root.findViewById(R.id.switch_out_0_0);
+        switch_out_0_0 = root.findViewById(R.id.switch_out_0_0);
         switch_out_0_0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +134,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_0_0);
-        final Switch switch_out_0_1 = root.findViewById(R.id.switch_out_0_1);
+        switch_out_0_1 = root.findViewById(R.id.switch_out_0_1);
         switch_out_0_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +148,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_0_1);
-        final Switch switch_out_0_2 = root.findViewById(R.id.switch_out_0_2);
+        switch_out_0_2 = root.findViewById(R.id.switch_out_0_2);
         switch_out_0_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +162,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_0_2);
-        final Switch switch_out_0_3 = root.findViewById(R.id.switch_out_0_3);
+        switch_out_0_3 = root.findViewById(R.id.switch_out_0_3);
         switch_out_0_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +176,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_0_3);
-        final Switch switch_out_0_4 = root.findViewById(R.id.switch_out_0_4);
+        switch_out_0_4 = root.findViewById(R.id.switch_out_0_4);
         switch_out_0_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +190,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_0_4);
-        final Switch switch_out_0_5 = root.findViewById(R.id.switch_out_0_5);
+        switch_out_0_5 = root.findViewById(R.id.switch_out_0_5);
         switch_out_0_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,7 +204,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_0_5);
-        final Switch switch_out_0_6 = root.findViewById(R.id.switch_out_0_6);
+        switch_out_0_6 = root.findViewById(R.id.switch_out_0_6);
         switch_out_0_6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,7 +218,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_0_6);
-        final Switch switch_out_0_7 = root.findViewById(R.id.switch_out_0_7);
+        switch_out_0_7 = root.findViewById(R.id.switch_out_0_7);
         switch_out_0_7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,7 +232,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_0_7);
-        final Switch switch_out_0_8 = root.findViewById(R.id.switch_out_0_8);
+        switch_out_0_8 = root.findViewById(R.id.switch_out_0_8);
         switch_out_0_8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,7 +246,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_0_8);
-        final Switch switch_out_0_9 = root.findViewById(R.id.switch_out_0_9);
+        switch_out_0_9 = root.findViewById(R.id.switch_out_0_9);
         switch_out_0_9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,7 +260,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_0_9);
-        final Switch switch_out_0_10 = root.findViewById(R.id.switch_out_0_10);
+        switch_out_0_10 = root.findViewById(R.id.switch_out_0_10);
         switch_out_0_10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,7 +274,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_0_10);
-        final Switch switch_out_0_11 = root.findViewById(R.id.switch_out_0_11);
+        switch_out_0_11 = root.findViewById(R.id.switch_out_0_11);
         switch_out_0_11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,7 +288,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_0_11);
-        final Switch switch_out_0_12 = root.findViewById(R.id.switch_out_0_12);
+        switch_out_0_12 = root.findViewById(R.id.switch_out_0_12);
         switch_out_0_12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -252,7 +302,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_0_12);
-        final Switch switch_out_0_13 = root.findViewById(R.id.switch_out_0_13);
+        switch_out_0_13 = root.findViewById(R.id.switch_out_0_13);
         switch_out_0_13.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -266,7 +316,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_0_13);
-        final Switch switch_out_0_14 = root.findViewById(R.id.switch_out_0_14);
+        switch_out_0_14 = root.findViewById(R.id.switch_out_0_14);
         switch_out_0_14.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -280,7 +330,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_0_14);
-        final Switch switch_out_0_15 = root.findViewById(R.id.switch_out_0_15);
+        switch_out_0_15 = root.findViewById(R.id.switch_out_0_15);
         switch_out_0_15.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -295,7 +345,7 @@ public class FragmentOutput extends Fragment {
         });
         arrayList.add(switch_out_0_15);
 
-        final Switch switch_out_1_0 = root.findViewById(R.id.switch_out_1_0);
+        switch_out_1_0 = root.findViewById(R.id.switch_out_1_0);
         switch_out_1_0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -309,7 +359,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_1_0);
-        final Switch switch_out_1_1 = root.findViewById(R.id.switch_out_1_1);
+        switch_out_1_1 = root.findViewById(R.id.switch_out_1_1);
         switch_out_1_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -323,7 +373,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_1_1);
-        final Switch switch_out_1_2 = root.findViewById(R.id.switch_out_1_2);
+        switch_out_1_2 = root.findViewById(R.id.switch_out_1_2);
         switch_out_1_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -337,7 +387,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_1_2);
-        final Switch switch_out_1_3 = root.findViewById(R.id.switch_out_1_3);
+        switch_out_1_3 = root.findViewById(R.id.switch_out_1_3);
         switch_out_1_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -351,7 +401,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_1_3);
-        final Switch switch_out_1_4 = root.findViewById(R.id.switch_out_1_4);
+        switch_out_1_4 = root.findViewById(R.id.switch_out_1_4);
         switch_out_1_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -365,7 +415,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_1_4);
-        final Switch switch_out_1_5 = root.findViewById(R.id.switch_out_1_5);
+        switch_out_1_5 = root.findViewById(R.id.switch_out_1_5);
         switch_out_1_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -379,7 +429,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_1_5);
-        final Switch switch_out_1_6 = root.findViewById(R.id.switch_out_1_6);
+        switch_out_1_6 = root.findViewById(R.id.switch_out_1_6);
         switch_out_1_6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -393,7 +443,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_1_6);
-        final Switch switch_out_1_7 = root.findViewById(R.id.switch_out_1_7);
+        switch_out_1_7 = root.findViewById(R.id.switch_out_1_7);
         switch_out_1_7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -407,7 +457,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_1_7);
-        final Switch switch_out_1_8 = root.findViewById(R.id.switch_out_1_8);
+        switch_out_1_8 = root.findViewById(R.id.switch_out_1_8);
         switch_out_1_8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -421,7 +471,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_1_8);
-        final Switch switch_out_1_9 = root.findViewById(R.id.switch_out_1_9);
+        switch_out_1_9 = root.findViewById(R.id.switch_out_1_9);
         switch_out_1_9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -435,7 +485,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_1_9);
-        final Switch switch_out_1_10 = root.findViewById(R.id.switch_out_1_10);
+        switch_out_1_10 = root.findViewById(R.id.switch_out_1_10);
         switch_out_1_10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -449,7 +499,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_1_10);
-        final Switch switch_out_1_11 = root.findViewById(R.id.switch_out_1_11);
+        switch_out_1_11 = root.findViewById(R.id.switch_out_1_11);
         switch_out_1_11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -463,7 +513,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_1_11);
-        final Switch switch_out_1_12 = root.findViewById(R.id.switch_out_1_12);
+        switch_out_1_12 = root.findViewById(R.id.switch_out_1_12);
         switch_out_1_12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -477,7 +527,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_1_12);
-        final Switch switch_out_1_13 = root.findViewById(R.id.switch_out_1_13);
+        switch_out_1_13 = root.findViewById(R.id.switch_out_1_13);
         switch_out_1_13.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -491,7 +541,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_1_13);
-        final Switch switch_out_1_14 = root.findViewById(R.id.switch_out_1_14);
+        switch_out_1_14 = root.findViewById(R.id.switch_out_1_14);
         switch_out_1_14.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -505,7 +555,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_1_14);
-        final Switch switch_out_1_15 = root.findViewById(R.id.switch_out_1_15);
+        switch_out_1_15 = root.findViewById(R.id.switch_out_1_15);
         switch_out_1_15.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -520,7 +570,7 @@ public class FragmentOutput extends Fragment {
         });
         arrayList.add(switch_out_1_15);
 
-        final Switch switch_out_2_0 = root.findViewById(R.id.switch_out_2_0);
+        switch_out_2_0 = root.findViewById(R.id.switch_out_2_0);
         switch_out_2_0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -534,7 +584,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_2_0);
-        final Switch switch_out_2_1 = root.findViewById(R.id.switch_out_2_1);
+        switch_out_2_1 = root.findViewById(R.id.switch_out_2_1);
         switch_out_2_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -548,7 +598,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_2_1);
-        final Switch switch_out_2_2 = root.findViewById(R.id.switch_out_2_2);
+        switch_out_2_2 = root.findViewById(R.id.switch_out_2_2);
         switch_out_2_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -562,7 +612,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_2_2);
-        final Switch switch_out_2_3 = root.findViewById(R.id.switch_out_2_3);
+        switch_out_2_3 = root.findViewById(R.id.switch_out_2_3);
         switch_out_2_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -576,7 +626,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_2_3);
-        final Switch switch_out_2_4 = root.findViewById(R.id.switch_out_2_4);
+        switch_out_2_4 = root.findViewById(R.id.switch_out_2_4);
         switch_out_2_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -590,7 +640,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_2_4);
-        final Switch switch_out_2_5 = root.findViewById(R.id.switch_out_2_5);
+        switch_out_2_5 = root.findViewById(R.id.switch_out_2_5);
         switch_out_2_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -604,7 +654,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_2_5);
-        final Switch switch_out_2_6 = root.findViewById(R.id.switch_out_2_6);
+        switch_out_2_6 = root.findViewById(R.id.switch_out_2_6);
         switch_out_2_6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -618,7 +668,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_2_6);
-        final Switch switch_out_2_7 = root.findViewById(R.id.switch_out_2_7);
+        switch_out_2_7 = root.findViewById(R.id.switch_out_2_7);
         switch_out_2_7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -632,7 +682,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_2_7);
-        final Switch switch_out_2_8 = root.findViewById(R.id.switch_out_2_8);
+        switch_out_2_8 = root.findViewById(R.id.switch_out_2_8);
         switch_out_2_8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -646,7 +696,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_2_8);
-        final Switch switch_out_2_9 = root.findViewById(R.id.switch_out_2_9);
+        switch_out_2_9 = root.findViewById(R.id.switch_out_2_9);
         switch_out_2_9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -660,7 +710,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_2_9);
-        final Switch switch_out_2_10 = root.findViewById(R.id.switch_out_2_10);
+        switch_out_2_10 = root.findViewById(R.id.switch_out_2_10);
         switch_out_2_10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -674,7 +724,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_2_10);
-        final Switch switch_out_2_11 = root.findViewById(R.id.switch_out_2_11);
+        switch_out_2_11 = root.findViewById(R.id.switch_out_2_11);
         switch_out_2_11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -688,7 +738,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_2_11);
-        final Switch switch_out_2_12 = root.findViewById(R.id.switch_out_2_12);
+        switch_out_2_12 = root.findViewById(R.id.switch_out_2_12);
         switch_out_2_12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -702,7 +752,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_2_12);
-        final Switch switch_out_2_13 = root.findViewById(R.id.switch_out_2_13);
+        switch_out_2_13 = root.findViewById(R.id.switch_out_2_13);
         switch_out_2_13.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -716,7 +766,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_2_13);
-        final Switch switch_out_2_14 = root.findViewById(R.id.switch_out_2_14);
+        switch_out_2_14 = root.findViewById(R.id.switch_out_2_14);
         switch_out_2_14.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -730,7 +780,7 @@ public class FragmentOutput extends Fragment {
             }
         });
         arrayList.add(switch_out_2_14);
-        final Switch switch_out_2_15 = root.findViewById(R.id.switch_out_2_15);
+        switch_out_2_15 = root.findViewById(R.id.switch_out_2_15);
         switch_out_2_15.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -745,12 +795,15 @@ public class FragmentOutput extends Fragment {
         });
         arrayList.add(switch_out_2_15);
 
-        upDate();
+        upDateValues();
+
+        upDateGraphicalDisplay = new UpDateGraphicalDisplay();
+        upDateGraphicalDisplay.start();
 
         return root;
     }
 
-    private void upDate() {
+    private void upDateValues() {
         for (int i = 0; i < arrayList.size(); i++) {
             if (arrayList.get(i).isChecked()) {
                 spaceAddress.setAddressSpace(startCellNumber + i, 1);
@@ -758,6 +811,608 @@ public class FragmentOutput extends Fragment {
             else {
                 spaceAddress.setAddressSpace(startCellNumber + i, 0);
             }
+        }
+    }
+
+    public class UpDateGraphicalDisplay extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            boolean latch = true;
+            while (true) {
+                try {
+                    UpDateGraphicalDisplay.sleep(timer);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (spaceStatus.isReadyFlagRecordingInitialValues()) {
+                    if (latch) {
+                        switch_out_0_0.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_0.setEnabled(false);
+                            }
+                        });
+                        switch_out_0_1.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_1.setEnabled(false);
+                            }
+                        });
+                        switch_out_0_2.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_2.setEnabled(false);
+                            }
+                        });
+                        switch_out_0_3.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_3.setEnabled(false);
+                            }
+                        });
+                        switch_out_0_4.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_4.setEnabled(false);
+                            }
+                        });
+                        switch_out_0_5.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_5.setEnabled(false);
+                            }
+                        });
+                        switch_out_0_6.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_6.setEnabled(false);
+                            }
+                        });
+                        switch_out_0_7.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_7.setEnabled(false);
+                            }
+                        });switch_out_0_8.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_8.setEnabled(false);
+                            }
+                        });
+                        switch_out_0_9.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_9.setEnabled(false);
+                            }
+                        });
+                        switch_out_0_10.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_10.setEnabled(false);
+                            }
+                        });
+                        switch_out_0_11.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_11.setEnabled(false);
+                            }
+                        });
+                        switch_out_0_12.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_12.setEnabled(false);
+                            }
+                        });
+                        switch_out_0_13.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_13.setEnabled(false);
+                            }
+                        });
+                        switch_out_0_14.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_14.setEnabled(false);
+                            }
+                        });
+                        switch_out_0_15.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_15.setEnabled(false);
+                            }
+                        });
+
+                        switch_out_1_0.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_0.setEnabled(false);
+                            }
+                        });
+                        switch_out_1_1.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_1.setEnabled(false);
+                            }
+                        });
+                        switch_out_1_2.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_2.setEnabled(false);
+                            }
+                        });
+                        switch_out_1_3.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_3.setEnabled(false);
+                            }
+                        });
+                        switch_out_1_4.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_4.setEnabled(false);
+                            }
+                        });
+                        switch_out_1_5.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_5.setEnabled(false);
+                            }
+                        });
+                        switch_out_1_6.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_6.setEnabled(false);
+                            }
+                        });
+                        switch_out_1_7.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_7.setEnabled(false);
+                            }
+                        });switch_out_1_8.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_8.setEnabled(false);
+                            }
+                        });
+                        switch_out_1_9.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_9.setEnabled(false);
+                            }
+                        });
+                        switch_out_1_10.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_10.setEnabled(false);
+                            }
+                        });
+                        switch_out_1_11.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_11.setEnabled(false);
+                            }
+                        });
+                        switch_out_1_12.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_12.setEnabled(false);
+                            }
+                        });
+                        switch_out_1_13.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_13.setEnabled(false);
+                            }
+                        });
+                        switch_out_1_14.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_14.setEnabled(false);
+                            }
+                        });
+                        switch_out_1_15.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_15.setEnabled(false);
+                            }
+                        });
+
+                        switch_out_2_0.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_0.setEnabled(false);
+                            }
+                        });
+                        switch_out_2_1.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_1.setEnabled(false);
+                            }
+                        });
+                        switch_out_2_2.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_2.setEnabled(false);
+                            }
+                        });
+                        switch_out_2_3.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_3.setEnabled(false);
+                            }
+                        });
+                        switch_out_2_4.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_4.setEnabled(false);
+                            }
+                        });
+                        switch_out_2_5.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_5.setEnabled(false);
+                            }
+                        });
+                        switch_out_2_6.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_6.setEnabled(false);
+                            }
+                        });
+                        switch_out_2_7.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_7.setEnabled(false);
+                            }
+                        });switch_out_2_8.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_8.setEnabled(false);
+                            }
+                        });
+                        switch_out_2_9.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_9.setEnabled(false);
+                            }
+                        });
+                        switch_out_2_10.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_10.setEnabled(false);
+                            }
+                        });
+                        switch_out_2_11.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_11.setEnabled(false);
+                            }
+                        });
+                        switch_out_2_12.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_12.setEnabled(false);
+                            }
+                        });
+                        switch_out_2_13.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_13.setEnabled(false);
+                            }
+                        });
+                        switch_out_2_14.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_14.setEnabled(false);
+                            }
+                        });
+                        switch_out_2_15.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_15.setEnabled(false);
+                            }
+                        });
+
+                        latch = false;
+                    }
+                } else {
+                    if (!latch) {
+                        switch_out_0_0.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_0.setEnabled(true);
+                            }
+                        });
+                        switch_out_0_1.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_1.setEnabled(true);
+                            }
+                        });
+                        switch_out_0_2.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_2.setEnabled(true);
+                            }
+                        });
+                        switch_out_0_3.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_3.setEnabled(true);
+                            }
+                        });
+                        switch_out_0_4.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_4.setEnabled(true);
+                            }
+                        });
+                        switch_out_0_5.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_5.setEnabled(true);
+                            }
+                        });
+                        switch_out_0_6.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_6.setEnabled(true);
+                            }
+                        });
+                        switch_out_0_7.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_7.setEnabled(true);
+                            }
+                        });switch_out_0_8.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_8.setEnabled(true);
+                            }
+                        });
+                        switch_out_0_9.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_9.setEnabled(true);
+                            }
+                        });
+                        switch_out_0_10.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_10.setEnabled(true);
+                            }
+                        });
+                        switch_out_0_11.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_11.setEnabled(true);
+                            }
+                        });
+                        switch_out_0_12.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_12.setEnabled(true);
+                            }
+                        });
+                        switch_out_0_13.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_13.setEnabled(true);
+                            }
+                        });
+                        switch_out_0_14.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_14.setEnabled(true);
+                            }
+                        });
+                        switch_out_0_15.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_0_15.setEnabled(true);
+                            }
+                        });
+
+                        switch_out_1_0.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_0.setEnabled(true);
+                            }
+                        });
+                        switch_out_1_1.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_1.setEnabled(true);
+                            }
+                        });
+                        switch_out_1_2.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_2.setEnabled(true);
+                            }
+                        });
+                        switch_out_1_3.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_3.setEnabled(true);
+                            }
+                        });
+                        switch_out_1_4.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_4.setEnabled(true);
+                            }
+                        });
+                        switch_out_1_5.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_5.setEnabled(true);
+                            }
+                        });
+                        switch_out_1_6.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_6.setEnabled(true);
+                            }
+                        });
+                        switch_out_1_7.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_7.setEnabled(true);
+                            }
+                        });switch_out_1_8.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_8.setEnabled(true);
+                            }
+                        });
+                        switch_out_1_9.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_9.setEnabled(true);
+                            }
+                        });
+                        switch_out_1_10.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_10.setEnabled(true);
+                            }
+                        });
+                        switch_out_1_11.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_11.setEnabled(true);
+                            }
+                        });
+                        switch_out_1_12.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_12.setEnabled(true);
+                            }
+                        });
+                        switch_out_1_13.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_13.setEnabled(true);
+                            }
+                        });
+                        switch_out_1_14.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_14.setEnabled(true);
+                            }
+                        });
+                        switch_out_1_15.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_1_15.setEnabled(true);
+                            }
+                        });
+
+                        switch_out_2_0.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_0.setEnabled(true);
+                            }
+                        });
+                        switch_out_2_1.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_1.setEnabled(true);
+                            }
+                        });
+                        switch_out_2_2.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_2.setEnabled(true);
+                            }
+                        });
+                        switch_out_2_3.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_3.setEnabled(true);
+                            }
+                        });
+                        switch_out_2_4.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_4.setEnabled(true);
+                            }
+                        });
+                        switch_out_2_5.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_5.setEnabled(true);
+                            }
+                        });
+                        switch_out_2_6.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_6.setEnabled(true);
+                            }
+                        });
+                        switch_out_2_7.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_7.setEnabled(true);
+                            }
+                        });switch_out_2_8.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_8.setEnabled(true);
+                            }
+                        });
+                        switch_out_2_9.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_9.setEnabled(true);
+                            }
+                        });
+                        switch_out_2_10.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_10.setEnabled(true);
+                            }
+                        });
+                        switch_out_2_11.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_11.setEnabled(true);
+                            }
+                        });
+                        switch_out_2_12.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_12.setEnabled(true);
+                            }
+                        });
+                        switch_out_2_13.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_13.setEnabled(true);
+                            }
+                        });
+                        switch_out_2_14.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_14.setEnabled(true);
+                            }
+                        });
+                        switch_out_2_15.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch_out_2_15.setEnabled(true);
+                            }
+                        });
+                        latch = true;
+                    }
+                }
+            }
+        }
+
+        public UpDateGraphicalDisplay() {
         }
     }
 }
