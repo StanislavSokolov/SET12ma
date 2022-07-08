@@ -277,7 +277,6 @@ public class FragmentBluetooth extends Fragment {
                 textViewConnectedToDevice.setVisibility(View.VISIBLE);
                 currentByte = 48;
                 statement = 1;
-                spaceStatus.setReadyFlagRecordingInitialValues(true);
                 bluetoothSoketThread = new BluetoothSoketThread();
                 bluetoothSoketThread.start();
             } else {
@@ -422,6 +421,7 @@ public class FragmentBluetooth extends Fragment {
             }
             // If a connection was accepted
             if (connect) {
+                spaceStatus.setReadyFlagRecordingInitialValues(true);
                 // Do work to manage the connection (in a separate thread)
                 try {
                     manageConnectedSocket();
