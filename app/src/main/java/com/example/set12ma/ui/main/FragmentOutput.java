@@ -29,7 +29,7 @@ public class FragmentOutput extends Fragment {
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
-    private long timer = 500;
+    private long timer = 100;
 
     private Switch switch_out_0_0;
     private Switch switch_out_0_1;

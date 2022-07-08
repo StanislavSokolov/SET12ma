@@ -83,8 +83,6 @@ public class FragmentSP6 extends Fragment {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
         pageViewModel.setIndex(index);
-        upDateGraphicalDisplay = new UpDateGraphicalDisplay();
-        upDateGraphicalDisplay.start();
         spaceMemory = resultReceiverMemorySpace.getSpaceMemory();
         spaceStatus = resultReceiverStatusSpace.getSpaceStatus();
     }
@@ -228,6 +226,9 @@ public class FragmentSP6 extends Fragment {
             textViewTipFindFile.setText("Подключитесь к устройству");
 //            Toast.makeText(getContext(), "Подключитесь к устройству", Toast.LENGTH_LONG).show();
         }
+
+        upDateGraphicalDisplay = new UpDateGraphicalDisplay();
+        upDateGraphicalDisplay.start();
 
         return root;
     }

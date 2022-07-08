@@ -52,8 +52,6 @@ public class FragmentInput extends Fragment {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
         pageViewModel.setIndex(index);
-        upDateGraphicalDisplay = new UpDateGraphicalDisplay();
-        upDateGraphicalDisplay.start();
         spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
     }
 
@@ -165,6 +163,9 @@ public class FragmentInput extends Fragment {
         arrayList.add(indicator_button_in_2_15);
 
         upDateValues();
+
+        upDateGraphicalDisplay = new UpDateGraphicalDisplay();
+        upDateGraphicalDisplay.start();
 
         return root;
     }

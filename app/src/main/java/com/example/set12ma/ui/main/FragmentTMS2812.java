@@ -56,8 +56,6 @@ public class FragmentTMS2812 extends Fragment {
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
     private long timer = 500;
 
-
-    // как и onCreate вызывается только один раз
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -86,8 +84,6 @@ public class FragmentTMS2812 extends Fragment {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
         pageViewModel.setIndex(index);
-        upDateGraphicalDisplay = new UpDateGraphicalDisplay();
-        upDateGraphicalDisplay.start();
         spaceMemory = resultReceiverMemorySpace.getSpaceMemory();
         spaceStatus = resultReceiverStatusSpace.getSpaceStatus();
     }
@@ -97,140 +93,143 @@ public class FragmentTMS2812 extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_tms2812, container, false);
-        textViewTipFindFile = root.findViewById(R.id.textView_tip_find_file);
-        buttonChoicePath = root.findViewById(R.id.button_choice_path_for_tms2812);
-        buttonChoicePath.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-            @Override
-            public void onClick(View v) { openFile();
-            }
-        });
-        buttonLoadToFlesh = root.findViewById(R.id.button_load_to_flesh_for_tms2812);
-        buttonLoadToFlesh.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-            @Override
-            public void onClick(View v) {
-                try {
-                    loadFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            Log.i("onCR", "onCreateView");
+            textViewTipFindFile = root.findViewById(R.id.textView_tip_find_file);
+            buttonChoicePath = root.findViewById(R.id.button_choice_path_for_tms2812);
+            buttonChoicePath.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+                @Override
+                public void onClick(View v) { openFile();
                 }
-            }
-        });
-
-        buttonStartLoadTMS2812 = root.findViewById(R.id.button_start_load_for_tms2812);
-        buttonStartLoadTMS2812.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-            @Override
-            public void onClick(View v) { startLoad();
-            }
-        });
-        textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file_for_tms2812);
-        textViewStatusLoadToFlesh = root.findViewById(R.id.textView_status_load_to_flesh_for_tms2812);
-
-        textViewInformationAboutDevice = root.findViewById(R.id.textView_information_about_device_for_tms2812);
-        textViewStatusLoadToDevice = root.findViewById(R.id.textView_status_load_to_device_for_tms2812);
-        textViewTipChoiseAddressOfDeviceForTMS2812 = root.findViewById(R.id.textView_tip_choise_address_of_device_for_tms2812);
-
-        progressBarLoadToFlesh = root.findViewById(R.id.progressBar_load_to_flesh_for_tms2812);
-        progressBarLoadToDevice = root.findViewById(R.id.progressBar_load_to_device_for_tms2812);
-
-        spinnerAddressOfDevice = root.findViewById(R.id.spinner_address_of_device_for_tms2812);
-        adapterAddressOfDevice = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
-        adapterAddressOfDevice.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        for (int i = 0; i < 16; i++) {
-            adapterAddressOfDevice.add(String.valueOf(i));
-        }
-        spinnerAddressOfDevice.setAdapter(adapterAddressOfDevice);
-        AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                itemSelectedFromConnectedDevices = spinnerAddressOfDevice.getSelectedItemPosition();
-                textViewInformationAboutDevice.setText("Устройство с адресом " + itemSelectedFromConnectedDevices + " готово к обновлению ПО");
-                spaceStatus.setAddressOfDevice(itemSelectedFromConnectedDevices);
-                if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
-                    textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+            });
+            buttonLoadToFlesh = root.findViewById(R.id.button_load_to_flesh_for_tms2812);
+            buttonLoadToFlesh.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+                @Override
+                public void onClick(View v) {
+                    try {
+                        loadFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
+            });
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        };
-        spinnerAddressOfDevice.setOnItemSelectedListener(itemSelectedListener);
+            buttonStartLoadTMS2812 = root.findViewById(R.id.button_start_load_for_tms2812);
+            buttonStartLoadTMS2812.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+                @Override
+                public void onClick(View v) { startLoad();
+                }
+            });
+            textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file_for_tms2812);
+            textViewStatusLoadToFlesh = root.findViewById(R.id.textView_status_load_to_flesh_for_tms2812);
 
-        if (spaceStatus.isReadyFlagToExchangeData()){
-            if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
-                textViewTipFindFile.setText("Выберите файл для загрузки");
-                textViewPathToLoadFile.setText(stringSelectedFile);
-                textViewPathToLoadFile.setVisibility(View.VISIBLE);
-                if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware())) {
-                    textViewStatusLoadToFlesh.setText("Загрузка в память...");
-                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                    progressBarLoadToFlesh.setVisibility(View.VISIBLE);
-                    textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.INVISIBLE);
-                    spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
-                    textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
-                    textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
-                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+            textViewInformationAboutDevice = root.findViewById(R.id.textView_information_about_device_for_tms2812);
+            textViewStatusLoadToDevice = root.findViewById(R.id.textView_status_load_to_device_for_tms2812);
+            textViewTipChoiseAddressOfDeviceForTMS2812 = root.findViewById(R.id.textView_tip_choise_address_of_device_for_tms2812);
+
+            progressBarLoadToFlesh = root.findViewById(R.id.progressBar_load_to_flesh_for_tms2812);
+            progressBarLoadToDevice = root.findViewById(R.id.progressBar_load_to_device_for_tms2812);
+
+            spinnerAddressOfDevice = root.findViewById(R.id.spinner_address_of_device_for_tms2812);
+            adapterAddressOfDevice = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+            adapterAddressOfDevice.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            for (int i = 0; i < 16; i++) {
+                adapterAddressOfDevice.add(String.valueOf(i));
+            }
+            spinnerAddressOfDevice.setAdapter(adapterAddressOfDevice);
+            AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    itemSelectedFromConnectedDevices = spinnerAddressOfDevice.getSelectedItemPosition();
+                    textViewInformationAboutDevice.setText("Устройство с адресом " + itemSelectedFromConnectedDevices + " готово к обновлению ПО");
+                    spaceStatus.setAddressOfDevice(itemSelectedFromConnectedDevices);
+                    if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
+                        textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+                    }
                 }
-                if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
-                    textViewStatusLoadToFlesh.setText("Загрузка завершена");
-                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
-                    textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.VISIBLE);
-                    spinnerAddressOfDevice.setVisibility(View.VISIBLE);
-                    textViewInformationAboutDevice.setVisibility(View.VISIBLE);
-                    textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
-                    buttonStartLoadTMS2812.setVisibility(View.VISIBLE);
-                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
                 }
-                if (spaceStatus.isReadyFlagToUpdateSoftware() || spaceStatus.isStatusProcessOfUpdatingSoftware()) {
-                    textViewStatusLoadToFlesh.setText("Загрузка завершена");
-                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
-                    textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.VISIBLE);
-                    spinnerAddressOfDevice.setVisibility(View.VISIBLE);
-                    textViewInformationAboutDevice.setVisibility(View.VISIBLE);
-                    textViewStatusLoadToDevice.setText("Обновление ПО...");
-                    textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
-                    buttonStartLoadTMS2812.setVisibility(View.VISIBLE);
-                    progressBarLoadToDevice.setVisibility(View.VISIBLE);
-                }
-                if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
-                    textViewStatusLoadToFlesh.setText("Загрузка завершена");
-                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
-                    textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.VISIBLE);
-                    spinnerAddressOfDevice.setVisibility(View.VISIBLE);
-                    textViewInformationAboutDevice.setVisibility(View.VISIBLE);
-                    textViewStatusLoadToDevice.setText("Обновление завершено");
-                    textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
-                    buttonStartLoadTMS2812.setVisibility(View.VISIBLE);
-                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+            };
+            spinnerAddressOfDevice.setOnItemSelectedListener(itemSelectedListener);
+
+            if (spaceStatus.isReadyFlagToExchangeData()){
+                if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
+                    textViewTipFindFile.setText("Выберите файл для загрузки");
+                    textViewPathToLoadFile.setText(stringSelectedFile);
+                    textViewPathToLoadFile.setVisibility(View.VISIBLE);
+                    if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware())) {
+                        textViewStatusLoadToFlesh.setText("Загрузка в память...");
+                        textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                        progressBarLoadToFlesh.setVisibility(View.VISIBLE);
+                        textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.INVISIBLE);
+                        spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
+                        textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
+                        textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+                        progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+                    }
+                    if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
+                        textViewStatusLoadToFlesh.setText("Загрузка завершена");
+                        textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                        progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                        textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.VISIBLE);
+                        spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+                        textViewInformationAboutDevice.setVisibility(View.VISIBLE);
+                        textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+                        buttonStartLoadTMS2812.setVisibility(View.VISIBLE);
+                        progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+                    }
+                    if (spaceStatus.isReadyFlagToUpdateSoftware() || spaceStatus.isStatusProcessOfUpdatingSoftware()) {
+                        textViewStatusLoadToFlesh.setText("Загрузка завершена");
+                        textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                        progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                        textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.VISIBLE);
+                        spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+                        textViewInformationAboutDevice.setVisibility(View.VISIBLE);
+                        textViewStatusLoadToDevice.setText("Обновление ПО...");
+                        textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
+                        buttonStartLoadTMS2812.setVisibility(View.VISIBLE);
+                        progressBarLoadToDevice.setVisibility(View.VISIBLE);
+                    }
+                    if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
+                        textViewStatusLoadToFlesh.setText("Загрузка завершена");
+                        textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                        progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                        textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.VISIBLE);
+                        spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+                        textViewInformationAboutDevice.setVisibility(View.VISIBLE);
+                        textViewStatusLoadToDevice.setText("Обновление завершено");
+                        textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
+                        buttonStartLoadTMS2812.setVisibility(View.VISIBLE);
+                        progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+                    }
+                } else {
+                    textViewPathToLoadFile.setText("Путь не указан");
+                    textViewPathToLoadFile.setVisibility(View.VISIBLE);
+                    buttonChoicePath.setVisibility(View.VISIBLE);
+                    buttonLoadToFlesh.setVisibility(View.VISIBLE);
+                    if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware()) || (spaceStatus.isReadyFlagToUpdateSoftware()) || (spaceStatus.isStatusProcessOfUpdatingSoftware())) {
+                        textViewPathToLoadFile.setVisibility(View.INVISIBLE);
+                        buttonChoicePath.setVisibility(View.INVISIBLE);
+                        buttonLoadToFlesh.setVisibility(View.INVISIBLE);
+                        textViewStatusLoadToFlesh.setText("Дождитесь завершения загрузки ПО для " + spaceStatus.getDevice());
+                        textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                        buttonStartLoadTMS2812.setVisibility(View.INVISIBLE);
+                        progressBarLoadToFlesh.setVisibility(View.VISIBLE);
+                    }
                 }
             } else {
-                textViewPathToLoadFile.setText("Путь не указан");
-                textViewPathToLoadFile.setVisibility(View.VISIBLE);
-                buttonChoicePath.setVisibility(View.VISIBLE);
-                buttonLoadToFlesh.setVisibility(View.VISIBLE);
-                if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware()) || (spaceStatus.isReadyFlagToUpdateSoftware()) || (spaceStatus.isStatusProcessOfUpdatingSoftware())) {
-                    textViewPathToLoadFile.setVisibility(View.INVISIBLE);
-                    buttonChoicePath.setVisibility(View.INVISIBLE);
-                    buttonLoadToFlesh.setVisibility(View.INVISIBLE);
-                    textViewStatusLoadToFlesh.setText("Дождитесь завершения загрузки ПО для " + spaceStatus.getDevice());
-                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                    buttonStartLoadTMS2812.setVisibility(View.INVISIBLE);
-                    progressBarLoadToFlesh.setVisibility(View.VISIBLE);
-                }
+                buttonChoicePath.setVisibility(View.INVISIBLE);
+                buttonLoadToFlesh.setVisibility(View.INVISIBLE);
+                textViewPathToLoadFile.setVisibility(View.INVISIBLE);
+                textViewTipFindFile.setText("Подключитесь к устройству");
             }
-        } else {
-            buttonChoicePath.setVisibility(View.INVISIBLE);
-            buttonLoadToFlesh.setVisibility(View.INVISIBLE);
-            textViewPathToLoadFile.setVisibility(View.INVISIBLE);
-            textViewTipFindFile.setText("Подключитесь к устройству");
-//            Toast.makeText(getContext(), "Подключитесь к устройству", Toast.LENGTH_LONG).show();
-        }
+
+        upDateGraphicalDisplay = new UpDateGraphicalDisplay();
+        upDateGraphicalDisplay.start();
 
         return root;
     }
@@ -425,6 +424,12 @@ public class FragmentTMS2812 extends Fragment {
                                         textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
                                         buttonStartLoadTMS2812.setVisibility(View.INVISIBLE);
                                         progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+
+                                        textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.INVISIBLE);
+                                        spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
+                                        textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
+                                        textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+                                        progressBarLoadToDevice.setVisibility(View.INVISIBLE);
                                     }
                                 }
                             });
