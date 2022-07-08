@@ -29,7 +29,9 @@ public class FragmentOutput extends Fragment {
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
-    private long timer = 100;
+    private long timer = 500;
+
+    boolean latch = true;
 
     private Switch switch_out_0_0;
     private Switch switch_out_0_1;
@@ -796,11 +798,592 @@ public class FragmentOutput extends Fragment {
         arrayList.add(switch_out_2_15);
 
         upDateValues();
+        upDateEnables();
 
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
         upDateGraphicalDisplay.start();
 
         return root;
+    }
+
+    private void upDateEnables() {
+        if (spaceStatus.isReadyFlagRecordingInitialValues()) {
+                switch_out_0_0.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_0.setEnabled(false);
+                    }
+                });
+                switch_out_0_1.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_1.setEnabled(false);
+                    }
+                });
+                switch_out_0_2.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_2.setEnabled(false);
+                    }
+                });
+                switch_out_0_3.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_3.setEnabled(false);
+                    }
+                });
+                switch_out_0_4.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_4.setEnabled(false);
+                    }
+                });
+                switch_out_0_5.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_5.setEnabled(false);
+                    }
+                });
+                switch_out_0_6.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_6.setEnabled(false);
+                    }
+                });
+                switch_out_0_7.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_7.setEnabled(false);
+                    }
+                });switch_out_0_8.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_8.setEnabled(false);
+                    }
+                });
+                switch_out_0_9.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_9.setEnabled(false);
+                    }
+                });
+                switch_out_0_10.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_10.setEnabled(false);
+                    }
+                });
+                switch_out_0_11.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_11.setEnabled(false);
+                    }
+                });
+                switch_out_0_12.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_12.setEnabled(false);
+                    }
+                });
+                switch_out_0_13.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_13.setEnabled(false);
+                    }
+                });
+                switch_out_0_14.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_14.setEnabled(false);
+                    }
+                });
+                switch_out_0_15.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_15.setEnabled(false);
+                    }
+                });
+
+                switch_out_1_0.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_0.setEnabled(false);
+                    }
+                });
+                switch_out_1_1.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_1.setEnabled(false);
+                    }
+                });
+                switch_out_1_2.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_2.setEnabled(false);
+                    }
+                });
+                switch_out_1_3.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_3.setEnabled(false);
+                    }
+                });
+                switch_out_1_4.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_4.setEnabled(false);
+                    }
+                });
+                switch_out_1_5.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_5.setEnabled(false);
+                    }
+                });
+                switch_out_1_6.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_6.setEnabled(false);
+                    }
+                });
+                switch_out_1_7.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_7.setEnabled(false);
+                    }
+                });switch_out_1_8.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_8.setEnabled(false);
+                    }
+                });
+                switch_out_1_9.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_9.setEnabled(false);
+                    }
+                });
+                switch_out_1_10.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_10.setEnabled(false);
+                    }
+                });
+                switch_out_1_11.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_11.setEnabled(false);
+                    }
+                });
+                switch_out_1_12.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_12.setEnabled(false);
+                    }
+                });
+                switch_out_1_13.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_13.setEnabled(false);
+                    }
+                });
+                switch_out_1_14.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_14.setEnabled(false);
+                    }
+                });
+                switch_out_1_15.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_15.setEnabled(false);
+                    }
+                });
+
+                switch_out_2_0.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_0.setEnabled(false);
+                    }
+                });
+                switch_out_2_1.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_1.setEnabled(false);
+                    }
+                });
+                switch_out_2_2.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_2.setEnabled(false);
+                    }
+                });
+                switch_out_2_3.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_3.setEnabled(false);
+                    }
+                });
+                switch_out_2_4.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_4.setEnabled(false);
+                    }
+                });
+                switch_out_2_5.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_5.setEnabled(false);
+                    }
+                });
+                switch_out_2_6.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_6.setEnabled(false);
+                    }
+                });
+                switch_out_2_7.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_7.setEnabled(false);
+                    }
+                });switch_out_2_8.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_8.setEnabled(false);
+                    }
+                });
+                switch_out_2_9.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_9.setEnabled(false);
+                    }
+                });
+                switch_out_2_10.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_10.setEnabled(false);
+                    }
+                });
+                switch_out_2_11.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_11.setEnabled(false);
+                    }
+                });
+                switch_out_2_12.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_12.setEnabled(false);
+                    }
+                });
+                switch_out_2_13.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_13.setEnabled(false);
+                    }
+                });
+                switch_out_2_14.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_14.setEnabled(false);
+                    }
+                });
+                switch_out_2_15.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_15.setEnabled(false);
+                    }
+                });
+        } else {
+                switch_out_0_0.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_0.setEnabled(true);
+                    }
+                });
+                switch_out_0_1.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_1.setEnabled(true);
+                    }
+                });
+                switch_out_0_2.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_2.setEnabled(true);
+                    }
+                });
+                switch_out_0_3.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_3.setEnabled(true);
+                    }
+                });
+                switch_out_0_4.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_4.setEnabled(true);
+                    }
+                });
+                switch_out_0_5.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_5.setEnabled(true);
+                    }
+                });
+                switch_out_0_6.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_6.setEnabled(true);
+                    }
+                });
+                switch_out_0_7.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_7.setEnabled(true);
+                    }
+                });switch_out_0_8.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_8.setEnabled(true);
+                    }
+                });
+                switch_out_0_9.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_9.setEnabled(true);
+                    }
+                });
+                switch_out_0_10.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_10.setEnabled(true);
+                    }
+                });
+                switch_out_0_11.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_11.setEnabled(true);
+                    }
+                });
+                switch_out_0_12.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_12.setEnabled(true);
+                    }
+                });
+                switch_out_0_13.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_13.setEnabled(true);
+                    }
+                });
+                switch_out_0_14.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_14.setEnabled(true);
+                    }
+                });
+                switch_out_0_15.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_0_15.setEnabled(true);
+                    }
+                });
+
+                switch_out_1_0.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_0.setEnabled(true);
+                    }
+                });
+                switch_out_1_1.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_1.setEnabled(true);
+                    }
+                });
+                switch_out_1_2.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_2.setEnabled(true);
+                    }
+                });
+                switch_out_1_3.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_3.setEnabled(true);
+                    }
+                });
+                switch_out_1_4.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_4.setEnabled(true);
+                    }
+                });
+                switch_out_1_5.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_5.setEnabled(true);
+                    }
+                });
+                switch_out_1_6.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_6.setEnabled(true);
+                    }
+                });
+                switch_out_1_7.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_7.setEnabled(true);
+                    }
+                });switch_out_1_8.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_8.setEnabled(true);
+                    }
+                });
+                switch_out_1_9.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_9.setEnabled(true);
+                    }
+                });
+                switch_out_1_10.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_10.setEnabled(true);
+                    }
+                });
+                switch_out_1_11.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_11.setEnabled(true);
+                    }
+                });
+                switch_out_1_12.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_12.setEnabled(true);
+                    }
+                });
+                switch_out_1_13.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_13.setEnabled(true);
+                    }
+                });
+                switch_out_1_14.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_14.setEnabled(true);
+                    }
+                });
+                switch_out_1_15.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_1_15.setEnabled(true);
+                    }
+                });
+
+                switch_out_2_0.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_0.setEnabled(true);
+                    }
+                });
+                switch_out_2_1.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_1.setEnabled(true);
+                    }
+                });
+                switch_out_2_2.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_2.setEnabled(true);
+                    }
+                });
+                switch_out_2_3.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_3.setEnabled(true);
+                    }
+                });
+                switch_out_2_4.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_4.setEnabled(true);
+                    }
+                });
+                switch_out_2_5.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_5.setEnabled(true);
+                    }
+                });
+                switch_out_2_6.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_6.setEnabled(true);
+                    }
+                });
+                switch_out_2_7.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_7.setEnabled(true);
+                    }
+                });switch_out_2_8.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_8.setEnabled(true);
+                    }
+                });
+                switch_out_2_9.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_9.setEnabled(true);
+                    }
+                });
+                switch_out_2_10.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_10.setEnabled(true);
+                    }
+                });
+                switch_out_2_11.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_11.setEnabled(true);
+                    }
+                });
+                switch_out_2_12.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_12.setEnabled(true);
+                    }
+                });
+                switch_out_2_13.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_13.setEnabled(true);
+                    }
+                });
+                switch_out_2_14.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_14.setEnabled(true);
+                    }
+                });
+                switch_out_2_15.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch_out_2_15.setEnabled(true);
+                    }
+                });
+        }
     }
 
     private void upDateValues() {
@@ -819,7 +1402,6 @@ public class FragmentOutput extends Fragment {
         @Override
         public void run() {
             super.run();
-            boolean latch = true;
             while (true) {
                 try {
                     UpDateGraphicalDisplay.sleep(timer);
@@ -828,585 +1410,12 @@ public class FragmentOutput extends Fragment {
                 }
                 if (spaceStatus.isReadyFlagRecordingInitialValues()) {
                     if (latch) {
-                        switch_out_0_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_0.setEnabled(false);
-                            }
-                        });
-                        switch_out_0_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_1.setEnabled(false);
-                            }
-                        });
-                        switch_out_0_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_2.setEnabled(false);
-                            }
-                        });
-                        switch_out_0_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_3.setEnabled(false);
-                            }
-                        });
-                        switch_out_0_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_4.setEnabled(false);
-                            }
-                        });
-                        switch_out_0_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_5.setEnabled(false);
-                            }
-                        });
-                        switch_out_0_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_6.setEnabled(false);
-                            }
-                        });
-                        switch_out_0_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_7.setEnabled(false);
-                            }
-                        });switch_out_0_8.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_8.setEnabled(false);
-                            }
-                        });
-                        switch_out_0_9.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_9.setEnabled(false);
-                            }
-                        });
-                        switch_out_0_10.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_10.setEnabled(false);
-                            }
-                        });
-                        switch_out_0_11.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_11.setEnabled(false);
-                            }
-                        });
-                        switch_out_0_12.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_12.setEnabled(false);
-                            }
-                        });
-                        switch_out_0_13.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_13.setEnabled(false);
-                            }
-                        });
-                        switch_out_0_14.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_14.setEnabled(false);
-                            }
-                        });
-                        switch_out_0_15.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_15.setEnabled(false);
-                            }
-                        });
-
-                        switch_out_1_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_0.setEnabled(false);
-                            }
-                        });
-                        switch_out_1_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_1.setEnabled(false);
-                            }
-                        });
-                        switch_out_1_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_2.setEnabled(false);
-                            }
-                        });
-                        switch_out_1_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_3.setEnabled(false);
-                            }
-                        });
-                        switch_out_1_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_4.setEnabled(false);
-                            }
-                        });
-                        switch_out_1_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_5.setEnabled(false);
-                            }
-                        });
-                        switch_out_1_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_6.setEnabled(false);
-                            }
-                        });
-                        switch_out_1_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_7.setEnabled(false);
-                            }
-                        });switch_out_1_8.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_8.setEnabled(false);
-                            }
-                        });
-                        switch_out_1_9.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_9.setEnabled(false);
-                            }
-                        });
-                        switch_out_1_10.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_10.setEnabled(false);
-                            }
-                        });
-                        switch_out_1_11.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_11.setEnabled(false);
-                            }
-                        });
-                        switch_out_1_12.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_12.setEnabled(false);
-                            }
-                        });
-                        switch_out_1_13.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_13.setEnabled(false);
-                            }
-                        });
-                        switch_out_1_14.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_14.setEnabled(false);
-                            }
-                        });
-                        switch_out_1_15.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_15.setEnabled(false);
-                            }
-                        });
-
-                        switch_out_2_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_0.setEnabled(false);
-                            }
-                        });
-                        switch_out_2_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_1.setEnabled(false);
-                            }
-                        });
-                        switch_out_2_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_2.setEnabled(false);
-                            }
-                        });
-                        switch_out_2_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_3.setEnabled(false);
-                            }
-                        });
-                        switch_out_2_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_4.setEnabled(false);
-                            }
-                        });
-                        switch_out_2_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_5.setEnabled(false);
-                            }
-                        });
-                        switch_out_2_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_6.setEnabled(false);
-                            }
-                        });
-                        switch_out_2_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_7.setEnabled(false);
-                            }
-                        });switch_out_2_8.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_8.setEnabled(false);
-                            }
-                        });
-                        switch_out_2_9.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_9.setEnabled(false);
-                            }
-                        });
-                        switch_out_2_10.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_10.setEnabled(false);
-                            }
-                        });
-                        switch_out_2_11.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_11.setEnabled(false);
-                            }
-                        });
-                        switch_out_2_12.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_12.setEnabled(false);
-                            }
-                        });
-                        switch_out_2_13.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_13.setEnabled(false);
-                            }
-                        });
-                        switch_out_2_14.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_14.setEnabled(false);
-                            }
-                        });
-                        switch_out_2_15.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_15.setEnabled(false);
-                            }
-                        });
-
+                        upDateEnables();
                         latch = false;
                     }
                 } else {
                     if (!latch) {
-                        switch_out_0_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_0.setEnabled(true);
-                            }
-                        });
-                        switch_out_0_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_1.setEnabled(true);
-                            }
-                        });
-                        switch_out_0_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_2.setEnabled(true);
-                            }
-                        });
-                        switch_out_0_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_3.setEnabled(true);
-                            }
-                        });
-                        switch_out_0_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_4.setEnabled(true);
-                            }
-                        });
-                        switch_out_0_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_5.setEnabled(true);
-                            }
-                        });
-                        switch_out_0_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_6.setEnabled(true);
-                            }
-                        });
-                        switch_out_0_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_7.setEnabled(true);
-                            }
-                        });switch_out_0_8.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_8.setEnabled(true);
-                            }
-                        });
-                        switch_out_0_9.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_9.setEnabled(true);
-                            }
-                        });
-                        switch_out_0_10.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_10.setEnabled(true);
-                            }
-                        });
-                        switch_out_0_11.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_11.setEnabled(true);
-                            }
-                        });
-                        switch_out_0_12.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_12.setEnabled(true);
-                            }
-                        });
-                        switch_out_0_13.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_13.setEnabled(true);
-                            }
-                        });
-                        switch_out_0_14.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_14.setEnabled(true);
-                            }
-                        });
-                        switch_out_0_15.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_0_15.setEnabled(true);
-                            }
-                        });
-
-                        switch_out_1_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_0.setEnabled(true);
-                            }
-                        });
-                        switch_out_1_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_1.setEnabled(true);
-                            }
-                        });
-                        switch_out_1_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_2.setEnabled(true);
-                            }
-                        });
-                        switch_out_1_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_3.setEnabled(true);
-                            }
-                        });
-                        switch_out_1_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_4.setEnabled(true);
-                            }
-                        });
-                        switch_out_1_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_5.setEnabled(true);
-                            }
-                        });
-                        switch_out_1_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_6.setEnabled(true);
-                            }
-                        });
-                        switch_out_1_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_7.setEnabled(true);
-                            }
-                        });switch_out_1_8.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_8.setEnabled(true);
-                            }
-                        });
-                        switch_out_1_9.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_9.setEnabled(true);
-                            }
-                        });
-                        switch_out_1_10.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_10.setEnabled(true);
-                            }
-                        });
-                        switch_out_1_11.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_11.setEnabled(true);
-                            }
-                        });
-                        switch_out_1_12.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_12.setEnabled(true);
-                            }
-                        });
-                        switch_out_1_13.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_13.setEnabled(true);
-                            }
-                        });
-                        switch_out_1_14.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_14.setEnabled(true);
-                            }
-                        });
-                        switch_out_1_15.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_1_15.setEnabled(true);
-                            }
-                        });
-
-                        switch_out_2_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_0.setEnabled(true);
-                            }
-                        });
-                        switch_out_2_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_1.setEnabled(true);
-                            }
-                        });
-                        switch_out_2_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_2.setEnabled(true);
-                            }
-                        });
-                        switch_out_2_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_3.setEnabled(true);
-                            }
-                        });
-                        switch_out_2_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_4.setEnabled(true);
-                            }
-                        });
-                        switch_out_2_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_5.setEnabled(true);
-                            }
-                        });
-                        switch_out_2_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_6.setEnabled(true);
-                            }
-                        });
-                        switch_out_2_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_7.setEnabled(true);
-                            }
-                        });switch_out_2_8.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_8.setEnabled(true);
-                            }
-                        });
-                        switch_out_2_9.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_9.setEnabled(true);
-                            }
-                        });
-                        switch_out_2_10.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_10.setEnabled(true);
-                            }
-                        });
-                        switch_out_2_11.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_11.setEnabled(true);
-                            }
-                        });
-                        switch_out_2_12.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_12.setEnabled(true);
-                            }
-                        });
-                        switch_out_2_13.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_13.setEnabled(true);
-                            }
-                        });
-                        switch_out_2_14.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_14.setEnabled(true);
-                            }
-                        });
-                        switch_out_2_15.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_out_2_15.setEnabled(true);
-                            }
-                        });
+                        upDateEnables();
                         latch = true;
                     }
                 }

@@ -30,7 +30,7 @@ public class FragmentTK extends Fragment{
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
-    private long timer = 100;
+    private long timer = 500;
 
     private Switch switch_tk_0_0;
     private Switch switch_tk_0_1;
@@ -1047,6 +1047,7 @@ public class FragmentTK extends Fragment{
         arrayList.add(switch_tk_7_7);
 
         upDateValues();
+        upDateEnables();
 
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
         upDateGraphicalDisplay.start();
@@ -1062,6 +1063,794 @@ public class FragmentTK extends Fragment{
             else {
                 spaceAddress.setAddressSpace(startCellNumber + i, 0);
             }
+        }
+    }
+
+    private void upDateEnables() {
+        if (spaceStatus.isReadyFlagRecordingInitialValues()) {
+            switch_tk_0_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_0.setEnabled(false);
+                }
+            });
+            switch_tk_0_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_1.setEnabled(false);
+                }
+            });
+            switch_tk_0_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_2.setEnabled(false);
+                }
+            });
+            switch_tk_0_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_3.setEnabled(false);
+                }
+            });
+            switch_tk_0_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_4.setEnabled(false);
+                }
+            });
+            switch_tk_0_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_5.setEnabled(false);
+                }
+            });
+            switch_tk_0_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_6.setEnabled(false);
+                }
+            });
+            switch_tk_0_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_7.setEnabled(false);
+                }
+            });
+
+            switch_tk_1_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_0.setEnabled(false);
+                }
+            });
+            switch_tk_1_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_1.setEnabled(false);
+                }
+            });
+            switch_tk_1_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_2.setEnabled(false);
+                }
+            });
+            switch_tk_1_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_3.setEnabled(false);
+                }
+            });
+            switch_tk_1_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_4.setEnabled(false);
+                }
+            });
+            switch_tk_1_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_5.setEnabled(false);
+                }
+            });
+            switch_tk_1_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_6.setEnabled(false);
+                }
+            });
+            switch_tk_1_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_7.setEnabled(false);
+                }
+            });
+
+            switch_tk_2_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_0.setEnabled(false);
+                }
+            });
+            switch_tk_2_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_1.setEnabled(false);
+                }
+            });
+            switch_tk_2_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_2.setEnabled(false);
+                }
+            });
+            switch_tk_2_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_3.setEnabled(false);
+                }
+            });
+            switch_tk_2_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_4.setEnabled(false);
+                }
+            });
+            switch_tk_2_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_5.setEnabled(false);
+                }
+            });
+            switch_tk_2_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_6.setEnabled(false);
+                }
+            });
+            switch_tk_2_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_7.setEnabled(false);
+                }
+            });
+
+            switch_tk_3_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_0.setEnabled(false);
+                }
+            });
+            switch_tk_3_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_1.setEnabled(false);
+                }
+            });
+            switch_tk_3_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_2.setEnabled(false);
+                }
+            });
+            switch_tk_3_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_3.setEnabled(false);
+                }
+            });
+            switch_tk_3_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_4.setEnabled(false);
+                }
+            });
+            switch_tk_3_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_5.setEnabled(false);
+                }
+            });
+            switch_tk_3_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_6.setEnabled(false);
+                }
+            });
+            switch_tk_3_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_7.setEnabled(false);
+                }
+            });
+
+            switch_tk_4_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_0.setEnabled(false);
+                }
+            });
+            switch_tk_4_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_1.setEnabled(false);
+                }
+            });
+            switch_tk_4_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_2.setEnabled(false);
+                }
+            });
+            switch_tk_4_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_3.setEnabled(false);
+                }
+            });
+            switch_tk_4_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_4.setEnabled(false);
+                }
+            });
+            switch_tk_4_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_5.setEnabled(false);
+                }
+            });
+            switch_tk_4_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_6.setEnabled(false);
+                }
+            });
+            switch_tk_4_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_7.setEnabled(false);
+                }
+            });
+
+            switch_tk_5_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_0.setEnabled(false);
+                }
+            });
+            switch_tk_5_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_1.setEnabled(false);
+                }
+            });
+            switch_tk_5_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_2.setEnabled(false);
+                }
+            });
+            switch_tk_5_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_3.setEnabled(false);
+                }
+            });
+            switch_tk_5_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_4.setEnabled(false);
+                }
+            });
+            switch_tk_5_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_5.setEnabled(false);
+                }
+            });
+            switch_tk_5_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_6.setEnabled(false);
+                }
+            });
+            switch_tk_5_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_7.setEnabled(false);
+                }
+            });
+
+            switch_tk_6_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_0.setEnabled(false);
+                }
+            });
+            switch_tk_6_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_1.setEnabled(false);
+                }
+            });
+            switch_tk_6_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_2.setEnabled(false);
+                }
+            });
+            switch_tk_6_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_3.setEnabled(false);
+                }
+            });
+            switch_tk_6_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_4.setEnabled(false);
+                }
+            });
+            switch_tk_6_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_5.setEnabled(false);
+                }
+            });
+            switch_tk_6_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_6.setEnabled(false);
+                }
+            });
+            switch_tk_6_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_7.setEnabled(false);
+                }
+            });
+
+            switch_tk_7_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_0.setEnabled(false);
+                }
+            });
+            switch_tk_7_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_1.setEnabled(false);
+                }
+            });
+            switch_tk_7_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_2.setEnabled(false);
+                }
+            });
+            switch_tk_7_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_3.setEnabled(false);
+                }
+            });
+            switch_tk_7_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_4.setEnabled(false);
+                }
+            });
+            switch_tk_7_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_5.setEnabled(false);
+                }
+            });
+            switch_tk_7_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_6.setEnabled(false);
+                }
+            });
+            switch_tk_7_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_7.setEnabled(false);
+                }
+            });
+        } else {
+            switch_tk_0_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_0.setEnabled(true);
+                }
+            });
+            switch_tk_0_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_1.setEnabled(true);
+                }
+            });
+            switch_tk_0_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_2.setEnabled(true);
+                }
+            });
+            switch_tk_0_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_3.setEnabled(true);
+                }
+            });
+            switch_tk_0_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_4.setEnabled(true);
+                }
+            });
+            switch_tk_0_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_5.setEnabled(true);
+                }
+            });
+            switch_tk_0_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_6.setEnabled(true);
+                }
+            });
+            switch_tk_0_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_0_7.setEnabled(true);
+                }
+            });
+
+            switch_tk_1_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_0.setEnabled(true);
+                }
+            });
+            switch_tk_1_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_1.setEnabled(true);
+                }
+            });
+            switch_tk_1_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_2.setEnabled(true);
+                }
+            });
+            switch_tk_1_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_3.setEnabled(true);
+                }
+            });
+            switch_tk_1_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_4.setEnabled(true);
+                }
+            });
+            switch_tk_1_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_5.setEnabled(true);
+                }
+            });
+            switch_tk_1_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_6.setEnabled(true);
+                }
+            });
+            switch_tk_1_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_1_7.setEnabled(true);
+                }
+            });
+
+            switch_tk_2_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_0.setEnabled(true);
+                }
+            });
+            switch_tk_2_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_1.setEnabled(true);
+                }
+            });
+            switch_tk_2_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_2.setEnabled(true);
+                }
+            });
+            switch_tk_2_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_3.setEnabled(true);
+                }
+            });
+            switch_tk_2_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_4.setEnabled(true);
+                }
+            });
+            switch_tk_2_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_5.setEnabled(true);
+                }
+            });
+            switch_tk_2_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_6.setEnabled(true);
+                }
+            });
+            switch_tk_2_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_2_7.setEnabled(true);
+                }
+            });
+
+            switch_tk_3_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_0.setEnabled(true);
+                }
+            });
+            switch_tk_3_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_1.setEnabled(true);
+                }
+            });
+            switch_tk_3_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_2.setEnabled(true);
+                }
+            });
+            switch_tk_3_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_3.setEnabled(true);
+                }
+            });
+            switch_tk_3_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_4.setEnabled(true);
+                }
+            });
+            switch_tk_3_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_5.setEnabled(true);
+                }
+            });
+            switch_tk_3_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_6.setEnabled(true);
+                }
+            });
+            switch_tk_3_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_3_7.setEnabled(true);
+                }
+            });
+
+            switch_tk_4_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_0.setEnabled(true);
+                }
+            });
+            switch_tk_4_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_1.setEnabled(true);
+                }
+            });
+            switch_tk_4_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_2.setEnabled(true);
+                }
+            });
+            switch_tk_4_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_3.setEnabled(true);
+                }
+            });
+            switch_tk_4_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_4.setEnabled(true);
+                }
+            });
+            switch_tk_4_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_5.setEnabled(true);
+                }
+            });
+            switch_tk_4_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_6.setEnabled(true);
+                }
+            });
+            switch_tk_4_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_4_7.setEnabled(true);
+                }
+            });
+
+            switch_tk_5_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_0.setEnabled(true);
+                }
+            });
+            switch_tk_5_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_1.setEnabled(true);
+                }
+            });
+            switch_tk_5_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_2.setEnabled(true);
+                }
+            });
+            switch_tk_5_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_3.setEnabled(true);
+                }
+            });
+            switch_tk_5_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_4.setEnabled(true);
+                }
+            });
+            switch_tk_5_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_5.setEnabled(true);
+                }
+            });
+            switch_tk_5_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_6.setEnabled(true);
+                }
+            });
+            switch_tk_5_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_5_7.setEnabled(true);
+                }
+            });
+
+            switch_tk_6_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_0.setEnabled(true);
+                }
+            });
+            switch_tk_6_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_1.setEnabled(true);
+                }
+            });
+            switch_tk_6_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_2.setEnabled(true);
+                }
+            });
+            switch_tk_6_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_3.setEnabled(true);
+                }
+            });
+            switch_tk_6_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_4.setEnabled(true);
+                }
+            });
+            switch_tk_6_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_5.setEnabled(true);
+                }
+            });
+            switch_tk_6_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_6.setEnabled(true);
+                }
+            });
+            switch_tk_6_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_6_7.setEnabled(true);
+                }
+            });
+
+            switch_tk_7_0.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_0.setEnabled(true);
+                }
+            });
+            switch_tk_7_1.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_1.setEnabled(true);
+                }
+            });
+            switch_tk_7_2.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_2.setEnabled(true);
+                }
+            });
+            switch_tk_7_3.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_3.setEnabled(true);
+                }
+            });
+            switch_tk_7_4.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_4.setEnabled(true);
+                }
+            });
+            switch_tk_7_5.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_5.setEnabled(true);
+                }
+            });
+            switch_tk_7_6.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_6.setEnabled(true);
+                }
+            });
+            switch_tk_7_7.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch_tk_7_7.setEnabled(true);
+                }
+            });
         }
     }
 
@@ -1090,794 +1879,12 @@ public class FragmentTK extends Fragment{
                 }
                 if (spaceStatus.isReadyFlagRecordingInitialValues()) {
                     if (latch) {
-                        switch_tk_0_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_0.setEnabled(false);
-                            }
-                        });
-                        switch_tk_0_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_1.setEnabled(false);
-                            }
-                        });
-                        switch_tk_0_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_2.setEnabled(false);
-                            }
-                        });
-                        switch_tk_0_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_3.setEnabled(false);
-                            }
-                        });
-                        switch_tk_0_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_4.setEnabled(false);
-                            }
-                        });
-                        switch_tk_0_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_5.setEnabled(false);
-                            }
-                        });
-                        switch_tk_0_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_6.setEnabled(false);
-                            }
-                        });
-                        switch_tk_0_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_7.setEnabled(false);
-                            }
-                        });
-
-                        switch_tk_1_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_0.setEnabled(false);
-                            }
-                        });
-                        switch_tk_1_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_1.setEnabled(false);
-                            }
-                        });
-                        switch_tk_1_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_2.setEnabled(false);
-                            }
-                        });
-                        switch_tk_1_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_3.setEnabled(false);
-                            }
-                        });
-                        switch_tk_1_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_4.setEnabled(false);
-                            }
-                        });
-                        switch_tk_1_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_5.setEnabled(false);
-                            }
-                        });
-                        switch_tk_1_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_6.setEnabled(false);
-                            }
-                        });
-                        switch_tk_1_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_7.setEnabled(false);
-                            }
-                        });
-
-                        switch_tk_2_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_0.setEnabled(false);
-                            }
-                        });
-                        switch_tk_2_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_1.setEnabled(false);
-                            }
-                        });
-                        switch_tk_2_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_2.setEnabled(false);
-                            }
-                        });
-                        switch_tk_2_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_3.setEnabled(false);
-                            }
-                        });
-                        switch_tk_2_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_4.setEnabled(false);
-                            }
-                        });
-                        switch_tk_2_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_5.setEnabled(false);
-                            }
-                        });
-                        switch_tk_2_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_6.setEnabled(false);
-                            }
-                        });
-                        switch_tk_2_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_7.setEnabled(false);
-                            }
-                        });
-
-                        switch_tk_3_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_0.setEnabled(false);
-                            }
-                        });
-                        switch_tk_3_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_1.setEnabled(false);
-                            }
-                        });
-                        switch_tk_3_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_2.setEnabled(false);
-                            }
-                        });
-                        switch_tk_3_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_3.setEnabled(false);
-                            }
-                        });
-                        switch_tk_3_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_4.setEnabled(false);
-                            }
-                        });
-                        switch_tk_3_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_5.setEnabled(false);
-                            }
-                        });
-                        switch_tk_3_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_6.setEnabled(false);
-                            }
-                        });
-                        switch_tk_3_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_7.setEnabled(false);
-                            }
-                        });
-
-                        switch_tk_4_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_0.setEnabled(false);
-                            }
-                        });
-                        switch_tk_4_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_1.setEnabled(false);
-                            }
-                        });
-                        switch_tk_4_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_2.setEnabled(false);
-                            }
-                        });
-                        switch_tk_4_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_3.setEnabled(false);
-                            }
-                        });
-                        switch_tk_4_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_4.setEnabled(false);
-                            }
-                        });
-                        switch_tk_4_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_5.setEnabled(false);
-                            }
-                        });
-                        switch_tk_4_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_6.setEnabled(false);
-                            }
-                        });
-                        switch_tk_4_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_7.setEnabled(false);
-                            }
-                        });
-
-                        switch_tk_5_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_0.setEnabled(false);
-                            }
-                        });
-                        switch_tk_5_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_1.setEnabled(false);
-                            }
-                        });
-                        switch_tk_5_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_2.setEnabled(false);
-                            }
-                        });
-                        switch_tk_5_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_3.setEnabled(false);
-                            }
-                        });
-                        switch_tk_5_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_4.setEnabled(false);
-                            }
-                        });
-                        switch_tk_5_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_5.setEnabled(false);
-                            }
-                        });
-                        switch_tk_5_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_6.setEnabled(false);
-                            }
-                        });
-                        switch_tk_5_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_7.setEnabled(false);
-                            }
-                        });
-
-                        switch_tk_6_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_0.setEnabled(false);
-                            }
-                        });
-                        switch_tk_6_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_1.setEnabled(false);
-                            }
-                        });
-                        switch_tk_6_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_2.setEnabled(false);
-                            }
-                        });
-                        switch_tk_6_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_3.setEnabled(false);
-                            }
-                        });
-                        switch_tk_6_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_4.setEnabled(false);
-                            }
-                        });
-                        switch_tk_6_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_5.setEnabled(false);
-                            }
-                        });
-                        switch_tk_6_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_6.setEnabled(false);
-                            }
-                        });
-                        switch_tk_6_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_7.setEnabled(false);
-                            }
-                        });
-
-                        switch_tk_7_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_0.setEnabled(false);
-                            }
-                        });
-                        switch_tk_7_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_1.setEnabled(false);
-                            }
-                        });
-                        switch_tk_7_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_2.setEnabled(false);
-                            }
-                        });
-                        switch_tk_7_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_3.setEnabled(false);
-                            }
-                        });
-                        switch_tk_7_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_4.setEnabled(false);
-                            }
-                        });
-                        switch_tk_7_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_5.setEnabled(false);
-                            }
-                        });
-                        switch_tk_7_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_6.setEnabled(false);
-                            }
-                        });
-                        switch_tk_7_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_7.setEnabled(false);
-                            }
-                        });
-
+                        upDateEnables();
                         latch = false;
                     }
                 } else {
                     if (!latch) {
-                        switch_tk_0_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_0.setEnabled(true);
-                            }
-                        });
-                        switch_tk_0_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_1.setEnabled(true);
-                            }
-                        });
-                        switch_tk_0_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_2.setEnabled(true);
-                            }
-                        });
-                        switch_tk_0_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_3.setEnabled(true);
-                            }
-                        });
-                        switch_tk_0_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_4.setEnabled(true);
-                            }
-                        });
-                        switch_tk_0_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_5.setEnabled(true);
-                            }
-                        });
-                        switch_tk_0_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_6.setEnabled(true);
-                            }
-                        });
-                        switch_tk_0_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_0_7.setEnabled(true);
-                            }
-                        });
-
-                        switch_tk_1_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_0.setEnabled(true);
-                            }
-                        });
-                        switch_tk_1_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_1.setEnabled(true);
-                            }
-                        });
-                        switch_tk_1_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_2.setEnabled(true);
-                            }
-                        });
-                        switch_tk_1_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_3.setEnabled(true);
-                            }
-                        });
-                        switch_tk_1_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_4.setEnabled(true);
-                            }
-                        });
-                        switch_tk_1_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_5.setEnabled(true);
-                            }
-                        });
-                        switch_tk_1_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_6.setEnabled(true);
-                            }
-                        });
-                        switch_tk_1_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_1_7.setEnabled(true);
-                            }
-                        });
-
-                        switch_tk_2_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_0.setEnabled(true);
-                            }
-                        });
-                        switch_tk_2_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_1.setEnabled(true);
-                            }
-                        });
-                        switch_tk_2_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_2.setEnabled(true);
-                            }
-                        });
-                        switch_tk_2_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_3.setEnabled(true);
-                            }
-                        });
-                        switch_tk_2_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_4.setEnabled(true);
-                            }
-                        });
-                        switch_tk_2_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_5.setEnabled(true);
-                            }
-                        });
-                        switch_tk_2_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_6.setEnabled(true);
-                            }
-                        });
-                        switch_tk_2_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_2_7.setEnabled(true);
-                            }
-                        });
-
-                        switch_tk_3_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_0.setEnabled(true);
-                            }
-                        });
-                        switch_tk_3_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_1.setEnabled(true);
-                            }
-                        });
-                        switch_tk_3_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_2.setEnabled(true);
-                            }
-                        });
-                        switch_tk_3_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_3.setEnabled(true);
-                            }
-                        });
-                        switch_tk_3_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_4.setEnabled(true);
-                            }
-                        });
-                        switch_tk_3_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_5.setEnabled(true);
-                            }
-                        });
-                        switch_tk_3_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_6.setEnabled(true);
-                            }
-                        });
-                        switch_tk_3_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_3_7.setEnabled(true);
-                            }
-                        });
-
-                        switch_tk_4_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_0.setEnabled(true);
-                            }
-                        });
-                        switch_tk_4_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_1.setEnabled(true);
-                            }
-                        });
-                        switch_tk_4_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_2.setEnabled(true);
-                            }
-                        });
-                        switch_tk_4_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_3.setEnabled(true);
-                            }
-                        });
-                        switch_tk_4_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_4.setEnabled(true);
-                            }
-                        });
-                        switch_tk_4_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_5.setEnabled(true);
-                            }
-                        });
-                        switch_tk_4_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_6.setEnabled(true);
-                            }
-                        });
-                        switch_tk_4_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_4_7.setEnabled(true);
-                            }
-                        });
-
-                        switch_tk_5_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_0.setEnabled(true);
-                            }
-                        });
-                        switch_tk_5_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_1.setEnabled(true);
-                            }
-                        });
-                        switch_tk_5_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_2.setEnabled(true);
-                            }
-                        });
-                        switch_tk_5_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_3.setEnabled(true);
-                            }
-                        });
-                        switch_tk_5_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_4.setEnabled(true);
-                            }
-                        });
-                        switch_tk_5_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_5.setEnabled(true);
-                            }
-                        });
-                        switch_tk_5_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_6.setEnabled(true);
-                            }
-                        });
-                        switch_tk_5_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_5_7.setEnabled(true);
-                            }
-                        });
-
-                        switch_tk_6_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_0.setEnabled(true);
-                            }
-                        });
-                        switch_tk_6_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_1.setEnabled(true);
-                            }
-                        });
-                        switch_tk_6_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_2.setEnabled(true);
-                            }
-                        });
-                        switch_tk_6_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_3.setEnabled(true);
-                            }
-                        });
-                        switch_tk_6_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_4.setEnabled(true);
-                            }
-                        });
-                        switch_tk_6_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_5.setEnabled(true);
-                            }
-                        });
-                        switch_tk_6_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_6.setEnabled(true);
-                            }
-                        });
-                        switch_tk_6_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_6_7.setEnabled(true);
-                            }
-                        });
-
-                        switch_tk_7_0.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_0.setEnabled(true);
-                            }
-                        });
-                        switch_tk_7_1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_1.setEnabled(true);
-                            }
-                        });
-                        switch_tk_7_2.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_2.setEnabled(true);
-                            }
-                        });
-                        switch_tk_7_3.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_3.setEnabled(true);
-                            }
-                        });
-                        switch_tk_7_4.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_4.setEnabled(true);
-                            }
-                        });
-                        switch_tk_7_5.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_5.setEnabled(true);
-                            }
-                        });
-                        switch_tk_7_6.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_6.setEnabled(true);
-                            }
-                        });
-                        switch_tk_7_7.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch_tk_7_7.setEnabled(true);
-                            }
-                        });
-
+                        upDateEnables();
                         latch = true;
                     }
                 }
