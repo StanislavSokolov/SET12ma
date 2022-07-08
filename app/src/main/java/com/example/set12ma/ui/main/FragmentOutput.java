@@ -814,6 +814,7 @@ public class FragmentOutput extends Fragment {
         }
     }
 
+
     public class UpDateGraphicalDisplay extends Thread {
         @Override
         public void run() {

@@ -413,6 +413,12 @@ public class FragmentSP2 extends Fragment {
                                         textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
                                         buttonStartLoadSP2.setVisibility(View.INVISIBLE);
                                         progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+
+                                        textViewTipChoiseAddressOfDeviceForSP2.setVisibility(View.INVISIBLE);
+                                        spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
+                                        textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
+                                        textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+                                        progressBarLoadToDevice.setVisibility(View.INVISIBLE);
                                     }
                                 }
                             });
