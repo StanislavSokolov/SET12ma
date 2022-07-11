@@ -21,7 +21,7 @@
                     tools:layout_constraintLeft_creator="1"
             />
             <TextView
-                    android:text="@string/tab_SET12MA_text_8"
+                    android:text="@string/tab_SET12MA_text_6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/textView_SP2" android:textSize="24sp"
                     android:gravity="center" android:padding="20dp"/>
