@@ -305,7 +305,6 @@ public class FragmentSP6 extends Fragment {
             Toast.makeText(getContext(), selectedFile.toString(), Toast.LENGTH_LONG).show();
             stringSelectedFile = data.getDataString();
             textViewPathToLoadFile.setText(stringSelectedFile);
-            spaceStatus.setReadyFlagToLoadSoftware(false);
         }
     }
 
@@ -432,19 +431,24 @@ public class FragmentSP6 extends Fragment {
                                 });
                             }
                         } else {
-                            buttonChoicePath.setVisibility(View.VISIBLE);
-                            buttonLoadToFlesh.setVisibility(View.VISIBLE);
-                            textViewPathToLoadFile.setText(stringSelectedFile);
-                            textViewPathToLoadFile.setVisibility(View.VISIBLE);
-                            textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
-                            buttonStartLoadSP6.setVisibility(View.INVISIBLE);
-                            progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                            textViewPathToLoadFile.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    buttonChoicePath.setVisibility(View.VISIBLE);
+                                    buttonLoadToFlesh.setVisibility(View.VISIBLE);
+                                    textViewPathToLoadFile.setText(stringSelectedFile);
+                                    textViewPathToLoadFile.setVisibility(View.VISIBLE);
+                                    textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
+                                    buttonStartLoadSP6.setVisibility(View.INVISIBLE);
+                                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
 
-                            textViewTipChoiseAddressOfDeviceForSP6.setVisibility(View.INVISIBLE);
-                            spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
-                            textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
-                            textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
-                            progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+                                    textViewTipChoiseAddressOfDeviceForSP6.setVisibility(View.INVISIBLE);
+                                    spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
+                                    textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
+                                    textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+                                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+                                }
+                            });
                         }
                     } else {
                         textViewTipFindFile.post(new Runnable() {

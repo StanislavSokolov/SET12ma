@@ -305,7 +305,6 @@ public class FragmentSP2 extends Fragment {
             Toast.makeText(getContext(), selectedFile.toString(), Toast.LENGTH_LONG).show();
             stringSelectedFile = data.getDataString();
             textViewPathToLoadFile.setText(stringSelectedFile);
-            spaceStatus.setReadyFlagToLoadSoftware(false);
         }
     }
 
@@ -323,7 +322,6 @@ public class FragmentSP2 extends Fragment {
                                 textViewTipFindFile.setText("Выберите файл для загрузки");
                             }
                         });
-                        if (spaceStatus.isReadyFlagToLoadSoftware()) {
                             if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
                                 if (spaceStatus.isStatusProcessOfUpdatingSoftware()) {
                                     progressBarLoadToDevice.post(new Runnable() {
@@ -431,21 +429,6 @@ public class FragmentSP2 extends Fragment {
                                     }
                                 });
                             }
-                        } else {
-                            buttonChoicePath.setVisibility(View.VISIBLE);
-                            buttonLoadToFlesh.setVisibility(View.VISIBLE);
-                            textViewPathToLoadFile.setText(stringSelectedFile);
-                            textViewPathToLoadFile.setVisibility(View.VISIBLE);
-                            textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
-                            buttonStartLoadSP2.setVisibility(View.INVISIBLE);
-                            progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
-
-                            textViewTipChoiseAddressOfDeviceForSP2.setVisibility(View.INVISIBLE);
-                            spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
-                            textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
-                            textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
-                            progressBarLoadToDevice.setVisibility(View.INVISIBLE);
-                        }
                     } else {
                         textViewTipFindFile.post(new Runnable() {
                             @Override
