@@ -464,6 +464,7 @@ public class FragmentBluetooth extends Fragment {
                         bluetoothConnectedThread.initLoad();
                     }
                 } else if (spaceStatus.isReadyFlagToUpdateSoftware()) {
+                    spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
                     if (!latchFinish) {
                         spaceStatus.setStatusProcessOfUpdatingSoftware(true);
                         bluetoothConnectedThread.startToLoad();

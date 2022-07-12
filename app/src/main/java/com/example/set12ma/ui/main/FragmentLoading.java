@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -24,28 +23,28 @@ import java.io.InputStream;
 import static android.app.Activity.RESULT_OK;
 
 public class FragmentLoading extends Fragment {
-    private static final String ARG_SECTION_NUMBER = "TMS2812";
-    private static final String LOG_TAG = "AndroidExample";
+    private static final String ARG_SECTION_NUMBER = "Loading";
 
     private static final String DEVICE_0 = "TMS2812";
     private static final String DEVICE_1 = "SP2main";
     private static final String DEVICE_2 = "SP2";
     private static final String DEVICE_3 = "SP6";
     private String deviceSelected = "";
-    private TextView textViewTipChoiceDevices;
-    private TextView textViewPathToLoadFile;
-    private TextView textViewStatusLoadToFlesh;
-    private TextView textViewStatusLoadToDevice;
-    private TextView textViewInformationAboutDevice;
-    private TextView textViewTipChoiseAddressOfDeviceForTMS2812;
-    private TextView textViewTipFindFile;
 
+    private TextView textViewTipChoiceDevices;
+    //spiner
+    private TextView textViewTipFindFile;
     private Button buttonChoicePath;
     private Button buttonLoadToFlesh;
-    private Button buttonStartLoadTMS2812;
-
+    private TextView textViewPathToLoadFile;
     private ProgressBar progressBarLoadToFlesh;
+    private TextView textViewStatusLoadToFlesh;
+    private TextView textViewTipChoiseAddressOfDevice;
+    //spiner
+    private TextView textViewInformationAboutDevice;
+    private Button buttonStartLoad;
     private ProgressBar progressBarLoadToDevice;
+    private TextView textViewStatusLoadToDevice;
 
     private Uri selectedFile = null;
     private String stringSelectedFile = "Путь не указан";
@@ -58,7 +57,7 @@ public class FragmentLoading extends Fragment {
     private Spinner spinnerTypeOfDevice;
     private ArrayAdapter<String> adapterAddressOfDevice;
     private ArrayAdapter<String> adapterTypeOfDevice;
-    private int itemSelectedFromConnectedDevices = 0;
+    private int itemSelectedFromConnectedOfDevices = 0;
     private int itemSelectedFromTypeOfDevices = 0;
 
     private boolean latchLoadToFlesh = false;
@@ -104,18 +103,18 @@ public class FragmentLoading extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_loading, container, false);
+
         textViewTipChoiceDevices = root.findViewById(R.id.textView_tip_choice_devices);
+        //spiner
         textViewTipFindFile = root.findViewById(R.id.textView_tip_find_file);
-
-
-        buttonChoicePath = root.findViewById(R.id.button_choice_path_for_tms2812);
+        buttonChoicePath = root.findViewById(R.id.button_choice_path);
         buttonChoicePath.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
             public void onClick(View v) { openFile();
             }
         });
-        buttonLoadToFlesh = root.findViewById(R.id.button_load_to_flesh_for_tms2812);
+        buttonLoadToFlesh = root.findViewById(R.id.button_load_to_flesh);
         buttonLoadToFlesh.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
@@ -127,23 +126,21 @@ public class FragmentLoading extends Fragment {
                 }
             }
         });
-
-        buttonStartLoadTMS2812 = root.findViewById(R.id.button_start_load_for_tms2812);
-        buttonStartLoadTMS2812.setOnClickListener(new View.OnClickListener() {
+        textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file);
+        progressBarLoadToFlesh = root.findViewById(R.id.progressBar_load_to_flesh);
+        textViewStatusLoadToFlesh = root.findViewById(R.id.textView_status_load_to_flesh);
+        textViewTipChoiseAddressOfDevice = root.findViewById(R.id.textView_tip_choise_address_of_device);
+        //spiner
+        textViewInformationAboutDevice = root.findViewById(R.id.textView_information_about_device);
+        buttonStartLoad = root.findViewById(R.id.button_start_load);
+        buttonStartLoad.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
             public void onClick(View v) { startLoad();
             }
         });
-        textViewPathToLoadFile = root.findViewById(R.id.textView_path_to_load_file_for_tms2812);
-        textViewStatusLoadToFlesh = root.findViewById(R.id.textView_status_load_to_flesh_for_tms2812);
-
-        textViewInformationAboutDevice = root.findViewById(R.id.textView_information_about_device_for_tms2812);
-        textViewStatusLoadToDevice = root.findViewById(R.id.textView_status_load_to_device_for_tms2812);
-        textViewTipChoiseAddressOfDeviceForTMS2812 = root.findViewById(R.id.textView_tip_choise_address_of_device_for_tms2812);
-
-        progressBarLoadToFlesh = root.findViewById(R.id.progressBar_load_to_flesh_for_tms2812);
-        progressBarLoadToDevice = root.findViewById(R.id.progressBar_load_to_device_for_tms2812);
+        progressBarLoadToDevice = root.findViewById(R.id.progressBar_load_to_device);
+        textViewStatusLoadToDevice = root.findViewById(R.id.textView_status_load_to_device);
 
         spinnerTypeOfDevice = root.findViewById(R.id.spinner_type_of_device);
         adapterTypeOfDevice = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
@@ -168,6 +165,11 @@ public class FragmentLoading extends Fragment {
                         textViewTipFindFile.setText("Выберите файл для загрузки для " + deviceSelected);
                     }
                 });
+                spaceStatus.setReadyFlagToUpdateSoftware(false);
+                spaceStatus.setStatusProcessOfUpdatingSoftware(false);
+                spaceStatus.setReadyFlagToLoadSoftware(false);
+                spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+                spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(false);
             }
 
             @Override
@@ -176,15 +178,7 @@ public class FragmentLoading extends Fragment {
         };
         spinnerTypeOfDevice.setOnItemSelectedListener(itemSelectedListener0);
 
-
-
-
-
-
-
-
-
-        spinnerAddressOfDevice = root.findViewById(R.id.spinner_address_of_device_for_tms2812);
+        spinnerAddressOfDevice = root.findViewById(R.id.spinner_address_of_device);
         adapterAddressOfDevice = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapterAddressOfDevice.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         for (int i = 0; i < 16; i++) {
@@ -194,9 +188,9 @@ public class FragmentLoading extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                itemSelectedFromConnectedDevices = spinnerAddressOfDevice.getSelectedItemPosition();
-                textViewInformationAboutDevice.setText("Устройство с адресом " + itemSelectedFromConnectedDevices + " готово к обновлению ПО");
-                spaceStatus.setAddressOfDevice(itemSelectedFromConnectedDevices);
+                itemSelectedFromConnectedOfDevices = spinnerAddressOfDevice.getSelectedItemPosition();
+                textViewInformationAboutDevice.setText("Устройство с адресом " + itemSelectedFromConnectedOfDevices + " готово к обновлению ПО");
+                spaceStatus.setAddressOfDevice(itemSelectedFromConnectedOfDevices);
                 if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
                     textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
                 }
@@ -208,51 +202,33 @@ public class FragmentLoading extends Fragment {
         };
         spinnerAddressOfDevice.setOnItemSelectedListener(itemSelectedListener);
 
-
-
-
-
         if (spaceStatus.isReadyFlagToExchangeData()){
-//            textViewTipChoiceDevices.setText("Выберите тип устройства");
-//            textViewTipChoiceDevices.setVisibility(View.VISIBLE);
-//            spinnerTypeOfDevice.setVisibility(View.VISIBLE);
-//            spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
-//            textViewTipFindFile.setVisibility(View.VISIBLE);
-//            buttonChoicePath.setVisibility(View.VISIBLE);
-//            buttonLoadToFlesh.setVisibility(View.VISIBLE);
-//            textViewPathToLoadFile.setVisibility(View.VISIBLE);
-//            buttonChoicePath.setVisibility(View.INVISIBLE);
-//            buttonLoadToFlesh.setVisibility(View.INVISIBLE);
-//            textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
-//            buttonStartLoadTMS2812.setVisibility(View.INVISIBLE);
-//            progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+
         } else {
             textViewTipChoiceDevices.setText("Подключитесь к устройству");
             spinnerTypeOfDevice.setVisibility(View.INVISIBLE);
-            spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
-            textViewTipChoiceDevices.setVisibility(View.VISIBLE);
             textViewTipFindFile.setVisibility(View.INVISIBLE);
             buttonChoicePath.setVisibility(View.INVISIBLE);
             buttonLoadToFlesh.setVisibility(View.INVISIBLE);
             textViewPathToLoadFile.setVisibility(View.INVISIBLE);
-            buttonChoicePath.setVisibility(View.INVISIBLE);
-            buttonLoadToFlesh.setVisibility(View.INVISIBLE);
-            textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
-            buttonStartLoadTMS2812.setVisibility(View.INVISIBLE);
             progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+            textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
+            textViewTipChoiseAddressOfDevice.setVisibility(View.INVISIBLE);
+            spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
+            textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
+            buttonStartLoad.setVisibility(View.INVISIBLE);
+            progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+            textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+
+
+
         }
 
-        Log.i(LOG_TAG, "onCreateView1");
+        Log.i("LOG_TAG", "onCreateView1");
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
         upDateGraphicalDisplay.start();
 
         return root;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        upDateGraphicalDisplay.interrupt();
     }
 
     private void openFile() {
@@ -267,8 +243,8 @@ public class FragmentLoading extends Fragment {
     }
 
     private void loadFile() throws IOException {
-        if (spaceStatus.getDevice().equals(ARG_SECTION_NUMBER)) {
-            if (!spaceStatus.isReadyFlagToLoadSoftware() & (!spaceStatus.isStatusProcessOfLoadingSoftware() & (!spaceStatus.isReadyFlagToFinishOfLoadingSoftware()))) {
+        if (!stringSelectedFile.equals("Путь не указан")) {
+            if (!spaceStatus.isReadyFlagToLoadSoftware() & (!spaceStatus.isStatusProcessOfLoadingSoftware())) {
                 InputStream inputStream = null;
                 try {
                     inputStream = getContext().getContentResolver().openInputStream(selectedFile);
@@ -289,9 +265,10 @@ public class FragmentLoading extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
-//            inputStream.close();
+                inputStream.close();
                 }
             } else {
+                Toast.makeText(getContext(), "Дождитесь завершения загрузки ПО", Toast.LENGTH_LONG).show();
                 if (spaceStatus.isReadyFlagToLoadSoftware() || spaceStatus.isStatusProcessOfLoadingSoftware()) {
                     Toast.makeText(getContext(), "Дождитесь завершения загрузки ПО", Toast.LENGTH_LONG).show();
                 } else if (spaceStatus.isReadyFlagToUpdateSoftware() || spaceStatus.isStatusProcessOfUpdatingSoftware()) {
@@ -330,6 +307,11 @@ public class FragmentLoading extends Fragment {
             Toast.makeText(getContext(), selectedFile.toString(), Toast.LENGTH_LONG).show();
             stringSelectedFile = data.getDataString();
             textViewPathToLoadFile.setText(stringSelectedFile);
+            spaceStatus.setReadyFlagToUpdateSoftware(false);
+            spaceStatus.setStatusProcessOfUpdatingSoftware(false);
+            spaceStatus.setReadyFlagToLoadSoftware(false);
+            spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+            spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(false);
         }
     }
 
@@ -339,9 +321,102 @@ public class FragmentLoading extends Fragment {
             super.run();
             while (true) {
                 try {
+                    Log.i("LOG_TAG", "UpDateGraphicalDisplay");
                     UpDateGraphicalDisplay.sleep(timer);
-                    if (spaceStatus.isReadyFlagToExchangeData()){
+                    if (spaceStatus.isReadyFlagToExchangeData()) {
                         if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware())) {
+                            Log.i("LOG_TAG", "if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware())) {");
+                            textViewTipChoiceDevices.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewTipChoiceDevices.setText("Выберите тип устройства для обновления ПО");
+                                    textViewTipChoiceDevices.setVisibility(View.VISIBLE);
+                                }
+                            });
+                            spinnerTypeOfDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    spinnerTypeOfDevice.setVisibility(View.VISIBLE);
+                                    spinnerTypeOfDevice.setEnabled(false);
+                                }
+                            });
+                            textViewTipFindFile.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewTipFindFile.setVisibility(View.VISIBLE);
+                                }
+                            });
+                            buttonChoicePath.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    buttonChoicePath.setVisibility(View.VISIBLE);
+                                    buttonChoicePath.setEnabled(false);
+                                }
+                            });
+                            buttonLoadToFlesh.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    buttonLoadToFlesh.setVisibility(View.VISIBLE);
+                                    buttonLoadToFlesh.setEnabled(false);
+                                }
+                            });
+                            textViewPathToLoadFile.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewPathToLoadFile.setVisibility(View.VISIBLE);
+                                }
+                            });
+                            progressBarLoadToFlesh.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBarLoadToFlesh.setVisibility(View.VISIBLE);
+                                }
+                            });
+                            textViewStatusLoadToFlesh.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                                    textViewStatusLoadToFlesh.setText("Загрузка в память...");
+                                }
+                            });
+                            textViewTipChoiseAddressOfDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewTipChoiseAddressOfDevice.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                            spinnerAddressOfDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                            textViewInformationAboutDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                            buttonStartLoad.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    buttonStartLoad.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                            progressBarLoadToDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                            textViewStatusLoadToFlesh.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                        } else if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
+                            Log.i("LOG_TAG", "spaceStatus.isReadyFlagToFinishOfLoadingSoftware()");
                             textViewTipChoiceDevices.post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -385,94 +460,6 @@ public class FragmentLoading extends Fragment {
                             progressBarLoadToFlesh.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    progressBarLoadToFlesh.setVisibility(View.VISIBLE);
-                                }
-                            });
-                            textViewStatusLoadToFlesh.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                                    textViewTipChoiceDevices.setText("Загрузка в память...");
-                                }
-                            });
-                            textViewTipChoiseAddressOfDeviceForTMS2812.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.INVISIBLE);
-                                }
-                            });
-                            spinnerAddressOfDevice.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
-                                }
-                            });
-                            textViewInformationAboutDevice.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
-                                }
-                            });
-                            buttonStartLoadTMS2812.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    buttonStartLoadTMS2812.setVisibility(View.INVISIBLE);
-                                }
-                            });
-                            progressBarLoadToFlesh.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
-                                }
-                            });
-                            textViewStatusLoadToFlesh.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
-                                }
-                            });
-                        } else if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
-                            textViewTipChoiceDevices.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    textViewTipChoiceDevices.setText("Выберите тип устройства для обновления ПО");
-                                    textViewTipChoiceDevices.setVisibility(View.VISIBLE);
-                                }
-                            });
-                            spinnerTypeOfDevice.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    spinnerTypeOfDevice.setVisibility(View.VISIBLE);
-                                    spinnerTypeOfDevice.setEnabled(false);
-                                }
-                            });
-                            textViewTipFindFile.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    textViewTipFindFile.setVisibility(View.VISIBLE);
-                                }
-                            });
-                            buttonChoicePath.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    buttonChoicePath.setVisibility(View.VISIBLE);
-                                }
-                            });
-                            buttonLoadToFlesh.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    buttonLoadToFlesh.setVisibility(View.VISIBLE);
-                                }
-                            });
-                            textViewPathToLoadFile.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    textViewPathToLoadFile.setVisibility(View.VISIBLE);
-                                }
-                            });
-                            progressBarLoadToFlesh.post(new Runnable() {
-                                @Override
-                                public void run() {
                                     progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
                                 }
                             });
@@ -480,13 +467,14 @@ public class FragmentLoading extends Fragment {
                                 @Override
                                 public void run() {
                                     textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                                    textViewTipChoiceDevices.setText("Загрузка завершена");
+                                    textViewStatusLoadToFlesh.setText("Загрузка завершена");
                                 }
                             });
-                            textViewTipChoiseAddressOfDeviceForTMS2812.post(new Runnable() {
+                            textViewTipChoiseAddressOfDevice.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.VISIBLE);
+                                    textViewTipChoiseAddressOfDevice.setVisibility(View.VISIBLE);
+                                    textViewTipChoiseAddressOfDevice.setText("Выберите адрес устройства");
                                 }
                             });
                             spinnerAddressOfDevice.post(new Runnable() {
@@ -501,31 +489,32 @@ public class FragmentLoading extends Fragment {
                                     textViewInformationAboutDevice.setVisibility(View.VISIBLE);
                                 }
                             });
-                            buttonStartLoadTMS2812.post(new Runnable() {
+                            buttonStartLoad.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    buttonStartLoadTMS2812.setVisibility(View.VISIBLE);
+                                    buttonStartLoad.setVisibility(View.VISIBLE);
                                 }
                             });
-                            progressBarLoadToFlesh.post(new Runnable() {
+                            progressBarLoadToDevice.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
                                 }
                             });
                             textViewStatusLoadToFlesh.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
+                                    textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
                                 }
                             });
                         } else if (spaceStatus.isReadyFlagToUpdateSoftware() || spaceStatus.isStatusProcessOfUpdatingSoftware()) {
+                            Log.i("LOG_TAG", "(spaceStatus.isReadyFlagToUpdateSoftware() || spaceStatus.isStatusProcessOfUpdatingSoftware())");
                             textViewTipChoiceDevices.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    textViewTipChoiceDevices.setText("Выберите тип устройства для обновления ПО");
-                                    textViewTipChoiceDevices.setVisibility(View.VISIBLE);
-                                }
+                            @Override
+                            public void run() {
+                                textViewTipChoiceDevices.setText("Выберите тип устройства для обновления ПО");
+                                textViewTipChoiceDevices.setVisibility(View.VISIBLE);
+                            }
                             });
                             spinnerTypeOfDevice.post(new Runnable() {
                                 @Override
@@ -570,19 +559,21 @@ public class FragmentLoading extends Fragment {
                                 @Override
                                 public void run() {
                                     textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-                                    textViewTipChoiceDevices.setText("Загрузка завершена");
+                                    textViewStatusLoadToFlesh.setText("Загрузка завершена");
                                 }
                             });
-                            textViewTipChoiseAddressOfDeviceForTMS2812.post(new Runnable() {
+                            textViewTipChoiseAddressOfDevice.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.VISIBLE);
+                                    textViewTipChoiseAddressOfDevice.setVisibility(View.VISIBLE);
+                                    textViewTipChoiseAddressOfDevice.setText("Выберите адрес устройства");
                                 }
                             });
                             spinnerAddressOfDevice.post(new Runnable() {
                                 @Override
                                 public void run() {
                                     spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+                                    spinnerAddressOfDevice.setEnabled(false);
                                 }
                             });
                             textViewInformationAboutDevice.post(new Runnable() {
@@ -591,10 +582,66 @@ public class FragmentLoading extends Fragment {
                                     textViewInformationAboutDevice.setVisibility(View.VISIBLE);
                                 }
                             });
-                            buttonStartLoadTMS2812.post(new Runnable() {
+                            buttonStartLoad.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    buttonStartLoadTMS2812.setVisibility(View.VISIBLE);
+                                    buttonStartLoad.setVisibility(View.VISIBLE);
+                                    buttonStartLoad.setEnabled(false);
+                                }
+                            });
+                            progressBarLoadToDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBarLoadToDevice.setVisibility(View.VISIBLE);
+                                }
+                            });
+                            textViewStatusLoadToFlesh.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
+                                    textViewStatusLoadToDevice.setText("Обновление ПО...");
+                                }
+                            });
+                        } else if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
+                            Log.i("LOG_TAG", "(spaceStatus.isReadyFlagToFinishOfUpdatingSoftware())");
+                            textViewTipChoiceDevices.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewTipChoiceDevices.setText("Выберите тип устройства для обновления ПО");
+                                    textViewTipChoiceDevices.setVisibility(View.VISIBLE);
+                                }
+                            });
+                            spinnerTypeOfDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    spinnerTypeOfDevice.setVisibility(View.VISIBLE);
+                                    spinnerTypeOfDevice.setEnabled(true);
+                                }
+                            });
+                            textViewTipFindFile.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewTipFindFile.setVisibility(View.VISIBLE);
+                                }
+                            });
+                            buttonChoicePath.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    buttonChoicePath.setVisibility(View.VISIBLE);
+                                    buttonChoicePath.setEnabled(true);
+                                }
+                            });
+                            buttonLoadToFlesh.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    buttonLoadToFlesh.setVisibility(View.VISIBLE);
+                                    buttonLoadToFlesh.setEnabled(true);
+                                }
+                            });
+                            textViewPathToLoadFile.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewPathToLoadFile.setVisibility(View.VISIBLE);
                                 }
                             });
                             progressBarLoadToFlesh.post(new Runnable() {
@@ -606,21 +653,52 @@ public class FragmentLoading extends Fragment {
                             textViewStatusLoadToFlesh.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
+                                    textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
+                                    textViewStatusLoadToFlesh.setText("Загрузка завершена");
                                 }
                             });
-                        } else if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
-//                            textViewStatusLoadToFlesh.setText("Загрузка завершена");
-//                            textViewStatusLoadToFlesh.setVisibility(View.VISIBLE);
-//                            progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
-//                            textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.VISIBLE);
-//                            spinnerAddressOfDevice.setVisibility(View.VISIBLE);
-//                            textViewInformationAboutDevice.setVisibility(View.VISIBLE);
-//                            textViewStatusLoadToDevice.setText("Обновление завершено");
-//                            textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
-//                            buttonStartLoadTMS2812.setVisibility(View.VISIBLE);
-//                            progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+                            textViewTipChoiseAddressOfDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewTipChoiseAddressOfDevice.setVisibility(View.VISIBLE);
+                                    textViewTipChoiseAddressOfDevice.setText("Выберите адрес устройства");
+                                }
+                            });
+                            spinnerAddressOfDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+                                    spinnerAddressOfDevice.setEnabled(true);
+                                }
+                            });
+                            textViewInformationAboutDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewInformationAboutDevice.setVisibility(View.VISIBLE);
+                                }
+                            });
+                            buttonStartLoad.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    buttonStartLoad.setVisibility(View.VISIBLE);
+                                    buttonStartLoad.setEnabled(true);
+                                }
+                            });
+                            progressBarLoadToDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                            textViewStatusLoadToFlesh.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
+                                    textViewStatusLoadToDevice.setText("Обновление завершено");
+                                }
+                            });
                         } else {
+                            Log.i("LOG_TAG", "ELSE");
                             textViewTipChoiceDevices.post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -670,10 +748,10 @@ public class FragmentLoading extends Fragment {
                                     textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
                                 }
                             });
-                            textViewTipChoiseAddressOfDeviceForTMS2812.post(new Runnable() {
+                            textViewTipChoiseAddressOfDevice.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.INVISIBLE);
+                                    textViewTipChoiseAddressOfDevice.setVisibility(View.INVISIBLE);
                                 }
                             });
                             spinnerAddressOfDevice.post(new Runnable() {
@@ -688,22 +766,22 @@ public class FragmentLoading extends Fragment {
                                     textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
                                 }
                             });
-                            buttonStartLoadTMS2812.post(new Runnable() {
+                            buttonStartLoad.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    buttonStartLoadTMS2812.setVisibility(View.INVISIBLE);
+                                    buttonStartLoad.setVisibility(View.INVISIBLE);
                                 }
                             });
-                            progressBarLoadToFlesh.post(new Runnable() {
+                            progressBarLoadToDevice.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                                    progressBarLoadToDevice.setVisibility(View.INVISIBLE);
                                 }
                             });
-                            textViewStatusLoadToFlesh.post(new Runnable() {
+                            textViewStatusLoadToDevice.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
+                                    textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
                                 }
                             });
                         }
@@ -744,6 +822,7 @@ public class FragmentLoading extends Fragment {
 ////                            progressBarLoadToDevice.setVisibility(View.INVISIBLE);
 ////                        }
                     } else {
+                        Log.i("LOG_TAG", "! isReadyFlagToExchangeData()");
                         textViewTipChoiceDevices.post(new Runnable() {
                             @Override
                             public void run() {
@@ -793,10 +872,10 @@ public class FragmentLoading extends Fragment {
                                 textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
                             }
                         });
-                        textViewTipChoiseAddressOfDeviceForTMS2812.post(new Runnable() {
+                        textViewTipChoiseAddressOfDevice.post(new Runnable() {
                             @Override
                             public void run() {
-                                textViewTipChoiseAddressOfDeviceForTMS2812.setVisibility(View.INVISIBLE);
+                                textViewTipChoiseAddressOfDevice.setVisibility(View.INVISIBLE);
                             }
                         });
                         spinnerAddressOfDevice.post(new Runnable() {
@@ -811,22 +890,22 @@ public class FragmentLoading extends Fragment {
                                 textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
                             }
                         });
-                        buttonStartLoadTMS2812.post(new Runnable() {
+                        buttonStartLoad.post(new Runnable() {
                             @Override
                             public void run() {
-                                buttonStartLoadTMS2812.setVisibility(View.INVISIBLE);
+                                buttonStartLoad.setVisibility(View.INVISIBLE);
                             }
                         });
-                        progressBarLoadToFlesh.post(new Runnable() {
+                        progressBarLoadToDevice.post(new Runnable() {
                             @Override
                             public void run() {
-                                progressBarLoadToFlesh.setVisibility(View.INVISIBLE);
+                                progressBarLoadToDevice.setVisibility(View.INVISIBLE);
                             }
                         });
-                        textViewStatusLoadToFlesh.post(new Runnable() {
+                        textViewStatusLoadToDevice.post(new Runnable() {
                             @Override
                             public void run() {
-                                textViewStatusLoadToFlesh.setVisibility(View.INVISIBLE);
+                                textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
                             }
                         });
                     }

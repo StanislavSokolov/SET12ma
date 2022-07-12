@@ -197,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     private void upDateViewPager(int value) {
         if (value == 0) {
             tabsSET12MA.setupWithViewPager(viewPagerDataExchange);
+            tabsSET12MA.setVisibility(View.VISIBLE);
             viewPagerConnecting.setVisibility(View.INVISIBLE);
             viewPagerLogging.setVisibility(View.INVISIBLE);
             viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
@@ -206,6 +207,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         }
         if (value == 1) {
             tabsSET12MA.setupWithViewPager(viewPagerConnecting);
+            tabsSET12MA.setVisibility(View.VISIBLE);
             viewPagerConnecting.setVisibility(View.VISIBLE);
             viewPagerLogging.setVisibility(View.INVISIBLE);
             viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
@@ -215,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         }
         if (value == 2) {
             tabsSET12MA.setupWithViewPager(viewPagerLogging);
+            tabsSET12MA.setVisibility(View.VISIBLE);
             viewPagerConnecting.setVisibility(View.INVISIBLE);
             viewPagerLogging.setVisibility(View.VISIBLE);
             viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
@@ -224,6 +227,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         }
         if (value == 3) {
             tabsSET12MA.setupWithViewPager(viewPagerLoadingSoftware);
+            tabsSET12MA.setVisibility(View.INVISIBLE);
             viewPagerConnecting.setVisibility(View.INVISIBLE);
             viewPagerLogging.setVisibility(View.INVISIBLE);
             viewPagerLoadingSoftware.setVisibility(View.VISIBLE);
