@@ -36,7 +36,7 @@ public class SpaceMemory implements Parcelable {
 
     public void setMemorySpaceByte() {
         if (!memorySpaceArrayList.isEmpty()) {
-            memorySpaceArrayList = null;
+            memorySpaceArrayList = new ArrayList<>();
         }
     }
 

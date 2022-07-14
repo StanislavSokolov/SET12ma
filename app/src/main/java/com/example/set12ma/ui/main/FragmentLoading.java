@@ -60,9 +60,6 @@ public class FragmentLoading extends Fragment {
     private int itemSelectedFromConnectedOfDevices = 0;
     private int itemSelectedFromTypeOfDevices = 0;
 
-    private boolean latchLoadToFlesh = false;
-    private boolean latchLoadToDevice = false;
-
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
     private long timer = 100;
 
@@ -219,12 +216,8 @@ public class FragmentLoading extends Fragment {
             buttonStartLoad.setVisibility(View.INVISIBLE);
             progressBarLoadToDevice.setVisibility(View.INVISIBLE);
             textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
-
-
-
         }
 
-        Log.i("LOG_TAG", "onCreateView1");
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
         upDateGraphicalDisplay.start();
 
@@ -294,18 +287,23 @@ public class FragmentLoading extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 123 && resultCode == RESULT_OK) {
 
-            // если путь файла изменен, то надо разрешать загружать еще раз
-            // сейчас это не работает
+            stringSelectedFile = "";
+            boolean start = false;
+            String stringSelectedFileBuf = data.getData().getLastPathSegment();
 
-            // так же корректно не работает повторная прошивка по этому или любому другому адресу
-            // здесь какие-то проблемы в логике
-            // на самом деле прошивка стартует
-            // но в приложении ее статус затирается
+            for (int i = 0; i < stringSelectedFileBuf.length(); i++) {
+                if (!start) {
+                    if (stringSelectedFileBuf.charAt(i) == ':') {
+                        start = true;
+                    }
+                } else {
+                    stringSelectedFile = stringSelectedFile + stringSelectedFileBuf.charAt(i);
+                }
+            }
 
             selectedFile = data.getData(); //The uri with the location of the file
-            spaceStatus.setDevice(ARG_SECTION_NUMBER);
+            spaceStatus.setDevice(deviceSelected);
             Toast.makeText(getContext(), selectedFile.toString(), Toast.LENGTH_LONG).show();
-            stringSelectedFile = data.getDataString();
             textViewPathToLoadFile.setText(stringSelectedFile);
             spaceStatus.setReadyFlagToUpdateSoftware(false);
             spaceStatus.setStatusProcessOfUpdatingSoftware(false);
