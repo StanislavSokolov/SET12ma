@@ -692,7 +692,11 @@ public class FragmentLoading extends Fragment {
                                 @Override
                                 public void run() {
                                     textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
-                                    textViewStatusLoadToDevice.setText("Обновление завершено");
+                                    if (spaceStatus.getLastNumberError() == 0) {
+                                        textViewStatusLoadToDevice.setText("Обновление успешно завершено" );
+                                    } else {
+                                        textViewStatusLoadToDevice.setText("Не удалось выполнить обновление ПО. Ошибка № " + spaceStatus.getLastNumberError());
+                                    }
                                 }
                             });
                         } else {

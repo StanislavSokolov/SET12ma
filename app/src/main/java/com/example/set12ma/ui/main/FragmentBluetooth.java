@@ -498,7 +498,7 @@ public class FragmentBluetooth extends Fragment {
         }
 
         public void run() {
-            byte[] buffer = new byte[8];  // buffer store for the stream
+            byte[] buffer = new byte[16];  // buffer store for the stream
             int bytes = 20; // bytes returned from read()
             while (!isInterrupted()) {
                 try {
@@ -515,19 +515,18 @@ public class FragmentBluetooth extends Fragment {
                         int crc = (CRC16.getCRC4(bytesToCreateCRC));
                         int high = crc/256;
                         if ((buffer[2] == (byte) (crc - high*256)) & (buffer[3] == (byte) high)) {
-                            Log.i(LOG_TAG, "CRC is good from InitLoad");
-                            flagWaitingAnswerInitLoad = false;
+                            Log.i("LOG_TAG_1", "CRC is good from InitLoad");
                         } else {
-                            Log.i(LOG_TAG, "CRC is bed from InitLoad");
-                            flagWaitingAnswerInitLoad = false;
+                            Log.i("LOG_TAG_1", "CRC is bed from InitLoad");
                         }
+                        flagWaitingAnswerInitLoad = false;
                         String answerTest = "";
                         for (byte readByte: buffer) {
                             int bufInt = 0;
                             if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
                             answerTest = answerTest + " " + bufInt;
                         }
-                        Log.i(LOG_TAG, answerTest);
+                        Log.i("LOG_TAG_1", answerTest);
                     } else if (flagWaitingAnswerLoad) {
                         bytesToCreateCRC = new byte[bytes-4];
                         for (int i = 0; i < bytesToCreateCRC.length; i++) {
@@ -536,20 +535,19 @@ public class FragmentBluetooth extends Fragment {
                         int crc = (CRC16.getCRC4(bytesToCreateCRC));
                         int high = crc/256;
                         if ((buffer[2] == (byte) (crc - high*256)) & (buffer[3] == (byte) high)) {
-                            Log.i(LOG_TAG, "CRC is good from Load");
+                            Log.i("LOG_TAG_1", "CRC is good from Load");
                             spaceStatus.setReadyFlagToFinishOfLoadingSoftware(true);
-                            flagWaitingAnswerLoad = false;
                         } else {
-                            Log.i(LOG_TAG, "CRC is bed from Load");
-                            flagWaitingAnswerLoad = false;
+                            Log.i("LOG_TAG_1", "CRC is bed from Load");
                         }
+                        flagWaitingAnswerLoad = false;
                         String answerTest = "";
                         for (byte readByte: buffer) {
                             int bufInt = 0;
                             if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
                             answerTest = answerTest + " " + bufInt;
                         }
-                        Log.i(LOG_TAG, answerTest);
+                        Log.i("LOG_TAG_1", answerTest);
                     } else if (flagWaitingAnswerFinishLoad) {
                         bytesToCreateCRC = new byte[bytes-4];
                         for (int i = 0; i < bytesToCreateCRC.length; i++) {
@@ -557,22 +555,21 @@ public class FragmentBluetooth extends Fragment {
                         }
                         int crc = (CRC16.getCRC4(bytesToCreateCRC));
                         int high = crc/256;
-                        if ((buffer[2] == (byte) (crc - high*256)) & (buffer[3] == (byte) high)) {
-                            Log.i(LOG_TAG, "CRC is good from FinishLoad");
-                            spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(true);
-                            flagWaitingAnswerFinishLoad = false;
+                        if ((buffer[14] == (byte) (crc - high*256)) & (buffer[15] == (byte) high)) {
+                            Log.i("LOG_TAG_1", "CRC is good from FinishLoad");
                         } else {
-                            Log.i(LOG_TAG, "CRC is bed from FinishLoad");
-                            spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(true);
-                            flagWaitingAnswerFinishLoad = false;
+                            Log.i("LOG_TAG_1", "CRC is bed from FinishLoad");
                         }
+                        spaceStatus.setLastNumberError(buffer[6]);
+                        spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(true);
+                        flagWaitingAnswerFinishLoad = false;
                         String answerTest = "";
                         for (byte readByte: buffer) {
                             int bufInt = 0;
                             if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
                             answerTest = answerTest + " " + bufInt;
                         }
-                        Log.i(LOG_TAG, answerTest);
+                        Log.i("LOG_TAG_1", answerTest);
                     } else {
                         if (bytes == 8) {
                             bytesFromBuffer = new byte[bytes];
