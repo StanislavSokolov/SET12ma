@@ -469,6 +469,7 @@ public class FragmentBluetooth extends Fragment {
                         spaceStatus.setStatusProcessOfUpdatingSoftware(true);
                         bluetoothConnectedThread.startToLoad();
                         latchFinish = true;
+                        Log.i("LOG_TAG_1", "зАЙДЕМ сюда!");
                     } else {
                         if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
                             latchFinish = false;
@@ -476,7 +477,7 @@ public class FragmentBluetooth extends Fragment {
                             spaceStatus.setStatusProcessOfUpdatingSoftware(false);
                             spaceStatus.setReadyFlagToLoadSoftware(false);
                             spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
-                            Log.i(LOG_TAG, "всё в ноль!!!!");
+                            Log.i("LOG_TAG_1", "всё в ноль!!!!");
                         }
                     }
                 } else {
@@ -498,7 +499,7 @@ public class FragmentBluetooth extends Fragment {
         }
 
         public void run() {
-            byte[] buffer = new byte[16];  // buffer store for the stream
+            byte[] buffer = new byte[8];  // buffer store for the stream
             int bytes = 20; // bytes returned from read()
             while (!isInterrupted()) {
                 try {
@@ -550,17 +551,18 @@ public class FragmentBluetooth extends Fragment {
                         Log.i("LOG_TAG_1", answerTest);
                     } else if (flagWaitingAnswerFinishLoad) {
                         bytesToCreateCRC = new byte[bytes-4];
-                        for (int i = 0; i < bytesToCreateCRC.length; i++) {
-                            bytesToCreateCRC[i] = buffer[i];
-                        }
-                        int crc = (CRC16.getCRC4(bytesToCreateCRC));
-                        int high = crc/256;
-                        if ((buffer[14] == (byte) (crc - high*256)) & (buffer[15] == (byte) high)) {
-                            Log.i("LOG_TAG_1", "CRC is good from FinishLoad");
-                        } else {
-                            Log.i("LOG_TAG_1", "CRC is bed from FinishLoad");
-                        }
+//                        for (int i = 0; i < bytesToCreateCRC.length; i++) {
+//                            bytesToCreateCRC[i] = buffer[i];
+//                        }
+//                        int crc = (CRC16.getCRC4(bytesToCreateCRC));
+//                        int high = crc/256;
+//                        if ((buffer[14] == (byte) (crc - high*256)) & (buffer[15] == (byte) high)) {
+//                            Log.i("LOG_TAG_1", "CRC is good from FinishLoad");
+//                        } else {
+//                            Log.i("LOG_TAG_1", "CRC is bed from FinishLoad");
+//                        }
                         spaceStatus.setLastNumberError(buffer[6]);
+                        Log.i("LOG_TAG_1", "СРАЗУ ПОМЕНЯЛИ");
                         spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(true);
                         flagWaitingAnswerFinishLoad = false;
                         String answerTest = "";
@@ -936,7 +938,7 @@ public class FragmentBluetooth extends Fragment {
             bytesToSend[bytesToSend.length-2] = (byte) (crc - high * 256);
             bytesToSend[bytesToSend.length-1] = (byte) high;
 
-            spaceStatus.setStatusProcessOfUpdatingSoftware(true);
+//            spaceStatus.setStatusProcessOfUpdatingSoftware(true);
 
             outputStream.write(bytesToSend);
             flagWaitingAnswerFinishLoad = true;

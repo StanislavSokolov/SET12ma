@@ -277,6 +277,7 @@ public class FragmentLoading extends Fragment {
     private void startLoad() {
         if (!spaceStatus.isStatusProcessOfUpdatingSoftware() & !spaceStatus.isStatusProcessOfLoadingSoftware()) {
             spaceStatus.setReadyFlagToUpdateSoftware(true);
+            spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(false);
         } else {
             Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
         }
