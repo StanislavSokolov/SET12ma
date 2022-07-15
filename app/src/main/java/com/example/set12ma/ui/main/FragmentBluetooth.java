@@ -562,7 +562,6 @@ public class FragmentBluetooth extends Fragment {
 //                            Log.i("LOG_TAG_1", "CRC is bed from FinishLoad");
 //                        }
                         spaceStatus.setLastNumberError(buffer[6]);
-                        Log.i("LOG_TAG_1", "СРАЗУ ПОМЕНЯЛИ");
                         spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(true);
                         flagWaitingAnswerFinishLoad = false;
                         String answerTest = "";
@@ -856,10 +855,16 @@ public class FragmentBluetooth extends Fragment {
             bytesToCreateCRC = new byte[bytesToSend.length - 2];
             bytesToSend[0] = addressDevice;
             bytesToSend[1] = initLoadCommand;
-            bytesToSend[2] = 0;
-            bytesToSend[3] = 0;
-            bytesToSend[4] = 10;
-            bytesToSend[5] = 0;
+            byte[] bytesToSendBuf = new byte[5];
+            bytesToSendBuf = determineDownloadMode();
+            Log.i("LoGF", String.valueOf(bytesToSendBuf[0]));
+            Log.i("LoGF", String.valueOf(bytesToSendBuf[1]));
+            Log.i("LoGF", String.valueOf(bytesToSendBuf[2]));
+            Log.i("LoGF", String.valueOf(bytesToSendBuf[3]));
+            bytesToSend[2] = bytesToSendBuf[0];
+            bytesToSend[3] = bytesToSendBuf[1];
+            bytesToSend[4] = bytesToSendBuf[2];
+            bytesToSend[5] = bytesToSendBuf[3];
             int i = (spaceMemory.getMemorySpaceArrayListSize() - 1)* spaceMemory.getMemorySpaceByteLength() + spaceMemory.getMemorySpaceByteLength(spaceMemory.getMemorySpaceArrayListSize() - 1);
             int highH = i/16777216;
             bytesToSend[9] = (byte) highH;
@@ -879,6 +884,37 @@ public class FragmentBluetooth extends Fragment {
 
             flagWaitingAnswerInitLoad = true;
             outputStream.write(bytesToSend);
+        }
+
+        private byte[] determineDownloadMode() {
+            String deviceSelected = spaceStatus.getDevice();
+            byte[] bytesToSendBuf = new byte[5];
+            if (deviceSelected.equals("TMS2812")) {
+                bytesToSendBuf[0] = 0;
+                bytesToSendBuf[1] = 0;
+                bytesToSendBuf[2] = 10;
+                bytesToSendBuf[3] = 0;
+                bytesToSendBuf[4] = 10;
+            } else if (deviceSelected.equals("SP2main")) {
+                bytesToSendBuf[0] = 0;
+                bytesToSendBuf[1] = 0;
+                bytesToSendBuf[2] = 10;
+                bytesToSendBuf[3] = 0;
+                bytesToSendBuf[4] = 1;
+            } else if (deviceSelected.equals("SP2")) {
+                bytesToSendBuf[0] = 0;
+                bytesToSendBuf[1] = 0;
+                bytesToSendBuf[2] = 10;
+                bytesToSendBuf[3] = 0;
+                bytesToSendBuf[4] = 6;
+            } else {
+                bytesToSendBuf[0] = 0;
+                bytesToSendBuf[1] = 0;
+                bytesToSendBuf[2] = 10;
+                bytesToSendBuf[3] = 0;
+                bytesToSendBuf[4] = 10;
+            }
+            return bytesToSendBuf;
         }
 
         public void load() throws IOException {
@@ -911,10 +947,17 @@ public class FragmentBluetooth extends Fragment {
             bytesToCreateCRC = new byte[16];
             bytesToSend[0] = addressDevice;
             bytesToSend[1] = extendCommand;
-            bytesToSend[2] = 0;
-            bytesToSend[3] = 0;
-            bytesToSend[4] = 10;
-            bytesToSend[5] = 0;
+            byte[] bytesToSendBuf = new byte[5];
+            bytesToSendBuf = determineDownloadMode();
+            Log.i("LoGF", String.valueOf(bytesToSendBuf[0]));
+            Log.i("LoGF", String.valueOf(bytesToSendBuf[1]));
+            Log.i("LoGF", String.valueOf(bytesToSendBuf[2]));
+            Log.i("LoGF", String.valueOf(bytesToSendBuf[3]));
+            Log.i("LoGF", String.valueOf(bytesToSendBuf[4]));
+            bytesToSend[2] = bytesToSendBuf[0];
+            bytesToSend[3] = bytesToSendBuf[1];
+            bytesToSend[4] = bytesToSendBuf[2];
+            bytesToSend[5] = bytesToSendBuf[3];
             bytesToSend[6] = 0;
             bytesToSend[7] = 0;
             bytesToSend[8] = 0;
@@ -928,7 +971,7 @@ public class FragmentBluetooth extends Fragment {
             bytesToSend[11] = (byte) lowH;
             int lowL = i - (highH*16777216) - (highL*65536) - (lowH*256);
             bytesToSend[10] = (byte) lowL;
-            bytesToSend[14] = 10;
+            bytesToSend[14] = bytesToSendBuf[4];
             bytesToSend[15] = (byte) spaceStatus.getAddressOfDevice();
             for (int j = 0; j < bytesToCreateCRC.length; j++) {
                 bytesToCreateCRC[j] = bytesToSend[j];

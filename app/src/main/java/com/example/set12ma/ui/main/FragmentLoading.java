@@ -162,6 +162,7 @@ public class FragmentLoading extends Fragment {
                         textViewTipFindFile.setText("Выберите файл для загрузки для " + deviceSelected);
                     }
                 });
+                spaceStatus.setDevice(deviceSelected);
                 spaceStatus.setReadyFlagToUpdateSoftware(false);
                 spaceStatus.setStatusProcessOfUpdatingSoftware(false);
                 spaceStatus.setReadyFlagToLoadSoftware(false);
@@ -303,7 +304,6 @@ public class FragmentLoading extends Fragment {
             }
 
             selectedFile = data.getData(); //The uri with the location of the file
-            spaceStatus.setDevice(deviceSelected);
             Toast.makeText(getContext(), selectedFile.toString(), Toast.LENGTH_LONG).show();
             textViewPathToLoadFile.setText(stringSelectedFile);
             spaceStatus.setReadyFlagToUpdateSoftware(false);
