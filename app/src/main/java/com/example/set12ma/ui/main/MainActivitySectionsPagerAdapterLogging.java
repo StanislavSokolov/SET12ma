@@ -29,7 +29,7 @@ public class MainActivitySectionsPagerAdapterLogging extends FragmentPagerAdapte
         // Return a PlaceholderFragment (defined as a static inner class below).
 //        return PlaceholderFragment.newInstance(position + 1);
         if (position == 0) {
-            return FragmentTK.newInstance(position + 1);
+            return FragmentLogging.newInstance(position + 1);
         } else {
             return FragmentTK.newInstance(position + 1);
         }
