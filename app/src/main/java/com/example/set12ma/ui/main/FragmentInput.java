@@ -170,6 +170,12 @@ public class FragmentInput extends Fragment {
         return root;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        upDateGraphicalDisplay.interrupt();
+    }
+
     public void upDateValues() {
         for (int i = 0; i < stopCellNumber; i++) {
             if (spaceAddress.getAddressSpace(startCellNumber + i) == 0)
@@ -187,7 +193,7 @@ public class FragmentInput extends Fragment {
                     UpDateGraphicalDisplay.sleep(timer);
                     upDateValues();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    break;
                 }
             }
         }

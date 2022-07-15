@@ -15,7 +15,7 @@ import com.example.set12ma.R;
 public class MainActivitySectionsPagerAdapterLoadingSoftware extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_SET12MA_text_6, R.string.tab_SET12MA_text_7, R.string.tab_SET12MA_text_8, R.string.tab_SET12MA_text_9};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_SET12MA_text_6};
     private final Context mContext;
 
     public MainActivitySectionsPagerAdapterLoadingSoftware(Context context, FragmentManager fm) {
@@ -28,15 +28,15 @@ public class MainActivitySectionsPagerAdapterLoadingSoftware extends FragmentPag
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
 //        return PlaceholderFragment.newInstance(position + 1);
-        if (position == 0) {
-            return FragmentTMS2812.newInstance(position + 1);
-        } else if (position == 1) {
-            return FragmentSP2MAIN.newInstance(position + 1);
-        } else if (position == 2) {
-            return FragmentSP2.newInstance(position + 1);
-        } else {
-            return FragmentSP6.newInstance(position + 1);
-        }
+//        if (position == 0)
+            return FragmentLoading.newInstance(position + 1);
+//        } else if (position == 1) {
+//            return FragmentSP2MAIN.newInstance(position + 1);
+//        } else if (position == 2) {
+//            return FragmentSP2.newInstance(position + 1);
+//        } else {
+//            return FragmentSP6.newInstance(position + 1);
+//        }
     }
 
     @Nullable
@@ -48,6 +48,6 @@ public class MainActivitySectionsPagerAdapterLoadingSoftware extends FragmentPag
     @Override
     public int getCount() {
         // Show 4 total pages.
-        return 4;
+        return 1;
     }
 }

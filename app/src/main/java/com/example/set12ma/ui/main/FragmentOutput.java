@@ -806,6 +806,12 @@ public class FragmentOutput extends Fragment {
         return root;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        upDateGraphicalDisplay.interrupt();
+    }
+
     private void upDateEnables() {
         if (spaceStatus.isReadyFlagRecordingInitialValues()) {
                 switch_out_0_0.post(new Runnable() {
@@ -1406,7 +1412,7 @@ public class FragmentOutput extends Fragment {
                 try {
                     UpDateGraphicalDisplay.sleep(timer);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    break;
                 }
                 if (spaceStatus.isReadyFlagRecordingInitialValues()) {
                     if (latch) {

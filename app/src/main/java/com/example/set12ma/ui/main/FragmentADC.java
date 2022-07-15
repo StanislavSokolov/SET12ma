@@ -272,6 +272,12 @@ public class FragmentADC extends Fragment {
         return root;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        upDateGraphicalDisplay.interrupt();
+    }
+
     public void upDateValues() {
         for (int i = 0; i < 48; i++) {
             arrayListTextView.get(i).setText(String.valueOf(spaceAddress.getAddressSpace(stopCellNumber + i)));
@@ -290,7 +296,7 @@ public class FragmentADC extends Fragment {
                     UpDateGraphicalDisplay.sleep(timer);
                     upDateValues();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    break;
                 }
             }
         }

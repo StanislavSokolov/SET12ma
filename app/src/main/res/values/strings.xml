@@ -9,13 +9,17 @@
     <string name="tab_SET12MA_text_4">Bluetooth</string>
     <string name="tab_SET12MA_text_5">COM-port</string>
 
-    <string name="tab_SET12MA_text_6">TMS2812</string>
-    <string name="tab_SET12MA_text_7">SP2MAIN</string>
-    <string name="tab_SET12MA_text_8">SP2</string>
-    <string name="tab_SET12MA_text_9">SP6</string>
+    <string name="tab_SET12MA_text_6">Загрузка ПО</string>
+
+<!--    <string name="tab_SET12MA_text_6">TMS2812</string>-->
+<!--    <string name="tab_SET12MA_text_7">SP2MAIN</string>-->
+<!--    <string name="tab_SET12MA_text_8">SP2</string>-->
+<!--    <string name="tab_SET12MA_text_9">SP6</string>-->
 
     <string name="tab_SET12MA_text_10">Скачать</string>
     <string name="tab_SET12MA_text_11">Посмотреть</string>
+
+    <string name="tip_text_01">Выберите тип устройства</string>
 
     <string name="tip_text_0">Выберите файл для загрузки</string>
     <string name="tip_text_1">Путь не указан</string>

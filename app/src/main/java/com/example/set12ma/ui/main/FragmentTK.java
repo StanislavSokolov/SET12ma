@@ -1055,6 +1055,12 @@ public class FragmentTK extends Fragment{
         return root;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        upDateGraphicalDisplay.interrupt();
+    }
+
     private void upDateValues() {
         for (int i = 0; i < arrayList.size(); i++) {
             if (arrayList.get(i).isChecked()) {
@@ -1875,7 +1881,7 @@ public class FragmentTK extends Fragment{
                 try {
                     UpDateGraphicalDisplay.sleep(timer);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    break;
                 }
                 if (spaceStatus.isReadyFlagRecordingInitialValues()) {
                     if (latch) {
