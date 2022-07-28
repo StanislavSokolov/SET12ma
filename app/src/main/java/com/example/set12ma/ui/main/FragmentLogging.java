@@ -100,7 +100,11 @@ public class FragmentLogging extends Fragment {
 
     private void download() {
         if (spaceStatus.isReadyFlagToExchangeData()) {
-            spaceStatus.setReadyFlagToDownloadLog(true);
+            if (!spaceStatus.isStatusProcessOfUpdatingSoftware() & !spaceStatus.isStatusProcessOfLoadingSoftware()) {
+                spaceStatus.setReadyFlagToDownloadLog(true);
+            } else {
+                Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
+            }
         } else Toast.makeText(getActivity(), "Подключитесь к устройству", Toast.LENGTH_SHORT).show();
 
     }

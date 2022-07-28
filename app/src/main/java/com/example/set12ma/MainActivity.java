@@ -19,7 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace, ResultReceiverStatusSpace {
+public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace, ResultReceiverStatusSpace, ResultReceiverFileLogsSpace {
 
     // Адресное пространство приложения
     SpaceAddress spaceAddress;
@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     SpaceMemory spaceMemory;
     // Пространство памяти для отображения состояния приложения
     SpaceStatus spaceStatus;
+    // Пространство памяти для хранения считанных логов
+    SpaceFileLogs spaceFileLogs;
     // SET12MA
     TabLayout tabsSET12MA;
     ViewPager viewPagerDataExchange;
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         spaceAddress = new SpaceAddress(300);
         spaceMemory = new SpaceMemory();
         spaceStatus = new SpaceStatus();
+        spaceFileLogs = new SpaceFileLogs();
 //        addressSpace.setAddressSpace(150, 1);
 //        addressSpace.setAddressSpace(210, 150);
 
@@ -250,5 +253,10 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     @Override
     public SpaceStatus getSpaceStatus() {
         return spaceStatus;
+    }
+
+    @Override
+    public SpaceFileLogs getSpaceFileLogs() {
+        return spaceFileLogs;
     }
 }

@@ -46,6 +46,7 @@ public class FragmentBluetooth extends Fragment {
     private byte initLoadCommand = 58;
     private byte loadCommand = 51;
     private byte extendCommand = 60;
+    private byte uploadCommand = 52;
     private int countBytes = 8;
     private int addressSpaceNumber = 0;
     // setFlagWaitingAnswerInitLoad sets the flag to wait the answer from controller to start the loading to memory
@@ -54,6 +55,7 @@ public class FragmentBluetooth extends Fragment {
     private boolean flagWaitingAnswerLoad = false;
     //
     private boolean flagWaitingAnswerFinishLoad = false;
+    private boolean flagWaitingAnswerUpload = false;
 
     //
     private boolean latchLoad = false;
@@ -69,7 +71,7 @@ public class FragmentBluetooth extends Fragment {
     private int currentByte = 0;
     private int nextByte = 0;
     private int counterUnsuccessfulSending = 0;
-    private int maxValueUnsuccessfulSending = 1000;
+    private int maxValueUnsuccessfulSending = 10;
     private int counterAttemptsToConection = 0;
     byte[] bytesToSend;
     byte[] bytesFromBuffer;
@@ -278,6 +280,7 @@ public class FragmentBluetooth extends Fragment {
                 textViewConnectedToDevice.setVisibility(View.VISIBLE);
                 currentByte = 48;
                 statement = 1;
+                counterUnsuccessfulSending = 0;
                 counterAttemptsToConection = 0;
                 bluetoothSoketThread = new BluetoothSoketThread();
                 bluetoothSoketThread.start();
@@ -482,6 +485,8 @@ public class FragmentBluetooth extends Fragment {
                             Log.i("LOG_TAG_1", "всё в ноль!!!!");
                         }
                     }
+                } else if (spaceStatus.isReadyFlagToDownloadLog()) {
+                    bluetoothConnectedThread.downloadLogs();
                 } else {
                     bluetoothConnectedThread.communication();
                 }
@@ -506,6 +511,7 @@ public class FragmentBluetooth extends Fragment {
             while (!isInterrupted()) {
                 try {
                     // Read from the InputStream
+
                     bytes = inputStream.read(buffer);
                     // Send the obtained bytes to the UI activity
 //                    mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
@@ -774,7 +780,22 @@ public class FragmentBluetooth extends Fragment {
                         }
                     }
                     Log.i(LOG_TAG, String.valueOf(currentByte));
-                } else Log.i(LOG_TAG, "множественные неудачные попытки прочитать значение");
+                } else {
+                    textViewConnectedToDevice.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            buttonConnectToDevice.setText("Подключить");
+                            textViewConnectedToDevice.setText("Процессорный модуль не отвечает. Проверьте соединение.");
+                            progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+                            spaceStatus.setReadyFlagToExchangeData(false);
+                            spaceStatus.setDevice("");
+                            getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                            spaceStatus.setReadyFlagRecordingInitialValues(false);
+                            bluetoothSoketThread.cancel();
+                            Toast.makeText(getContext(), "Процессорный модуль не отвечает. Проверьте соединение.", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
             } else {
                 if (counterAttemptsToConection < 10) {
                     bytesToSend = new byte[countBytes];
@@ -1006,6 +1027,32 @@ public class FragmentBluetooth extends Fragment {
 
             outputStream.write(bytesToSend);
             flagWaitingAnswerFinishLoad = true;
+        }
+
+        public void downloadLogs() throws IOException {
+            bytesToSend = new byte[12];
+            bytesToCreateCRC = new byte[bytesToSend.length - 2];
+            bytesToSend[0] = addressDevice;
+            bytesToSend[1] = uploadCommand;
+            bytesToSend[2] = 0;
+            bytesToSend[3] = 0;
+            bytesToSend[4] = 10;
+            bytesToSend[5] = 0;
+            bytesToSend[9] = 0;
+            bytesToSend[8] = 0;
+            bytesToSend[7] = 0;
+            bytesToSend[6] = 8;
+            for (int j = 0; j < bytesToCreateCRC.length; j++) {
+                bytesToCreateCRC[j] = bytesToSend[j];
+            }
+            int crc = (CRC16.getCRC4(bytesToCreateCRC));
+            int high = crc / 256;
+            bytesToSend[bytesToSend.length-2] = (byte) (crc - high * 256);
+            bytesToSend[bytesToSend.length-1] = (byte) high;
+            Log.i(LOG_TAG, "Команда на чтение 8 байт");
+
+            flagWaitingAnswerUpload = true;
+            outputStream.write(bytesToSend);
         }
     }
 }
