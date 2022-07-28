@@ -70,6 +70,7 @@ public class FragmentBluetooth extends Fragment {
     private int nextByte = 0;
     private int counterUnsuccessfulSending = 0;
     private int maxValueUnsuccessfulSending = 1000;
+    private int counterAttemptsToConection = 0;
     byte[] bytesToSend;
     byte[] bytesFromBuffer;
     byte[] bytesToCreateCRC;
@@ -277,6 +278,7 @@ public class FragmentBluetooth extends Fragment {
                 textViewConnectedToDevice.setVisibility(View.VISIBLE);
                 currentByte = 48;
                 statement = 1;
+                counterAttemptsToConection = 0;
                 bluetoothSoketThread = new BluetoothSoketThread();
                 bluetoothSoketThread.start();
             } else {
@@ -774,24 +776,43 @@ public class FragmentBluetooth extends Fragment {
                     Log.i(LOG_TAG, String.valueOf(currentByte));
                 } else Log.i(LOG_TAG, "множественные неудачные попытки прочитать значение");
             } else {
-                bytesToSend = new byte[countBytes];
-                bytesToCreateCRC = new byte[countBytes - 2];
-                bytesToSend[0] = addressDevice;
-                bytesToSend[1] = readCommand;
-                bytesToSend[2] = 6;
-                bytesToSend[3] = 32;
-                bytesToSend[4] = 0;
-                bytesToSend[5] = 0;
-                for (int i = 0; i < bytesToCreateCRC.length; i++) {
-                    bytesToCreateCRC[i] = bytesToSend[i];
+                if (counterAttemptsToConection < 10) {
+                    bytesToSend = new byte[countBytes];
+                    bytesToCreateCRC = new byte[countBytes - 2];
+                    bytesToSend[0] = addressDevice;
+                    bytesToSend[1] = readCommand;
+                    bytesToSend[2] = 6;
+                    bytesToSend[3] = 32;
+                    bytesToSend[4] = 0;
+                    bytesToSend[5] = 0;
+                    for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                        bytesToCreateCRC[i] = bytesToSend[i];
+                    }
+                    int crc = (CRC16.getCRC4(bytesToCreateCRC));
+                    int high = crc / 256;
+                    bytesToSend[6] = (byte) (crc - high * 256);
+                    bytesToSend[7] = (byte) high;
+                    counterAttemptsToConection++;
+                    try {
+                        outputStream.write(bytesToSend);
+                    } catch (IOException e) {}
+                } else {
+                    textViewConnectedToDevice.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            buttonConnectToDevice.setText("Подключить");
+                            textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение.");
+                            progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+                            spaceStatus.setReadyFlagToExchangeData(false);
+                            spaceStatus.setDevice("");
+                            getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                            spaceStatus.setReadyFlagRecordingInitialValues(false);
+                            bluetoothSoketThread.cancel();
+                            Toast.makeText(getContext(), "Не удается связаться с процессорным модулем. Проверьте соединение.", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
-                int crc = (CRC16.getCRC4(bytesToCreateCRC));
-                int high = crc / 256;
-                bytesToSend[6] = (byte) (crc - high * 256);
-                bytesToSend[7] = (byte) high;
-                try {
-                    outputStream.write(bytesToSend);
-                } catch (IOException e) {}
+
             }
         }
 

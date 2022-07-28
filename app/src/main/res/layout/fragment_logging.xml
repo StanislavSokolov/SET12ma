@@ -23,7 +23,7 @@
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/button_download"
-                    android:visibility="visible" tools:text="Скачать"/>
+                    android:visibility="visible" tools:text="Загрузить"/>
             <TextView
                     android:id="@+id/section_label4"
                     android:layout_width="match_parent"
