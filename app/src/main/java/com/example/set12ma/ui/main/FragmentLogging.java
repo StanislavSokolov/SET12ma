@@ -1,6 +1,7 @@
 package com.example.set12ma.ui.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -24,6 +27,10 @@ public class FragmentLogging extends Fragment {
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
     private long timer = 100;
+
+    private Button buttonDownload;
+    private Button buttonSave;
+    private Button buttonSend;
 
     @Override
     public void onAttach(Context context) {
@@ -60,12 +67,66 @@ public class FragmentLogging extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_logging, container, false);
+        buttonDownload = root.findViewById(R.id.button_download);
+        buttonSave = root.findViewById(R.id.button_save);
+        buttonSend = root.findViewById(R.id.button_send);
+
+        buttonDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                download();
+            }
+        });
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                save();
+            }
+        });
+        buttonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                send();
+            }
+        });
+
 
 
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
         upDateGraphicalDisplay.start();
 
         return root;
+    }
+
+    private void download() {
+        if (spaceStatus.isReadyFlagToExchangeData()) {
+            spaceStatus.setReadyFlagToDownloadLog(true);
+        } else Toast.makeText(getActivity(), "Подключитесь к устройству", Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void save() {
+        if (spaceStatus.isReadyFlagToExchangeData()) {
+            Toast.makeText(getActivity(), "save", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(getActivity(), "Подключитесь к устройству", Toast.LENGTH_SHORT).show();
+    }
+
+    private void send() {
+        if (spaceStatus.isReadyFlagToExchangeData()) {
+            Toast.makeText(getActivity(), "send", Toast.LENGTH_SHORT).show();
+//            Intent intent = new Intent()
+//                    .setType("*/*")
+//                    .setAction(Intent.ACTION_SEND);
+//            startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
+
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+            sendIntent.setType("text/plain");
+
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            startActivity(shareIntent);
+        } else Toast.makeText(getActivity(), "Подключитесь к устройству", Toast.LENGTH_SHORT).show();
     }
 
     public class UpDateGraphicalDisplay extends Thread {

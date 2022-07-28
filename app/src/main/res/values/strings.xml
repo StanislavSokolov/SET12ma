@@ -85,4 +85,8 @@
     <string name="main_text_available_devices">Доступные устройства</string>
     <string name="main_button_find_new_devices">Поиск новых устройств</string>
 
+    <string name="download_log">Загрузить</string>
+    <string name="save_log">Сохранить</string>
+    <string name="send_log">Отправить</string>
+
 </resources>
