@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
         upDateViewPager(viewPagerNumber);
 
-        FloatingActionButton fab = findViewById(R.id.fab_SET12MA);
+//        FloatingActionButton fab = findViewById(R.id.fab_SET12MA);
 
         spaceAddress = new SpaceAddress(300);
         spaceMemory = new SpaceMemory();
@@ -96,13 +96,13 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
 //        indicator = findViewById(R.id.menu_indicator);
 //        indicator.setEnabled(false);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
