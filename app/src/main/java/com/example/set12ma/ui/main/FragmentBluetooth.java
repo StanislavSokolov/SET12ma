@@ -697,10 +697,39 @@ public class FragmentBluetooth extends Fragment {
                                 textViewConnectedToDevice.setText("CRC не совпало");
                             }
                         } else if (flagWaitingAnswerUpload) {
-                            byte[] buffer = new byte[spaceFileLogs.getSpaceFileLogsLength()];  // buffer store for the stream
+//                            byte[] buffer = new byte[spaceFileLogs.getSpaceFileLogsLength()];  // buffer store for the stream
+                            byte[] buffer = new byte[12];
                             int bytes = 0; // bytes returned from read()
                             bytes = inputStream.read(buffer);
+
+                            Log.i("LOG_TAG_1", String.valueOf(bytes));
+
+//                            bytesToCreateCRC = new byte[bytes-4];
+//                            for (int i = 0; i < bytesToCreateCRC.length; i++) {
+//                                bytesToCreateCRC[i] = buffer[i];
+//                            }
+//                            int crc = (CRC16.getCRC4(bytesToCreateCRC));
+//                            int high = crc/256;
+//                            if ((buffer[2] == (byte) (crc - high*256)) & (buffer[3] == (byte) high)) {
+//                                Log.i("LOG_TAG_1", "CRC is good from InitLoad");
+//                            } else {
+//                                Log.i("LOG_TAG_1", "CRC is bed from InitLoad");
+//                            }
+
+
                             flagWaitingAnswerUpload = false;
+
+
+                            String answerTest = "";
+                            for (byte readByte: buffer) {
+                                int bufInt = 0;
+                                if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
+                                answerTest = answerTest + " " + bufInt;
+                            }
+                            Log.i("LOG_TAG_1", answerTest);
+
+
+
                         }
                     } catch (IOException e) {
                         Log.i(LOG_TAG,e.toString());
