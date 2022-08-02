@@ -5,14 +5,18 @@
     <item
             android:id="@+id/menu_indicator"
             android:orderInCategory="0"
-            android:title="@string/menu_dataExchange"
+            android:title="@string/menu_dataInput"
             app:showAsAction="always"
             android:icon="@drawable/red"
             android:visible="true"/>
     <item
-            android:id="@+id/menu_dataExchange"
+            android:id="@+id/menu_dataInput"
             android:orderInCategory="1"
-            android:title="@string/menu_dataExchange" android:visible="true"/>
+            android:title="@string/menu_dataInput" android:visible="true"/>
+    <item
+            android:id="@+id/menu_dataOutput"
+            android:orderInCategory="1"
+            android:title="@string/menu_dataOutput" android:visible="true"/>
     <item
             android:id="@+id/menu_connecting"
             android:orderInCategory="2"
