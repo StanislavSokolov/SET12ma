@@ -523,7 +523,8 @@ public class FragmentBluetooth extends Fragment {
 
         public void run() {
             while (!isInterrupted()) {
-                if (flagWaitingAnswerInitLoad | flagWaitingAnswerLoad | flagWaitingAnswerFinishLoad | flagWaitingAnswerReading | flagWaitingAnswerWriting | flagWaitingAnswerUpload) {
+//                if (flagWaitingAnswerInitLoad | flagWaitingAnswerLoad | flagWaitingAnswerFinishLoad | flagWaitingAnswerReading | flagWaitingAnswerWriting | flagWaitingAnswerUpload) {
+                    if (flagWaitingAnswerReading | flagWaitingAnswerWriting) {
                     try {
                         // Read from the InputStream
 
@@ -612,9 +613,36 @@ public class FragmentBluetooth extends Fragment {
                             Log.i("LOG_TAG_1", answerTest);
                         } else if (flagWaitingAnswerReading) {
 
-                            byte[] buffer = new byte[8];  // buffer store for the stream
+                            byte[] buffer = new byte[10];  // buffer store for the stream
+//                            byte[] bufferPrepeared = new byte[10];
                             int bytes = 0; // bytes returned from read()
                             bytes = inputStream.read(buffer);
+//                            int lastbit = 0;
+//
+//                            if (bytes < buffer.length) {
+//                                for (int i = 0; i < bytes; i++) {
+//                                    bufferPrepeared[i] = buffer[i];
+//                                    lastbit = bytes;
+//                                }
+//                                bytes = inputStream.read(buffer);
+//                                for (int i = 0; i < bytes; i++) {
+//                                    bufferPrepeared[lastbit + i] = buffer[i];
+////                                    lastbit = bytes;
+//                                }
+//                                buffer = bufferPrepeared;
+//                            }
+
+//                            while (bytes < 10) {
+//                                bytes = bytes - lastbit;
+//                                for (int i = 0; i < bytes; i++) {
+//                                    bufferPrepeared[lastbit + i] = buffer[i];
+//                                }
+//                                lastbit = lastbit + bytes;
+//                                bytes = lastbit + bytes;
+//                                bytes = bytes + inputStream.read(buffer);
+//                            }
+
+                            Log.i(LOG_TAG, String.valueOf(bytes));
 
                             bytesFromBuffer = new byte[bytes];
                             bytesToCreateCRC = new byte[bytes - 2];
@@ -656,9 +684,12 @@ public class FragmentBluetooth extends Fragment {
                             }
                         } else if (flagWaitingAnswerWriting) {
 
+                            Log.i(LOG_TAG, "Здесь впервые");
+
                             byte[] buffer = new byte[6];  // buffer store for the stream
                             int bytes = 0; // bytes returned from read()
                             bytes = inputStream.read(buffer);
+                            Log.i(LOG_TAG, String.valueOf(bytes));
 
                             bytesFromBuffer = new byte[bytes];
                             bytesToCreateCRC = new byte[bytes - 4];
@@ -670,15 +701,18 @@ public class FragmentBluetooth extends Fragment {
                             }
                             int crc = (CRC16.getCRC4(bytesToCreateCRC));
                             int high = crc/256;
+
+                            String answerTest = "";
+                            for (byte readByte: bytesFromBuffer) {
+                                int bufInt = 0;
+                                if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
+                                answerTest = answerTest + " " + bufInt;
+                            }
+                            Log.i(LOG_TAG, answerTest);
+
                             if ((bytesFromBuffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bytesFromBuffer[bytesToCreateCRC.length + 1] == (byte) high)) {
                                 if (spaceStatus.isReadyFlagToExchangeData()) {
-                                    String answerTest = "";
-                                    for (byte readByte: bytesFromBuffer) {
-                                        int bufInt = 0;
-                                        if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
-                                        answerTest = answerTest + " " + bufInt;
-                                    }
-                                    Log.i(LOG_TAG, answerTest);
+
                                     if (currentByte == 207) {
                                         spaceStatus.setReadyFlagRecordingInitialValues(false);
                                     }
@@ -693,7 +727,7 @@ public class FragmentBluetooth extends Fragment {
                                 flagWaitingAnswerWriting = false;
                                 changeStateIndicator();
                             } else {
-                                Log.i(LOG_TAG, "CRC не совпало");
+                                Log.i(LOG_TAG, "HERE");
                                 textViewConnectedToDevice.setText("CRC не совпало");
                             }
                         } else if (flagWaitingAnswerUpload) {
@@ -763,17 +797,18 @@ public class FragmentBluetooth extends Fragment {
                                 // запись out
                                 case 1:
                                     Log.i(LOG_TAG, "statement 1");
+                                    flagWaitingAnswerWriting = true;
                                     sending(1);
                                     isStatusReading = false;
                                     if (currentByte == 95) {
                                         statement = 3;
                                         nextByte = 144;
                                     }
-                                    flagWaitingAnswerWriting = true;
                                     break;
                                 // запись ТК
                                 case 3:
                                     Log.i(LOG_TAG, "statement 3");
+                                    flagWaitingAnswerWriting = true;
                                     sending(1);
                                     isStatusReading = false;
                                     if (currentByte == 207) {
@@ -781,7 +816,6 @@ public class FragmentBluetooth extends Fragment {
                                         spaceStatus.setReadyFlagRecordingInitialValues(false);
                                         nextByte = 0;
                                     }
-                                    flagWaitingAnswerWriting = true;
                                     break;
                                 default:
                                     break;
@@ -903,10 +937,11 @@ public class FragmentBluetooth extends Fragment {
                     bytesToSend[6] = (byte) (crc - high * 256);
                     bytesToSend[7] = (byte) high;
                     counterAttemptsToConection++;
-                    flagWaitingAnswerWriting = true;
                     try {
                         outputStream.write(bytesToSend);
                     } catch (IOException e) {}
+                    flagWaitingAnswerReading = true;
+                    Log.i(LOG_TAG, "flagWaitingAnswerReading = true");
                 } else {
                     textViewConnectedToDevice.post(new Runnable() {
                         @Override
