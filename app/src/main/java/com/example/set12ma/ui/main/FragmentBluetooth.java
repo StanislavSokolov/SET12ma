@@ -473,6 +473,7 @@ public class FragmentBluetooth extends Fragment {
             }
 
             while (!isInterrupted()) {
+                BluetoothConnectedThread.sleep(100);
                 if (isStatusReading) {
                     isStatusReading = false;
                     if (spaceStatus.isReadyFlagToLoadSoftware()) {
@@ -485,7 +486,9 @@ public class FragmentBluetooth extends Fragment {
                                     spaceStatus.setReadyFlagToLoadSoftware(false);
                                     spaceStatus.setStatusProcessOfLoadingSoftware(false);
                                     latchLoad = false;
+                                    isStatusReading = true;
                                 }
+
                             }
                         } else {
                             spaceStatus.setStatusProcessOfLoadingSoftware(true);
@@ -551,9 +554,7 @@ public class FragmentBluetooth extends Fragment {
                         if (flagWaitingAnswerInitLoad) {
                             buffer = null;
                             buffer = new byte[6];  // buffer store for the stream
-                            Log.i(LOG_TAG, "NEN");
                             bytes = inputStream.read(buffer);
-                            Log.i(LOG_TAG, "TAM");
                             bytesToCreateCRC = new byte[bytes-4];
                             for (int i = 0; i < bytesToCreateCRC.length; i++) {
                                 bytesToCreateCRC[i] = buffer[i];
@@ -576,11 +577,11 @@ public class FragmentBluetooth extends Fragment {
                             isStatusReading = true;
                         } else if (flagWaitingAnswerLoad) {
                             buffer = null;
-                            buffer = new byte[6];  // buffer store for the stream
+                            buffer = new byte[4];  // buffer store for the stream
                             bytes = inputStream.read(buffer);
 
 
-                            bytesToCreateCRC = new byte[bytes-2];
+                            bytesToCreateCRC = new byte[2];
                             for (int i = 0; i < bytesToCreateCRC.length; i++) {
                                 bytesToCreateCRC[i] = buffer[i];
                             }
