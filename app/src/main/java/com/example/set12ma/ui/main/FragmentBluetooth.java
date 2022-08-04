@@ -539,8 +539,8 @@ public class FragmentBluetooth extends Fragment {
 
         public void run() {
             while (!isInterrupted()) {
-//                if (flagWaitingAnswerInitLoad | flagWaitingAnswerLoad | flagWaitingAnswerFinishLoad | flagWaitingAnswerReading | flagWaitingAnswerWriting | flagWaitingAnswerUpload) {
-                    if (flagWaitingAnswerWriting | flagWaitingAnswerReadingStart | flagWaitingAnswerReading) {
+                if (flagWaitingAnswerInitLoad | flagWaitingAnswerLoad | flagWaitingAnswerFinishLoad | flagWaitingAnswerReading | flagWaitingAnswerWriting| flagWaitingAnswerReadingStart | flagWaitingAnswerUpload) {
+//                    if (flagWaitingAnswerWriting | flagWaitingAnswerReadingStart | flagWaitingAnswerReading) {
                     try {
                         // Read from the InputStream
 
@@ -550,9 +550,10 @@ public class FragmentBluetooth extends Fragment {
 //                            .sendToTarget();
                         if (flagWaitingAnswerInitLoad) {
                             buffer = null;
-                            buffer = new byte[8];  // buffer store for the stream
+                            buffer = new byte[6];  // buffer store for the stream
+                            Log.i(LOG_TAG, "NEN");
                             bytes = inputStream.read(buffer);
-
+                            Log.i(LOG_TAG, "TAM");
                             bytesToCreateCRC = new byte[bytes-4];
                             for (int i = 0; i < bytesToCreateCRC.length; i++) {
                                 bytesToCreateCRC[i] = buffer[i];
@@ -560,45 +561,48 @@ public class FragmentBluetooth extends Fragment {
                             int crc = (CRC16.getCRC4(bytesToCreateCRC));
                             int high = crc/256;
                             if ((buffer[2] == (byte) (crc - high*256)) & (buffer[3] == (byte) high)) {
-                                Log.i("LOG_TAG_1", "CRC is good from InitLoad");
+                                Log.i(LOG_TAG, "CRC is good from InitLoad");
                             } else {
-                                Log.i("LOG_TAG_1", "CRC is bed from InitLoad");
+                                Log.i(LOG_TAG, "CRC is bed from InitLoad");
                             }
-                            flagWaitingAnswerInitLoad = false;
                             String answerTest = "";
                             for (byte readByte: buffer) {
                                 int bufInt = 0;
                                 if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
                                 answerTest = answerTest + " " + bufInt;
                             }
-                            Log.i("LOG_TAG_1", answerTest);
+                            Log.i(LOG_TAG, answerTest);
+                            flagWaitingAnswerInitLoad = false;
+                            isStatusReading = true;
                         } else if (flagWaitingAnswerLoad) {
                             buffer = null;
-                            buffer = new byte[8];  // buffer store for the stream
+                            buffer = new byte[6];  // buffer store for the stream
                             bytes = inputStream.read(buffer);
 
 
-                            bytesToCreateCRC = new byte[bytes-4];
+                            bytesToCreateCRC = new byte[bytes-2];
                             for (int i = 0; i < bytesToCreateCRC.length; i++) {
                                 bytesToCreateCRC[i] = buffer[i];
                             }
                             int crc = (CRC16.getCRC4(bytesToCreateCRC));
                             int high = crc/256;
                             if ((buffer[2] == (byte) (crc - high*256)) & (buffer[3] == (byte) high)) {
-                                Log.i("LOG_TAG_1", "CRC is good from Load");
+                                Log.i(LOG_TAG, "CRC is good from Load");
                                 spaceStatus.setReadyFlagToFinishOfLoadingSoftware(true);
                             } else {
-                                Log.i("LOG_TAG_1", "CRC is bed from Load");
+                                Log.i(LOG_TAG, "CRC is bed from Load");
                             }
-                            flagWaitingAnswerLoad = false;
                             String answerTest = "";
                             for (byte readByte: buffer) {
                                 int bufInt = 0;
                                 if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
                                 answerTest = answerTest + " " + bufInt;
                             }
-                            Log.i("LOG_TAG_1", answerTest);
+                            Log.i(LOG_TAG, answerTest);
+                            flagWaitingAnswerLoad = false;
+                            isStatusReading = true;
                         } else if (flagWaitingAnswerFinishLoad) {
+                            Log.i(LOG_TAG, "answerTest");
                             buffer = null;
                             buffer = new byte[18];  // buffer store for the stream
                             bytes = inputStream.read(buffer);
@@ -616,7 +620,6 @@ public class FragmentBluetooth extends Fragment {
                             }
                             spaceStatus.setLastNumberError(buffer[6]);
                             spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(true);
-                            flagWaitingAnswerFinishLoad = false;
                             String answerTest = "";
                             for (byte readByte: buffer) {
                                 int bufInt = 0;
@@ -624,6 +627,8 @@ public class FragmentBluetooth extends Fragment {
                                 answerTest = answerTest + " " + bufInt;
                             }
                             Log.i("LOG_TAG_1", answerTest);
+                            flagWaitingAnswerFinishLoad = false;
+                            isStatusReading = true;
                         } else if (flagWaitingAnswerReading) {
                             Log.i(LOG_TAG, "Читаем в цикле");
                             buffer = null;
@@ -708,9 +713,9 @@ public class FragmentBluetooth extends Fragment {
                                 isStatusError = true;
                             }
 
-                            isStatusReading = true;
-                            flagWaitingAnswerReading = false;
 
+                            flagWaitingAnswerReading = false;
+                            isStatusReading = true;
                         } else if (flagWaitingAnswerWriting) {
 
                             Log.i(LOG_TAG, "Пишем задание");
@@ -760,8 +765,9 @@ public class FragmentBluetooth extends Fragment {
                                 isStatusError = true;
                             }
 
-                            isStatusReading = true;
+
                             flagWaitingAnswerWriting = false;
+                            isStatusReading = true;
                         } else if (flagWaitingAnswerReadingStart) {
                             buffer = null;
                             buffer = new byte[10];  // buffer store for the stream
@@ -791,8 +797,9 @@ public class FragmentBluetooth extends Fragment {
                                 Log.i(LOG_TAG, "CRC не совпало");
                                 textViewConnectedToDevice.setText("CRC не совпало");
                             }
-                            isStatusReading = true;
+
                             flagWaitingAnswerReadingStart = false;
+                            isStatusReading = true;
                         } else if (flagWaitingAnswerUpload) {
 //                            byte[] buffer = new byte[spaceFileLogs.getSpaceFileLogsLength()];  // buffer store for the stream
                             buffer = null;
@@ -858,13 +865,11 @@ public class FragmentBluetooth extends Fragment {
                         Log.i(LOG_TAG, String.valueOf(currentByte));
                         if (!isStatusError) {
                             counterUnsuccessfulSending = 0;
-                            flagWaitingAnswerWriting = true;
-                            sending(1);
                         } else {
                             counterUnsuccessfulSending++;
-                            flagWaitingAnswerWriting = true;
-                            sending(1);
                         }
+                        flagWaitingAnswerWriting = true;
+                        sending(1);
                     } else {
                         Log.i(LOG_TAG, "Read values");
                         Log.i(LOG_TAG, String.valueOf(currentByte));
@@ -884,7 +889,6 @@ public class FragmentBluetooth extends Fragment {
                                 }
                                 currentByte = currentByte + elementQueue.getId();
                                 Log.i(LOG_TAG, "SUPRIM");
-                                isStatusReading = false;
                                 isModeSending = true;
                                 flagWaitingAnswerWriting = true;
                                 sending(1);
@@ -894,7 +898,6 @@ public class FragmentBluetooth extends Fragment {
                                     currentByte = previousByte;
                                     isModeSending = false;
                                 }
-                                isStatusReading = false;
                                 flagWaitingAnswerReading = true;
                                 sending(0);
                             }
@@ -908,7 +911,6 @@ public class FragmentBluetooth extends Fragment {
                             }
                             counterUnsuccessfulSending++;
                         }
-                        Log.i(LOG_TAG, "pfcnhzkb yf 145");
                     }
                 } else {
                     textViewConnectedToDevice.post(new Runnable() {
@@ -1058,6 +1060,7 @@ public class FragmentBluetooth extends Fragment {
             bytesToSend[11] = (byte) high;
 
             flagWaitingAnswerInitLoad = true;
+            Log.i(LOG_TAG, "flagWaitingAnswerInitLoad = true");
             outputStream.write(bytesToSend);
         }
 
