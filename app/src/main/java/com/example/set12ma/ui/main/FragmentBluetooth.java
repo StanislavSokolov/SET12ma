@@ -58,6 +58,7 @@ public class FragmentBluetooth extends Fragment {
     private boolean flagWaitingAnswerUpload = false;
     private boolean flagWaitingAnswerReading = false;
     private boolean flagWaitingAnswerWriting = false;
+    private boolean flagWaitingAnswerReadingStart = false;
 
     //
     private boolean latchLoad = false;
@@ -66,6 +67,7 @@ public class FragmentBluetooth extends Fragment {
 
     private boolean latchQueue = false;
 
+    private boolean isStatusError = false;
     private boolean isStatusReading = false;
     private boolean isModeSending = false;
     private int statement = 0;
@@ -285,6 +287,10 @@ public class FragmentBluetooth extends Fragment {
             flagWaitingAnswerUpload = false;
             flagWaitingAnswerReading = false;
             flagWaitingAnswerWriting = false;
+            flagWaitingAnswerReadingStart = false;
+
+            isStatusReading = false;
+            isStatusError = false;
 
 
             if (buttonConnectToDevice.getText().equals("Подключить")) {
@@ -467,51 +473,60 @@ public class FragmentBluetooth extends Fragment {
             }
 
             while (!isInterrupted()) {
-                BluetoothSoketThread.sleep(timer);
-                if (spaceStatus.isReadyFlagToLoadSoftware()) {
-                    if (spaceStatus.isStatusProcessOfLoadingSoftware()) {
-                        if (!latchLoad) {
-                            bluetoothConnectedThread.load();
-                            latchLoad = true;
+                if (isStatusReading) {
+                    if (spaceStatus.isReadyFlagToLoadSoftware()) {
+                        if (spaceStatus.isStatusProcessOfLoadingSoftware()) {
+                            if (!latchLoad) {
+                                bluetoothConnectedThread.load();
+                                latchLoad = true;
+                            } else {
+                                if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
+                                    spaceStatus.setReadyFlagToLoadSoftware(false);
+                                    spaceStatus.setStatusProcessOfLoadingSoftware(false);
+                                    latchLoad = false;
+                                }
+                            }
                         } else {
-                            if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
+                            spaceStatus.setStatusProcessOfLoadingSoftware(true);
+                            bluetoothConnectedThread.initLoad();
+                        }
+                    } else if (spaceStatus.isReadyFlagToUpdateSoftware()) {
+                        spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+                        if (!latchFinish) {
+                            spaceStatus.setStatusProcessOfUpdatingSoftware(true);
+                            bluetoothConnectedThread.startToLoad();
+                            latchFinish = true;
+                            Log.i("LOG_TAG_1", "зАЙДЕМ сюда!");
+                        } else {
+                            if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
+                                latchFinish = false;
+                                spaceStatus.setReadyFlagToUpdateSoftware(false);
+                                spaceStatus.setStatusProcessOfUpdatingSoftware(false);
                                 spaceStatus.setReadyFlagToLoadSoftware(false);
-                                spaceStatus.setStatusProcessOfLoadingSoftware(false);
-                                latchLoad = false;
+                                spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+                                Log.i("LOG_TAG_1", "всё в ноль!!!!");
                             }
                         }
+                    } else if (spaceStatus.isReadyFlagToDownloadLog()) {
+                        bluetoothConnectedThread.downloadLogs();
                     } else {
-                        spaceStatus.setStatusProcessOfLoadingSoftware(true);
-                        bluetoothConnectedThread.initLoad();
+                        bluetoothConnectedThread.communication();
                     }
-                } else if (spaceStatus.isReadyFlagToUpdateSoftware()) {
-                    spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
-                    if (!latchFinish) {
-                        spaceStatus.setStatusProcessOfUpdatingSoftware(true);
-                        bluetoothConnectedThread.startToLoad();
-                        latchFinish = true;
-                        Log.i("LOG_TAG_1", "зАЙДЕМ сюда!");
-                    } else {
-                        if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
-                            latchFinish = false;
-                            spaceStatus.setReadyFlagToUpdateSoftware(false);
-                            spaceStatus.setStatusProcessOfUpdatingSoftware(false);
-                            spaceStatus.setReadyFlagToLoadSoftware(false);
-                            spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
-                            Log.i("LOG_TAG_1", "всё в ноль!!!!");
-                        }
-                    }
-                } else if (spaceStatus.isReadyFlagToDownloadLog()) {
-                    bluetoothConnectedThread.downloadLogs();
+                    isStatusReading = false;
                 } else {
-                    bluetoothConnectedThread.communication();
+                    if (!spaceStatus.isReadyFlagToExchangeData()) {
+                        BluetoothConnectedThread.sleep(timer);
+                        bluetoothConnectedThread.communication();
+                    }
                 }
+
             }
             bluetoothConnectedThread.interrupt();
         }
     }
 
     public class BluetoothConnectedThread extends Thread {
+        byte[] buffer;
         public BluetoothConnectedThread() {
             // Get the input and output streams, using temp objects because
             // member streams are final
@@ -524,7 +539,7 @@ public class FragmentBluetooth extends Fragment {
         public void run() {
             while (!isInterrupted()) {
 //                if (flagWaitingAnswerInitLoad | flagWaitingAnswerLoad | flagWaitingAnswerFinishLoad | flagWaitingAnswerReading | flagWaitingAnswerWriting | flagWaitingAnswerUpload) {
-                    if (flagWaitingAnswerReading | flagWaitingAnswerWriting) {
+                    if (flagWaitingAnswerWriting | flagWaitingAnswerReadingStart) {
                     try {
                         // Read from the InputStream
 
@@ -533,8 +548,8 @@ public class FragmentBluetooth extends Fragment {
 //                    mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
 //                            .sendToTarget();
                         if (flagWaitingAnswerInitLoad) {
-
-                            byte[] buffer = new byte[8];  // buffer store for the stream
+                            buffer = null;
+                            buffer = new byte[8];  // buffer store for the stream
                             int bytes = 0; // bytes returned from read()
                             bytes = inputStream.read(buffer);
 
@@ -558,8 +573,8 @@ public class FragmentBluetooth extends Fragment {
                             }
                             Log.i("LOG_TAG_1", answerTest);
                         } else if (flagWaitingAnswerLoad) {
-
-                            byte[] buffer = new byte[8];  // buffer store for the stream
+                            buffer = null;
+                            buffer = new byte[8];  // buffer store for the stream
                             int bytes = 0; // bytes returned from read()
                             bytes = inputStream.read(buffer);
 
@@ -585,8 +600,8 @@ public class FragmentBluetooth extends Fragment {
                             }
                             Log.i("LOG_TAG_1", answerTest);
                         } else if (flagWaitingAnswerFinishLoad) {
-
-                            byte[] buffer = new byte[18];  // buffer store for the stream
+                            buffer = null;
+                            buffer = new byte[18];  // buffer store for the stream
                             int bytes = 0; // bytes returned from read()
                             bytes = inputStream.read(buffer);
 
@@ -612,8 +627,8 @@ public class FragmentBluetooth extends Fragment {
                             }
                             Log.i("LOG_TAG_1", answerTest);
                         } else if (flagWaitingAnswerReading) {
-
-                            byte[] buffer = new byte[10];  // buffer store for the stream
+                            buffer = null;
+                            buffer = new byte[10];  // buffer store for the stream
 //                            byte[] bufferPrepeared = new byte[10];
                             int bytes = 0; // bytes returned from read()
                             bytes = inputStream.read(buffer);
@@ -678,21 +693,21 @@ public class FragmentBluetooth extends Fragment {
                                 isStatusReading = true;
                                 flagWaitingAnswerReading = false;
                                 changeStateIndicator();
+
                             } else {
                                 Log.i(LOG_TAG, "CRC не совпало");
                                 textViewConnectedToDevice.setText("CRC не совпало");
                             }
-                        } else if (flagWaitingAnswerWriting) {
-
-                            Log.i(LOG_TAG, "Здесь впервые");
-
-                            byte[] buffer = new byte[6];  // buffer store for the stream
+                        } else if (flagWaitingAnswerReadingStart) {
+                            buffer = null;
+                            buffer = new byte[10];  // buffer store for the stream
+//                            byte[] bufferPrepeared = new byte[10];
                             int bytes = 0; // bytes returned from read()
                             bytes = inputStream.read(buffer);
                             Log.i(LOG_TAG, String.valueOf(bytes));
 
                             bytesFromBuffer = new byte[bytes];
-                            bytesToCreateCRC = new byte[bytes - 4];
+                            bytesToCreateCRC = new byte[bytes - 2];
                             for (int i = 0; i < bytesFromBuffer.length; i++) {
                                 bytesFromBuffer[i] = buffer[i];
                             }
@@ -701,38 +716,82 @@ public class FragmentBluetooth extends Fragment {
                             }
                             int crc = (CRC16.getCRC4(bytesToCreateCRC));
                             int high = crc/256;
-
-                            String answerTest = "";
-                            for (byte readByte: bytesFromBuffer) {
-                                int bufInt = 0;
-                                if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
-                                answerTest = answerTest + " " + bufInt;
-                            }
-                            Log.i(LOG_TAG, answerTest);
-
                             if ((bytesFromBuffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bytesFromBuffer[bytesToCreateCRC.length + 1] == (byte) high)) {
-                                if (spaceStatus.isReadyFlagToExchangeData()) {
-
-                                    if (currentByte == 207) {
-                                        spaceStatus.setReadyFlagRecordingInitialValues(false);
-                                    }
-                                    if ((currentByte == 47) || (currentByte == 95) || (currentByte == 143) || (currentByte == 207) || (currentByte == 255)) currentByte = nextByte;
-                                    else currentByte++;
-                                } else {
-                                    textViewConnectedToDevice.setText("Поключено к " + stringConnectedToDevice);
-                                    progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
-                                    spaceStatus.setReadyFlagToExchangeData(true);
+                                textViewConnectedToDevice.setText("Поключено к " + stringConnectedToDevice);
+                                progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+                                spaceStatus.setReadyFlagToExchangeData(true);
+                                String answerTest = "";
+                                for (byte readByte: bytesFromBuffer) {
+                                    int bufInt = 0;
+                                    if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
+                                    answerTest = answerTest + " " + bufInt;
                                 }
-                                isStatusReading = true;
-                                flagWaitingAnswerWriting = false;
-                                changeStateIndicator();
+                                Log.i(LOG_TAG, answerTest);
                             } else {
-                                Log.i(LOG_TAG, "HERE");
+                                Log.i(LOG_TAG, "CRC не совпало");
                                 textViewConnectedToDevice.setText("CRC не совпало");
                             }
+                            isStatusReading = true;
+                            flagWaitingAnswerReadingStart = false;
+                        } else if (flagWaitingAnswerWriting) {
+
+                            Log.i(LOG_TAG, "Здесь впервые");
+                            buffer = null;
+                            buffer = new byte[6];  // buffer store for the stream
+                            int bytes = 0; // bytes returned from read()
+                            bytes = inputStream.read(buffer);
+                            Log.i(LOG_TAG, String.valueOf(bytes));
+                            if (bytes == buffer.length) {
+                                bytesFromBuffer = new byte[bytes];
+                                bytesToCreateCRC = new byte[bytes - 4];
+                                for (int i = 0; i < bytesFromBuffer.length; i++) {
+                                    bytesFromBuffer[i] = buffer[i];
+                                }
+                                for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                                    bytesToCreateCRC[i] = bytesFromBuffer[i];
+                                }
+                                int crc = (CRC16.getCRC4(bytesToCreateCRC));
+                                int high = crc/256;
+
+                                String answerTest = "";
+                                for (byte readByte: bytesFromBuffer) {
+                                    int bufInt = 0;
+                                    if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
+                                    answerTest = answerTest + " " + bufInt;
+                                }
+                                Log.i(LOG_TAG, answerTest);
+
+                                if ((bytesFromBuffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bytesFromBuffer[bytesToCreateCRC.length + 1] == (byte) high)) {
+                                    if (spaceStatus.isReadyFlagToExchangeData()) {
+
+                                        if (currentByte == 207) {
+                                            spaceStatus.setReadyFlagRecordingInitialValues(false);
+                                        }
+                                        if ((currentByte == 47) || (currentByte == 95) || (currentByte == 143) || (currentByte == 207) || (currentByte == 255)) currentByte = nextByte;
+                                        else currentByte++;
+                                    } else {
+                                        textViewConnectedToDevice.setText("Поключено к " + stringConnectedToDevice);
+                                        progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+                                        spaceStatus.setReadyFlagToExchangeData(true);
+                                    }
+                                    changeStateIndicator();
+                                    isStatusError = false;
+                                } else {
+                                    Log.i(LOG_TAG, "HERE");
+                                    textViewConnectedToDevice.setText("CRC не совпало");
+                                    isStatusError = true;
+                                }
+                            } else {
+                                isStatusError = true;
+                            }
+
+                            isStatusReading = true;
+                            flagWaitingAnswerWriting = false;
+
                         } else if (flagWaitingAnswerUpload) {
 //                            byte[] buffer = new byte[spaceFileLogs.getSpaceFileLogsLength()];  // buffer store for the stream
-                            byte[] buffer = new byte[12];
+                            buffer = null;
+                            buffer = new byte[12];
                             int bytes = 0; // bytes returned from read()
                             bytes = inputStream.read(buffer);
 
@@ -791,7 +850,7 @@ public class FragmentBluetooth extends Fragment {
             if (spaceStatus.isReadyFlagToExchangeData()) {
                 if (counterUnsuccessfulSending < maxValueUnsuccessfulSending) {
                     if (spaceStatus.isReadyFlagRecordingInitialValues()) {
-                        if (isStatusReading) {
+                        if (!isStatusError) {
                             counterUnsuccessfulSending = 0;
                             switch (statement) {
                                 // запись out
@@ -825,7 +884,7 @@ public class FragmentBluetooth extends Fragment {
                             sending(1);
                             counterUnsuccessfulSending++;
                         }
-
+                        Log.i(LOG_TAG, "pfcnhzkb yf 145 ifff");
                     } else {
                         if (isStatusReading) {
                             counterUnsuccessfulSending = 0;
@@ -901,6 +960,7 @@ public class FragmentBluetooth extends Fragment {
                             }
                             counterUnsuccessfulSending++;
                         }
+                        Log.i(LOG_TAG, "pfcnhzkb yf 145");
                     }
                     Log.i(LOG_TAG, String.valueOf(currentByte));
                 } else {
@@ -940,9 +1000,10 @@ public class FragmentBluetooth extends Fragment {
                     try {
                         outputStream.write(bytesToSend);
                     } catch (IOException e) {}
-                    flagWaitingAnswerReading = true;
-                    Log.i(LOG_TAG, "flagWaitingAnswerReading = true");
+                    flagWaitingAnswerReadingStart = true;
+                    Log.i(LOG_TAG, "flagWaitingAnswerReadingStart = true");
                 } else {
+                    flagWaitingAnswerReadingStart = false;
                     textViewConnectedToDevice.post(new Runnable() {
                         @Override
                         public void run() {
