@@ -762,24 +762,17 @@ public class FragmentBluetooth extends Fragment {
                                 Log.i(LOG_TAG, answerTest);
 
                                 if ((bytesFromBuffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bytesFromBuffer[bytesToCreateCRC.length + 1] == (byte) high)) {
-                                    if (spaceStatus.isReadyFlagToExchangeData()) {
-
-                                        if (currentByte == 207) {
-                                            spaceStatus.setReadyFlagRecordingInitialValues(false);
-                                            nextByte = 0;
-                                        }
-                                        if (currentByte == 95) {
-                                            statement = 3;
-                                            nextByte = 144;
-                                        }
-
-                                        if ((currentByte == 95) || (currentByte == 207)) currentByte = nextByte;
-                                        else currentByte++;
-                                    } else {
-                                        textViewConnectedToDevice.setText("Поключено к " + stringConnectedToDevice);
-                                        progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
-                                        spaceStatus.setReadyFlagToExchangeData(true);
+                                    if (currentByte == 207) {
+                                        spaceStatus.setReadyFlagRecordingInitialValues(false);
+                                        nextByte = 0;
                                     }
+                                    if (currentByte == 95) {
+                                        statement = 3;
+                                        nextByte = 144;
+                                    }
+                                    if ((currentByte == 95) || (currentByte == 207)) currentByte = nextByte;
+                                    else currentByte++;
+
                                     changeStateIndicator();
                                     isStatusError = false;
                                 } else {
@@ -856,6 +849,8 @@ public class FragmentBluetooth extends Fragment {
             if (spaceStatus.isReadyFlagToExchangeData()) {
                 if (counterUnsuccessfulSending < maxValueUnsuccessfulSending) {
                     if (spaceStatus.isReadyFlagRecordingInitialValues()) {
+                        Log.i(LOG_TAG, "Initi values");
+                        Log.i(LOG_TAG, String.valueOf(currentByte));
                         if (!isStatusError) {
                             counterUnsuccessfulSending = 0;
                             flagWaitingAnswerWriting = true;
@@ -865,7 +860,6 @@ public class FragmentBluetooth extends Fragment {
                             sending(1);
                             counterUnsuccessfulSending++;
                         }
-                        Log.i(LOG_TAG, "Initi values");
                     } else {
                         if (isStatusReading) {
                             counterUnsuccessfulSending = 0;
@@ -943,7 +937,6 @@ public class FragmentBluetooth extends Fragment {
                         }
                         Log.i(LOG_TAG, "pfcnhzkb yf 145");
                     }
-                    Log.i(LOG_TAG, String.valueOf(currentByte));
                 } else {
                     textViewConnectedToDevice.post(new Runnable() {
                         @Override
