@@ -474,6 +474,7 @@ public class FragmentBluetooth extends Fragment {
 
             while (!isInterrupted()) {
                 if (isStatusReading) {
+                    isStatusReading = false;
                     if (spaceStatus.isReadyFlagToLoadSoftware()) {
                         if (spaceStatus.isStatusProcessOfLoadingSoftware()) {
                             if (!latchLoad) {
@@ -512,7 +513,6 @@ public class FragmentBluetooth extends Fragment {
                     } else {
                         bluetoothConnectedThread.communication();
                     }
-                    isStatusReading = false;
                 } else {
                     if (!spaceStatus.isReadyFlagToExchangeData()) {
                         BluetoothConnectedThread.sleep(timer);
@@ -766,8 +766,14 @@ public class FragmentBluetooth extends Fragment {
 
                                         if (currentByte == 207) {
                                             spaceStatus.setReadyFlagRecordingInitialValues(false);
+                                            nextByte = 0;
                                         }
-                                        if ((currentByte == 47) || (currentByte == 95) || (currentByte == 143) || (currentByte == 207) || (currentByte == 255)) currentByte = nextByte;
+                                        if (currentByte == 95) {
+                                            statement = 3;
+                                            nextByte = 144;
+                                        }
+
+                                        if ((currentByte == 95) || (currentByte == 207)) currentByte = nextByte;
                                         else currentByte++;
                                     } else {
                                         textViewConnectedToDevice.setText("Поключено к " + stringConnectedToDevice);
@@ -852,39 +858,14 @@ public class FragmentBluetooth extends Fragment {
                     if (spaceStatus.isReadyFlagRecordingInitialValues()) {
                         if (!isStatusError) {
                             counterUnsuccessfulSending = 0;
-                            switch (statement) {
-                                // запись out
-                                case 1:
-                                    Log.i(LOG_TAG, "statement 1");
-                                    flagWaitingAnswerWriting = true;
-                                    sending(1);
-                                    isStatusReading = false;
-                                    if (currentByte == 95) {
-                                        statement = 3;
-                                        nextByte = 144;
-                                    }
-                                    break;
-                                // запись ТК
-                                case 3:
-                                    Log.i(LOG_TAG, "statement 3");
-                                    flagWaitingAnswerWriting = true;
-                                    sending(1);
-                                    isStatusReading = false;
-                                    if (currentByte == 207) {
-                                        statement = 0;
-                                        spaceStatus.setReadyFlagRecordingInitialValues(false);
-                                        nextByte = 0;
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
+                            flagWaitingAnswerWriting = true;
+                            sending(1);
                         } else {
                             flagWaitingAnswerWriting = true;
                             sending(1);
                             counterUnsuccessfulSending++;
                         }
-                        Log.i(LOG_TAG, "pfcnhzkb yf 145 ifff");
+                        Log.i(LOG_TAG, "Initi values");
                     } else {
                         if (isStatusReading) {
                             counterUnsuccessfulSending = 0;
