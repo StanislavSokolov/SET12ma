@@ -34,7 +34,7 @@ public class FragmentBluetooth extends Fragment {
     final String PBAP_UUID = "00001101-0000-1000-8000-00805f9b34fb";
     private BluetoothSocket bluetoothSocket;
     private BluetoothDevice bluetoothDevice;
-    private long timer = 150;
+    private long timer = 100;
 
     // for BluetoothConnectedThread
     private InputStream inputStream;
@@ -116,8 +116,6 @@ public class FragmentBluetooth extends Fragment {
     private TextView textViewAvailableDevices;
     private Spinner spinnerAvailableDevices;
     private Button buttonFindNewDevices;
-
-    private boolean isEnable = false;
 
     @Override
     public void onAttach(Context context) {
@@ -285,7 +283,6 @@ public class FragmentBluetooth extends Fragment {
 
             isStatusReading = false;
             isStatusError = false;
-            isEnable = false;
 
             if (buttonConnectToDevice.getText().equals("Подключить")) {
                 stringConnectedToDevice = arrayListConnectedDevices.get(itemSelectedFromConnectedDevices).getName();
@@ -516,10 +513,8 @@ public class FragmentBluetooth extends Fragment {
                     } else {
                         communication();
                     }
-                    isEnable = true;
                 } else {
                     if (!spaceStatus.isReadyFlagToExchangeData()) {
-//                        BluetoothConnectedThread.sleep(timer);
                         communication();
                     }
                 }
@@ -1017,7 +1012,7 @@ public class FragmentBluetooth extends Fragment {
                         buffer = null;
                         buffer = new byte[10];  // buffer store for the stream
                         //                            inputStream.read(buffer);
-                        byte[] bufferPrepeared = new byte[10];
+                        //byte[] bufferPrepeared = new byte[10];
                         int lastByte = 0;
                         bytes = 0;
                         while (lastByte != buffer.length) {
@@ -1066,6 +1061,7 @@ public class FragmentBluetooth extends Fragment {
 //                        }
 
                         if (lastByte == buffer.length) {
+                            bytes = lastByte;
                             bytesFromBuffer = new byte[bytes];
                             bytesToCreateCRC = new byte[bytes - 2];
                             for (int i = 0; i < bytesFromBuffer.length; i++) {
