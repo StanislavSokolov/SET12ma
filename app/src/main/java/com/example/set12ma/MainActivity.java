@@ -19,7 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace, ResultReceiverStatusSpace {
+public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace, ResultReceiverStatusSpace, ResultReceiverFileLogsSpace {
 
     // Адресное пространство приложения
     SpaceAddress spaceAddress;
@@ -27,9 +27,12 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     SpaceMemory spaceMemory;
     // Пространство памяти для отображения состояния приложения
     SpaceStatus spaceStatus;
+    // Пространство памяти для хранения считанных логов
+    SpaceFileLogs spaceFileLogs;
     // SET12MA
     TabLayout tabsSET12MA;
-    ViewPager viewPagerDataExchange;
+    ViewPager viewPagerDataInput;
+    ViewPager viewPagerDataOutput;
     // LoadSoftware
     ViewPager viewPagerLoadingSoftware;
     // Logging
@@ -39,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
     MenuItem indicator;
 
-    MainActivitySectionsPagerAdapterDataExchange sectionsPagerAdapterDataExchange;
+    MainActivitySectionsPagerAdapterDataInput sectionsPagerAdapterDataInput;
+    MainActivitySectionsPagerAdapterDataOutput sectionsPagerAdapterDataOutput;
     MainActivitySectionsPagerAdapterLoadingSoftware sectionsPagerAdapterLoadingSoftware;
     MainActivitySectionsPagerAdapterLogging sectionsPagerAdapterLogging;
     MainActivitySectionsPagerAdapterConnecting sectionsPagerAdapterConnecting;
@@ -55,15 +59,18 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         super.onCreate(savedInstanceState);
         Log.i("AndroidExample", "onCreate");
         setContentView(R.layout.activity_main);
-        sectionsPagerAdapterDataExchange = new MainActivitySectionsPagerAdapterDataExchange(this, getSupportFragmentManager());
+        sectionsPagerAdapterDataInput = new MainActivitySectionsPagerAdapterDataInput(this, getSupportFragmentManager());
+        sectionsPagerAdapterDataOutput = new MainActivitySectionsPagerAdapterDataOutput(this, getSupportFragmentManager());
         sectionsPagerAdapterLoadingSoftware = new MainActivitySectionsPagerAdapterLoadingSoftware(this, getSupportFragmentManager());
         sectionsPagerAdapterLogging = new MainActivitySectionsPagerAdapterLogging(this, getSupportFragmentManager());
         sectionsPagerAdapterConnecting = new MainActivitySectionsPagerAdapterConnecting(this, getSupportFragmentManager());
 
         // Terminal
-        viewPagerDataExchange = findViewById(R.id.view_pager_dataExchange);
-        viewPagerDataExchange.setAdapter(sectionsPagerAdapterDataExchange);
+        viewPagerDataInput = findViewById(R.id.view_pager_dataInput);
+        viewPagerDataInput.setAdapter(sectionsPagerAdapterDataInput);
         viewPagerNumber = 0;
+        viewPagerDataOutput = findViewById(R.id.view_pager_dataOutput);
+        viewPagerDataOutput.setAdapter(sectionsPagerAdapterDataOutput);
         // LoadingSoftware
         viewPagerLoadingSoftware = findViewById(R.id.view_pager_loadingSoftware);
         viewPagerLoadingSoftware.setAdapter(sectionsPagerAdapterLoadingSoftware);
@@ -79,27 +86,28 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
         // main tab
         tabsSET12MA = findViewById(R.id.tabs_SET12MA);
-        tabsSET12MA.setupWithViewPager(viewPagerDataExchange);
+        tabsSET12MA.setupWithViewPager(viewPagerDataInput);
 
         upDateViewPager(viewPagerNumber);
 
-        FloatingActionButton fab = findViewById(R.id.fab_SET12MA);
+//        FloatingActionButton fab = findViewById(R.id.fab_SET12MA);
 
         spaceAddress = new SpaceAddress(300);
         spaceMemory = new SpaceMemory();
         spaceStatus = new SpaceStatus();
+        spaceFileLogs = new SpaceFileLogs();
 //        addressSpace.setAddressSpace(150, 1);
 //        addressSpace.setAddressSpace(210, 150);
 
 //        indicator = findViewById(R.id.menu_indicator);
 //        indicator.setEnabled(false);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -177,17 +185,20 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
                     Toast.makeText(MainActivity.this, "Нет обмена данными", Toast.LENGTH_SHORT).show();
                 }
                 return true;
-            case R.id.menu_dataExchange:
+            case R.id.menu_dataInput:
                 upDateViewPager(0);
                 return true;
-            case R.id.menu_connecting:
+            case R.id.menu_dataOutput:
                 upDateViewPager(1);
                 return true;
-            case R.id.menu_logging:
+            case R.id.menu_connecting:
                 upDateViewPager(2);
                 return true;
-            case R.id.menu_loadingSoftware:
+            case R.id.menu_logging:
                 upDateViewPager(3);
+                return true;
+            case R.id.menu_loadingSoftware:
+                upDateViewPager(4);
                 return true;
         }
 //        headerView.setText(item.getTitle());
@@ -196,44 +207,59 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
     private void upDateViewPager(int value) {
         if (value == 0) {
-            tabsSET12MA.setupWithViewPager(viewPagerDataExchange);
+            tabsSET12MA.setupWithViewPager(viewPagerDataInput);
             tabsSET12MA.setVisibility(View.VISIBLE);
             viewPagerConnecting.setVisibility(View.INVISIBLE);
             viewPagerLogging.setVisibility(View.INVISIBLE);
             viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
-            viewPagerDataExchange.setVisibility(View.VISIBLE);
-            getSupportActionBar().setTitle("Данные");
+            viewPagerDataInput.setVisibility(View.VISIBLE);
+            viewPagerDataOutput.setVisibility(View.INVISIBLE);
+            getSupportActionBar().setTitle("Входы");
             viewPagerNumber = 0;
         }
         if (value == 1) {
+            tabsSET12MA.setupWithViewPager(viewPagerDataOutput);
+            tabsSET12MA.setVisibility(View.VISIBLE);
+            viewPagerConnecting.setVisibility(View.INVISIBLE);
+            viewPagerLogging.setVisibility(View.INVISIBLE);
+            viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
+            viewPagerDataInput.setVisibility(View.INVISIBLE);
+            viewPagerDataOutput.setVisibility(View.VISIBLE);
+            getSupportActionBar().setTitle("Выходы");
+            viewPagerNumber = 1;
+        }
+        if (value == 2) {
             tabsSET12MA.setupWithViewPager(viewPagerConnecting);
             tabsSET12MA.setVisibility(View.VISIBLE);
             viewPagerConnecting.setVisibility(View.VISIBLE);
             viewPagerLogging.setVisibility(View.INVISIBLE);
             viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
-            viewPagerDataExchange.setVisibility(View.INVISIBLE);
+            viewPagerDataInput.setVisibility(View.INVISIBLE);
+            viewPagerDataOutput.setVisibility(View.INVISIBLE);
             getSupportActionBar().setTitle("Подключение");
-            viewPagerNumber = 1;
+            viewPagerNumber = 2;
         }
-        if (value == 2) {
+        if (value == 3) {
             tabsSET12MA.setupWithViewPager(viewPagerLogging);
             tabsSET12MA.setVisibility(View.VISIBLE);
             viewPagerConnecting.setVisibility(View.INVISIBLE);
             viewPagerLogging.setVisibility(View.VISIBLE);
             viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
-            viewPagerDataExchange.setVisibility(View.INVISIBLE);
+            viewPagerDataInput.setVisibility(View.INVISIBLE);
+            viewPagerDataOutput.setVisibility(View.INVISIBLE);
             getSupportActionBar().setTitle("Логирование");
-            viewPagerNumber = 2;
+            viewPagerNumber = 3;
         }
-        if (value == 3) {
+        if (value == 4) {
             tabsSET12MA.setupWithViewPager(viewPagerLoadingSoftware);
             tabsSET12MA.setVisibility(View.INVISIBLE);
             viewPagerConnecting.setVisibility(View.INVISIBLE);
             viewPagerLogging.setVisibility(View.INVISIBLE);
             viewPagerLoadingSoftware.setVisibility(View.VISIBLE);
-            viewPagerDataExchange.setVisibility(View.INVISIBLE);
+            viewPagerDataInput.setVisibility(View.INVISIBLE);
+            viewPagerDataOutput.setVisibility(View.INVISIBLE);
             getSupportActionBar().setTitle("Загрузка ПО");
-            viewPagerNumber = 3;
+            viewPagerNumber = 4;
         }
     }
 
@@ -250,5 +276,10 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     @Override
     public SpaceStatus getSpaceStatus() {
         return spaceStatus;
+    }
+
+    @Override
+    public SpaceFileLogs getSpaceFileLogs() {
+        return spaceFileLogs;
     }
 }

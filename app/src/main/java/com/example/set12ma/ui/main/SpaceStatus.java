@@ -59,6 +59,16 @@ public class SpaceStatus implements Parcelable {
     public boolean isReadyFlagToFinishOfUpdatingSoftware() { return readyFlagToFinishOfUpdatingSoftware; }
     public void setReadyFlagToFinishOfUpdatingSoftware(boolean readyFlagToFinishOfUpdatingSoftware) { this.readyFlagToFinishOfUpdatingSoftware = readyFlagToFinishOfUpdatingSoftware; }
 
+    public boolean isReadyFlagToDownloadLog() {
+        return readyFlagToDownloadLog;
+    }
+
+    public void setReadyFlagToDownloadLog(boolean readyFlagToDownloadLog) {
+        this.readyFlagToDownloadLog = readyFlagToDownloadLog;
+    }
+
+    private boolean readyFlagToDownloadLog = false;
+
     private int lastNumberError = 0;
 
     public int getLastNumberError() {

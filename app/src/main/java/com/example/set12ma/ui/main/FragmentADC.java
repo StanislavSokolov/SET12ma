@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,8 @@ public class FragmentADC extends Fragment {
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
     private long timer = 500;
+
+    FloatingActionButton fab;
 
     @Override
     public void onAttach(Context context) {
@@ -55,6 +59,8 @@ public class FragmentADC extends Fragment {
         }
         pageViewModel.setIndex(index);
         spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
+
+
     }
 
     @Override
@@ -63,6 +69,14 @@ public class FragmentADC extends Fragment {
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_adc, container, false);
 
+        fab = root.findViewById(R.id.fab_SET12MA);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
         arrayListTextView = new ArrayList<>();
         arrayListButton = new ArrayList<>();
 

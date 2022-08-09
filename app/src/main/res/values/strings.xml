@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">SET12MA</string>
 
-    <string name="tab_SET12MA_text_0">IN</string>
-    <string name="tab_SET12MA_text_1">OUT</string>
-    <string name="tab_SET12MA_text_2">ADC</string>
-    <string name="tab_SET12MA_text_3">TK</string>
+    <string name="tab_SET12MA_text_0">Цифровые</string>
+    <string name="tab_SET12MA_text_1">Цифровые</string>
+    <string name="tab_SET12MA_text_2">Аналоговые</string>
+    <string name="tab_SET12MA_text_3">Ключи</string>
 
     <string name="tab_SET12MA_text_4">Bluetooth</string>
     <string name="tab_SET12MA_text_5">COM-port</string>
@@ -72,7 +72,8 @@
 
     <string name="text_inital_value">0</string>
 
-    <string name="menu_dataExchange">Данные</string>
+    <string name="menu_dataInput">Входы</string>
+    <string name="menu_dataOutput">Выходы</string>
     <string name="menu_connection">Подключение</string>
     <string name="menu_logging">Логирование</string>
     <string name="menu_loadingSoftware">Загрузка ПО</string>
@@ -84,5 +85,9 @@
     <string name="main_button_unconnect_to_device">Отключить</string>
     <string name="main_text_available_devices">Доступные устройства</string>
     <string name="main_button_find_new_devices">Поиск новых устройств</string>
+
+    <string name="download_log">Загрузить</string>
+    <string name="save_log">Сохранить</string>
+    <string name="send_log">Отправить</string>
 
 </resources>

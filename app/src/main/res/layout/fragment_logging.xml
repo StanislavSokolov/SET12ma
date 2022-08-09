@@ -23,7 +23,7 @@
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/button_download"
-                    android:visibility="visible" tools:text="Скачать"/>
+                    android:text="@string/download_log"/>
             <TextView
                     android:id="@+id/section_label4"
                     android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/button_save"
-                    android:visibility="visible" tools:text="Сохранить"/>
+                    android:visibility="visible" android:text="@string/save_log"/>
             <TextView
                     android:id="@+id/section_label2"
                     android:layout_width="match_parent"
@@ -47,7 +47,7 @@
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/button_send"
-                    android:visibility="visible" tools:text="Отправить"/>
+                    android:visibility="visible" android:text="@string/send_log"/>
             <TextView
                     android:id="@+id/section_label3"
                     android:layout_width="match_parent"

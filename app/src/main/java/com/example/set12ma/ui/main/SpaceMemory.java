@@ -26,8 +26,8 @@ public class SpaceMemory implements Parcelable {
         return memorySpaceByteLength;
     }
 
-    public void setMemorySpaceArrayListByte(byte[] memorySpaceByte) {
-        memorySpaceArrayList.add(memorySpaceByte);
+    public void setMemorySpaceArrayListByte(byte[] memorySpaceBytes) {
+        memorySpaceArrayList.add(memorySpaceBytes);
     }
 
     public void setMemorySpaceArrayListByte(int i, byte[] memorySpaceByte) {
