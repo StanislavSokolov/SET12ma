@@ -34,7 +34,7 @@ public class FragmentBluetooth extends Fragment {
     final String PBAP_UUID = "00001101-0000-1000-8000-00805f9b34fb";
     private BluetoothSocket bluetoothSocket;
     private BluetoothDevice bluetoothDevice;
-    private long timer = 100;
+    private long timer = 150;
 
     // for BluetoothConnectedThread
     private InputStream inputStream;
@@ -473,6 +473,7 @@ public class FragmentBluetooth extends Fragment {
             }
 
             while (!isInterrupted()) {
+                BluetoothSoketThread.sleep(timer);
                 if (isStatusReading) {
                     isStatusReading = false;
                     if (spaceStatus.isReadyFlagToLoadSoftware()) {
@@ -518,7 +519,7 @@ public class FragmentBluetooth extends Fragment {
                     isEnable = true;
                 } else {
                     if (!spaceStatus.isReadyFlagToExchangeData()) {
-                        BluetoothConnectedThread.sleep(timer);
+//                        BluetoothConnectedThread.sleep(timer);
                         communication();
                     }
                 }
@@ -1015,11 +1016,22 @@ public class FragmentBluetooth extends Fragment {
                         Log.i(LOG_TAG, "Читаем в цикле");
                         buffer = null;
                         buffer = new byte[10];  // buffer store for the stream
-                        try {
-                            bytes = inputStream.read(buffer);
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
+                        //                            inputStream.read(buffer);
+                        byte[] bufferPrepeared = new byte[10];
+                        int lastByte = 0;
+                        bytes = 0;
+                        while (lastByte != buffer.length) {
+                            try {
+                                bytes = inputStream.read(buffer, 0, buffer.length - bytes);
+                                lastByte = lastByte + bytes;
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                            if (lastByte > buffer.length) {
+                                break;
+                            }
                         }
+
 //                            int lastbit = 0;
 //
 //                            if (bytes < buffer.length) {
@@ -1045,9 +1057,15 @@ public class FragmentBluetooth extends Fragment {
 //                                bytes = bytes + inputStream.read(buffer);
 //                            }
 
-                        Log.i(LOG_TAG, String.valueOf(bytes));
+                        Log.i(LOG_TAG, String.valueOf(lastByte));
+//                        if ( bytes < buffer.length) {
+//                            for (int i = 0; i < bytes; i++) {
+//                                bufferPrepeared[i] = buffer[i];
+//                                lastbit = bytes;
+//                            }
+//                        }
 
-                        if (bytes == buffer.length) {
+                        if (lastByte == buffer.length) {
                             bytesFromBuffer = new byte[bytes];
                             bytesToCreateCRC = new byte[bytes - 2];
                             for (int i = 0; i < bytesFromBuffer.length; i++) {
