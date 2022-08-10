@@ -863,6 +863,7 @@ public class FragmentBluetooth extends Fragment {
 
     public class BluetoothConnectedThread extends Thread {
         byte[] buffer;
+        byte[] bufferPrepeared;
         int bytes = 0;
         public BluetoothConnectedThread() {
             // Get the input and output streams, using temp objects because
@@ -1018,12 +1019,18 @@ public class FragmentBluetooth extends Fragment {
                         buffer = null;
                         buffer = new byte[10];  // buffer store for the stream
                         //                            inputStream.read(buffer);
-                        //byte[] bufferPrepeared = new byte[10];
+                        bufferPrepeared = null;
+                        bufferPrepeared = new byte[10];
                         int lastByte = 0;
                         bytes = 0;
                         while (lastByte != buffer.length) {
                             try {
                                 bytes = inputStream.read(buffer, 0, buffer.length - bytes);
+                                for (int i = 0; i < bytes; i++) {
+                                    if (lastByte + i < bufferPrepeared.length) {
+                                        bufferPrepeared[lastByte + i] = buffer[i];
+                                    } else break;
+                                }
                                 lastByte = lastByte + bytes;
                             } catch (IOException ex) {
                                 ex.printStackTrace();
@@ -1066,12 +1073,12 @@ public class FragmentBluetooth extends Fragment {
 //                            }
 //                        }
 
-                        if (lastByte == buffer.length) {
+                        if (lastByte == bufferPrepeared.length) {
                             bytes = lastByte;
                             bytesFromBuffer = new byte[bytes];
                             bytesToCreateCRC = new byte[bytes - 2];
                             for (int i = 0; i < bytesFromBuffer.length; i++) {
-                                bytesFromBuffer[i] = buffer[i];
+                                bytesFromBuffer[i] = bufferPrepeared[i];
                             }
                             for (int i = 0; i < bytesToCreateCRC.length; i++) {
                                 bytesToCreateCRC[i] = bytesFromBuffer[i];
