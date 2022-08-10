@@ -66,6 +66,8 @@ public class FragmentBluetooth extends Fragment {
 
     private boolean latchQueue = false;
 
+    private boolean latchDownloadLog = false;
+
     private boolean isStatusError = false;
     private boolean isStatusReading = false;
     private boolean isModeSending = false;
@@ -278,6 +280,7 @@ public class FragmentBluetooth extends Fragment {
             latchLoad = false;
             latchFinish = false;
             latchQueue = false;
+            latchDownloadLog = false;
 
             stateWaitingAnswer = 0;
 
@@ -510,8 +513,18 @@ public class FragmentBluetooth extends Fragment {
                             }
                         }
                     } else if (spaceStatus.isReadyFlagToDownloadLog()) {
-                        downloadLogs();
-                        BluetoothSoketThread.sleep(10000);
+                        if (!latchDownloadLog) {
+                            downloadLogs();
+                            latchDownloadLog = true;
+                            Log.i(LOG_TAG, "We  are here!");
+                        } else {
+                            if (spaceStatus.isReadyFlagToFinishOfDownloadingLogs()) {
+                                latchDownloadLog = false;
+                                spaceStatus.setReadyFlagToDownloadLog(false);
+                                Log.i(LOG_TAG, "Finish of downloadlog");
+                                isStatusReading = true;
+                            }
+                        }
                     } else {
                         communication();
                     }
@@ -865,6 +878,7 @@ public class FragmentBluetooth extends Fragment {
         byte[] buffer;
         byte[] bufferPrepeared;
         int bytes = 0;
+        int lastByte = 0;
         public BluetoothConnectedThread() {
             // Get the input and output streams, using temp objects because
             // member streams are final
@@ -979,13 +993,28 @@ public class FragmentBluetooth extends Fragment {
                     case 4:
                         buffer = null;
                         buffer = new byte[20];
-                        try {
-                            bytes = inputStream.read(buffer);
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
+                        bufferPrepeared = null;
+                        bufferPrepeared = new byte[20];
+                        lastByte = 0;
+                        bytes = 0;
+                        while (lastByte != buffer.length) {
+                            try {
+                                bytes = inputStream.read(buffer, 0, buffer.length - bytes);
+                                for (int i = 0; i < bytes; i++) {
+                                    if (lastByte + i < bufferPrepeared.length) {
+                                        bufferPrepeared[lastByte + i] = buffer[i];
+                                    } else break;
+                                }
+                                lastByte = lastByte + bytes;
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                            if (lastByte > buffer.length) {
+                                break;
+                            }
                         }
 
-                        Log.i(LOG_TAG, String.valueOf(bytes));
+                        Log.i(LOG_TAG, String.valueOf(lastByte));
 
 //                            bytesToCreateCRC = new byte[bytes-4];
 //                            for (int i = 0; i < bytesToCreateCRC.length; i++) {
@@ -999,18 +1028,14 @@ public class FragmentBluetooth extends Fragment {
 //                                Log.i("LOG_TAG_1", "CRC is bed from InitLoad");
 //                            }
 
-
-                        stateWaitingAnswer = 0;
-
-
                         answerTest = "";
-                        for (byte readByte: buffer) {
+                        for (byte readByte: bufferPrepeared) {
                             int bufInt = 0;
                             if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
                             answerTest = answerTest + " " + bufInt;
                         }
                         Log.i(LOG_TAG, answerTest);
-                        spaceStatus.setReadyFlagToDownloadLog(false);
+                        spaceStatus.setReadyFlagToFinishOfDownloadingLogs(true);
                         stateWaitingAnswer = 0;
                         isStatusReading = true;
                         break;
@@ -1021,7 +1046,7 @@ public class FragmentBluetooth extends Fragment {
                         //                            inputStream.read(buffer);
                         bufferPrepeared = null;
                         bufferPrepeared = new byte[10];
-                        int lastByte = 0;
+                        lastByte = 0;
                         bytes = 0;
                         while (lastByte != buffer.length) {
                             try {
