@@ -247,7 +247,7 @@ public class FragmentBluetooth extends Fragment {
             public void onClick(View v) {         if (bluetooth.isEnabled()) {
                 try {
                     setConnecting();
-                } catch (InterruptedException e) {
+                } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
                 }
             } else
@@ -266,7 +266,7 @@ public class FragmentBluetooth extends Fragment {
     }
 
 
-    private void setConnecting() throws InterruptedException {
+    private void setConnecting() throws InterruptedException, IOException {
         if (!adapterConnectedDevices.getItem(itemSelectedFromConnectedDevices + 1).equals("Выберите устройство")) {
 
             spaceStatus.setReadyFlagToExchangeData(false);
@@ -460,10 +460,12 @@ public class FragmentBluetooth extends Fragment {
         }
 
         public void cancel() {
+            bluetoothSoketThread.interrupt();
             try {
-                interrupt();
                 bluetoothSocket.close();
-            } catch (IOException e) { }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         private void manageConnectedSocket() throws InterruptedException, IOException {
@@ -543,6 +545,7 @@ public class FragmentBluetooth extends Fragment {
             catch (IOException e) { }
 
             bluetoothConnectedThread.interrupt();
+
         }
 
         public void communication() {
@@ -1264,6 +1267,7 @@ public class FragmentBluetooth extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
 
         private void changeStateIndicator() {
