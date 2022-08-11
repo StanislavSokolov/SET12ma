@@ -1,10 +1,12 @@
 package com.example.set12ma.ui.main;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.ParcelUuid;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +14,13 @@ import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import com.example.set12ma.MainActivity;
 import com.example.set12ma.R;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,6 +64,12 @@ public class FragmentLoading extends Fragment {
     private ArrayAdapter<String> adapterTypeOfDevice;
     private int itemSelectedFromConnectedOfDevices = 0;
     private int itemSelectedFromTypeOfDevices = 0;
+
+    private boolean latchLoadToFlesh = false;
+    private boolean latchLoadToDevice = false;
+
+    FileInputStream inputStream = null;
+    private LoadFromFileThread loadFromFileThread;
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
     private long timer = 100;
@@ -162,7 +173,6 @@ public class FragmentLoading extends Fragment {
                         textViewTipFindFile.setText("Выберите файл для загрузки для " + deviceSelected);
                     }
                 });
-                spaceStatus.setDevice(deviceSelected);
                 spaceStatus.setReadyFlagToUpdateSoftware(false);
                 spaceStatus.setStatusProcessOfUpdatingSoftware(false);
                 spaceStatus.setReadyFlagToLoadSoftware(false);
@@ -217,6 +227,7 @@ public class FragmentLoading extends Fragment {
             buttonStartLoad.setVisibility(View.INVISIBLE);
             progressBarLoadToDevice.setVisibility(View.INVISIBLE);
             textViewStatusLoadToDevice.setVisibility(View.INVISIBLE);
+
         }
 
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
@@ -230,7 +241,7 @@ public class FragmentLoading extends Fragment {
             Intent intent = new Intent()
                     .setType("*/*")
                     .setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
+            startActivityForResult(intent, 403);
         } else {
             Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
         }
@@ -238,29 +249,11 @@ public class FragmentLoading extends Fragment {
 
     private void loadFile() throws IOException {
         if (!stringSelectedFile.equals("Путь не указан")) {
+            Toast.makeText(getContext(), "здесь", Toast.LENGTH_LONG).show();
             if (!spaceStatus.isReadyFlagToLoadSoftware() & (!spaceStatus.isStatusProcessOfLoadingSoftware())) {
-                InputStream inputStream = null;
-                try {
-                    inputStream = getContext().getContentResolver().openInputStream(selectedFile);
-                    spaceMemory.setMemorySpaceByte();
-                    byte[] data = new byte[spaceMemory.getMemorySpaceByteLength()];
-                    int count = inputStream.read(data);
-                    while (count != -1) {
-                        byte[] dataLastByte = new byte[count];
-                        for (int i = 0; i < count; i++) {
-                            dataLastByte[i] = data[i];
-                        }
-                        spaceMemory.setMemorySpaceArrayListByte(dataLastByte);
-                        count = inputStream.read(data);
-                    }
-                    spaceStatus.setReadyFlagToLoadSoftware(true);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                inputStream.close();
-                }
+                Toast.makeText(getContext(), "Мы туту", Toast.LENGTH_LONG).show();
+                loadFromFileThread = new LoadFromFileThread();
+                loadFromFileThread.start();
             } else {
                 Toast.makeText(getContext(), "Дождитесь завершения загрузки ПО", Toast.LENGTH_LONG).show();
                 if (spaceStatus.isReadyFlagToLoadSoftware() || spaceStatus.isStatusProcessOfLoadingSoftware()) {
@@ -278,7 +271,6 @@ public class FragmentLoading extends Fragment {
     private void startLoad() {
         if (!spaceStatus.isStatusProcessOfUpdatingSoftware() & !spaceStatus.isStatusProcessOfLoadingSoftware()) {
             spaceStatus.setReadyFlagToUpdateSoftware(true);
-            spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(false);
         } else {
             Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
         }
@@ -287,30 +279,64 @@ public class FragmentLoading extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 123 && resultCode == RESULT_OK) {
-
+        if (requestCode == 403 && resultCode == RESULT_OK) {
             stringSelectedFile = "";
             boolean start = false;
-            String stringSelectedFileBuf = data.getData().getLastPathSegment();
+            String selectedFile = data.getData().getLastPathSegment();
 
-            for (int i = 0; i < stringSelectedFileBuf.length(); i++) {
+
+            for (int i = 0; i < selectedFile.length(); i++) {
                 if (!start) {
-                    if (stringSelectedFileBuf.charAt(i) == ':') {
+                    if (selectedFile.charAt(i) == ':') {
                         start = true;
                     }
                 } else {
-                    stringSelectedFile = stringSelectedFile + stringSelectedFileBuf.charAt(i);
+                    stringSelectedFile = stringSelectedFile + selectedFile.charAt(i);
                 }
             }
 
-            selectedFile = data.getData(); //The uri with the location of the file
-            Toast.makeText(getContext(), selectedFile.toString(), Toast.LENGTH_LONG).show();
             textViewPathToLoadFile.setText(stringSelectedFile);
             spaceStatus.setReadyFlagToUpdateSoftware(false);
             spaceStatus.setStatusProcessOfUpdatingSoftware(false);
             spaceStatus.setReadyFlagToLoadSoftware(false);
             spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
             spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(false);
+        }
+    }
+
+    public class LoadFromFileThread extends Thread {
+
+        FileInputStream inputStream;
+
+        public LoadFromFileThread() throws FileNotFoundException {
+            inputStream = new FileInputStream(stringSelectedFile);
+        }
+
+        @Override
+        public void run() {
+            Toast.makeText(getContext(), "Поток запущен", Toast.LENGTH_LONG).show();
+            spaceMemory.setMemorySpaceByte();
+            byte[] data = new byte[spaceMemory.getMemorySpaceByteLength()];
+            int count = 0;
+            try {
+                count = inputStream.read(data);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            while (count != -1) {
+                byte[] dataLastByte = new byte[count];
+                for (int i = 0; i < count; i++) {
+                    dataLastByte[i] = data[i];
+                }
+                spaceMemory.setMemorySpaceArrayListByte(dataLastByte);
+                try {
+                    count = inputStream.read(data);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            Toast.makeText(getContext(), "Дошли", Toast.LENGTH_LONG).show();
+            spaceStatus.setReadyFlagToLoadSoftware(true);
         }
     }
 
@@ -693,11 +719,7 @@ public class FragmentLoading extends Fragment {
                                 @Override
                                 public void run() {
                                     textViewStatusLoadToDevice.setVisibility(View.VISIBLE);
-                                    if (spaceStatus.getLastNumberError() == 0) {
-                                        textViewStatusLoadToDevice.setText("Обновление успешно завершено" );
-                                    } else {
-                                        textViewStatusLoadToDevice.setText("Не удалось выполнить обновление ПО. Ошибка № " + spaceStatus.getLastNumberError());
-                                    }
+                                    textViewStatusLoadToDevice.setText("Обновление завершено");
                                 }
                             });
                         } else {
