@@ -32,6 +32,10 @@ public class FragmentBluetooth extends Fragment {
     final String PBAP_UUID = "00001101-0000-1000-8000-00805f9b34fb";
     private BluetoothSocket bluetoothSocket;
     private BluetoothDevice bluetoothDevice;
+
+    private BluetoothSoketThread bluetoothSoketThread;
+    private BluetoothConnectedInputThread bluetoothConnectedInputThread;
+    private BluetoothConnectedOutputThread bluetoothConnectedOutputThread;
     private long timer = 1000;
 
     private final int ADDRESS_DEVICE = 10;
@@ -107,9 +111,6 @@ public class FragmentBluetooth extends Fragment {
     private String firstStringAdapterConnectedDevices = "Выберите устройство";
     private ArrayAdapter<String> adapterAvailableDevices;
     private String firstStringAdapterAvailableDevices = "Выберите устройство";
-
-    private BluetoothSoketThread bluetoothSoketThread;
-    private BluetoothConnectedThread bluetoothConnectedThread;
 
     private PageViewModel pageViewModel;
     private TextView textViewConnectedDevices;
@@ -416,7 +417,8 @@ public class FragmentBluetooth extends Fragment {
 
         @Override
         public void run() {
-            bluetoothConnectedThread = new BluetoothConnectedThread();
+            bluetoothConnectedInputThread = new BluetoothConnectedInputThread();
+            bluetoothConnectedOutputThread = new BluetoothConnectedOutputThread();
             boolean connect = false;
             try {
                 bluetoothSocket.connect();
@@ -454,8 +456,13 @@ public class FragmentBluetooth extends Fragment {
         }
 
         private void manageConnectedSocket() throws InterruptedException, IOException {
-            bluetoothConnectedThread.start();
-            while (!bluetoothConnectedThread.isAlive()) {
+            bluetoothConnectedInputThread.start();
+            while (!bluetoothConnectedInputThread.isAlive()) {
+                BluetoothSoketThread.sleep(1);
+            }
+
+            bluetoothConnectedOutputThread.start();
+            while (!bluetoothConnectedOutputThread.isAlive()) {
                 BluetoothSoketThread.sleep(1);
             }
 
@@ -500,7 +507,8 @@ public class FragmentBluetooth extends Fragment {
                     bluetoothConnectedThread.communication();
                 }
             }
-            bluetoothConnectedThread.interrupt();
+            bluetoothConnectedInputThread.interrupt();
+            bluetoothConnectedOutputThread.interrupt();
         }
     }
 
@@ -514,30 +522,18 @@ public class FragmentBluetooth extends Fragment {
             byte[] buffer = new byte[msg.arg1];
             buffer = (byte[]) msg.obj;
 
-            switch (getCommand()) {
-                case READ:
-                    break;
-                case WRITE:
-                    break;
-                case INIT_LOAD:
-                    break;
-                case LOAD:
-                    break;
-                case UPLOAD:
-                    break;
-            }
+            spaceAddress.setByteQueue(buffer);
 
             Log.i("Handler", String.valueOf(buffer[0]));
         }
     };
 
-    public class BluetoothConnectedThread extends Thread {
-        public BluetoothConnectedThread() {
+    public class BluetoothConnectedInputThread extends Thread {
+        public BluetoothConnectedInputThread() {
             // Get the input and output streams, using temp objects because
             // member streams are final
             try {
                 inputStream = bluetoothSocket.getInputStream();
-                outputStream = bluetoothSocket.getOutputStream();
             } catch (IOException e) { Log.i(LOG_TAG,"don't get Streams");}
         }
 
@@ -547,13 +543,46 @@ public class FragmentBluetooth extends Fragment {
             while (!isInterrupted()) {
                 try {
                     // Read from the InputStream
-
                     bytes = inputStream.read(buffer);
-//                    Log.i("Handler", String.valueOf(bytes));
                     // Send the obtained bytes to the UI activity
                     handler.obtainMessage(1, bytes, -1, buffer)
                             .sendToTarget();
+                    isStatusReading = true;
+                    changeStateIndicator();
+//                    spaceStatus.setReadyFlagToExchangeData(true);
+                } catch (IOException e) {
+                    Log.i(LOG_TAG,e.toString());
+                    break;
+                }
+            }
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
+        private void changeStateIndicator() {
+            if (getActivity().findViewById(R.id.menu_indicator).getVisibility() == View.VISIBLE) {
+                getActivity().findViewById(R.id.menu_indicator).setVisibility(View.INVISIBLE);
+            } else {
+                getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    public class BluetoothConnectedOutputThread extends Thread {
+        public BluetoothConnectedOutputThread() {
+            // Get the input and output streams, using temp objects because
+            // member streams are final
+            try {
+                outputStream = bluetoothSocket.getOutputStream();
+            } catch (IOException e) { Log.i(LOG_TAG,"don't get Streams");}
+        }
+
+        public void run() {
+            while (!isInterrupted()) {
+//                try {
 //                    if (flagWaitingAnswerInitLoad) {
 //                        bytesToCreateCRC = new byte[bytes-4];
 //                        for (int i = 0; i < bytesToCreateCRC.length; i++) {
@@ -694,27 +723,11 @@ public class FragmentBluetooth extends Fragment {
 //                            }
 //                        }
 //                    }
-                    isStatusReading = true;
-                    changeStateIndicator();
-                    spaceStatus.setReadyFlagToExchangeData(true);
-                } catch (IOException e) {
-                    Log.i(LOG_TAG,e.toString());
-                    break;
-                }
             }
             try {
-                inputStream.close();
                 outputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            }
-        }
-
-        private void changeStateIndicator() {
-            if (getActivity().findViewById(R.id.menu_indicator).getVisibility() == View.VISIBLE) {
-                getActivity().findViewById(R.id.menu_indicator).setVisibility(View.INVISIBLE);
-            } else {
-                getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
             }
         }
 
@@ -783,33 +796,33 @@ public class FragmentBluetooth extends Fragment {
                                 switch (statement) {
                                     // чтение IN
                                     case 0:
-                                            Log.i(LOG_TAG, "statement 0");
-                                            sending(0);
-                                            isStatusReading = false;
-                                            if (currentByte == 47) {
-                                                statement = 2;
-                                                nextByte = 96;
-                                            }
+                                        Log.i(LOG_TAG, "statement 0");
+                                        sending(0);
+                                        isStatusReading = false;
+                                        if (currentByte == 47) {
+                                            statement = 2;
+                                            nextByte = 96;
+                                        }
                                         break;
                                     // чтение ADC
                                     case 2:
-                                            Log.i(LOG_TAG, "statement 2");
-                                            sending(0);
-                                            isStatusReading = false;
-                                            if (currentByte == 143) {
-                                                statement = 4;
-                                                nextByte = 208;
-                                            }
+                                        Log.i(LOG_TAG, "statement 2");
+                                        sending(0);
+                                        isStatusReading = false;
+                                        if (currentByte == 143) {
+                                            statement = 4;
+                                            nextByte = 208;
+                                        }
                                         break;
                                     // чтение ADC
                                     case 4:
-                                            Log.i(LOG_TAG, "statement 4");
-                                            sending(0);
-                                            isStatusReading = false;
-                                            if (currentByte == 255) {
-                                                statement = 0;
-                                                nextByte = 0;
-                                            }
+                                        Log.i(LOG_TAG, "statement 4");
+                                        sending(0);
+                                        isStatusReading = false;
+                                        if (currentByte == 255) {
+                                            statement = 0;
+                                            nextByte = 0;
+                                        }
                                         break;
                                     default:
                                         break;
@@ -928,7 +941,6 @@ public class FragmentBluetooth extends Fragment {
         /* Call this from the main activity to shutdown the connection */
         public void cancel() {
             try {
-                inputStream.close();
                 outputStream.close();
             } catch (IOException e) { }
         }
