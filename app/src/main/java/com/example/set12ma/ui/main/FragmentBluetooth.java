@@ -47,7 +47,7 @@ public class FragmentBluetooth extends Fragment {
     private final int UPLOAD = 52;
 
 
-    private int currentCommand = 0;
+    private volatile int currentCommand = INIT_LOAD;
 
 
     // for BluetoothConnectedThread
@@ -285,6 +285,8 @@ public class FragmentBluetooth extends Fragment {
             latchQueue = false;
             latchDownloadLog = false;
 
+            setCommand(INIT_LOAD);
+
             if (buttonConnectToDevice.getText().equals("Подключить")) {
                 stringConnectedToDevice = arrayListConnectedDevices.get(itemSelectedFromConnectedDevices).getName();
                 bluetoothDevice = arrayListConnectedDevices.get(itemSelectedFromConnectedDevices);
@@ -471,65 +473,86 @@ public class FragmentBluetooth extends Fragment {
             }
 
             while (!isInterrupted()) {
-                BluetoothSoketThread.sleep(timer);
-                if (isStatusReading) {
-                    isStatusReading = false;
-                    if (spaceStatus.isReadyFlagToLoadSoftware()) {
-                        if (spaceStatus.isStatusProcessOfLoadingSoftware()) {
-                            if (!latchLoad) {
-                                bluetoothConnectedOutputThread.load();
-                                latchLoad = true;
+                if (!spaceAddress.isEmptyByteQueue()) {
+                    byte[] buffer = spaceAddress.getByteQueue();
+                    switch (getCommand()) {
+                        case READ:
+
+                            break;
+                        case WRITE:
+                            break;
+                        case INIT_LOAD:
+                            break;
+                        case LOAD:
+                            break;
+                        case EXTEND:
+                            break;
+                        case UPLOAD:
+                            break;
+                    }
+                    spaceAddress.getByteQueue();
+                } else {
+                    BluetoothSoketThread.sleep(timer);
+                    if (isStatusReading) {
+                        isStatusReading = false;
+                        if (spaceStatus.isReadyFlagToLoadSoftware()) {
+                            if (spaceStatus.isStatusProcessOfLoadingSoftware()) {
+                                if (!latchLoad) {
+                                    bluetoothConnectedOutputThread.load();
+                                    latchLoad = true;
+                                } else {
+                                    if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
+                                        spaceStatus.setReadyFlagToLoadSoftware(false);
+                                        spaceStatus.setStatusProcessOfLoadingSoftware(false);
+                                        latchLoad = false;
+                                        isStatusReading = true;
+                                    }
+
+                                }
                             } else {
-                                if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
+                                spaceStatus.setStatusProcessOfLoadingSoftware(true);
+                                bluetoothConnectedOutputThread.initLoad();
+                            }
+                        } else if (spaceStatus.isReadyFlagToUpdateSoftware()) {
+                            spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+                            if (!latchFinish) {
+                                spaceStatus.setStatusProcessOfUpdatingSoftware(true);
+                                bluetoothConnectedOutputThread.startToLoad();
+                                latchFinish = true;
+                                Log.i(LOG_TAG, "зАЙДЕМ сюда!");
+                            } else {
+                                if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
+                                    latchFinish = false;
+                                    spaceStatus.setReadyFlagToUpdateSoftware(false);
+                                    spaceStatus.setStatusProcessOfUpdatingSoftware(false);
                                     spaceStatus.setReadyFlagToLoadSoftware(false);
-                                    spaceStatus.setStatusProcessOfLoadingSoftware(false);
-                                    latchLoad = false;
+                                    spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+                                    Log.i(LOG_TAG, "всё в ноль!!!!");
                                     isStatusReading = true;
                                 }
-
+                            }
+                        } else if (spaceStatus.isReadyFlagToDownloadLog()) {
+                            if (!latchDownloadLog) {
+                                bluetoothConnectedOutputThread.downloadLogs();
+                                latchDownloadLog = true;
+                                Log.i(LOG_TAG, "We  are here!");
+                            } else {
+                                if (spaceStatus.isReadyFlagToFinishOfDownloadingLogs()) {
+                                    latchDownloadLog = false;
+                                    spaceStatus.setReadyFlagToDownloadLog(false);
+                                    Log.i(LOG_TAG, "Finish of downloadlog");
+                                    isStatusReading = true;
+                                }
                             }
                         } else {
-                            spaceStatus.setStatusProcessOfLoadingSoftware(true);
-                            bluetoothConnectedOutputThread.initLoad();
-                        }
-                    } else if (spaceStatus.isReadyFlagToUpdateSoftware()) {
-                        spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
-                        if (!latchFinish) {
-                            spaceStatus.setStatusProcessOfUpdatingSoftware(true);
-                            bluetoothConnectedOutputThread.startToLoad();
-                            latchFinish = true;
-                            Log.i(LOG_TAG, "зАЙДЕМ сюда!");
-                        } else {
-                            if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
-                                latchFinish = false;
-                                spaceStatus.setReadyFlagToUpdateSoftware(false);
-                                spaceStatus.setStatusProcessOfUpdatingSoftware(false);
-                                spaceStatus.setReadyFlagToLoadSoftware(false);
-                                spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
-                                Log.i(LOG_TAG, "всё в ноль!!!!");
+                            bluetoothConnectedOutputThread.communication();
+                            if (!spaceStatus.isReadyFlagToExchangeData()) {
                                 isStatusReading = true;
                             }
-                        }
-                    } else if (spaceStatus.isReadyFlagToDownloadLog()) {
-                        if (!latchDownloadLog) {
-                            bluetoothConnectedOutputThread.downloadLogs();
-                            latchDownloadLog = true;
-                            Log.i(LOG_TAG, "We  are here!");
-                        } else {
-                            if (spaceStatus.isReadyFlagToFinishOfDownloadingLogs()) {
-                                latchDownloadLog = false;
-                                spaceStatus.setReadyFlagToDownloadLog(false);
-                                Log.i(LOG_TAG, "Finish of downloadlog");
-                                isStatusReading = true;
-                            }
-                        }
-                    } else {
-                        bluetoothConnectedOutputThread.communication();
-                        if (!spaceStatus.isReadyFlagToExchangeData()) {
-                            isStatusReading = true;
                         }
                     }
                 }
+
             }
             bluetoothConnectedInputThread.interrupt();
             bluetoothConnectedOutputThread.interrupt();
@@ -571,7 +594,7 @@ public class FragmentBluetooth extends Fragment {
                     // Send the obtained bytes to the UI activity
                     handler.obtainMessage(1, bytes, -1, buffer)
                             .sendToTarget();
-                    isStatusReading = true;
+//                    isStatusReading = true;
                     changeStateIndicator();
 //                    spaceStatus.setReadyFlagToExchangeData(true);
                 } catch (IOException e) {
