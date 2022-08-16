@@ -412,6 +412,10 @@ public class FragmentBluetooth extends Fragment {
 
     public class BluetoothSoketThread extends Thread {
 
+        int crc = 0;
+        int high = 0;
+        String answerTest = "";
+
         public BluetoothSoketThread() {
             try {
                 bluetoothSocket = bluetoothDevice.createRfcommSocketToServiceRecord(ParcelUuid.fromString(PBAP_UUID).getUuid());
@@ -477,7 +481,92 @@ public class FragmentBluetooth extends Fragment {
                     byte[] buffer = spaceAddress.getByteQueue();
                     switch (getCommand()) {
                         case READ:
+                            if (buffer.length == 10) {
+                                // full message
+                                if ((buffer[0] == ADDRESS_DEVICE) & (buffer[1] == READ)) {
+                                    // right message
+                                    byte[] bytesToCreateCRC = new byte[buffer.length - 2];
+                                    for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                                        bytesToCreateCRC[i] = buffer[i];
+                                    }
+                                    crc = (CRC16.getCRC4(bytesToCreateCRC));
+                                    high = crc/256;
+                                    answerTest = "";
+                                    for (byte readByte: buffer) {
+                                        int bufInt = 0;
+                                        if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
+                                        answerTest = answerTest + " " + bufInt;
+                                    }
+                                    Log.i(LOG_TAG, answerTest);
+                                    if ((buffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (buffer[bytesToCreateCRC.length + 1] == (byte) high)) {
 
+                                        if (currentByte == 47) {
+                                            nextByte = 96;
+                                        }
+
+                                        if (currentByte == 143) {
+                                            nextByte = 208;
+                                        }
+
+                                        if (currentByte == 255) {
+                                            nextByte = 0;
+                                        }
+
+
+                                        if ((currentByte == 47) || (currentByte == 143) || (currentByte == 255)) currentByte = nextByte;
+                                        else currentByte++;
+                                    } else {
+                                        textViewConnectedToDevice.setText("CRC не совпало");
+                                        isStatusError = true;
+                                    }
+                                } else {
+                                    isStatusError = true;
+                                }
+
+                                }
+//                            }
+//        buffer = new byte[10];  // buffer store for the stream
+//        //                            inputStream.read(buffer);
+//        bufferPrepeared = null;
+//        bufferPrepeared = new byte[10];
+//        lastByte = 0;
+//        bytes = 0;
+//        int countToBreakeFromWhile = 0;
+//        while (lastByte != 10) {
+////                            Log.i(LOG_TAG, "Проверяем lastByte != buffer.length");
+//        test("Проверяем lastByte != buffer.length");
+//        try {
+//        bytes = inputStream.read(buffer);
+//        for (int i = 0; i < bytes; i++) {
+//        if (lastByte + i < 10) {
+//        bufferPrepeared[lastByte + i] = buffer[i];
+//        } else break;
+//        }
+//        lastByte = lastByte + bytes;
+////                                Log.i(LOG_TAG, String.valueOf(lastByte));
+//        test(String.valueOf(lastByte));
+//        } catch (IOException ex) {
+////                                Log.i(LOG_TAG, "Здесь мы чтоли??");
+//        test("Здесь мы чтоли??");
+//        ex.printStackTrace();
+//        }
+//        if (lastByte > 10) {
+//        break;
+//        }
+//        countToBreakeFromWhile++;
+//        if (countToBreakeFromWhile > 2) {
+////                                Log.i(LOG_TAG, "Вышел по условию countToBreakeFromWhile > 2");
+//        test("Вышел по условию countToBreakeFromWhile > 2");
+//        break;
+//        }
+//        }
+//        test(String.valueOf(lastByte));
+//        test(String.valueOf(lastByte));
+//
+//        if (lastByte == bufferPrepeared.length) {
+//        bytes = lastByte;
+
+        break;
                             break;
                         case WRITE:
                             break;
@@ -1156,4 +1245,377 @@ public class FragmentBluetooth extends Fragment {
         }
     }
 }
+
+//while (!isInterrupted()) {
+//        switch (test3()) {
+//        case 1:
+//        buffer = null;
+//        buffer = new byte[6];  // buffer store for the stream
+//        try {
+//        bytes = inputStream.read(buffer);
+//        } catch (IOException e) {
+//        e.printStackTrace();
+//        }
+//        bytesToCreateCRC = new byte[bytes - 4];
+//        for (int i = 0; i < bytesToCreateCRC.length; i++) {
+//        bytesToCreateCRC[i] = buffer[i];
+//        }
+//        crc = (CRC16.getCRC4(bytesToCreateCRC));
+//        high = crc / 256;
+//        if ((buffer[2] == (byte) (crc - high * 256)) & (buffer[3] == (byte) high)) {
+////                            Log.i(LOG_TAG, "CRC is good from InitLoad");
+//        } else {
+////                            Log.i(LOG_TAG, "CRC is bed from InitLoad");
+//        }
+//        answerTest = "";
+//        for (byte readByte : buffer) {
+//        int bufInt = 0;
+//        if (readByte < 0) bufInt = readByte + 256;
+//        else bufInt = readByte;
+//        answerTest = answerTest + " " + bufInt;
+//        }
+////                        Log.i(LOG_TAG, answerTest);
+////                        stateWaitingAnswer = 0;
+////                        isStatusReading = true;
+//        break;
+//        case 2:
+//        buffer = null;
+//        buffer = new byte[4];  // buffer store for the stream
+//        try {
+//        bytes = inputStream.read(buffer);
+//        } catch (IOException e) {
+//        e.printStackTrace();
+//        }
+//
+//
+//        bytesToCreateCRC = new byte[2];
+//        for (int i = 0; i < bytesToCreateCRC.length; i++) {
+//        bytesToCreateCRC[i] = buffer[i];
+//        }
+//        crc = (CRC16.getCRC4(bytesToCreateCRC));
+//        high = crc / 256;
+//        if ((buffer[2] == (byte) (crc - high * 256)) & (buffer[3] == (byte) high)) {
+////                            Log.i(LOG_TAG, "CRC is good from Load");
+//        spaceStatus.setReadyFlagToFinishOfLoadingSoftware(true);
+//        } else {
+////                            Log.i(LOG_TAG, "CRC is bed from Load");
+//        }
+//        answerTest = "";
+//        for (byte readByte : buffer) {
+//        int bufInt = 0;
+//        if (readByte < 0) bufInt = readByte + 256;
+//        else bufInt = readByte;
+//        answerTest = answerTest + " " + bufInt;
+//        }
+////                        Log.i(LOG_TAG, answerTest);
+////                        stateWaitingAnswer = 0;
+////                        isStatusReading = true;
+//        break;
+//        case 3:
+////                        Log.i(LOG_TAG, "answerTest");
+//        test("waite");
+//        buffer = null;
+//        buffer = new byte[18];  // buffer store for the stream
+//        try {
+//        bytes = inputStream.read(buffer);
+//        } catch (IOException e) {
+//        e.printStackTrace();
+//        }
+////                        Log.i(LOG_TAG, String.valueOf(bytes));
+//        test(String.valueOf(bytes));
+//        bytesToCreateCRC = new byte[bytes - 4];
+//        for (int i = 0; i < bytesToCreateCRC.length; i++) {
+//        bytesToCreateCRC[i] = buffer[i];
+//        }
+//        crc = (CRC16.getCRC4(bytesToCreateCRC));
+//        high = crc / 256;
+//        if ((buffer[14] == (byte) (crc - high * 256)) & (buffer[15] == (byte) high)) {
+////                            Log.i(LOG_TAG, "CRC is good from FinishLoad");
+//        test("CRC is good from FinishLoad");
+//        } else {
+////                            Log.i(LOG_TAG, "CRC is bed from FinishLoad");
+//        test("CRC is bed from FinishLoad");
+//        }
+//        spaceStatus.setLastNumberError(buffer[6]);
+//        spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(true);
+//        answerTest = "";
+//        for (byte readByte : buffer) {
+//        int bufInt = 0;
+//        if (readByte < 0) bufInt = readByte + 256;
+//        else bufInt = readByte;
+//        answerTest = answerTest + " " + bufInt;
+//        }
+////                        Log.i(LOG_TAG, answerTest);
+//        test(answerTest);
+////                        stateWaitingAnswer = 0;
+////                        isStatusReading = true;
+//        break;
+//        case 4:
+//        buffer = null;
+//        buffer = new byte[20];
+//        bufferPrepeared = null;
+//        bufferPrepeared = new byte[20];
+//        lastByte = 0;
+//        bytes = 0;
+//        while (lastByte != buffer.length) {
+//        try {
+//        bytes = inputStream.read(buffer, 0, buffer.length - bytes);
+//        for (int i = 0; i < bytes; i++) {
+//        if (lastByte + i < bufferPrepeared.length) {
+//        bufferPrepeared[lastByte + i] = buffer[i];
+//        } else break;
+//        }
+//        lastByte = lastByte + bytes;
+//        } catch (IOException ex) {
+//        ex.printStackTrace();
+//        }
+//        if (lastByte > buffer.length) {
+//        break;
+//        }
+//        }
+//
+////                        Log.i(LOG_TAG, String.valueOf(lastByte));
+//        test(String.valueOf(lastByte));
+//
+////                            bytesToCreateCRC = new byte[bytes-4];
+////                            for (int i = 0; i < bytesToCreateCRC.length; i++) {
+////                                bytesToCreateCRC[i] = buffer[i];
+////                            }
+////                            int crc = (CRC16.getCRC4(bytesToCreateCRC));
+////                            int high = crc/256;
+////                            if ((buffer[2] == (byte) (crc - high*256)) & (buffer[3] == (byte) high)) {
+////                                Log.i("LOG_TAG_1", "CRC is good from InitLoad");
+////                            } else {
+////                                Log.i("LOG_TAG_1", "CRC is bed from InitLoad");
+////                            }
+//
+//        answerTest = "";
+//        for (byte readByte: bufferPrepeared) {
+//        int bufInt = 0;
+//        if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
+//        answerTest = answerTest + " " + bufInt;
+//        }
+////                        Log.i(LOG_TAG, answerTest);
+//        test(answerTest);
+//        spaceStatus.setReadyFlagToFinishOfDownloadingLogs(true);
+////                        stateWaitingAnswer = 0;
+////                        isStatusReading = true;
+//        break;
+//        case 5:
+////                        Log.i(LOG_TAG, "Читаем в цикле");
+//        test("Читаем в цикле");
+//        buffer = null;
+//        buffer = new byte[10];  // buffer store for the stream
+//        //                            inputStream.read(buffer);
+//        bufferPrepeared = null;
+//        bufferPrepeared = new byte[10];
+//        lastByte = 0;
+//        bytes = 0;
+//        int countToBreakeFromWhile = 0;
+//        while (lastByte != 10) {
+////                            Log.i(LOG_TAG, "Проверяем lastByte != buffer.length");
+//        test("Проверяем lastByte != buffer.length");
+//        try {
+//        bytes = inputStream.read(buffer);
+//        for (int i = 0; i < bytes; i++) {
+//        if (lastByte + i < 10) {
+//        bufferPrepeared[lastByte + i] = buffer[i];
+//        } else break;
+//        }
+//        lastByte = lastByte + bytes;
+////                                Log.i(LOG_TAG, String.valueOf(lastByte));
+//        test(String.valueOf(lastByte));
+//        } catch (IOException ex) {
+////                                Log.i(LOG_TAG, "Здесь мы чтоли??");
+//        test("Здесь мы чтоли??");
+//        ex.printStackTrace();
+//        }
+//        if (lastByte > 10) {
+//        break;
+//        }
+//        countToBreakeFromWhile++;
+//        if (countToBreakeFromWhile > 2) {
+////                                Log.i(LOG_TAG, "Вышел по условию countToBreakeFromWhile > 2");
+//        test("Вышел по условию countToBreakeFromWhile > 2");
+//        break;
+//        }
+//        }
+//        test(String.valueOf(lastByte));
+//        test(String.valueOf(lastByte));
+//
+//        if (lastByte == bufferPrepeared.length) {
+//        bytes = lastByte;
+//        bytesFromBuffer = new byte[bytes];
+//        bytesToCreateCRC = new byte[bytes - 2];
+//        for (int i = 0; i < bytesFromBuffer.length; i++) {
+//        bytesFromBuffer[i] = bufferPrepeared[i];
+//        }
+//        for (int i = 0; i < bytesToCreateCRC.length; i++) {
+//        bytesToCreateCRC[i] = bytesFromBuffer[i];
+//        }
+//        crc = (CRC16.getCRC4(bytesToCreateCRC));
+//        high = crc/256;
+//        answerTest = "";
+//        for (byte readByte: bytesFromBuffer) {
+//        int bufInt = 0;
+//        if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
+//        answerTest = answerTest + " " + bufInt;
+//        }
+////                            Log.i(LOG_TAG, answerTest);
+//        test(answerTest);
+//        if ((bytesFromBuffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bytesFromBuffer[bytesToCreateCRC.length + 1] == (byte) high)) {
+//        spaceAddress.setAddressSpace(currentByte, bytesFromBuffer[2]);
+//
+//
+//        if (currentByte == 47) {
+//        nextByte = 96;
+//        }
+//
+//        if (currentByte == 143) {
+//        nextByte = 208;
+//        }
+//
+//
+//        if (currentByte == 255) {
+//        nextByte = 0;
+//        }
+//
+//
+//        if ((currentByte == 47) || (currentByte == 143) || (currentByte == 255)) currentByte = nextByte;
+//        else currentByte++;
+//
+//        changeStateIndicator();
+//        isStatusError = false;
+//        } else {
+////                                Log.i(LOG_TAG, "CRC не совпало");
+//        test("LOG_TAG, CRC не совпало");
+//        textViewConnectedToDevice.setText("CRC не совпало");
+//        isStatusError = true;
+//        }
+//        } else {
+//        isStatusError = true;
+//        }
+//
+//
+////                        stateWaitingAnswer = 0;
+////                        isStatusReading = true;
+//        break;
+//        case 6:
+////                        Log.i(LOG_TAG, "Пишем задание");
+//        test("Пишем задание");
+//        buffer = null;
+//        buffer = new byte[6];  // buffer store for the stream
+//        try {
+//        bytes = inputStream.read(buffer);
+//        } catch (IOException ex) {
+//        ex.printStackTrace();
+//        }
+////                        Log.i(LOG_TAG, String.valueOf(bytes));
+//        test(String.valueOf(bytes));
+//        if (bytes == buffer.length) {
+//        bytesFromBuffer = new byte[bytes];
+//        bytesToCreateCRC = new byte[bytes - 4];
+//        for (int i = 0; i < bytesFromBuffer.length; i++) {
+//        bytesFromBuffer[i] = buffer[i];
+//        }
+//        for (int i = 0; i < bytesToCreateCRC.length; i++) {
+//        bytesToCreateCRC[i] = bytesFromBuffer[i];
+//        }
+//        crc = (CRC16.getCRC4(bytesToCreateCRC));
+//        high = crc/256;
+//
+//        answerTest = "";
+//        for (byte readByte: bytesFromBuffer) {
+//        int bufInt = 0;
+//        if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
+//        answerTest = answerTest + " " + bufInt;
+//        }
+//        test(answerTest);
+//
+//        if ((bytesFromBuffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bytesFromBuffer[bytesToCreateCRC.length + 1] == (byte) high)) {
+//        if (currentByte == 207) {
+//        spaceStatus.setReadyFlagRecordingInitialValues(false);
+//        nextByte = 0;
+//        }
+//        if (currentByte == 95) {
+//        nextByte = 144;
+//        }
+//        if ((currentByte == 95) || (currentByte == 207)) currentByte = nextByte;
+//        else currentByte++;
+//
+//        changeStateIndicator();
+//        isStatusError = false;
+//        } else {
+////                                Log.i(LOG_TAG, "ЧУДЕСА");
+//        test("ЧУДЕСА");
+//        textViewConnectedToDevice.setText("CRC не совпало");
+//        isStatusError = true;
+//        }
+//        } else {
+//        isStatusError = true;
+//        }
+//
+//
+////                        stateWaitingAnswer = 0;
+////                        isStatusReading = true;
+////                        Log.i(LOG_TAG, "Сколько раз мы здесь???");
+//        test("Сколько раз мы здесь???");
+//        break;
+//        case 7:
+//        buffer = null;
+//        buffer = new byte[10];  // buffer store for the stream
+//        try {
+//        bytes = inputStream.read(buffer);
+//        } catch (IOException ex) {
+//        ex.printStackTrace();
+//        }
+//        Log.i(LOG_TAG, String.valueOf(bytes));
+//        if (bytes == buffer.length) {
+//        bytesFromBuffer = new byte[bytes];
+//        bytesToCreateCRC = new byte[bytes - 2];
+//        for (int i = 0; i < bytesFromBuffer.length; i++) {
+//        bytesFromBuffer[i] = buffer[i];
+//        }
+//        for (int i = 0; i < bytesToCreateCRC.length; i++) {
+//        bytesToCreateCRC[i] = bytesFromBuffer[i];
+//        }
+//        crc = (CRC16.getCRC4(bytesToCreateCRC));
+//        high = crc/256;
+//        if ((bytesFromBuffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bytesFromBuffer[bytesToCreateCRC.length + 1] == (byte) high)) {
+//        textViewConnectedToDevice.setText("Поключено к " + stringConnectedToDevice);
+//        progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+//        spaceStatus.setReadyFlagToExchangeData(true);
+//        answerTest = "";
+//        for (byte readByte: bytesFromBuffer) {
+//        int bufInt = 0;
+//        if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
+//        answerTest = answerTest + " " + bufInt;
+//        }
+////                                Log.i(LOG_TAG, answerTest);
+//        test(answerTest);
+//        } else {
+////                                Log.i(LOG_TAG, "CRC не совпало");
+//        test("CRC не совпало");
+//        textViewConnectedToDevice.setText("CRC не совпало");
+//        }
+//        } else {
+////                            isStatusError = true;
+//        }
+//
+//
+////                        stateWaitingAnswer = 0;
+////                        isStatusReading = true;
+//        break;
+////                    default:
+////                        try {
+////                            bluetoothConnectedThread.sleep(1);
+////                        } catch (InterruptedException e) {
+////                            e.printStackTrace();
+////                        }
+////                        break;
+//
+//        }
+//        test2(0);
+//        test5(true);
+//        }
 
