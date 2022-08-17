@@ -36,7 +36,7 @@ public class FragmentBluetooth extends Fragment {
     private BluetoothSoketThread bluetoothSoketThread;
     private BluetoothConnectedInputThread bluetoothConnectedInputThread;
     private BluetoothConnectedOutputThread bluetoothConnectedOutputThread;
-    private long timer = 1000;
+    private long timer = 5000;
 
     private final int ADDRESS_DEVICE = 10;
     private final int READ = 56;
@@ -51,8 +51,10 @@ public class FragmentBluetooth extends Fragment {
 
 
     // for BluetoothConnectedThread
+    byte[] bytesToSend = null;
+    byte[] bytesToCreateCRC = null;;
+    OutputStream outputStream = null;
     private InputStream inputStream;
-    private OutputStream outputStream;
     private byte addressDevice = 10;
     private byte readCommand = 56;
     private byte writeCommand = 57;
@@ -88,9 +90,6 @@ public class FragmentBluetooth extends Fragment {
     private int counterUnsuccessfulSending = 0;
     private int maxValueUnsuccessfulSending = 10;
     private int counterAttemptsToConection = 0;
-    byte[] bytesToSend;
-    byte[] bytesFromBuffer;
-    byte[] bytesToCreateCRC;
 
     // for
     private static final String ARG_SECTION_NUMBER = "BT";
@@ -412,10 +411,6 @@ public class FragmentBluetooth extends Fragment {
 
     public class BluetoothSoketThread extends Thread {
 
-        int crc = 0;
-        int high = 0;
-        String answerTest = "";
-
         public BluetoothSoketThread() {
             try {
                 bluetoothSocket = bluetoothDevice.createRfcommSocketToServiceRecord(ParcelUuid.fromString(PBAP_UUID).getUuid());
@@ -476,29 +471,70 @@ public class FragmentBluetooth extends Fragment {
                 BluetoothSoketThread.sleep(1);
             }
 
+            int countByte = 0;
+            byte[] bufferByte = null;
+
+            int crc = 0;
+            int high = 0;
+            String answerTest = "";
+
+            boolean getAnswer = true;
+
             while (!isInterrupted()) {
                 if (!spaceAddress.isEmptyByteQueue()) {
                     byte[] buffer = spaceAddress.getByteQueue();
                     switch (getCommand()) {
                         case READ:
-                            if (buffer.length == 10) {
-                                // full message
-                                if ((buffer[0] == ADDRESS_DEVICE) & (buffer[1] == READ)) {
-                                    // right message
-                                    byte[] bytesToCreateCRC = new byte[buffer.length - 2];
+
+                            if (countByte == 0) {
+                                // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
+                                bufferByte = new byte[10];
+                                Log.i(LOG_TAG, "Начало сообщения");
+                            }
+
+                            getAnswer = true;
+
+                            if (buffer.length > 10 - countByte) {
+                                // получили избыточное количество байт в посылке
+                                // остаток положим во временный буфер
+                                Log.i(LOG_TAG, "Избыточное количество байт");
+                            } else {
+                                // получили байты
+                                for (int i = 0; i < buffer.length; i++) {
+                                    bufferByte[i + countByte] = buffer[i];
+                                }
+                                countByte = bufferByte.length;
+                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + String.valueOf(countByte));
+                            }
+
+                            if (countByte == 10) {
+                                Log.i(LOG_TAG, "Получили нужное количество байт");
+                                answerTest = "";
+                                for (byte readByte: buffer) {
+                                    int bufInt = 0;
+                                    if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
+                                    answerTest = answerTest + " " + bufInt;
+                                }
+                                Log.i(LOG_TAG, answerTest);
+                                countByte = 0;
+                                if ((bufferByte[0] == ADDRESS_DEVICE) & (bufferByte[1] == READ)) {
+                                    Log.i(LOG_TAG, "Идентификатор корректен");
+                                    // проверяем корректность сообщения по идентификатору
+                                    byte[] bytesToCreateCRC = new byte[bufferByte.length - 2];
                                     for (int i = 0; i < bytesToCreateCRC.length; i++) {
-                                        bytesToCreateCRC[i] = buffer[i];
+                                        bytesToCreateCRC[i] = bufferByte[i];
                                     }
                                     crc = (CRC16.getCRC4(bytesToCreateCRC));
                                     high = crc/256;
-                                    answerTest = "";
-                                    for (byte readByte: buffer) {
-                                        int bufInt = 0;
-                                        if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
-                                        answerTest = answerTest + " " + bufInt;
-                                    }
+//                                    answerTest = "";
+//                                    for (byte readByte: buffer) {
+//                                        int bufInt = 0;
+//                                        if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
+//                                        answerTest = answerTest + " " + bufInt;
+//                                    }
                                     Log.i(LOG_TAG, answerTest);
                                     if ((buffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (buffer[bytesToCreateCRC.length + 1] == (byte) high)) {
+                                        Log.i(LOG_TAG, "ЦРЦ в порядке");
 
                                         if (currentByte == 47) {
                                             nextByte = 96;
@@ -517,14 +553,12 @@ public class FragmentBluetooth extends Fragment {
                                         else currentByte++;
                                     } else {
                                         textViewConnectedToDevice.setText("CRC не совпало");
-                                        isStatusError = true;
+                                        Log.i(LOG_TAG, "CRC не совпало");
                                     }
                                 } else {
-                                    isStatusError = true;
+                                    Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
                                 }
-
-                                }
-//                            }
+                            }
 //        buffer = new byte[10];  // buffer store for the stream
 //        //                            inputStream.read(buffer);
 //        bufferPrepeared = null;
@@ -566,7 +600,7 @@ public class FragmentBluetooth extends Fragment {
 //        if (lastByte == bufferPrepeared.length) {
 //        bytes = lastByte;
 
-        break;
+
                             break;
                         case WRITE:
                             break;
@@ -582,70 +616,82 @@ public class FragmentBluetooth extends Fragment {
                     spaceAddress.getByteQueue();
                 } else {
                     BluetoothSoketThread.sleep(timer);
-                    if (isStatusReading) {
-                        isStatusReading = false;
-                        if (spaceStatus.isReadyFlagToLoadSoftware()) {
-                            if (spaceStatus.isStatusProcessOfLoadingSoftware()) {
-                                if (!latchLoad) {
-                                    bluetoothConnectedOutputThread.load();
-                                    latchLoad = true;
-                                } else {
-                                    if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
-                                        spaceStatus.setReadyFlagToLoadSoftware(false);
-                                        spaceStatus.setStatusProcessOfLoadingSoftware(false);
-                                        latchLoad = false;
-                                        isStatusReading = true;
-                                    }
+                    setCommand(READ);
 
-                                }
-                            } else {
-                                spaceStatus.setStatusProcessOfLoadingSoftware(true);
-                                bluetoothConnectedOutputThread.initLoad();
-                            }
-                        } else if (spaceStatus.isReadyFlagToUpdateSoftware()) {
-                            spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
-                            if (!latchFinish) {
-                                spaceStatus.setStatusProcessOfUpdatingSoftware(true);
-                                bluetoothConnectedOutputThread.startToLoad();
-                                latchFinish = true;
-                                Log.i(LOG_TAG, "зАЙДЕМ сюда!");
-                            } else {
-                                if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
-                                    latchFinish = false;
-                                    spaceStatus.setReadyFlagToUpdateSoftware(false);
-                                    spaceStatus.setStatusProcessOfUpdatingSoftware(false);
-                                    spaceStatus.setReadyFlagToLoadSoftware(false);
-                                    spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
-                                    Log.i(LOG_TAG, "всё в ноль!!!!");
-                                    isStatusReading = true;
-                                }
-                            }
-                        } else if (spaceStatus.isReadyFlagToDownloadLog()) {
-                            if (!latchDownloadLog) {
-                                bluetoothConnectedOutputThread.downloadLogs();
-                                latchDownloadLog = true;
-                                Log.i(LOG_TAG, "We  are here!");
-                            } else {
-                                if (spaceStatus.isReadyFlagToFinishOfDownloadingLogs()) {
-                                    latchDownloadLog = false;
-                                    spaceStatus.setReadyFlagToDownloadLog(false);
-                                    Log.i(LOG_TAG, "Finish of downloadlog");
-                                    isStatusReading = true;
-                                }
-                            }
-                        } else {
-                            bluetoothConnectedOutputThread.communication();
-                            if (!spaceStatus.isReadyFlagToExchangeData()) {
-                                isStatusReading = true;
-                            }
-                        }
+                    if (getAnswer) {
+                        getAnswer = false;
+                        bluetoothConnectedOutputThread.read();
+                    } else {
+                        sleep(1000);
+                        bluetoothConnectedOutputThread.read();
                     }
+
+//                    if (isStatusReading) {
+//                        isStatusReading = false;
+//                        if (spaceStatus.isReadyFlagToLoadSoftware()) {
+//                            if (spaceStatus.isStatusProcessOfLoadingSoftware()) {
+//                                if (!latchLoad) {
+//                                    bluetoothConnectedOutputThread.load();
+//                                    latchLoad = true;
+//                                } else {
+//                                    if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
+//                                        spaceStatus.setReadyFlagToLoadSoftware(false);
+//                                        spaceStatus.setStatusProcessOfLoadingSoftware(false);
+//                                        latchLoad = false;
+//                                        isStatusReading = true;
+//                                    }
+//
+//                                }
+//                            } else {
+//                                spaceStatus.setStatusProcessOfLoadingSoftware(true);
+//                                bluetoothConnectedOutputThread.initLoad();
+//                            }
+//                        } else if (spaceStatus.isReadyFlagToUpdateSoftware()) {
+//                            spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+//                            if (!latchFinish) {
+//                                spaceStatus.setStatusProcessOfUpdatingSoftware(true);
+//                                bluetoothConnectedOutputThread.startToLoad();
+//                                latchFinish = true;
+//                                Log.i(LOG_TAG, "зАЙДЕМ сюда!");
+//                            } else {
+//                                if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
+//                                    latchFinish = false;
+//                                    spaceStatus.setReadyFlagToUpdateSoftware(false);
+//                                    spaceStatus.setStatusProcessOfUpdatingSoftware(false);
+//                                    spaceStatus.setReadyFlagToLoadSoftware(false);
+//                                    spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+//                                    Log.i(LOG_TAG, "всё в ноль!!!!");
+//                                    isStatusReading = true;
+//                                }
+//                            }
+//                        } else if (spaceStatus.isReadyFlagToDownloadLog()) {
+//                            if (!latchDownloadLog) {
+//                                bluetoothConnectedOutputThread.downloadLogs();
+//                                latchDownloadLog = true;
+//                                Log.i(LOG_TAG, "We  are here!");
+//                            } else {
+//                                if (spaceStatus.isReadyFlagToFinishOfDownloadingLogs()) {
+//                                    latchDownloadLog = false;
+//                                    spaceStatus.setReadyFlagToDownloadLog(false);
+//                                    Log.i(LOG_TAG, "Finish of downloadlog");
+//                                    isStatusReading = true;
+//                                }
+//                            }
+//                        } else {
+//                            bluetoothConnectedOutputThread.communication();
+//                            if (!spaceStatus.isReadyFlagToExchangeData()) {
+//                                isStatusReading = true;
+//                            }
+//                        }
+//                    }
                 }
 
             }
             bluetoothConnectedInputThread.interrupt();
             bluetoothConnectedOutputThread.interrupt();
         }
+
+
     }
 
     private synchronized int getCommand() { return currentCommand; }
@@ -655,12 +701,16 @@ public class FragmentBluetooth extends Fragment {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
+            byte[] buf = new byte[msg.arg2];
+            buf = (byte[]) msg.obj;
             byte[] buffer = new byte[msg.arg1];
-            buffer = (byte[]) msg.obj;
+            for (int i = 0; i < buffer.length; i++) {
+                buffer[i] = buf[i];
+            }
 
             spaceAddress.setByteQueue(buffer);
 
-            Log.i("Handler", String.valueOf(buffer[0]));
+            Log.i(LOG_TAG, String.valueOf(buffer.length));
         }
     };
 
@@ -674,14 +724,14 @@ public class FragmentBluetooth extends Fragment {
         }
 
         public void run() {
-            byte[] buffer = new byte[8];  // buffer store for the stream
+            byte[] buffer = new byte[16];  // buffer store for the stream
             int bytes = 20; // bytes returned from read()
             while (!isInterrupted()) {
                 try {
                     // Read from the InputStream
                     bytes = inputStream.read(buffer);
                     // Send the obtained bytes to the UI activity
-                    handler.obtainMessage(1, bytes, -1, buffer)
+                    handler.obtainMessage(1, bytes, buffer.length, buffer)
                             .sendToTarget();
 //                    isStatusReading = true;
                     changeStateIndicator();
@@ -708,6 +758,7 @@ public class FragmentBluetooth extends Fragment {
     }
 
     public class BluetoothConnectedOutputThread extends Thread {
+
         public BluetoothConnectedOutputThread() {
             // Get the input and output streams, using temp objects because
             // member streams are final
@@ -866,6 +917,64 @@ public class FragmentBluetooth extends Fragment {
                 e.printStackTrace();
             }
         }
+
+        public void write() {
+            bytesToSend = new byte[12];
+            bytesToCreateCRC = new byte[10];
+            bytesToSend[0] = ADDRESS_DEVICE;
+            bytesToSend[1] = WRITE;
+            bytesToSend[2] = 5;
+            bytesToSend[3] = 0;
+            bytesToSend[4] = 0;
+            bytesToSend[5] = 0;
+            int data = spaceAddress.getAddressSpace(5);
+            int high = data / 256;
+            bytesToSend[6] = (byte) (data - high * 256);
+            bytesToSend[7] = (byte) high;
+            bytesToSend[8] = 0;
+            bytesToSend[9] = 0;
+
+            for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                bytesToCreateCRC[i] = bytesToSend[i];
+            }
+            int crc = (CRC16.getCRC4(bytesToCreateCRC));
+            high = crc / 256;
+            bytesToSend[10] = (byte) (crc - high * 256);
+            bytesToSend[11] = (byte) high;
+
+            try {
+                outputStream.write(bytesToSend);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        public void read() {
+            bytesToSend = new byte[8];
+            bytesToCreateCRC = new byte[6];
+            bytesToSend[0] = ADDRESS_DEVICE;
+            bytesToSend[1] = READ;
+            bytesToSend[2] = (byte) 5;
+            bytesToSend[3] = 0;
+            bytesToSend[4] = 0;
+            bytesToSend[5] = 0;
+            for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                bytesToCreateCRC[i] = bytesToSend[i];
+            }
+            int crc = (CRC16.getCRC4(bytesToCreateCRC));
+            int high = crc / 256;
+            bytesToSend[6] = (byte) (crc - high * 256);
+            bytesToSend[7] = (byte) high;
+            Log.i(LOG_TAG, "Отправляем сообщения");
+
+            try {
+                outputStream.write(bytesToSend);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
 
         public void communication() {
             if (spaceStatus.isReadyFlagToExchangeData()) {
