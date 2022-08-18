@@ -476,9 +476,14 @@ public class FragmentBluetooth extends Fragment {
 
             int crc = 0;
             int high = 0;
-            String answerTest = "";
 
-            boolean getAnswer = true;
+            String answerTest = "";
+            int countWaitConnection = 0;
+
+           boolean latchInit = true;
+
+
+            boolean getAnswer = false;
 
             while (!isInterrupted()) {
                 if (!spaceAddress.isEmptyByteQueue()) {
@@ -486,13 +491,13 @@ public class FragmentBluetooth extends Fragment {
                     switch (getCommand()) {
                         case READ:
 
+                            Log.i(LOG_TAG, "count byte " + buffer.length);
+
                             if (countByte == 0) {
                                 // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
                                 bufferByte = new byte[10];
                                 Log.i(LOG_TAG, "Начало сообщения");
                             }
-
-                            getAnswer = true;
 
                             if (buffer.length > 10 - countByte) {
                                 // получили избыточное количество байт в посылке
@@ -503,14 +508,14 @@ public class FragmentBluetooth extends Fragment {
                                 for (int i = 0; i < buffer.length; i++) {
                                     bufferByte[i + countByte] = buffer[i];
                                 }
-                                countByte = bufferByte.length;
+                                countByte = countByte + buffer.length;
                                 Log.i(LOG_TAG, "Текущее количестов принятых байт " + String.valueOf(countByte));
                             }
 
                             if (countByte == 10) {
                                 Log.i(LOG_TAG, "Получили нужное количество байт");
                                 answerTest = "";
-                                for (byte readByte: buffer) {
+                                for (byte readByte: bufferByte) {
                                     int bufInt = 0;
                                     if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
                                     answerTest = answerTest + " " + bufInt;
@@ -532,8 +537,8 @@ public class FragmentBluetooth extends Fragment {
 //                                        if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
 //                                        answerTest = answerTest + " " + bufInt;
 //                                    }
-                                    Log.i(LOG_TAG, answerTest);
-                                    if ((buffer[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (buffer[bytesToCreateCRC.length + 1] == (byte) high)) {
+//                                    Log.i(LOG_TAG, answerTest);
+                                    if ((bufferByte[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bufferByte[bytesToCreateCRC.length + 1] == (byte) high)) {
                                         Log.i(LOG_TAG, "ЦРЦ в порядке");
 
                                         if (currentByte == 47) {
@@ -558,6 +563,7 @@ public class FragmentBluetooth extends Fragment {
                                 } else {
                                     Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
                                 }
+                                getAnswer = true;
                             }
 //        buffer = new byte[10];  // buffer store for the stream
 //        //                            inputStream.read(buffer);
@@ -613,17 +619,24 @@ public class FragmentBluetooth extends Fragment {
                         case UPLOAD:
                             break;
                     }
-                    spaceAddress.getByteQueue();
                 } else {
-                    BluetoothSoketThread.sleep(timer);
+//                    BluetoothSoketThread.sleep(timer);
                     setCommand(READ);
 
                     if (getAnswer) {
+                        latchInit = false;
                         getAnswer = false;
                         bluetoothConnectedOutputThread.read();
                     } else {
-                        sleep(1000);
-                        bluetoothConnectedOutputThread.read();
+                        if (latchInit) {
+                            if (countWaitConnection < 500000) {
+                                countWaitConnection = countWaitConnection + 1;
+                            } else {
+                                countWaitConnection = 0;
+                                bluetoothConnectedOutputThread.read();
+                            }
+                        }
+
                     }
 
 //                    if (isStatusReading) {
@@ -708,9 +721,11 @@ public class FragmentBluetooth extends Fragment {
                 buffer[i] = buf[i];
             }
 
+            Log.i(LOG_TAG, "Принято байт в handler " + buffer.length);
+
             spaceAddress.setByteQueue(buffer);
 
-            Log.i(LOG_TAG, String.valueOf(buffer.length));
+
         }
     };
 
@@ -742,6 +757,7 @@ public class FragmentBluetooth extends Fragment {
                 }
             }
             try {
+                Log.i(LOG_TAG, "INPUT STREAM CLOSE");
                 inputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
