@@ -10,6 +10,20 @@ import java.util.Queue;
 public class SpaceAddress implements Parcelable {
     private int[] addressSpace;
     private Queue<ElementQueue> queue;
+    private volatile Queue<byte[]> byteQueue;
+
+    public synchronized byte[] getByteQueue() {
+        return byteQueue.remove();
+    }
+
+    public synchronized void setByteQueue(byte[] byteQ) {
+        byteQueue.add(byteQ);
+    }
+
+    public synchronized boolean isEmptyByteQueue(){
+        return byteQueue.isEmpty();
+    }
+
 
     public ElementQueue getElementQueue() {
         return queue.remove();
@@ -26,6 +40,7 @@ public class SpaceAddress implements Parcelable {
     public SpaceAddress(int addressSpaceNumber) {
         addressSpace = new int[addressSpaceNumber];
         queue = new LinkedList<>();
+        byteQueue = new LinkedList<>();
     }
 
     protected SpaceAddress(Parcel in) {
