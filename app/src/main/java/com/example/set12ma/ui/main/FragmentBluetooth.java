@@ -790,11 +790,11 @@ public class FragmentBluetooth extends Fragment {
 
                             if (countByte == 0) {
                                 // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
-                                bufferByte = new byte[16];
+                                bufferByte = new byte[24];
                                 Log.i(LOG_TAG, "Начало сообщения");
                             }
 
-                            if (buffer.length > 16 - countByte) {
+                            if (buffer.length > 24 - countByte) {
                                 // получили избыточное количество байт в посылке
                                 // остаток положим во временный буфер
                                 Log.i(LOG_TAG, "Избыточное количество байт");
@@ -807,7 +807,7 @@ public class FragmentBluetooth extends Fragment {
                                 Log.i(LOG_TAG, "Текущее количестов принятых байт " + String.valueOf(countByte));
                             }
 
-                            if (countByte == 16) {
+                            if (countByte == 24) {
                                 Log.i(LOG_TAG, "Получили нужное количество байт");
                                 answerTest = "";
                                 for (byte readByte : bufferByte) {
@@ -827,7 +827,7 @@ public class FragmentBluetooth extends Fragment {
                                     }
                                     crc = (CRC16.getCRC4(bytesToCreateCRC));
                                     high = crc / 256;
-                                    if ((bufferByte[10] == (byte) (crc - high*256)) & (bufferByte[11] == (byte) high)) {
+                                    if ((bufferByte[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bufferByte[bytesToCreateCRC.length + 1] == (byte) high)) {
                                         Log.i(LOG_TAG, "CRC is good from UPLOAD");
                                         spaceStatus.setReadyFlagToFinishOfDownloadingLogs(true);
                                         statusError = false;
@@ -1322,7 +1322,7 @@ public class FragmentBluetooth extends Fragment {
             bytesToSend[9] = 0;
             bytesToSend[8] = 0;
             bytesToSend[7] = 0;
-            bytesToSend[6] = 8;
+            bytesToSend[6] = 16;
             for (int j = 0; j < bytesToCreateCRC.length; j++) {
                 bytesToCreateCRC[j] = bytesToSend[j];
             }
