@@ -555,11 +555,14 @@ public class FragmentBluetooth extends Fragment {
                                                 currentByte = nextByte;
                                             else currentByte++;
                                         }
+                                        statusError = false;
                                     } else {
                                         Log.i(LOG_TAG, "CRC не совпало");
+                                        statusError = true;
                                     }
                                 } else {
                                     Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
+                                    statusError = true;
                                 }
                                 statusAnswer = true;
                             }
@@ -609,33 +612,23 @@ public class FragmentBluetooth extends Fragment {
                                     high = crc / 256;
                                     if ((bufferByte[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (bufferByte[bytesToCreateCRC.length + 1] == (byte) high)) {
                                         Log.i(LOG_TAG, "ЦРЦ в порядке");
-                                        if (currentByte == 47) {
-                                            nextByte = 96;
-                                        }
-
-                                        if (currentByte == 143) {
-                                            nextByte = 208;
-                                        }
-
-                                        if (currentByte == 255) {
-                                            nextByte = 0;
-                                        }
-
                                         if (currentByte == 207) {
                                             spaceStatus.setReadyFlagRecordingInitialValues(false);
+                                            nextByte = 0;
                                         }
-                                        if ((currentByte == 47) || (currentByte == 95) || (currentByte == 143) || (currentByte == 207) || (currentByte == 255)) currentByte = nextByte;
+                                        if (currentByte == 95) {
+                                            nextByte = 144;
+                                        }
+                                        if ((currentByte == 95) || (currentByte == 207)) currentByte = nextByte;
                                         else currentByte++;
-
-
-                                        if ((currentByte == 47) || (currentByte == 143) || (currentByte == 255))
-                                            currentByte = nextByte;
-                                        else currentByte++;
+                                        statusError = false;
                                     } else {
                                         Log.i(LOG_TAG, "CRC не совпало");
+                                        statusError = true;
                                     }
                                 } else {
                                     Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
+                                    statusError = true;
                                 }
                                 statusAnswer = true;
                             }
@@ -709,6 +702,8 @@ public class FragmentBluetooth extends Fragment {
                             if (counterUnsuccessfulSending < maxValueUnsuccessfulSending) {
                                 if (statusError) {
                                     counterUnsuccessfulSending = counterUnsuccessfulSending + 1;
+                                } else {
+                                    counterUnsuccessfulSending = 0;
                                 }
 
                                 if (spaceStatus.isReadyFlagRecordingInitialValues()) {
