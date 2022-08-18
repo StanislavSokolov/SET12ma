@@ -785,6 +785,63 @@ public class FragmentBluetooth extends Fragment {
                             }
                             break;
                         case UPLOAD:
+
+                            Log.i(LOG_TAG, "count byte " + buffer.length + " UPLOAD");
+
+                            if (countByte == 0) {
+                                // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
+                                bufferByte = new byte[16];
+                                Log.i(LOG_TAG, "Начало сообщения");
+                            }
+
+                            if (buffer.length > 16 - countByte) {
+                                // получили избыточное количество байт в посылке
+                                // остаток положим во временный буфер
+                                Log.i(LOG_TAG, "Избыточное количество байт");
+                            } else {
+                                // получили байты
+                                for (int i = 0; i < buffer.length; i++) {
+                                    bufferByte[i + countByte] = buffer[i];
+                                }
+                                countByte = countByte + buffer.length;
+                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + String.valueOf(countByte));
+                            }
+
+                            if (countByte == 16) {
+                                Log.i(LOG_TAG, "Получили нужное количество байт");
+                                answerTest = "";
+                                for (byte readByte : bufferByte) {
+                                    int bufInt = 0;
+                                    if (readByte < 0) bufInt = readByte + 256;
+                                    else bufInt = readByte;
+                                    answerTest = answerTest + " " + bufInt;
+                                }
+                                Log.i(LOG_TAG, answerTest);
+                                countByte = 0;
+                                if ((bufferByte[0] == ADDRESS_DEVICE) & (bufferByte[1] == UPLOAD)) {
+                                    Log.i(LOG_TAG, "Идентификатор корректен");
+                                    // проверяем корректность сообщения по идентификатору
+                                    byte[] bytesToCreateCRC = new byte[bufferByte.length - 6];
+                                    for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                                        bytesToCreateCRC[i] = bufferByte[i];
+                                    }
+                                    crc = (CRC16.getCRC4(bytesToCreateCRC));
+                                    high = crc / 256;
+                                    if ((bufferByte[10] == (byte) (crc - high*256)) & (bufferByte[11] == (byte) high)) {
+                                        Log.i(LOG_TAG, "CRC is good from UPLOAD");
+                                        spaceStatus.setReadyFlagToFinishOfDownloadingLogs(true);
+                                        statusError = false;
+                                    } else {
+                                        Log.i(LOG_TAG, "CRC is bed from UPLOAD");
+                                    }
+                                } else {
+                                    Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
+                                    statusError = true;
+                                }
+                                statusAnswer = true;
+                            }
+
+
                             break;
                     }
                 } else {
@@ -844,6 +901,7 @@ public class FragmentBluetooth extends Fragment {
                             }
                         } else if (spaceStatus.isReadyFlagToDownloadLog()) {
                             if (!latchDownloadLog) {
+                                setCommand(UPLOAD);
                                 bluetoothConnectedOutputThread.downloadLogs();
                                 latchDownloadLog = true;
                                 Log.i(LOG_TAG, "We  are here!");
@@ -852,6 +910,7 @@ public class FragmentBluetooth extends Fragment {
                                     latchDownloadLog = false;
                                     spaceStatus.setReadyFlagToDownloadLog(false);
                                     Log.i(LOG_TAG, "Finish of downloadlog");
+                                    statusAnswer = true;
                                 }
                             }
                         } else {
