@@ -566,7 +566,7 @@ public class FragmentBluetooth extends Fragment {
                             break;
                         case WRITE:
 
-                            Log.i(LOG_TAG, "count byte " + buffer.length);
+                            Log.i(LOG_TAG, "count byte " + buffer.length + " for Write");
 
                             if (countByte == 0) {
                                 // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
@@ -598,7 +598,7 @@ public class FragmentBluetooth extends Fragment {
                                 }
                                 Log.i(LOG_TAG, answerTest);
                                 countByte = 0;
-                                if ((bufferByte[0] == ADDRESS_DEVICE) & (bufferByte[1] == READ)) {
+                                if ((bufferByte[0] == ADDRESS_DEVICE) & (bufferByte[1] == WRITE)) {
                                     Log.i(LOG_TAG, "Идентификатор корректен");
                                     // проверяем корректность сообщения по идентификатору
                                     byte[] bytesToCreateCRC = new byte[bufferByte.length - 4];
@@ -609,7 +609,6 @@ public class FragmentBluetooth extends Fragment {
                                     high = crc / 256;
                                     if ((bufferByte[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (bufferByte[bytesToCreateCRC.length + 1] == (byte) high)) {
                                         Log.i(LOG_TAG, "ЦРЦ в порядке");
-                                        spaceAddress.setAddressSpace(currentByte, bufferByte[2]);
                                         if (currentByte == 47) {
                                             nextByte = 96;
                                         }
@@ -759,8 +758,8 @@ public class FragmentBluetooth extends Fragment {
                             }
                         }
                     } else {
-                        setCommand(READ);
                         if (latchInit) {
+                            setCommand(READ);
                             if (counterAttemptsToConection < 10) {
                                 if (countWaitConnection < 500000) {
                                     countWaitConnection = countWaitConnection + 1;
