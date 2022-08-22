@@ -45,6 +45,9 @@ public class FragmentBluetooth extends Fragment {
     private final int LOAD = 51;
     private final int EXTEND = 60;
     private final int UPLOAD = 52;
+    private final int BYTE_UPLOAD = 1024;
+    private final int ADDRESS_UPLOAD = 655360; // 000A0000
+    private final int COUNT = 170;
 
 
     private volatile int currentCommand = INIT_LOAD;
@@ -797,11 +800,11 @@ public class FragmentBluetooth extends Fragment {
 
                             if (countByte == 0) {
                                 // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
-                                bufferByte = new byte[24];
+                                bufferByte = new byte[BYTE_UPLOAD + 8];
                                 Log.i(LOG_TAG, "Начало сообщения");
                             }
 
-                            if (buffer.length > 24 - countByte) {
+                            if (buffer.length > BYTE_UPLOAD + 8 - countByte) {
                                 // получили избыточное количество байт в посылке
                                 // остаток положим во временный буфер
                                 Log.i(LOG_TAG, "Избыточное количество байт");
@@ -811,10 +814,10 @@ public class FragmentBluetooth extends Fragment {
                                     bufferByte[i + countByte] = buffer[i];
                                 }
                                 countByte = countByte + buffer.length;
-                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + String.valueOf(countByte));
+                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
                             }
 
-                            if (countByte == 24) {
+                            if (countByte == BYTE_UPLOAD + 8) {
                                 Log.i(LOG_TAG, "Получили нужное количество байт");
                                 answerTest = "";
                                 for (byte readByte : bufferByte) {
@@ -914,7 +917,7 @@ public class FragmentBluetooth extends Fragment {
                         } else if (spaceStatus.isReadyFlagToDownloadLog()) {
                             if (!latchDownloadLog) {
                                 setCommand(UPLOAD);
-                                bluetoothConnectedOutputThread.downloadLogs(655360 + 16*countReceivedMessage, 16);
+                                bluetoothConnectedOutputThread.downloadLogs(ADDRESS_UPLOAD + BYTE_UPLOAD*countReceivedMessage, BYTE_UPLOAD);
                                 latchDownloadLog = true;
                                 Log.i(LOG_TAG, "We  are here!");
                             } else {
@@ -924,10 +927,11 @@ public class FragmentBluetooth extends Fragment {
                                     latchDownloadLog = false;
                                     Log.i(LOG_TAG, "Finish of downloadlog");
                                     statusAnswer = true;
-                                    if (countReceivedMessage < 30) {
+                                    if (countReceivedMessage < COUNT) {
                                         countReceivedMessage = countReceivedMessage + 1;
                                     } else {
                                         spaceStatus.setReadyFlagToDownloadLog(false);
+                                        Log.i("strartt", "finish");
                                         countReceivedMessage = 0;
                                         Log.i(LOG_TAG, "Длинна записанная в SpaceFileLogs " + spaceFileLogs.getSpaceFileLogsArrayListSize());
                                         for (int i = 0; i < spaceFileLogs.getSpaceFileLogsArrayListSize(); i++) {
@@ -1366,10 +1370,14 @@ public class FragmentBluetooth extends Fragment {
             bytesToSend[3] = (byte) lowH;
             bytesToSend[4] = (byte) highL;
             bytesToSend[5] = (byte) highH;
-            bytesToSend[9] = 0;
-            bytesToSend[8] = 0;
-            bytesToSend[7] = 0;
-            bytesToSend[6] = (byte) length;
+            highH = length/16777216;
+            highL = (length - (highH*16777216))/65536;
+            lowH = (length - (highH*16777216) - (highL*65536))/256;
+            lowL = length - (highH*16777216) - (highL*65536) - (lowH*256);
+            bytesToSend[9] = (byte) highH;
+            bytesToSend[8] = (byte) highL;
+            bytesToSend[7] = (byte) lowH;
+            bytesToSend[6] = (byte) lowL;
             for (int j = 0; j < bytesToCreateCRC.length; j++) {
                 bytesToCreateCRC[j] = bytesToSend[j];
             }
