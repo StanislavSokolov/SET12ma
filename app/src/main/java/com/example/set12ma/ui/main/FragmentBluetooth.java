@@ -1037,7 +1037,7 @@ public class FragmentBluetooth extends Fragment {
     private synchronized int getCommand() { return currentCommand; }
     private synchronized void setCommand(int currentCommand) { this.currentCommand = currentCommand; }
 
-    Handler handler = new Handler(Looper.getMainLooper()){
+    private Handler handler = new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
@@ -1072,15 +1072,24 @@ public class FragmentBluetooth extends Fragment {
         }
 
         public void run() {
-            byte[] buffer = new byte[16];  // buffer store for the stream
+            byte[] buffer = new byte[32];  // buffer store for the stream
             int bytes = 20; // bytes returned from read()
             while (!isInterrupted()) {
                 try {
                     // Read from the InputStream
                     bytes = inputStream.read(buffer);
+                    byte[] buf = new byte[bytes];
+//                    String s = "";
+                    for (int i = 0; i < buf.length; i++) {
+                        buf[i] = buffer[i];
+//                        s = s + " " + buf[i];
+                    }
+                    spaceAddress.setByteQueue(buf);
                     // Send the obtained bytes to the UI activity
-                    handler.obtainMessage(1, bytes, buffer.length, buffer)
-                            .sendToTarget();
+//                    byte[] buf = new byte[bytes];
+//                    buf = buffer;
+//                    handler.obtainMessage(1, bytes, buf.length, buf)
+//                            .sendToTarget();
 //                    isStatusReading = true;
                     changeStateIndicator();
 //                    spaceStatus.setReadyFlagToExchangeData(true);
