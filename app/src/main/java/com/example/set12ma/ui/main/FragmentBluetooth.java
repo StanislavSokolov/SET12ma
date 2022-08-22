@@ -20,12 +20,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Set;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FragmentBluetooth extends Fragment {
 
@@ -841,11 +840,11 @@ public class FragmentBluetooth extends Fragment {
                                         Log.i(LOG_TAG, "CRC is good from UPLOAD");
                                         spaceStatus.setReadyFlagToFinishOfDownloadingLogs(true);
                                         statusError = false;
-                                        byte[] bytes = new byte[8];
-                                        for (int i = 0; i < 8; i++) {
+                                        byte[] bytes = new byte[BYTE_UPLOAD];
+                                        for (int i = 0; i < BYTE_UPLOAD; i++) {
                                             bytes[i] = bufferByte[i+2];
                                         }
-                                        spaceMemory.setMemorySpaceArrayListByte(bytes);
+                                        spaceFileLogs.setSpaceFileLogsArrayListByte(bytes);
                                     } else {
                                         Log.i(LOG_TAG, "CRC is bed from UPLOAD");
                                     }
@@ -933,7 +932,7 @@ public class FragmentBluetooth extends Fragment {
                                         spaceStatus.setReadyFlagToDownloadLog(false);
                                         Log.i("strartt", "finish");
                                         countReceivedMessage = 0;
-                                        Log.i(LOG_TAG, "Длинна записанная в SpaceFileLogs " + spaceFileLogs.getSpaceFileLogsArrayListSize());
+                                        Log.i("strartt", "Длинна записанная в SpaceFileLogs " + spaceFileLogs.getSpaceFileLogsArrayListSize());
                                         for (int i = 0; i < spaceFileLogs.getSpaceFileLogsArrayListSize(); i++) {
                                             byte[] bytes = new byte[spaceFileLogs.getSpaceFileLogsLength(i)];
                                             bytes = spaceFileLogs.getSpaceFileLogsByte(i);
@@ -941,7 +940,7 @@ public class FragmentBluetooth extends Fragment {
                                             for (int j = 0; j < bytes.length; j++) {
                                                 s = s + " " + bytes[j];
                                             }
-                                            Log.i(LOG_TAG, s);
+                                            Log.i("strartt", s);
                                         }
                                     }
                                 }
