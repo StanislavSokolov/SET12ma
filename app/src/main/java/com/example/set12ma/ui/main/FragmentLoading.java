@@ -248,6 +248,7 @@ public class FragmentLoading extends Fragment {
     }
 
     private void loadFile() throws IOException {
+        Toast.makeText(getContext(), "Что происходит?", Toast.LENGTH_LONG).show();
         if (!stringSelectedFile.equals("Путь не указан")) {
             Toast.makeText(getContext(), "здесь", Toast.LENGTH_LONG).show();
             if (!spaceStatus.isReadyFlagToLoadSoftware() & (!spaceStatus.isStatusProcessOfLoadingSoftware())) {

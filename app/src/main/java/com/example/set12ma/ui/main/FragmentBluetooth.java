@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -36,7 +37,6 @@ public class FragmentBluetooth extends Fragment {
     private BluetoothSoketThread bluetoothSoketThread;
     private BluetoothConnectedInputThread bluetoothConnectedInputThread;
     private BluetoothConnectedOutputThread bluetoothConnectedOutputThread;
-//    private long timer = 5000;
 
     private final int ADDRESS_DEVICE = 10;
     private final int READ = 56;
@@ -101,6 +101,7 @@ public class FragmentBluetooth extends Fragment {
         resultReceiverAddressSpace = (ResultReceiverAddressSpace) context;
         resultReceiverMemorySpace = (ResultReceiverMemorySpace) context;
         resultReceiverStatusSpace = (ResultReceiverStatusSpace) context;
+        resultReceiverFileLogsSpace = (ResultReceiverFileLogsSpace) context;
     }
 
 
@@ -837,8 +838,8 @@ public class FragmentBluetooth extends Fragment {
                                         Log.i(LOG_TAG, "CRC is good from UPLOAD");
                                         spaceStatus.setReadyFlagToFinishOfDownloadingLogs(true);
                                         statusError = false;
-                                        byte[] bytes = new byte[16];
-                                        for (int i = 0; i < 16; i++) {
+                                        byte[] bytes = new byte[8];
+                                        for (int i = 0; i < 8; i++) {
                                             bytes[i] = bufferByte[i+2];
                                         }
                                         spaceMemory.setMemorySpaceArrayListByte(bytes);
@@ -847,7 +848,7 @@ public class FragmentBluetooth extends Fragment {
                                     }
                                 } else {
                                     Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
-                                    statusError = true;
+//                                    statusError = true;
                                 }
                                 statusAnswer = true;
                             }
@@ -1021,6 +1022,8 @@ public class FragmentBluetooth extends Fragment {
                                         Toast.makeText(getContext(), "Не удается связаться с процессорным модулем. Проверьте соединение.", Toast.LENGTH_LONG).show();
                                     }
                                 });
+                                latchInit = false;
+                                interrupt();
                             }
                         }
                     }
@@ -1041,11 +1044,14 @@ public class FragmentBluetooth extends Fragment {
             byte[] buf = new byte[msg.arg2];
             buf = (byte[]) msg.obj;
             byte[] buffer = new byte[msg.arg1];
+            String s = "";
             for (int i = 0; i < buffer.length; i++) {
                 buffer[i] = buf[i];
+                s = s + " " + buf[i];
             }
 
             Log.i(LOG_TAG, "Принято байт в handler " + buffer.length);
+            Log.i(LOG_TAG, s);
 
             spaceAddress.setByteQueue(buffer);
 
@@ -1362,7 +1368,7 @@ public class FragmentBluetooth extends Fragment {
             int high = crc / 256;
             bytesToSend[bytesToSend.length-2] = (byte) (crc - high * 256);
             bytesToSend[bytesToSend.length-1] = (byte) high;
-            Log.i(LOG_TAG, "highH" + String.valueOf(highH) + "highL" + String.valueOf(highL) + "lowH" + String.valueOf(lowH) + "lowL" + String.valueOf(lowL));
+            Log.i(LOG_TAG, "highH " + highH + "; highL " + highL + "; lowH " + lowH + "; lowL " + lowL + ";");
             Log.i(LOG_TAG, "DOWNLOAD");
 
             try {
