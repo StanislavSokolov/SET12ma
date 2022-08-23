@@ -1,5 +1,6 @@
 package com.example.set12ma.ui.main;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -36,6 +37,8 @@ public class FragmentBluetooth extends Fragment {
     private BluetoothSoketThread bluetoothSoketThread;
     private BluetoothConnectedInputThread bluetoothConnectedInputThread;
     private BluetoothConnectedOutputThread bluetoothConnectedOutputThread;
+
+    private LogsToFile logsToFile;
 
     private final int ADDRESS_DEVICE = 10;
     private final int READ = 56;
@@ -935,23 +938,8 @@ public class FragmentBluetooth extends Fragment {
                                         countReceivedMessage = 0;
                                         Log.i("strartt", "Длинна записанная в SpaceFileLogs " + spaceFileLogs.getSpaceFileLogsArrayListSize());
 
-                                        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getContext().openFileOutput("config.txt", Context.MODE_APPEND));
-
-                                        for (int i = 0; i < spaceFileLogs.getSpaceFileLogsArrayListSize(); i++) {
-                                            byte[] bytes = new byte[spaceFileLogs.getSpaceFileLogsLength(i)];
-                                            bytes = spaceFileLogs.getSpaceFileLogsByte(i);
-                                            String s = "";
-                                            for (byte readByte : bytes) {
-                                                int bufInt = 0;
-                                                if (readByte < 0) bufInt = readByte + 256;
-                                                else bufInt = readByte;
-                                                s = s + " " + bufInt;
-                                            }
-                                            Log.i("strartt", s);
-                                            outputStreamWriter.write(String.valueOf(bytes));
-                                        }
-
-                                        outputStreamWriter.close();
+                                        logsToFile = new LogsToFile();
+                                        logsToFile.start();
                                     }
                                 }
                             }
@@ -1394,7 +1382,7 @@ public class FragmentBluetooth extends Fragment {
             int high = crc / 256;
             bytesToSend[bytesToSend.length-2] = (byte) (crc - high * 256);
             bytesToSend[bytesToSend.length-1] = (byte) high;
-            Log.i(LOG_TAG, "highH " + highH + "; highL " + highL + "; lowH " + lowH + "; lowL " + lowL + ";");
+//            Log.i(LOG_TAG, "highH " + highH + "; highL " + highL + "; lowH " + lowH + "; lowL " + lowL + ";");
             Log.i(LOG_TAG, "DOWNLOAD");
 
             try {
@@ -1402,6 +1390,35 @@ public class FragmentBluetooth extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public class LogsToFile extends Thread {
+
+        @Override
+        public void run() {
+            super.run();
+
+//            FileOutputStream fileOutputStream = new FileOutputStream(new File("logs.txt"));
+////                                        File file = new File("logs.txt");
+////                                        if (!file.exists()) file.createNewFile();
+////                                        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getContext().openFileOutput("logs.txt", Context.MODE_APPEND));
+//            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+
+            for (int i = 0; i < spaceFileLogs.getSpaceFileLogsArrayListSize(); i++) {
+                byte[] bytes = new byte[spaceFileLogs.getSpaceFileLogsLength(i)];
+                bytes = spaceFileLogs.getSpaceFileLogsByte(i);
+                String s = "";
+                for (byte readByte : bytes) {
+                    int bufInt = 0;
+                    if (readByte < 0) bufInt = readByte + 256;
+                    else bufInt = readByte;
+                    s = s + " " + bufInt;
+                }
+                Log.i("strartt", s);
+//                bufferedOutputStream.write(bytes);
+            }
+//            bufferedOutputStream.close();
         }
     }
 }
