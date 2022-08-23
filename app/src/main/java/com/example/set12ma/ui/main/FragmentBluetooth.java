@@ -928,6 +928,7 @@ public class FragmentBluetooth extends Fragment {
                                     statusAnswer = true;
                                     if (countReceivedMessage < COUNT) {
                                         countReceivedMessage = countReceivedMessage + 1;
+                                        spaceStatus.setProgressBarDownload(countReceivedMessage);
                                     } else {
                                         spaceStatus.setReadyFlagToDownloadLog(false);
                                         Log.i("strartt", "finish");
@@ -940,8 +941,11 @@ public class FragmentBluetooth extends Fragment {
                                             byte[] bytes = new byte[spaceFileLogs.getSpaceFileLogsLength(i)];
                                             bytes = spaceFileLogs.getSpaceFileLogsByte(i);
                                             String s = "";
-                                            for (int j = 0; j < bytes.length; j++) {
-                                                s = s + " " + bytes[j];
+                                            for (byte readByte : bytes) {
+                                                int bufInt = 0;
+                                                if (readByte < 0) bufInt = readByte + 256;
+                                                else bufInt = readByte;
+                                                s = s + " " + bufInt;
                                             }
                                             Log.i("strartt", s);
                                             outputStreamWriter.write(String.valueOf(bytes));

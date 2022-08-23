@@ -8,10 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -27,11 +24,10 @@ public class FragmentLogging extends Fragment {
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
-    private long timer = 100;
+    private long timer = 1000;
 
     private Button buttonDownload;
-    private Button buttonSave;
-    private Button buttonSend;
+    private ProgressBar progressBar2;
 
     @Override
     public void onAttach(Context context) {
@@ -69,8 +65,8 @@ public class FragmentLogging extends Fragment {
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_logging, container, false);
         buttonDownload = root.findViewById(R.id.button_download);
-        buttonSave = root.findViewById(R.id.button_save);
-        buttonSend = root.findViewById(R.id.button_send);
+//        buttonSave = root.findViewById(R.id.button_save);
+//        buttonSend = root.findViewById(R.id.button_send);
 
         buttonDownload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,20 +74,25 @@ public class FragmentLogging extends Fragment {
                 download();
             }
         });
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                save();
-            }
-        });
-        buttonSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                send();
-            }
-        });
+//        buttonSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                save();
+//            }
+//        });
+//        buttonSend.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                send();
+//            }
+//        });
 
 
+        progressBar2 = root.findViewById(R.id.progressBar2);
+        progressBar2.setVisibility(View.INVISIBLE);
+//        progressBar = root.findViewById(R.id.progressBar);
+//        progressBar.setMax(175);
+//        progressBar.setVisibility(View.INVISIBLE);
 
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
         upDateGraphicalDisplay.start();
@@ -102,8 +103,13 @@ public class FragmentLogging extends Fragment {
     private void download() {
         if (spaceStatus.isReadyFlagToExchangeData()) {
             if (!spaceStatus.isStatusProcessOfUpdatingSoftware() & !spaceStatus.isStatusProcessOfLoadingSoftware()) {
-                spaceStatus.setReadyFlagToDownloadLog(true);
-                Log.i("strartt", "start");
+                if (!spaceStatus.isReadyFlagToDownloadLog()) {
+                    Log.i("strartt", "start");
+                    spaceStatus.setReadyFlagToDownloadLog(true);
+                } else {
+                    Toast.makeText(getContext(), "Дождитесь завершения загрузки логов", Toast.LENGTH_LONG).show();
+                }
+
             } else {
                 Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
             }
@@ -136,9 +142,40 @@ public class FragmentLogging extends Fragment {
     }
 
     public class UpDateGraphicalDisplay extends Thread {
+
+        boolean latch = false;
+
         @Override
         public void run() {
-            super.run();
+//            while (true) {
+//                try {
+//                    UpDateGraphicalDisplay.sleep(timer);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                if (spaceStatus.isReadyFlagToDownloadLog()) {
+//                    if (!latch) {
+//                        progressBar2.post(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                progressBar2.setVisibility(View.VISIBLE);
+//                            }
+//                        });
+//                        latch = true;
+//                    }
+//                } else {
+//                    if (latch) {
+//                        progressBar2.post(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                progressBar2.setVisibility(View.INVISIBLE);
+//                            }
+//                        });
+//                        latch = false;
+//                    }
+//                }
+//            }
+
         }
 
         public UpDateGraphicalDisplay() {
