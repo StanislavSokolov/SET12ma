@@ -97,6 +97,16 @@ public class SpaceStatus implements Parcelable {
         this.device = device;
     }
 
+    private int progressBarDownload = 0;
+
+    public int getProgressBarDownload() {
+        return progressBarDownload;
+    }
+
+    public void setProgressBarDownload(int progressBarDownload) {
+        this.progressBarDownload = progressBarDownload;
+    }
+
     public SpaceStatus() {
     }
 
