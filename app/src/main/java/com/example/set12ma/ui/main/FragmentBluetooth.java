@@ -933,6 +933,9 @@ public class FragmentBluetooth extends Fragment {
                                         Log.i("strartt", "finish");
                                         countReceivedMessage = 0;
                                         Log.i("strartt", "Длинна записанная в SpaceFileLogs " + spaceFileLogs.getSpaceFileLogsArrayListSize());
+
+                                        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getContext().openFileOutput("config.txt", Context.MODE_APPEND));
+
                                         for (int i = 0; i < spaceFileLogs.getSpaceFileLogsArrayListSize(); i++) {
                                             byte[] bytes = new byte[spaceFileLogs.getSpaceFileLogsLength(i)];
                                             bytes = spaceFileLogs.getSpaceFileLogsByte(i);
@@ -941,7 +944,10 @@ public class FragmentBluetooth extends Fragment {
                                                 s = s + " " + bytes[j];
                                             }
                                             Log.i("strartt", s);
+                                            outputStreamWriter.write(String.valueOf(bytes));
                                         }
+
+                                        outputStreamWriter.close();
                                     }
                                 }
                             }
