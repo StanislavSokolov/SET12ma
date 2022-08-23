@@ -147,34 +147,34 @@ public class FragmentLogging extends Fragment {
 
         @Override
         public void run() {
-//            while (true) {
-//                try {
-//                    UpDateGraphicalDisplay.sleep(timer);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                if (spaceStatus.isReadyFlagToDownloadLog()) {
-//                    if (!latch) {
-//                        progressBar2.post(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                progressBar2.setVisibility(View.VISIBLE);
-//                            }
-//                        });
-//                        latch = true;
-//                    }
-//                } else {
-//                    if (latch) {
-//                        progressBar2.post(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                progressBar2.setVisibility(View.INVISIBLE);
-//                            }
-//                        });
-//                        latch = false;
-//                    }
-//                }
-//            }
+            while (true) {
+                try {
+                    this.sleep(timer);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (spaceStatus.isReadyFlagToDownloadLog()) {
+                    if (!latch) {
+                        progressBar2.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar2.setVisibility(View.VISIBLE);
+                            }
+                        });
+                        latch = true;
+                    }
+                } else {
+                    if (latch) {
+                        progressBar2.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar2.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                        latch = false;
+                    }
+                }
+            }
 
         }
 

@@ -918,6 +918,9 @@ public class FragmentBluetooth extends Fragment {
                             }
                         } else if (spaceStatus.isReadyFlagToDownloadLog()) {
                             if (!latchDownloadLog) {
+                                if (countReceivedMessage == 0) {
+                                    spaceFileLogs.setSpaceFileLogsByte();
+                                }
                                 setCommand(UPLOAD);
                                 bluetoothConnectedOutputThread.downloadLogs(ADDRESS_UPLOAD + BYTE_UPLOAD*countReceivedMessage, BYTE_UPLOAD);
                                 latchDownloadLog = true;
@@ -931,7 +934,7 @@ public class FragmentBluetooth extends Fragment {
                                     statusAnswer = true;
                                     if (countReceivedMessage < COUNT) {
                                         countReceivedMessage = countReceivedMessage + 1;
-                                        spaceStatus.setProgressBarDownload(countReceivedMessage);
+//                                        spaceStatus.setProgressBarDownload(countReceivedMessage);
                                     } else {
                                         spaceStatus.setReadyFlagToDownloadLog(false);
                                         Log.i("strartt", "finish");
@@ -1404,6 +1407,8 @@ public class FragmentBluetooth extends Fragment {
 ////                                        if (!file.exists()) file.createNewFile();
 ////                                        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getContext().openFileOutput("logs.txt", Context.MODE_APPEND));
 //            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+
+
 
             for (int i = 0; i < spaceFileLogs.getSpaceFileLogsArrayListSize(); i++) {
                 byte[] bytes = new byte[spaceFileLogs.getSpaceFileLogsLength(i)];
