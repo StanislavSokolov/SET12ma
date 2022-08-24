@@ -48,7 +48,7 @@ public class FragmentBluetooth extends Fragment {
     private final int LOAD = 51;
     private final int EXTEND = 60;
     private final int UPLOAD = 52;
-    private final int BYTE_UPLOAD = 1024;
+    private final int BYTE_UPLOAD = 2048;
     private final int ADDRESS_UPLOAD = 655360; // 000A0000
     private final int COUNT = 350;
 
@@ -1108,14 +1108,6 @@ public class FragmentBluetooth extends Fragment {
                 inputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            }
-        }
-
-        private void changeStateIndicator() {
-            if (getActivity().findViewById(R.id.menu_indicator).getVisibility() == View.VISIBLE) {
-                getActivity().findViewById(R.id.menu_indicator).setVisibility(View.INVISIBLE);
-            } else {
-                getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
             }
         }
     }
