@@ -2,7 +2,7 @@ package com.example.set12ma.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,13 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 
 public class FragmentLogging extends Fragment {
     private static final String ARG_SECTION_NUMBER = "Logging";
@@ -25,9 +23,11 @@ public class FragmentLogging extends Fragment {
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
-    private long timer = 1000;
+    private long timer = 500;
 
     private Button buttonDownload;
+    private Button buttonSend;
+    private ProgressBar progressBar;
     private ProgressBar progressBar2;
 
     @Override
@@ -66,8 +66,7 @@ public class FragmentLogging extends Fragment {
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_logging, container, false);
         buttonDownload = root.findViewById(R.id.button_download);
-//        buttonSave = root.findViewById(R.id.button_save);
-//        buttonSend = root.findViewById(R.id.button_send);
+        buttonSend = root.findViewById(R.id.button_send);
 
         buttonDownload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,44 +80,24 @@ public class FragmentLogging extends Fragment {
 //                save();
 //            }
 //        });
-//        buttonSend.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                send();
-//            }
-//        });
+        buttonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                send();
+            }
+        });
 
 
         progressBar2 = root.findViewById(R.id.progressBar2);
         progressBar2.setVisibility(View.INVISIBLE);
-//        progressBar = root.findViewById(R.id.progressBar);
-//        progressBar.setMax(175);
-//        progressBar.setVisibility(View.INVISIBLE);
+        progressBar = root.findViewById(R.id.progressBar);
+        progressBar.setMax(175);
+        progressBar.setVisibility(View.INVISIBLE);
 
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
         upDateGraphicalDisplay.start();
 
         return root;
-    }
-
-    private void testDL() throws IOException {
-
-        Log.i("testDL", "step 1");
-
-        byte[] bytes = new byte[16];
-        for (int i = 0; i < 16; i++) {
-            bytes[i] = (byte) i;
-        }
-        Log.i("testDL", "step 2");
-        File file = new File(String.valueOf(getContext().getFilesDir() + "/text.txt"));
-        Log.i("testDL", "step 3");
-        file.createNewFile();
-        Log.i("testDL", "step 4");
-        FileOutputStream fileOutputStream = new FileOutputStream(file, true);
-        Log.i("testDL", "step 5");
-        fileOutputStream.write(bytes);
-        Log.i("testDL", "step 6");
-        fileOutputStream.close();
     }
 
     private void download() {
@@ -138,28 +117,35 @@ public class FragmentLogging extends Fragment {
 
     }
 
-    private void save() {
-        if (spaceStatus.isReadyFlagToExchangeData()) {
-            Toast.makeText(getActivity(), "save", Toast.LENGTH_SHORT).show();
-        } else Toast.makeText(getActivity(), "Подключитесь к устройству", Toast.LENGTH_SHORT).show();
-    }
-
     private void send() {
-        if (spaceStatus.isReadyFlagToExchangeData()) {
-            Toast.makeText(getActivity(), "send", Toast.LENGTH_SHORT).show();
-//            Intent intent = new Intent()
-//                    .setType("*/*")
-//                    .setAction(Intent.ACTION_SEND);
-//            startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
-
+        File file = new File(String.valueOf(getContext().getFilesDir() + "/logs.txt"));
+        if (file.exists()) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-            sendIntent.setType("text/plain");
+            sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(file.getAbsolutePath()));
+            sendIntent.setType("application/txt*");
 
             Intent shareIntent = Intent.createChooser(sendIntent, null);
             startActivity(shareIntent);
-        } else Toast.makeText(getActivity(), "Подключитесь к устройству", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), "Нет данных для отправки", Toast.LENGTH_SHORT).show();
+        }
+
+//        if (spaceStatus.isReadyFlagToExchangeData()) {
+//
+////            Intent intent = new Intent()
+////                    .setType("*/*")
+////                    .setAction(Intent.ACTION_SEND);
+////            startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
+//
+//            Intent sendIntent = new Intent();
+//            sendIntent.setAction(Intent.ACTION_SEND);
+//            sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+//            sendIntent.setType("text/plain");
+//
+//            Intent shareIntent = Intent.createChooser(sendIntent, null);
+//            startActivity(shareIntent);
+//        } else Toast.makeText(getActivity(), "Подключитесь к устройству", Toast.LENGTH_SHORT).show();
     }
 
     public class UpDateGraphicalDisplay extends Thread {
@@ -184,12 +170,25 @@ public class FragmentLogging extends Fragment {
                         });
                         latch = true;
                     }
+                    progressBar.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar.setVisibility(View.VISIBLE);
+                            progressBar.setProgress(spaceStatus.getProgressBarDownload());
+                        }
+                    });
                 } else {
                     if (latch) {
                         progressBar2.post(new Runnable() {
                             @Override
                             public void run() {
                                 progressBar2.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                        progressBar.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.INVISIBLE);
                             }
                         });
                         latch = false;

@@ -39,7 +39,6 @@ public class FragmentBluetooth extends Fragment {
     private BluetoothConnectedOutputThread bluetoothConnectedOutputThread;
 
     private LogsToFile logsToFile;
-    private File file;
 
     private final int ADDRESS_DEVICE = 10;
     private final int READ = 56;
@@ -50,7 +49,7 @@ public class FragmentBluetooth extends Fragment {
     private final int UPLOAD = 52;
     private final int BYTE_UPLOAD = 2048;
     private final int ADDRESS_UPLOAD = 655360; // 000A0000
-    private final int COUNT = 350;
+    private final int COUNT = 170;
 
 
     private volatile int currentCommand = INIT_LOAD;
@@ -935,7 +934,7 @@ public class FragmentBluetooth extends Fragment {
                                     statusAnswer = true;
                                     if (countReceivedMessage < COUNT) {
                                         countReceivedMessage = countReceivedMessage + 1;
-//                                        spaceStatus.setProgressBarDownload(countReceivedMessage);
+                                        spaceStatus.setProgressBarDownload(countReceivedMessage);
                                     } else {
                                         spaceStatus.setReadyFlagToDownloadLog(false);
                                         Log.i("strartt", "finish");
@@ -1077,7 +1076,7 @@ public class FragmentBluetooth extends Fragment {
         }
 
         public void run() {
-            byte[] buffer = new byte[64];  // buffer store for the stream
+            byte[] buffer = new byte[32];  // buffer store for the stream
             int bytes = 20; // bytes returned from read()
             while (!isInterrupted()) {
                 try {
@@ -1394,49 +1393,33 @@ public class FragmentBluetooth extends Fragment {
         @Override
         public void run() {
             super.run();
-
-            Log.i("testDL", "step 2");
-            file = new File(String.valueOf(getContext().getFilesDir() + "/testAll.txt"));
-            Log.i("testDL", "step 3");
+            File file = new File(String.valueOf(getContext().getFilesDir() + "/logs.txt"));
             if (file.exists()) file.delete();
             try {
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
-                Log.i("testDL", "Does nt work");
             }
-            Log.i("testDL", "step 4");
             FileOutputStream fileOutputStream = null;
             try {
                 fileOutputStream = new FileOutputStream(file, true);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            Log.i("testDL", "step 5");
-
-
             for (int i = 0; i < spaceFileLogs.getSpaceFileLogsArrayListSize(); i++) {
                 byte[] bytes = new byte[spaceFileLogs.getSpaceFileLogsLength(i)];
                 bytes = spaceFileLogs.getSpaceFileLogsByte(i);
-                String s = "";
                 for (byte readByte : bytes) {
                     int bufInt = 0;
                     if (readByte < 0) bufInt = readByte + 256;
                     else bufInt = readByte;
-                    s = s + " " + bufInt;
                 }
-                Log.i("strartt", s);
                 try {
                     fileOutputStream.write(bytes);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-
-
-
-
-            Log.i("testDL", "step 6");
             try {
                 fileOutputStream.close();
             } catch (IOException e) {
