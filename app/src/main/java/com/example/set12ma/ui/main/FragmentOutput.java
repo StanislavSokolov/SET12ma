@@ -1403,6 +1403,14 @@ public class FragmentOutput extends Fragment {
         }
     }
 
+    private void changeStateIndicator() {
+        if (getActivity().findViewById(R.id.menu_indicator).getVisibility() == View.VISIBLE) {
+            getActivity().findViewById(R.id.menu_indicator).setVisibility(View.INVISIBLE);
+        } else {
+            getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+        }
+    }
+
 
     public class UpDateGraphicalDisplay extends Thread {
         @Override
@@ -1424,6 +1432,9 @@ public class FragmentOutput extends Fragment {
                         upDateEnables();
                         latch = true;
                     }
+                }
+                if (spaceStatus.isReadyFlagToExchangeData()) {
+                    changeStateIndicator();
                 }
             }
         }

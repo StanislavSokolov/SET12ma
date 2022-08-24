@@ -1,5 +1,6 @@
 package com.example.set12ma.ui.main;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -20,11 +21,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Set;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FragmentBluetooth extends Fragment {
 
@@ -36,7 +37,8 @@ public class FragmentBluetooth extends Fragment {
     private BluetoothSoketThread bluetoothSoketThread;
     private BluetoothConnectedInputThread bluetoothConnectedInputThread;
     private BluetoothConnectedOutputThread bluetoothConnectedOutputThread;
-//    private long timer = 5000;
+
+    private LogsToFile logsToFile;
 
     private final int ADDRESS_DEVICE = 10;
     private final int READ = 56;
@@ -45,6 +47,9 @@ public class FragmentBluetooth extends Fragment {
     private final int LOAD = 51;
     private final int EXTEND = 60;
     private final int UPLOAD = 52;
+    private final int BYTE_UPLOAD = 2048;
+    private final int ADDRESS_UPLOAD = 655360; // 000A0000
+    private final int COUNT = 170;
 
 
     private volatile int currentCommand = INIT_LOAD;
@@ -73,6 +78,9 @@ public class FragmentBluetooth extends Fragment {
     private SpaceStatus spaceStatus;
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
+    private SpaceFileLogs spaceFileLogs;
+    private ResultReceiverFileLogsSpace resultReceiverFileLogsSpace;
+
     private ArrayList<BluetoothDevice> arrayListAvailableDevices;                               // список устройств, доступных к сопряжению
     private ArrayList<BluetoothDevice> arrayListConnectedDevices;                               // список устройств, доступных к сопряжению
     private int itemSelectedFromConnectedDevices = 0;
@@ -98,6 +106,7 @@ public class FragmentBluetooth extends Fragment {
         resultReceiverAddressSpace = (ResultReceiverAddressSpace) context;
         resultReceiverMemorySpace = (ResultReceiverMemorySpace) context;
         resultReceiverStatusSpace = (ResultReceiverStatusSpace) context;
+        resultReceiverFileLogsSpace = (ResultReceiverFileLogsSpace) context;
     }
 
 
@@ -197,6 +206,7 @@ public class FragmentBluetooth extends Fragment {
         spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
         spaceMemory = resultReceiverMemorySpace.getSpaceMemory();
         spaceStatus = resultReceiverStatusSpace.getSpaceStatus();
+        spaceFileLogs = resultReceiverFileLogsSpace.getSpaceFileLogs();
 
         textViewConnectedDevices = root.findViewById(R.id.textView_tip_find_file);
         spinnerConnectedDevices = root.findViewById(R.id.spinner_connected_devices);
@@ -442,6 +452,8 @@ public class FragmentBluetooth extends Fragment {
 
             String answerTest = "";
             int countWaitConnection = 0;
+
+            int countReceivedMessage = 0;
 
             boolean latchInit = true;
             boolean latchQueue = false;
@@ -790,11 +802,11 @@ public class FragmentBluetooth extends Fragment {
 
                             if (countByte == 0) {
                                 // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
-                                bufferByte = new byte[16];
+                                bufferByte = new byte[BYTE_UPLOAD + 8];
                                 Log.i(LOG_TAG, "Начало сообщения");
                             }
 
-                            if (buffer.length > 16 - countByte) {
+                            if (buffer.length > BYTE_UPLOAD + 8 - countByte) {
                                 // получили избыточное количество байт в посылке
                                 // остаток положим во временный буфер
                                 Log.i(LOG_TAG, "Избыточное количество байт");
@@ -804,10 +816,10 @@ public class FragmentBluetooth extends Fragment {
                                     bufferByte[i + countByte] = buffer[i];
                                 }
                                 countByte = countByte + buffer.length;
-                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + String.valueOf(countByte));
+                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
                             }
 
-                            if (countByte == 16) {
+                            if (countByte == BYTE_UPLOAD + 8) {
                                 Log.i(LOG_TAG, "Получили нужное количество байт");
                                 answerTest = "";
                                 for (byte readByte : bufferByte) {
@@ -827,16 +839,21 @@ public class FragmentBluetooth extends Fragment {
                                     }
                                     crc = (CRC16.getCRC4(bytesToCreateCRC));
                                     high = crc / 256;
-                                    if ((bufferByte[10] == (byte) (crc - high*256)) & (bufferByte[11] == (byte) high)) {
+                                    if ((bufferByte[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bufferByte[bytesToCreateCRC.length + 1] == (byte) high)) {
                                         Log.i(LOG_TAG, "CRC is good from UPLOAD");
                                         spaceStatus.setReadyFlagToFinishOfDownloadingLogs(true);
                                         statusError = false;
+                                        byte[] bytes = new byte[BYTE_UPLOAD];
+                                        for (int i = 0; i < BYTE_UPLOAD; i++) {
+                                            bytes[i] = bufferByte[i+2];
+                                        }
+                                        spaceFileLogs.setSpaceFileLogsArrayListByte(bytes);
                                     } else {
                                         Log.i(LOG_TAG, "CRC is bed from UPLOAD");
                                     }
                                 } else {
                                     Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
-                                    statusError = true;
+//                                    statusError = true;
                                 }
                                 statusAnswer = true;
                             }
@@ -901,16 +918,32 @@ public class FragmentBluetooth extends Fragment {
                             }
                         } else if (spaceStatus.isReadyFlagToDownloadLog()) {
                             if (!latchDownloadLog) {
+                                if (countReceivedMessage == 0) {
+                                    spaceFileLogs.setSpaceFileLogsByte();
+                                }
                                 setCommand(UPLOAD);
-                                bluetoothConnectedOutputThread.downloadLogs();
+                                bluetoothConnectedOutputThread.downloadLogs(ADDRESS_UPLOAD + BYTE_UPLOAD*countReceivedMessage, BYTE_UPLOAD);
                                 latchDownloadLog = true;
                                 Log.i(LOG_TAG, "We  are here!");
                             } else {
                                 if (spaceStatus.isReadyFlagToFinishOfDownloadingLogs()) {
+                                    // ЦИКЛ ДЛЯ СЧИТЫВАНИЯ ЛОГОВ
+                                    spaceStatus.setReadyFlagToFinishOfDownloadingLogs(false);
                                     latchDownloadLog = false;
-                                    spaceStatus.setReadyFlagToDownloadLog(false);
                                     Log.i(LOG_TAG, "Finish of downloadlog");
                                     statusAnswer = true;
+                                    if (countReceivedMessage < COUNT) {
+                                        countReceivedMessage = countReceivedMessage + 1;
+                                        spaceStatus.setProgressBarDownload(countReceivedMessage);
+                                    } else {
+                                        spaceStatus.setReadyFlagToDownloadLog(false);
+                                        Log.i("strartt", "finish");
+                                        countReceivedMessage = 0;
+                                        Log.i("strartt", "Длинна записанная в SpaceFileLogs " + spaceFileLogs.getSpaceFileLogsArrayListSize());
+
+                                        logsToFile = new LogsToFile();
+                                        logsToFile.start();
+                                    }
                                 }
                             }
                         } else {
@@ -993,6 +1026,8 @@ public class FragmentBluetooth extends Fragment {
                                         Toast.makeText(getContext(), "Не удается связаться с процессорным модулем. Проверьте соединение.", Toast.LENGTH_LONG).show();
                                     }
                                 });
+                                latchInit = false;
+                                interrupt();
                             }
                         }
                     }
@@ -1006,18 +1041,21 @@ public class FragmentBluetooth extends Fragment {
     private synchronized int getCommand() { return currentCommand; }
     private synchronized void setCommand(int currentCommand) { this.currentCommand = currentCommand; }
 
-    Handler handler = new Handler(Looper.getMainLooper()){
+    private Handler handler = new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             byte[] buf = new byte[msg.arg2];
             buf = (byte[]) msg.obj;
             byte[] buffer = new byte[msg.arg1];
+            String s = "";
             for (int i = 0; i < buffer.length; i++) {
                 buffer[i] = buf[i];
+                s = s + " " + buf[i];
             }
 
             Log.i(LOG_TAG, "Принято байт в handler " + buffer.length);
+            Log.i(LOG_TAG, s);
 
             spaceAddress.setByteQueue(buffer);
 
@@ -1038,17 +1076,26 @@ public class FragmentBluetooth extends Fragment {
         }
 
         public void run() {
-            byte[] buffer = new byte[16];  // buffer store for the stream
+            byte[] buffer = new byte[32];  // buffer store for the stream
             int bytes = 20; // bytes returned from read()
             while (!isInterrupted()) {
                 try {
                     // Read from the InputStream
                     bytes = inputStream.read(buffer);
+                    byte[] buf = new byte[bytes];
+//                    String s = "";
+                    for (int i = 0; i < buf.length; i++) {
+                        buf[i] = buffer[i];
+//                        s = s + " " + buf[i];
+                    }
+                    spaceAddress.setByteQueue(buf);
                     // Send the obtained bytes to the UI activity
-                    handler.obtainMessage(1, bytes, buffer.length, buffer)
-                            .sendToTarget();
+//                    byte[] buf = new byte[bytes];
+//                    buf = buffer;
+//                    handler.obtainMessage(1, bytes, buf.length, buf)
+//                            .sendToTarget();
 //                    isStatusReading = true;
-                    changeStateIndicator();
+//                    changeStateIndicator();
 //                    spaceStatus.setReadyFlagToExchangeData(true);
                 } catch (IOException e) {
                     Log.i(LOG_TAG,e.toString());
@@ -1060,14 +1107,6 @@ public class FragmentBluetooth extends Fragment {
                 inputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            }
-        }
-
-        private void changeStateIndicator() {
-            if (getActivity().findViewById(R.id.menu_indicator).getVisibility() == View.VISIBLE) {
-                getActivity().findViewById(R.id.menu_indicator).setVisibility(View.INVISIBLE);
-            } else {
-                getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
             }
         }
     }
@@ -1310,19 +1349,27 @@ public class FragmentBluetooth extends Fragment {
             }
         }
 
-        public void downloadLogs() throws IOException {
+        public void downloadLogs(int address, int length) throws IOException {
             bytesToSend = new byte[12];
             bytesToCreateCRC = new byte[bytesToSend.length - 2];
+            int highH = address/16777216;
+            int highL = (address - (highH*16777216))/65536;
+            int lowH = (address - (highH*16777216) - (highL*65536))/256;
+            int lowL = address - (highH*16777216) - (highL*65536) - (lowH*256);
             bytesToSend[0] = ADDRESS_DEVICE;
             bytesToSend[1] = UPLOAD;
-            bytesToSend[2] = 0;
-            bytesToSend[3] = 0;
-            bytesToSend[4] = 10;
-            bytesToSend[5] = 0;
-            bytesToSend[9] = 0;
-            bytesToSend[8] = 0;
-            bytesToSend[7] = 0;
-            bytesToSend[6] = 8;
+            bytesToSend[2] = (byte) lowL;
+            bytesToSend[3] = (byte) lowH;
+            bytesToSend[4] = (byte) highL;
+            bytesToSend[5] = (byte) highH;
+            highH = length/16777216;
+            highL = (length - (highH*16777216))/65536;
+            lowH = (length - (highH*16777216) - (highL*65536))/256;
+            lowL = length - (highH*16777216) - (highL*65536) - (lowH*256);
+            bytesToSend[9] = (byte) highH;
+            bytesToSend[8] = (byte) highL;
+            bytesToSend[7] = (byte) lowH;
+            bytesToSend[6] = (byte) lowL;
             for (int j = 0; j < bytesToCreateCRC.length; j++) {
                 bytesToCreateCRC[j] = bytesToSend[j];
             }
@@ -1330,12 +1377,51 @@ public class FragmentBluetooth extends Fragment {
             int high = crc / 256;
             bytesToSend[bytesToSend.length-2] = (byte) (crc - high * 256);
             bytesToSend[bytesToSend.length-1] = (byte) high;
-            Log.i(LOG_TAG, "Команда на чтение 8 байт");
-
+//            Log.i(LOG_TAG, "highH " + highH + "; highL " + highL + "; lowH " + lowH + "; lowL " + lowL + ";");
             Log.i(LOG_TAG, "DOWNLOAD");
 
             try {
                 outputStream.write(bytesToSend);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public class LogsToFile extends Thread {
+
+        @Override
+        public void run() {
+            super.run();
+            File file = new File(String.valueOf(getContext().getFilesDir() + "/logs.txt"));
+            if (file.exists()) file.delete();
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            FileOutputStream fileOutputStream = null;
+            try {
+                fileOutputStream = new FileOutputStream(file, true);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            for (int i = 0; i < spaceFileLogs.getSpaceFileLogsArrayListSize(); i++) {
+                byte[] bytes = new byte[spaceFileLogs.getSpaceFileLogsLength(i)];
+                bytes = spaceFileLogs.getSpaceFileLogsByte(i);
+                for (byte readByte : bytes) {
+                    int bufInt = 0;
+                    if (readByte < 0) bufInt = readByte + 256;
+                    else bufInt = readByte;
+                }
+                try {
+                    fileOutputStream.write(bytes);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                fileOutputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

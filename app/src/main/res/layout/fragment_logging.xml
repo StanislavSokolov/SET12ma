@@ -32,10 +32,11 @@
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     tools:layout_constraintLeft_creator="1"
             />
-            <Button
+            <ProgressBar
+                    style="?android:attr/progressBarStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/button_save"
-                    android:visibility="visible" android:text="@string/save_log"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBar2"/>
             <TextView
                     android:id="@+id/section_label2"
                     android:layout_width="match_parent"
@@ -44,10 +45,11 @@
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     tools:layout_constraintLeft_creator="1"
             />
-            <Button
+            <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/button_send"
-                    android:visibility="visible" android:text="@string/send_log"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBar"/>
             <TextView
                     android:id="@+id/section_label3"
                     android:layout_width="match_parent"
@@ -56,6 +58,10 @@
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     tools:layout_constraintLeft_creator="1"
             />
+            <Button
+                    android:text="@string/send_log"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/button_send"/>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,22 +2,19 @@ package com.example.set12ma.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
 
-import java.io.IOException;
+import java.io.*;
 
 public class FragmentLogging extends Fragment {
     private static final String ARG_SECTION_NUMBER = "Logging";
@@ -26,11 +23,12 @@ public class FragmentLogging extends Fragment {
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
-    private long timer = 100;
+    private long timer = 500;
 
     private Button buttonDownload;
-    private Button buttonSave;
     private Button buttonSend;
+    private ProgressBar progressBar;
+    private ProgressBar progressBar2;
 
     @Override
     public void onAttach(Context context) {
@@ -68,7 +66,6 @@ public class FragmentLogging extends Fragment {
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_logging, container, false);
         buttonDownload = root.findViewById(R.id.button_download);
-        buttonSave = root.findViewById(R.id.button_save);
         buttonSend = root.findViewById(R.id.button_send);
 
         buttonDownload.setOnClickListener(new View.OnClickListener() {
@@ -77,12 +74,12 @@ public class FragmentLogging extends Fragment {
                 download();
             }
         });
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                save();
-            }
-        });
+//        buttonSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                save();
+//            }
+//        });
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +88,11 @@ public class FragmentLogging extends Fragment {
         });
 
 
+        progressBar2 = root.findViewById(R.id.progressBar2);
+        progressBar2.setVisibility(View.INVISIBLE);
+        progressBar = root.findViewById(R.id.progressBar);
+        progressBar.setMax(175);
+        progressBar.setVisibility(View.INVISIBLE);
 
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
         upDateGraphicalDisplay.start();
@@ -101,7 +103,13 @@ public class FragmentLogging extends Fragment {
     private void download() {
         if (spaceStatus.isReadyFlagToExchangeData()) {
             if (!spaceStatus.isStatusProcessOfUpdatingSoftware() & !spaceStatus.isStatusProcessOfLoadingSoftware()) {
-                spaceStatus.setReadyFlagToDownloadLog(true);
+                if (!spaceStatus.isReadyFlagToDownloadLog()) {
+                    Log.i("strartt", "start");
+                    spaceStatus.setReadyFlagToDownloadLog(true);
+                } else {
+                    Toast.makeText(getContext(), "Дождитесь завершения загрузки логов", Toast.LENGTH_LONG).show();
+                }
+
             } else {
                 Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
             }
@@ -109,34 +117,85 @@ public class FragmentLogging extends Fragment {
 
     }
 
-    private void save() {
-        if (spaceStatus.isReadyFlagToExchangeData()) {
-            Toast.makeText(getActivity(), "save", Toast.LENGTH_SHORT).show();
-        } else Toast.makeText(getActivity(), "Подключитесь к устройству", Toast.LENGTH_SHORT).show();
-    }
-
     private void send() {
-        if (spaceStatus.isReadyFlagToExchangeData()) {
-            Toast.makeText(getActivity(), "send", Toast.LENGTH_SHORT).show();
-//            Intent intent = new Intent()
-//                    .setType("*/*")
-//                    .setAction(Intent.ACTION_SEND);
-//            startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
-
+        File file = new File(String.valueOf(getContext().getFilesDir() + "/logs.txt"));
+        if (file.exists()) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-            sendIntent.setType("text/plain");
+            sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(file.getAbsolutePath()));
+            sendIntent.setType("application/txt*");
 
             Intent shareIntent = Intent.createChooser(sendIntent, null);
             startActivity(shareIntent);
-        } else Toast.makeText(getActivity(), "Подключитесь к устройству", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), "Нет данных для отправки", Toast.LENGTH_SHORT).show();
+        }
+
+//        if (spaceStatus.isReadyFlagToExchangeData()) {
+//
+////            Intent intent = new Intent()
+////                    .setType("*/*")
+////                    .setAction(Intent.ACTION_SEND);
+////            startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
+//
+//            Intent sendIntent = new Intent();
+//            sendIntent.setAction(Intent.ACTION_SEND);
+//            sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+//            sendIntent.setType("text/plain");
+//
+//            Intent shareIntent = Intent.createChooser(sendIntent, null);
+//            startActivity(shareIntent);
+//        } else Toast.makeText(getActivity(), "Подключитесь к устройству", Toast.LENGTH_SHORT).show();
     }
 
     public class UpDateGraphicalDisplay extends Thread {
+
+        boolean latch = false;
+
         @Override
         public void run() {
-            super.run();
+            while (true) {
+                try {
+                    this.sleep(timer);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (spaceStatus.isReadyFlagToDownloadLog()) {
+                    if (!latch) {
+                        progressBar2.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar2.setVisibility(View.VISIBLE);
+                            }
+                        });
+                        latch = true;
+                    }
+                    progressBar.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar.setVisibility(View.VISIBLE);
+                            progressBar.setProgress(spaceStatus.getProgressBarDownload());
+                        }
+                    });
+                } else {
+                    if (latch) {
+                        progressBar2.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar2.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                        progressBar.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                        latch = false;
+                    }
+                }
+            }
+
         }
 
         public UpDateGraphicalDisplay() {
