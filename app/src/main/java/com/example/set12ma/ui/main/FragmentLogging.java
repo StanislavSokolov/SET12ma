@@ -15,7 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class FragmentLogging extends Fragment {
     private static final String ARG_SECTION_NUMBER = "Logging";
@@ -71,7 +72,12 @@ public class FragmentLogging extends Fragment {
         buttonDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                download();
+                try {
+                    testDL();
+                } catch (IOException e) {
+                    Log.i("testDL", "Does nt work");
+                    e.printStackTrace();
+                }
             }
         });
 //        buttonSave.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +104,26 @@ public class FragmentLogging extends Fragment {
         upDateGraphicalDisplay.start();
 
         return root;
+    }
+
+    private void testDL() throws IOException {
+
+        Log.i("testDL", "step 1");
+
+        byte[] bytes = new byte[16];
+        for (int i = 0; i < 16; i++) {
+            bytes[i] = (byte) i;
+        }
+        Log.i("testDL", "step 2");
+        File file = new File(String.valueOf(getContext().getFilesDir() + "/text.txt"));
+        Log.i("testDL", "step 3");
+        file.createNewFile();
+        Log.i("testDL", "step 4");
+        FileOutputStream fileOutputStream = new FileOutputStream(file, true);
+        Log.i("testDL", "step 5");
+        fileOutputStream.write(bytes);
+        Log.i("testDL", "step 6");
+        fileOutputStream.close();
     }
 
     private void download() {

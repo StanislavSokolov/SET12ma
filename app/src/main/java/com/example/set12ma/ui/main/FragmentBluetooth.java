@@ -1403,10 +1403,10 @@ public class FragmentBluetooth extends Fragment {
             super.run();
 
 //            FileOutputStream fileOutputStream = new FileOutputStream(new File("logs.txt"));
-////                                        File file = new File("logs.txt");
-////                                        if (!file.exists()) file.createNewFile();
-////                                        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getContext().openFileOutput("logs.txt", Context.MODE_APPEND));
-//            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+//////                                        File file = new File("logs.txt");
+//////                                        if (!file.exists()) file.createNewFile();
+//////                                        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getContext().openFileOutput("logs.txt", Context.MODE_APPEND));
+////            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
 
 
 
