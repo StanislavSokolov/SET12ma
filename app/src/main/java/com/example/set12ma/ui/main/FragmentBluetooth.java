@@ -39,6 +39,7 @@ public class FragmentBluetooth extends Fragment {
     private BluetoothConnectedOutputThread bluetoothConnectedOutputThread;
 
     private LogsToFile logsToFile;
+    private File file;
 
     private final int ADDRESS_DEVICE = 10;
     private final int READ = 56;
@@ -49,7 +50,7 @@ public class FragmentBluetooth extends Fragment {
     private final int UPLOAD = 52;
     private final int BYTE_UPLOAD = 1024;
     private final int ADDRESS_UPLOAD = 655360; // 000A0000
-    private final int COUNT = 170;
+    private final int COUNT = 350;
 
 
     private volatile int currentCommand = INIT_LOAD;
@@ -1076,7 +1077,7 @@ public class FragmentBluetooth extends Fragment {
         }
 
         public void run() {
-            byte[] buffer = new byte[32];  // buffer store for the stream
+            byte[] buffer = new byte[64];  // buffer store for the stream
             int bytes = 20; // bytes returned from read()
             while (!isInterrupted()) {
                 try {
@@ -1095,7 +1096,7 @@ public class FragmentBluetooth extends Fragment {
 //                    handler.obtainMessage(1, bytes, buf.length, buf)
 //                            .sendToTarget();
 //                    isStatusReading = true;
-                    changeStateIndicator();
+//                    changeStateIndicator();
 //                    spaceStatus.setReadyFlagToExchangeData(true);
                 } catch (IOException e) {
                     Log.i(LOG_TAG,e.toString());
@@ -1402,12 +1403,24 @@ public class FragmentBluetooth extends Fragment {
         public void run() {
             super.run();
 
-//            FileOutputStream fileOutputStream = new FileOutputStream(new File("logs.txt"));
-//////                                        File file = new File("logs.txt");
-//////                                        if (!file.exists()) file.createNewFile();
-//////                                        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getContext().openFileOutput("logs.txt", Context.MODE_APPEND));
-////            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
-
+            Log.i("testDL", "step 2");
+            file = new File(String.valueOf(getContext().getFilesDir() + "/testAll.txt"));
+            Log.i("testDL", "step 3");
+            if (file.exists()) file.delete();
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.i("testDL", "Does nt work");
+            }
+            Log.i("testDL", "step 4");
+            FileOutputStream fileOutputStream = null;
+            try {
+                fileOutputStream = new FileOutputStream(file, true);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Log.i("testDL", "step 5");
 
 
             for (int i = 0; i < spaceFileLogs.getSpaceFileLogsArrayListSize(); i++) {
@@ -1421,9 +1434,22 @@ public class FragmentBluetooth extends Fragment {
                     s = s + " " + bufInt;
                 }
                 Log.i("strartt", s);
-//                bufferedOutputStream.write(bytes);
+                try {
+                    fileOutputStream.write(bytes);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-//            bufferedOutputStream.close();
+
+
+
+
+            Log.i("testDL", "step 6");
+            try {
+                fileOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

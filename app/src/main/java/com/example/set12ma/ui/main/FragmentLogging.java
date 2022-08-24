@@ -72,12 +72,7 @@ public class FragmentLogging extends Fragment {
         buttonDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    testDL();
-                } catch (IOException e) {
-                    Log.i("testDL", "Does nt work");
-                    e.printStackTrace();
-                }
+                download();
             }
         });
 //        buttonSave.setOnClickListener(new View.OnClickListener() {
