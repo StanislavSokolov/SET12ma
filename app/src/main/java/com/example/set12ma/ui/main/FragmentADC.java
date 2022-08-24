@@ -12,6 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -32,6 +37,11 @@ public class FragmentADC extends Fragment {
     private long timer = 500;
 
     FloatingActionButton fab;
+
+    private LineChart chart0;
+    private LineChart chart1;
+    private LineChart chart2;
+
 
     @Override
     public void onAttach(Context context) {
@@ -69,12 +79,60 @@ public class FragmentADC extends Fragment {
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_adc, container, false);
 
+        chart0 = root.findViewById(R.id.chart0);
+        chart1 = root.findViewById(R.id.chart1);
+        chart2 = root.findViewById(R.id.chart2);
+
         fab = root.findViewById(R.id.fab_SET12MA);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                // Массив координат точек
+                ArrayList<Entry> entriesFirst = new ArrayList<>();
+                entriesFirst.add(new Entry(1f, 5f));
+                entriesFirst.add(new Entry(2f, 2f));
+                entriesFirst.add(new Entry(3f, 1f));
+                entriesFirst.add(new Entry(4f, -3f));
+                entriesFirst.add(new Entry(5f, 4f));
+                entriesFirst.add(new Entry(6f, 1f));
+
+// На основании массива точек создаем первую линию с названием
+                LineDataSet datasetFirst = new LineDataSet(entriesFirst, "График первый");
+
+// Массив координат точек второй линии
+                ArrayList<Entry> entriesSecond = new ArrayList<>();
+                entriesSecond.add(new Entry(0.5f, 0f));
+                entriesSecond.add(new Entry(2.5f, 2f));
+                entriesSecond.add(new Entry(3.5f, 1f));
+                entriesSecond.add(new Entry(3.6f, 2f));
+                entriesSecond.add(new Entry(4f, 0.5f));
+                entriesSecond.add(new Entry(5.1f, -0.5f));
+
+// На основании массива точек создаем вторую линию с названием
+                LineDataSet datasetSecond = new LineDataSet(entriesSecond, "График второй");
+
+// Линии графиков соберем в один массив
+                ArrayList<ILineDataSet> dataSets = new ArrayList();
+                dataSets.add(datasetFirst);
+                dataSets.add(datasetSecond);
+
+// Создадим переменную  данных для графика
+                LineData data = new LineData(dataSets);
+// Передадим данные для графика в сам график
+                chart0.setData(data);
+
+// Не забудем отправить команду на перерисовку кадра, иначе график не отобразится
+                chart0.invalidate();
+
+
+
+                chart1.setData(data);
+                chart1.invalidate();
+                chart2.setData(data);
+                chart2.invalidate();
             }
         });
         arrayListTextView = new ArrayList<>();
