@@ -29,7 +29,7 @@ public class FragmentOutput extends Fragment {
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
-    private long timer = 500;
+    private long timer = 250;
 
     boolean latch = true;
 
@@ -1417,6 +1417,7 @@ public class FragmentOutput extends Fragment {
         public void run() {
             super.run();
             while (true) {
+                Log.i("sfv", "evtd");
                 try {
                     UpDateGraphicalDisplay.sleep(timer);
                 } catch (InterruptedException e) {

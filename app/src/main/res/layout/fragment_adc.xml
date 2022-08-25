@@ -41,6 +41,9 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_0"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_0" android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -63,6 +66,9 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_1"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_1" android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -85,6 +91,9 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_2"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_2" android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -107,6 +116,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_3"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_3"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -129,6 +142,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_4"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_4"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -151,6 +168,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_5"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_5"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -173,6 +194,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_6"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_6"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -195,6 +220,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_7"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_7"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -217,6 +246,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_8"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_8"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -239,6 +272,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_9"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_9"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -261,6 +298,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_10"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_10"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -283,6 +324,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_11"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_11"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -305,6 +350,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_12"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_12"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -327,6 +376,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_13"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_13"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -349,6 +402,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_14"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_14"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -371,7 +428,17 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_0_15"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_0_15"
+                        android:layout_weight="1"/>
             </LinearLayout>
+
+            <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chart0"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp" />
+
             <TextView
                     android:text="@string/text_adc_1"
                     android:layout_width="match_parent"
@@ -401,6 +468,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_0"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_0"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -423,6 +494,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_1"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_1"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -445,6 +520,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_2"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_2"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -467,6 +546,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_3"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_3"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -489,6 +572,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_4"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_4"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -511,6 +598,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_5"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_5"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -533,6 +624,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_6"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_6"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -555,6 +650,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_7"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_7"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -577,6 +676,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_8"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_8"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -599,6 +702,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_9"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_9"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -621,6 +728,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_10"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_10"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -643,6 +754,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_11"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_11"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -665,6 +780,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_12"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_12"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -687,6 +806,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_13"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_13"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -709,6 +832,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_14"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_14"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -731,7 +858,17 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_1_15"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_1_15"
+                        android:layout_weight="1"/>
             </LinearLayout>
+
+            <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chart1"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp" />
+
             <TextView
                     android:text="@string/text_adc_2"
                     android:layout_width="match_parent"
@@ -761,6 +898,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_0"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_0"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -783,6 +924,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_1"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_1"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -805,6 +950,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_2"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_2"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -827,6 +976,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_3"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_3"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -849,6 +1002,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_4"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_4"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -871,6 +1028,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_5"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_5"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -893,6 +1054,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_6"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_6"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -915,6 +1080,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_7"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_7"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -937,6 +1106,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_8"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_8"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -959,6 +1132,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_9"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_9"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -981,6 +1158,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_10"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_10"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -1003,6 +1184,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_11"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_11"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -1025,6 +1210,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_12"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_12"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -1047,6 +1236,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_13"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_13"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -1069,6 +1262,10 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_14"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_14"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -1091,8 +1288,17 @@
                         android:layout_height="25dp" android:id="@+id/indicator_button_adc_2_15"
                         android:layout_weight="0"
                         android:clickable="false"/>
+                <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/switch_adc_2_15"
+                        android:layout_weight="1"/>
             </LinearLayout>
 
+
+            <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chart2"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp" />
 
         </LinearLayout>
     </ScrollView>
