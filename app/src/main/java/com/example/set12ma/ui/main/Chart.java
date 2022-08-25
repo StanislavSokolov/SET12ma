@@ -4,20 +4,33 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Chart {
+
+    private final int SIZE_QUEUE = 16;
+
     private String name;
+    private Queue<Entry> queue;
     private ArrayList<Entry> arrayList;
     private boolean enableShow;
 
     public void setData(float x, float y) {
-        arrayList.add(new Entry(x, y));
+        if (queue.size() > SIZE_QUEUE) {
+            queue.remove();
+        }
+        queue.add(new Entry(x, y));
+        arrayList = new ArrayList<>();
+        for (Entry entry: queue) {
+            arrayList.add(entry);
+        }
     }
 
     public Chart(String name, boolean enableShow) {
         this.name = name;
         this.enableShow = enableShow;
-        arrayList = new ArrayList<>();
+        queue = new LinkedList<>();
     }
 
     public String getName() {
