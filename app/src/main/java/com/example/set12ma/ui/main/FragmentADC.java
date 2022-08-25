@@ -3,6 +3,7 @@ package com.example.set12ma.ui.main;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
 
 public class FragmentADC extends Fragment {
     private static final String ARG_SECTION_NUMBER = "ADC";
@@ -34,13 +37,20 @@ public class FragmentADC extends Fragment {
     private ResultReceiverAddressSpace resultReceiverAddressSpace;
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
-    private long timer = 500;
+    private long timer = 1000;
 
     FloatingActionButton fab;
 
-    private LineChart chart0;
-    private LineChart chart1;
-    private LineChart chart2;
+    private LineChart lineChart0;
+    private LineChart lineChart1;
+    private LineChart lineChart2;
+
+    private int time = 0;
+
+    // Массивы координат точек
+    ArrayList<Chart> arrayList0;
+    ArrayList<Chart> arrayList1;
+    ArrayList<Chart> arrayList2;
 
 
     @Override
@@ -79,9 +89,19 @@ public class FragmentADC extends Fragment {
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_adc, container, false);
 
-        chart0 = root.findViewById(R.id.chart0);
-        chart1 = root.findViewById(R.id.chart1);
-        chart2 = root.findViewById(R.id.chart2);
+        lineChart0 = root.findViewById(R.id.chart0);
+        lineChart1 = root.findViewById(R.id.chart1);
+        lineChart2 = root.findViewById(R.id.chart2);
+
+        arrayList0 = new ArrayList<>();
+        arrayList1 = new ArrayList<>();
+        arrayList2 = new ArrayList<>();
+
+        for (int i = 0; i < 15; i++) {
+            arrayList0.add(new Chart("ADC" + i, true));
+            arrayList1.add(new Chart("ADC" + i, false));
+            arrayList2.add(new Chart("ADC" + i, true));
+        }
 
         fab = root.findViewById(R.id.fab_SET12MA);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -90,49 +110,6 @@ public class FragmentADC extends Fragment {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                // Массив координат точек
-                ArrayList<Entry> entriesFirst = new ArrayList<>();
-                entriesFirst.add(new Entry(1f, 5f));
-                entriesFirst.add(new Entry(2f, 2f));
-                entriesFirst.add(new Entry(3f, 1f));
-                entriesFirst.add(new Entry(4f, -3f));
-                entriesFirst.add(new Entry(5f, 4f));
-                entriesFirst.add(new Entry(6f, 1f));
-
-// На основании массива точек создаем первую линию с названием
-                LineDataSet datasetFirst = new LineDataSet(entriesFirst, "График первый");
-
-// Массив координат точек второй линии
-                ArrayList<Entry> entriesSecond = new ArrayList<>();
-                entriesSecond.add(new Entry(0.5f, 0f));
-                entriesSecond.add(new Entry(2.5f, 2f));
-                entriesSecond.add(new Entry(3.5f, 1f));
-                entriesSecond.add(new Entry(3.6f, 2f));
-                entriesSecond.add(new Entry(4f, 0.5f));
-                entriesSecond.add(new Entry(5.1f, -0.5f));
-
-// На основании массива точек создаем вторую линию с названием
-                LineDataSet datasetSecond = new LineDataSet(entriesSecond, "График второй");
-
-// Линии графиков соберем в один массив
-                ArrayList<ILineDataSet> dataSets = new ArrayList();
-                dataSets.add(datasetFirst);
-                dataSets.add(datasetSecond);
-
-// Создадим переменную  данных для графика
-                LineData data = new LineData(dataSets);
-// Передадим данные для графика в сам график
-                chart0.setData(data);
-
-// Не забудем отправить команду на перерисовку кадра, иначе график не отобразится
-                chart0.invalidate();
-
-
-
-                chart1.setData(data);
-                chart1.invalidate();
-                chart2.setData(data);
-                chart2.invalidate();
             }
         });
         arrayListTextView = new ArrayList<>();
@@ -352,11 +329,32 @@ public class FragmentADC extends Fragment {
 
     public void upDateValues() {
         for (int i = 0; i < 48; i++) {
-            arrayListTextView.get(i).setText(String.valueOf(spaceAddress.getAddressSpace(stopCellNumber + i)));
-            if (spaceAddress.getAddressSpace(stopCellNumber + i) > 0)
+            int value = spaceAddress.getAddressSpace(stopCellNumber + i);
+            arrayListTextView.get(i).setText(String.valueOf(value));
+            if (value > 0)
                 arrayListButton.get(i).setBackgroundColor(Color.RED);
             else arrayListButton.get(i).setBackgroundColor(Color.GREEN);
         }
+    }
+
+    public void addValueToLine(ArrayList<Chart> arrayList, int time) {
+        int i = 0;
+        for (Chart chart: arrayList) {
+            chart.setData(time, spaceAddress.getAddressSpace(stopCellNumber + i));
+            i = i + 1;
+        }
+    }
+
+    public void upDateChart(ArrayList<Chart> arrayList, LineChart lineChart) {
+        ArrayList<ILineDataSet> dataSets = new ArrayList();
+        for (Chart chart: arrayList) {
+            if (chart.isEnableShow()) {
+                dataSets.add(new LineDataSet(chart.getArrayList(), chart.getName()));
+            }
+        }
+        LineData data = new LineData(dataSets);
+        lineChart.setData(data);
+        lineChart.invalidate();
     }
 
     public class UpDateGraphicalDisplay extends Thread {
@@ -370,6 +368,20 @@ public class FragmentADC extends Fragment {
                 } catch (InterruptedException e) {
                     break;
                 }
+
+                time = time + 1;
+
+
+
+                addValueToLine(arrayList0, time);
+                addValueToLine(arrayList1, time);
+                addValueToLine(arrayList2, time);
+
+                upDateChart(arrayList0, lineChart0);
+                upDateChart(arrayList1, lineChart1);
+                upDateChart(arrayList2, lineChart2);
+
+
             }
         }
 
