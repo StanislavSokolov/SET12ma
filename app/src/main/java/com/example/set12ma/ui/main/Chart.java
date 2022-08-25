@@ -7,6 +7,15 @@ import java.util.ArrayList;
 public class Chart {
     private ArrayList<Line> arrayList;
     private LineChart lineChart;
+    private int adc;
+
+    public int getAdc() {
+        return adc;
+    }
+
+    public void setAdc(int adc) {
+        this.adc = adc;
+    }
 
     public ArrayList<Line> getArrayList() {
         return arrayList;
@@ -24,9 +33,10 @@ public class Chart {
         this.lineChart = lineChart;
     }
 
-    public Chart(ArrayList<Line> arrayList, LineChart lineChart) {
+    public Chart(ArrayList<Line> arrayList, LineChart lineChart, int adc) {
         this.arrayList = arrayList;
         this.lineChart = lineChart;
+        this.adc = adc;
     }
 
     public void addArrayList(Line line) {

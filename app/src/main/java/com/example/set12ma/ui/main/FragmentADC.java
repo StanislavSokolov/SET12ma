@@ -135,13 +135,13 @@ public class FragmentADC extends Fragment {
         View root = inflater.inflate(R.layout.fragment_adc, container, false);
 
         arrayListChart = new ArrayList<>();
-        arrayListChart.add(new Chart(new ArrayList<Line>(), (LineChart) root.findViewById(R.id.chart0)));
-        arrayListChart.add(new Chart(new ArrayList<Line>(), (LineChart) root.findViewById(R.id.chart1)));
-        arrayListChart.add(new Chart(new ArrayList<Line>(), (LineChart) root.findViewById(R.id.chart2)));
+        arrayListChart.add(new Chart(new ArrayList<Line>(), (LineChart) root.findViewById(R.id.chart0), 0));
+        arrayListChart.add(new Chart(new ArrayList<Line>(), (LineChart) root.findViewById(R.id.chart1), 1));
+        arrayListChart.add(new Chart(new ArrayList<Line>(), (LineChart) root.findViewById(R.id.chart2), 2));
 
         for (Chart chart: arrayListChart) {
             for (int i = 0; i <16; i++) {
-                chart.addArrayList(new Line("ADC" + i, true));
+                chart.addArrayList(new Line("ADC" + i, false));
             }
         }
 
@@ -767,10 +767,10 @@ public class FragmentADC extends Fragment {
         }
     }
 
-    public void addValueToLine(ArrayList<Line> arrayList, int time) {
+    public void addValueToLine(ArrayList<Line> arrayList, int time, int adc) {
         int i = 0;
         for (Line line : arrayList) {
-            line.setData(time, spaceAddress.getAddressSpace(stopCellNumber + i));
+            line.setData(time, spaceAddress.getAddressSpace(stopCellNumber + i + adc*16));
             i = i + 1;
         }
     }
@@ -805,7 +805,7 @@ public class FragmentADC extends Fragment {
                 if (spaceStatus.isReadyFlagToExchangeData()) {
                     time = time + 1;
                     for (Chart chart: arrayListChart) {
-                        addValueToLine(chart.getArrayList(), time);
+                        addValueToLine(chart.getArrayList(), time, chart.getAdc());
                         upDateChart(chart.getArrayList(), chart.getLineChart());
                     }
                 } else {
