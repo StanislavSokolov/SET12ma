@@ -3,7 +3,6 @@ package com.example.set12ma.ui.main;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
@@ -22,8 +20,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
 
 public class FragmentADC extends Fragment {
     private static final String ARG_SECTION_NUMBER = "ADC";
@@ -41,16 +37,14 @@ public class FragmentADC extends Fragment {
 
     FloatingActionButton fab;
 
-    private LineChart lineChart0;
-    private LineChart lineChart1;
-    private LineChart lineChart2;
+    private ArrayList<Chart> arrayListChart;
 
     private int time = 0;
 
     // Массивы координат точек
-    ArrayList<Chart> arrayList0;
-    ArrayList<Chart> arrayList1;
-    ArrayList<Chart> arrayList2;
+    ArrayList<Line> arrayList0;
+    ArrayList<Line> arrayList1;
+    ArrayList<Line> arrayList2;
 
 
     @Override
@@ -89,18 +83,15 @@ public class FragmentADC extends Fragment {
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_adc, container, false);
 
-        lineChart0 = root.findViewById(R.id.chart0);
-        lineChart1 = root.findViewById(R.id.chart1);
-        lineChart2 = root.findViewById(R.id.chart2);
+        arrayListChart = new ArrayList<>();
+        arrayListChart.add(new Chart(new ArrayList<Line>(), (LineChart) root.findViewById(R.id.chart0)));
+        arrayListChart.add(new Chart(new ArrayList<Line>(), (LineChart) root.findViewById(R.id.chart1)));
+        arrayListChart.add(new Chart(new ArrayList<Line>(), (LineChart) root.findViewById(R.id.chart2)));
 
-        arrayList0 = new ArrayList<>();
-        arrayList1 = new ArrayList<>();
-        arrayList2 = new ArrayList<>();
-
-        for (int i = 0; i < 15; i++) {
-            arrayList0.add(new Chart("ADC" + i, true));
-            arrayList1.add(new Chart("ADC" + i, false));
-            arrayList2.add(new Chart("ADC" + i, true));
+        for (Chart chart: arrayListChart) {
+            for (int i = 0; i <16; i++) {
+                chart.addArrayList(new Line("ADC" + i, true));
+            }
         }
 
         fab = root.findViewById(R.id.fab_SET12MA);
@@ -337,19 +328,19 @@ public class FragmentADC extends Fragment {
         }
     }
 
-    public void addValueToLine(ArrayList<Chart> arrayList, int time) {
+    public void addValueToLine(ArrayList<Line> arrayList, int time) {
         int i = 0;
-        for (Chart chart: arrayList) {
-            chart.setData(time, spaceAddress.getAddressSpace(stopCellNumber + i));
+        for (Line line : arrayList) {
+            line.setData(time, spaceAddress.getAddressSpace(stopCellNumber + i));
             i = i + 1;
         }
     }
 
-    public void upDateChart(ArrayList<Chart> arrayList, LineChart lineChart) {
+    public void upDateChart(ArrayList<Line> arrayList, LineChart lineChart) {
         ArrayList<ILineDataSet> dataSets = new ArrayList();
-        for (Chart chart: arrayList) {
-            if (chart.isEnableShow()) {
-                dataSets.add(new LineDataSet(chart.getArrayList(), chart.getName()));
+        for (Line line : arrayList) {
+            if (line.isEnableShow()) {
+                dataSets.add(new LineDataSet(line.getArrayList(), line.getName()));
             }
         }
         LineData data = new LineData(dataSets);
@@ -371,16 +362,10 @@ public class FragmentADC extends Fragment {
 
                 time = time + 1;
 
-
-
-                addValueToLine(arrayList0, time);
-                addValueToLine(arrayList1, time);
-                addValueToLine(arrayList2, time);
-
-                upDateChart(arrayList0, lineChart0);
-                upDateChart(arrayList1, lineChart1);
-                upDateChart(arrayList2, lineChart2);
-
+                for (Chart chart: arrayListChart) {
+                    addValueToLine(chart.getArrayList(), time);
+                    upDateChart(chart.getArrayList(), chart.getLineChart());
+                }
 
             }
         }

@@ -1,59 +1,35 @@
 package com.example.set12ma.ui.main;
 
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.charts.LineChart;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class Chart {
+    private ArrayList<Line> arrayList;
+    private LineChart lineChart;
 
-    private final int SIZE_QUEUE = 16;
-
-    private String name;
-    private Queue<Entry> queue;
-    private ArrayList<Entry> arrayList;
-    private boolean enableShow;
-
-    public void setData(float x, float y) {
-        if (queue.size() > SIZE_QUEUE) {
-            queue.remove();
-        }
-        queue.add(new Entry(x, y));
-        arrayList = new ArrayList<>();
-        for (Entry entry: queue) {
-            arrayList.add(entry);
-        }
-    }
-
-    public Chart(String name, boolean enableShow) {
-        this.name = name;
-        this.enableShow = enableShow;
-        queue = new LinkedList<>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ArrayList<Entry> getArrayList() {
+    public ArrayList<Line> getArrayList() {
         return arrayList;
     }
 
-    public void setArrayList(ArrayList<Entry> arrayList) {
+    public void setArrayList(ArrayList<Line> arrayList) {
         this.arrayList = arrayList;
     }
 
-    public boolean isEnableShow() {
-        return enableShow;
+    public LineChart getLineChart() {
+        return lineChart;
     }
 
-    public void setEnableShow(boolean enableShow) {
-        this.enableShow = enableShow;
+    public void setLineChart(LineChart lineChart) {
+        this.lineChart = lineChart;
+    }
+
+    public Chart(ArrayList<Line> arrayList, LineChart lineChart) {
+        this.arrayList = arrayList;
+        this.lineChart = lineChart;
+    }
+
+    public void addArrayList(Line line) {
+        arrayList.add(line);
     }
 }
