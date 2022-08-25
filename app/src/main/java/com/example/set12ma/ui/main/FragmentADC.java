@@ -31,6 +31,8 @@ public class FragmentADC extends Fragment {
     private ArrayList<TextView> arrayListTextView;
     private SpaceAddress spaceAddress;
     private ResultReceiverAddressSpace resultReceiverAddressSpace;
+    private SpaceStatus spaceStatus;
+    private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
     private long timer = 1000;
@@ -41,16 +43,11 @@ public class FragmentADC extends Fragment {
 
     private int time = 0;
 
-    // Массивы координат точек
-    ArrayList<Line> arrayList0;
-    ArrayList<Line> arrayList1;
-    ArrayList<Line> arrayList2;
-
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         resultReceiverAddressSpace = (ResultReceiverAddressSpace) context;
+        resultReceiverStatusSpace = (ResultReceiverStatusSpace) context;
     }
 
     private PageViewModel pageViewModel;
@@ -73,8 +70,7 @@ public class FragmentADC extends Fragment {
         }
         pageViewModel.setIndex(index);
         spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
-
-
+        spaceStatus = resultReceiverStatusSpace.getSpaceStatus();
     }
 
     @Override
@@ -359,12 +355,14 @@ public class FragmentADC extends Fragment {
                 } catch (InterruptedException e) {
                     break;
                 }
-
-                time = time + 1;
-
-                for (Chart chart: arrayListChart) {
-                    addValueToLine(chart.getArrayList(), time);
-                    upDateChart(chart.getArrayList(), chart.getLineChart());
+                if (spaceStatus.isReadyFlagToExchangeData()) {
+                    time = time + 1;
+                    for (Chart chart: arrayListChart) {
+                        addValueToLine(chart.getArrayList(), time);
+                        upDateChart(chart.getArrayList(), chart.getLineChart());
+                    }
+                } else {
+                    time = 0;
                 }
 
             }
