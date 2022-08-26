@@ -141,7 +141,7 @@ public class FragmentADC extends Fragment {
 
         for (Chart chart: arrayListChart) {
             for (int i = 0; i <16; i++) {
-                chart.addArrayList(new Line("ADC" + i, false));
+                chart.addArrayList(new Line("ADC" + i, false, i));
             }
         }
 
@@ -779,7 +779,10 @@ public class FragmentADC extends Fragment {
         ArrayList<ILineDataSet> dataSets = new ArrayList();
         for (Line line : arrayList) {
             if (line.isEnableShow()) {
-                dataSets.add(new LineDataSet(line.getArrayList(), line.getName()));
+                LineDataSet lineDataSet = new LineDataSet(line.getArrayList(), line.getName());
+                lineDataSet.setColor(line.getColor());
+                lineDataSet.setCircleColor(line.getColor());
+                dataSets.add(lineDataSet);
             }
         }
         LineData data = new LineData(dataSets);
