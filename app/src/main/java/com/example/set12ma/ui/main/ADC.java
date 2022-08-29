@@ -17,8 +17,8 @@ public class ADC {
 
     public ADC(String name, int plus, int minus, int color, int register) {
         this.name = name;
-        this.plus = plus;
-        this.minus = minus;
+        if (plus > 2048) plus = 2048; else this.plus = plus;
+        if (minus < -2048) minus = -2048; else this.minus = minus;
         this.color = color;
         this.register = register;
     }
