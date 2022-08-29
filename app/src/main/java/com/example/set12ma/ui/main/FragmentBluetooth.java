@@ -307,6 +307,18 @@ public class FragmentBluetooth extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 12:
+                showConnectedDevices();
+                showAvailableDevices();
+                break;
+        }
+
+    }
+
     private void showConnectedDevices(){
 
         arrayListConnectedDevices = new ArrayList<>();
