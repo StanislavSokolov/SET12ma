@@ -5,12 +5,22 @@ public class ADC {
     private int plus;
     private int minus;
     private int color;
+    private int register;
 
-    public ADC(String name, int plus, int minus, int color) {
+    public int getRegister() {
+        return register;
+    }
+
+    public void setRegister(int register) {
+        this.register = register;
+    }
+
+    public ADC(String name, int plus, int minus, int color, int register) {
         this.name = name;
         this.plus = plus;
         this.minus = minus;
         this.color = color;
+        this.register = register;
     }
 
     public String getName() {

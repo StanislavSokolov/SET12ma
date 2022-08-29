@@ -21,7 +21,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace, ResultReceiverStatusSpace, ResultReceiverFileLogsSpace {
+public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace, ResultReceiverStatusSpace, ResultReceiverFileLogsSpace, ResultReceiverSettingSpace {
 
     // Адресное пространство приложения
     SpaceAddress spaceAddress;
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     SpaceStatus spaceStatus;
     // Пространство памяти для хранения считанных логов
     SpaceFileLogs spaceFileLogs;
+    SpaceSetting spaceSetting;
     // SET12MA
     TabLayout tabsSET12MA;
     ViewPager viewPagerDataInput;
@@ -104,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         spaceMemory = new SpaceMemory();
         spaceStatus = new SpaceStatus();
         spaceFileLogs = new SpaceFileLogs();
+        spaceSetting = new SpaceSetting();
 //        addressSpace.setAddressSpace(150, 1);
 //        addressSpace.setAddressSpace(210, 150);
 
@@ -129,8 +131,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 //        ActivityCompat.requestPermissions(MainActivity.this,
 //                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
 //                1);
-        Toast.makeText(MainActivity.this, "Чек", Toast.LENGTH_SHORT).show();
-        Toast.makeText(MainActivity.this, "чек1", Toast.LENGTH_SHORT).show();
+
         sharedPreferences = getSharedPreferences("Setting", MODE_PRIVATE);
         dataRecovery();
     }
@@ -138,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     @SuppressLint("CommitPrefEdits")
     private void dataRecovery() {
         if (!sharedPreferences.contains("start")) {
+
             sharedPreferences.edit().putString("adc_0_0_name", "Channel0");
         }
     }
@@ -320,5 +322,10 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     @Override
     public SpaceFileLogs getSpaceFileLogs() {
         return spaceFileLogs;
+    }
+
+    @Override
+    public SpaceSetting getSpaceSetting() {
+        return spaceSetting;
     }
 }
