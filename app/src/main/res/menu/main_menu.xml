@@ -10,24 +10,28 @@
             android:icon="@drawable/red"
             android:visible="true"/>
     <item
-            android:id="@+id/menu_dataInput"
+            android:id="@+id/menu_connecting"
             android:orderInCategory="1"
+            android:title="@string/menu_connection" android:visible="true"/>
+    <item
+            android:id="@+id/menu_dataInput"
+            android:orderInCategory="2"
             android:title="@string/menu_dataInput" android:visible="true"/>
     <item
             android:id="@+id/menu_dataOutput"
-            android:orderInCategory="1"
+            android:orderInCategory="3"
             android:title="@string/menu_dataOutput" android:visible="true"/>
     <item
-            android:id="@+id/menu_connecting"
-            android:orderInCategory="2"
-            android:title="@string/menu_connection" android:visible="true"/>
-    <item
             android:id="@+id/menu_logging"
-            android:orderInCategory="3"
+            android:orderInCategory="4"
             android:title="@string/menu_logging" android:visible="true"/>
     <item
             android:id="@+id/menu_loadingSoftware"
-            android:orderInCategory="4"
+            android:orderInCategory="5"
             android:title="@string/menu_loadingSoftware" android:visible="true"/>
+    <item
+            android:id="@+id/menu_setting"
+            android:orderInCategory="6"
+            android:title="@string/menu_setting" android:visible="true"/>
 
 </menu>
