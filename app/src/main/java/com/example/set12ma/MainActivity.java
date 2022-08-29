@@ -1,5 +1,7 @@
 package com.example.set12ma;
 
+import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
     int viewPagerNumber = 0;
 
+
+    SharedPreferences sharedPreferences;
 
 
     @Override
@@ -125,6 +129,17 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 //        ActivityCompat.requestPermissions(MainActivity.this,
 //                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
 //                1);
+        Toast.makeText(MainActivity.this, "Чек", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "чек1", Toast.LENGTH_SHORT).show();
+        sharedPreferences = getSharedPreferences("Setting", MODE_PRIVATE);
+        dataRecovery();
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    private void dataRecovery() {
+        if (!sharedPreferences.contains("start")) {
+            sharedPreferences.edit().putString("adc_0_0_name", "Channel0");
+        }
     }
 
     @Override
