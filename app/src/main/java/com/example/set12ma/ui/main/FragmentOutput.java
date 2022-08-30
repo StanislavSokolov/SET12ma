@@ -124,7 +124,7 @@ public class FragmentOutput extends Fragment {
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_output, container, false);
 
-        arrayList = new ArrayList();
+        arrayList = new ArrayList<>();
 
         switch_out_0_0 = root.findViewById(R.id.switch_out_0_0);
         switch_out_0_0.setOnClickListener(new View.OnClickListener() {
@@ -1441,6 +1441,56 @@ public class FragmentOutput extends Fragment {
                 if (spaceStatus.isReadyFlagToExchangeData()) {
                     changeStateIndicator();
                 }
+                switch_out_0_0.setText(spaceSetting.getOutArrayList().get(0).getName());
+                switch_out_0_1.setText(spaceSetting.getOutArrayList().get(1).getName());
+                switch_out_0_2.setText(spaceSetting.getOutArrayList().get(2).getName());
+                switch_out_0_3.setText(spaceSetting.getOutArrayList().get(3).getName());
+                switch_out_0_4.setText(spaceSetting.getOutArrayList().get(4).getName());
+                switch_out_0_5.setText(spaceSetting.getOutArrayList().get(5).getName());
+                switch_out_0_6.setText(spaceSetting.getOutArrayList().get(6).getName());
+                switch_out_0_7.setText(spaceSetting.getOutArrayList().get(7).getName());
+                switch_out_0_8.setText(spaceSetting.getOutArrayList().get(8).getName());
+                switch_out_0_9.setText(spaceSetting.getOutArrayList().get(9).getName());
+                switch_out_0_10.setText(spaceSetting.getOutArrayList().get(10).getName());
+                switch_out_0_11.setText(spaceSetting.getOutArrayList().get(11).getName());
+                switch_out_0_12.setText(spaceSetting.getOutArrayList().get(12).getName());
+                switch_out_0_13.setText(spaceSetting.getOutArrayList().get(13).getName());
+                switch_out_0_14.setText(spaceSetting.getOutArrayList().get(14).getName());
+                switch_out_0_15.setText(spaceSetting.getOutArrayList().get(15).getName());
+
+                switch_out_1_0.setText(spaceSetting.getOutArrayList().get(16).getName());
+                switch_out_1_1.setText(spaceSetting.getOutArrayList().get(17).getName());
+                switch_out_1_2.setText(spaceSetting.getOutArrayList().get(18).getName());
+                switch_out_1_3.setText(spaceSetting.getOutArrayList().get(19).getName());
+                switch_out_1_4.setText(spaceSetting.getOutArrayList().get(20).getName());
+                switch_out_1_5.setText(spaceSetting.getOutArrayList().get(21).getName());
+                switch_out_1_6.setText(spaceSetting.getOutArrayList().get(22).getName());
+                switch_out_1_7.setText(spaceSetting.getOutArrayList().get(23).getName());
+                switch_out_1_8.setText(spaceSetting.getOutArrayList().get(24).getName());
+                switch_out_1_9.setText(spaceSetting.getOutArrayList().get(25).getName());
+                switch_out_1_10.setText(spaceSetting.getOutArrayList().get(26).getName());
+                switch_out_1_11.setText(spaceSetting.getOutArrayList().get(27).getName());
+                switch_out_1_12.setText(spaceSetting.getOutArrayList().get(28).getName());
+                switch_out_1_13.setText(spaceSetting.getOutArrayList().get(29).getName());
+                switch_out_1_14.setText(spaceSetting.getOutArrayList().get(30).getName());
+                switch_out_1_15.setText(spaceSetting.getOutArrayList().get(31).getName());
+
+                switch_out_2_0.setText(spaceSetting.getOutArrayList().get(32).getName());
+                switch_out_2_1.setText(spaceSetting.getOutArrayList().get(33).getName());
+                switch_out_2_2.setText(spaceSetting.getOutArrayList().get(34).getName());
+                switch_out_2_3.setText(spaceSetting.getOutArrayList().get(35).getName());
+                switch_out_2_4.setText(spaceSetting.getOutArrayList().get(36).getName());
+                switch_out_2_5.setText(spaceSetting.getOutArrayList().get(37).getName());
+                switch_out_2_6.setText(spaceSetting.getOutArrayList().get(38).getName());
+                switch_out_2_7.setText(spaceSetting.getOutArrayList().get(39).getName());
+                switch_out_2_8.setText(spaceSetting.getOutArrayList().get(40).getName());
+                switch_out_2_9.setText(spaceSetting.getOutArrayList().get(41).getName());
+                switch_out_2_10.setText(spaceSetting.getOutArrayList().get(42).getName());
+                switch_out_2_11.setText(spaceSetting.getOutArrayList().get(43).getName());
+                switch_out_2_12.setText(spaceSetting.getOutArrayList().get(44).getName());
+                switch_out_2_13.setText(spaceSetting.getOutArrayList().get(45).getName());
+                switch_out_2_14.setText(spaceSetting.getOutArrayList().get(46).getName());
+                switch_out_2_15.setText(spaceSetting.getOutArrayList().get(47).getName());
             }
         }
 

@@ -1898,6 +1898,77 @@ public class FragmentTK extends Fragment{
                         latch = true;
                     }
                 }
+                switch_tk_0_0.setText(spaceSetting.getTkArrayList().get(0).getName());
+                switch_tk_0_1.setText(spaceSetting.getTkArrayList().get(1).getName());
+                switch_tk_0_2.setText(spaceSetting.getTkArrayList().get(2).getName());
+                switch_tk_0_3.setText(spaceSetting.getTkArrayList().get(3).getName());
+                switch_tk_0_4.setText(spaceSetting.getTkArrayList().get(4).getName());
+                switch_tk_0_5.setText(spaceSetting.getTkArrayList().get(5).getName());
+                switch_tk_0_6.setText(spaceSetting.getTkArrayList().get(6).getName());
+                switch_tk_0_7.setText(spaceSetting.getTkArrayList().get(7).getName());
+
+                switch_tk_1_0.setText(spaceSetting.getTkArrayList().get(8).getName());
+                switch_tk_1_1.setText(spaceSetting.getTkArrayList().get(9).getName());
+                switch_tk_1_2.setText(spaceSetting.getTkArrayList().get(10).getName());
+                switch_tk_1_3.setText(spaceSetting.getTkArrayList().get(11).getName());
+                switch_tk_1_4.setText(spaceSetting.getTkArrayList().get(12).getName());
+                switch_tk_1_5.setText(spaceSetting.getTkArrayList().get(13).getName());
+                switch_tk_1_6.setText(spaceSetting.getTkArrayList().get(14).getName());
+                switch_tk_1_7.setText(spaceSetting.getTkArrayList().get(15).getName());
+
+                switch_tk_2_0.setText(spaceSetting.getTkArrayList().get(16).getName());
+                switch_tk_2_1.setText(spaceSetting.getTkArrayList().get(17).getName());
+                switch_tk_2_2.setText(spaceSetting.getTkArrayList().get(18).getName());
+                switch_tk_2_3.setText(spaceSetting.getTkArrayList().get(19).getName());
+                switch_tk_2_4.setText(spaceSetting.getTkArrayList().get(20).getName());
+                switch_tk_2_5.setText(spaceSetting.getTkArrayList().get(21).getName());
+                switch_tk_2_6.setText(spaceSetting.getTkArrayList().get(22).getName());
+                switch_tk_2_7.setText(spaceSetting.getTkArrayList().get(23).getName());
+
+                switch_tk_3_0.setText(spaceSetting.getTkArrayList().get(24).getName());
+                switch_tk_3_1.setText(spaceSetting.getTkArrayList().get(25).getName());
+                switch_tk_3_2.setText(spaceSetting.getTkArrayList().get(26).getName());
+                switch_tk_3_3.setText(spaceSetting.getTkArrayList().get(27).getName());
+                switch_tk_3_4.setText(spaceSetting.getTkArrayList().get(28).getName());
+                switch_tk_3_5.setText(spaceSetting.getTkArrayList().get(29).getName());
+                switch_tk_3_6.setText(spaceSetting.getTkArrayList().get(30).getName());
+                switch_tk_3_7.setText(spaceSetting.getTkArrayList().get(31).getName());
+
+                switch_tk_4_0.setText(spaceSetting.getTkArrayList().get(32).getName());
+                switch_tk_4_1.setText(spaceSetting.getTkArrayList().get(33).getName());
+                switch_tk_4_2.setText(spaceSetting.getTkArrayList().get(34).getName());
+                switch_tk_4_3.setText(spaceSetting.getTkArrayList().get(35).getName());
+                switch_tk_4_4.setText(spaceSetting.getTkArrayList().get(36).getName());
+                switch_tk_4_5.setText(spaceSetting.getTkArrayList().get(37).getName());
+                switch_tk_4_6.setText(spaceSetting.getTkArrayList().get(38).getName());
+                switch_tk_4_7.setText(spaceSetting.getTkArrayList().get(39).getName());
+
+                switch_tk_5_0.setText(spaceSetting.getTkArrayList().get(40).getName());
+                switch_tk_5_1.setText(spaceSetting.getTkArrayList().get(41).getName());
+                switch_tk_5_2.setText(spaceSetting.getTkArrayList().get(42).getName());
+                switch_tk_5_3.setText(spaceSetting.getTkArrayList().get(43).getName());
+                switch_tk_5_4.setText(spaceSetting.getTkArrayList().get(44).getName());
+                switch_tk_5_5.setText(spaceSetting.getTkArrayList().get(45).getName());
+                switch_tk_5_6.setText(spaceSetting.getTkArrayList().get(46).getName());
+                switch_tk_5_7.setText(spaceSetting.getTkArrayList().get(47).getName());
+
+                switch_tk_6_0.setText(spaceSetting.getTkArrayList().get(48).getName());
+                switch_tk_6_1.setText(spaceSetting.getTkArrayList().get(49).getName());
+                switch_tk_6_2.setText(spaceSetting.getTkArrayList().get(50).getName());
+                switch_tk_6_3.setText(spaceSetting.getTkArrayList().get(51).getName());
+                switch_tk_6_4.setText(spaceSetting.getTkArrayList().get(52).getName());
+                switch_tk_6_5.setText(spaceSetting.getTkArrayList().get(53).getName());
+                switch_tk_6_6.setText(spaceSetting.getTkArrayList().get(54).getName());
+                switch_tk_6_7.setText(spaceSetting.getTkArrayList().get(55).getName());
+
+                switch_tk_7_0.setText(spaceSetting.getTkArrayList().get(56).getName());
+                switch_tk_7_1.setText(spaceSetting.getTkArrayList().get(57).getName());
+                switch_tk_7_2.setText(spaceSetting.getTkArrayList().get(58).getName());
+                switch_tk_7_3.setText(spaceSetting.getTkArrayList().get(59).getName());
+                switch_tk_7_4.setText(spaceSetting.getTkArrayList().get(60).getName());
+                switch_tk_7_5.setText(spaceSetting.getTkArrayList().get(61).getName());
+                switch_tk_7_6.setText(spaceSetting.getTkArrayList().get(62).getName());
+                switch_tk_7_7.setText(spaceSetting.getTkArrayList().get(63).getName());
             }
         }
 
