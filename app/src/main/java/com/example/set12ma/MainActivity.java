@@ -139,8 +139,56 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     @SuppressLint("CommitPrefEdits")
     private void dataRecovery() {
         if (!sharedPreferences.contains("start")) {
+            for (int j = 0; j < 3; j++) {
+                for (int i = 0; i < 16; i++) {
+                    sharedPreferences.edit().putString("adc_" + j + "_" + i + "_name", spaceSetting.getAdcArrayList().get(i+j*16).getName());
+                    sharedPreferences.edit().putInt("adc_" + j + "_" + i + "_plus", spaceSetting.getAdcArrayList().get(i+j*16).getPlus());
+                    sharedPreferences.edit().putInt("adc_" + j + "_" + i + "_minus", spaceSetting.getAdcArrayList().get(i+j*16).getMinus());
+                    sharedPreferences.edit().putInt("adc_" + j + "_" + i + "_color", spaceSetting.getAdcArrayList().get(i+j*16).getColor());
+                    sharedPreferences.edit().putInt("adc_" + j + "_" + i + "_register", spaceSetting.getAdcArrayList().get(i+j*16).getRegister());
 
-            sharedPreferences.edit().putString("adc_0_0_name", "Channel0");
+                    sharedPreferences.edit().putString("in_" + j + "_" + i + "_name", spaceSetting.getInArrayList().get(i+j*16).getName());
+                    sharedPreferences.edit().putInt("in_" + j + "_" + i + "_register", spaceSetting.getInArrayList().get(i+j*16).getRegister());
+
+                    sharedPreferences.edit().putString("out_" + j + "_" + i + "_name", spaceSetting.getOutArrayList().get(i+j*16).getName());
+                    sharedPreferences.edit().putInt("out_" + j + "_" + i + "_register", spaceSetting.getOutArrayList().get(i+j*16).getRegister());
+                }
+            }
+
+            for (int j = 0; j < 8; j++) {
+                for (int i = 0; i < 8; i++) {
+                    sharedPreferences.edit().putString("tk_" + j + "_" + i + "_name", spaceSetting.getTkArrayList().get(i+j*8).getName());
+                    sharedPreferences.edit().putInt("tk_" + j + "_" + i + "_register", spaceSetting.getTkArrayList().get(i+j*8).getRegister());
+                }
+            }
+
+            sharedPreferences.edit().putString("start", "start");
+            sharedPreferences.edit().apply();
+        } else {
+            for (int j = 0; j < 3; j++) {
+                for (int i = 0; i < 16; i++) {
+                    spaceSetting.getAdcArrayList().get(i + j * 16).setName(sharedPreferences.getString("adc_" + j + "_" + i + "_name", "adc_" + j + "_" + i + "_name"));
+                    spaceSetting.getAdcArrayList().get(i + j * 16).setPlus(sharedPreferences.getInt("adc_" + j + "_" + i + "_plus", 1024));
+                    spaceSetting.getAdcArrayList().get(i + j * 16).setMinus(sharedPreferences.getInt("adc_" + j + "_" + i + "_minus", 1024));
+                    spaceSetting.getAdcArrayList().get(i + j * 16).setColor(sharedPreferences.getInt("adc_" + j + "_" + i + "_color", i));
+                    spaceSetting.getAdcArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("out_" + j + "_" + i + "_register", 208 + i + j*16));
+
+                    spaceSetting.getInArrayList().get(i + j * 16).setName(sharedPreferences.getString("in_" + j + "_" + i + "_name", "in_" + j + "_" + i + "_name"));
+                    spaceSetting.getInArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("in_" + j + "_" + i + "_register", i + j*16));
+
+                    spaceSetting.getInArrayList().get(i + j * 16).setName(sharedPreferences.getString("out_" + j + "_" + i + "_name", "out_" + j + "_" + i + "_name"));
+                    spaceSetting.getInArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("out_" + j + "_" + i + "_register", 48 + i + j*16));
+                }
+            }
+
+            for (int j = 0; j < 8; j++) {
+                for (int i = 0; i < 8; i++) {
+                    spaceSetting.getInArrayList().get(i + j * 8).setName(sharedPreferences.getString("tk_" + j + "_" + i + "_name", "tk_" + j + "_" + i + "_name"));
+                    spaceSetting.getInArrayList().get(i + j * 8).setRegister(sharedPreferences.getInt("tk_" + j + "_" + i + "_name", 144+i+j*8));
+                    sharedPreferences.edit().putString("tk_" + j + "_" + i + "_name", spaceSetting.getTkArrayList().get(i+j*8).getName());
+                    sharedPreferences.edit().putInt("tk_" + j + "_" + i + "_register", spaceSetting.getTkArrayList().get(i+j*8).getRegister());
+                }
+            }
         }
     }
 
