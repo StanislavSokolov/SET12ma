@@ -759,7 +759,7 @@ public class FragmentADC extends Fragment {
 
     public void upDateValues() {
         for (int i = 0; i < 48; i++) {
-            int value = spaceAddress.getAddressSpace(stopCellNumber + i);
+            int value = spaceAddress.getAddressSpace(startCellNumber + i);
             arrayListTextView.get(i).setText(String.valueOf(value));
             if (value > 0)
                 arrayListButton.get(i).setBackgroundColor(Color.RED);
@@ -770,7 +770,7 @@ public class FragmentADC extends Fragment {
     public void addValueToLine(ArrayList<Line> arrayList, int time, int adc) {
         int i = 0;
         for (Line line : arrayList) {
-            line.setData(time, spaceAddress.getAddressSpace(stopCellNumber + i + adc*16));
+            line.setData(time, spaceAddress.getAddressSpace(startCellNumber + i + adc*16));
             i = i + 1;
         }
     }

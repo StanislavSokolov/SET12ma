@@ -26,8 +26,10 @@ public class FragmentTK extends Fragment{
     private ArrayList<Switch> arrayList;
     private SpaceAddress spaceAddress;
     private SpaceStatus spaceStatus;
+    private SpaceSetting spaceSetting;
     private ResultReceiverAddressSpace resultReceiverAddressSpace;
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
+    private ResultReceiverSettingSpace resultReceiverSettingSpace;
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
     private long timer = 500;
@@ -109,6 +111,7 @@ public class FragmentTK extends Fragment{
         super.onAttach(context);
         resultReceiverAddressSpace = (ResultReceiverAddressSpace) context;
         resultReceiverStatusSpace = (ResultReceiverStatusSpace) context;
+        resultReceiverSettingSpace = (ResultReceiverSettingSpace) context;
     }
 
     private PageViewModel pageViewModel;
@@ -132,6 +135,7 @@ public class FragmentTK extends Fragment{
         pageViewModel.setIndex(index);
         spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
         spaceStatus = resultReceiverStatusSpace.getSpaceStatus();
+        spaceSetting = resultReceiverSettingSpace.getSpaceSetting();
     }
 
     @Override
@@ -147,10 +151,10 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_0_0.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(0).getRegister(), 1));
                     spaceAddress.setAddressSpace(startCellNumber + 0, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(0).getRegister(), 0));
                     spaceAddress.setAddressSpace(startCellNumber + 0, 0);
                 }
             }
@@ -161,11 +165,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_0_0.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(1).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 1, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(1).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 1, 0);
                 }
             }
         });
@@ -175,11 +179,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_0_2.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(2).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 2, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(2).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 2, 0);
                 }
             }
         });
@@ -189,11 +193,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_0_3.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(3).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 3, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(3).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 3, 0);
                 }
             }
         });
@@ -203,11 +207,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_0_4.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(4).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 4, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(4).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 4, 0);
                 }
             }
         });
@@ -217,11 +221,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_0_5.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(5).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 5, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(5).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 5, 0);
                 }
             }
         });
@@ -231,11 +235,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_0_6.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(6).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 6, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(6).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 6, 0);
                 }
             }
         });
@@ -245,11 +249,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_0_7.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(7).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 7, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(7).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 7, 0);
                 }
             }
         });
@@ -260,11 +264,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_1_0.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(8).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 8, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(8).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 8, 0);
                 }
             }
         });
@@ -274,11 +278,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_1_1.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(9).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 9, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(9).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 9, 0);
                 }
             }
         });
@@ -288,11 +292,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_1_2.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(10).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 10, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(10).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 10, 0);
                 }
             }
         });
@@ -302,11 +306,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_1_3.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(11).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 11, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(11).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 11, 0);
                 }
             }
         });
@@ -316,11 +320,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_1_4.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(12).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 12, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(12).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 12, 0);
                 }
             }
         });
@@ -330,11 +334,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_1_5.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(13).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 13, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(13).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 13, 0);
                 }
             }
         });
@@ -344,11 +348,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_1_6.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(14).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 14, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(14).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 14, 0);
                 }
             }
         });
@@ -358,11 +362,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_1_7.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(15).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 15, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(15).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 15, 0);
                 }
             }
         });
@@ -373,11 +377,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_2_0.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(16).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 16, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(16).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 16, 0);
                 }
             }
         });
@@ -387,11 +391,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_2_1.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(17).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 17, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(17).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 17, 0);
                 }
             }
         });
@@ -401,11 +405,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_2_2.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(18).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 18, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(18).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 18, 0);
                 }
             }
         });
@@ -415,11 +419,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_2_3.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(19).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 19, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(19).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 19, 0);
                 }
             }
         });
@@ -429,11 +433,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_2_4.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(20).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 20, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(20).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 20, 0);
                 }
             }
         });
@@ -443,11 +447,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_2_5.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(21).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 21, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(21).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 21, 0);
                 }
             }
         });
@@ -457,11 +461,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_2_6.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(22).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 22, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(22).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 22, 0);
                 }
             }
         });
@@ -471,11 +475,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_2_7.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(23).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 23, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(23).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 23, 0);
                 }
             }
         });
@@ -486,11 +490,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_3_0.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(24).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 24, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(24).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 24, 0);
                 }
             }
         });
@@ -500,11 +504,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_3_1.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(25).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 25, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(25).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 25, 0);
                 }
             }
         });
@@ -514,11 +518,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_3_2.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(26).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 26, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(26).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 26, 0);
                 }
             }
         });
@@ -528,11 +532,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_3_3.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(27).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 27, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(27).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 27, 0);
                 }
             }
         });
@@ -542,11 +546,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_3_4.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(28).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 28, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(28).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 28, 0);
                 }
             }
         });
@@ -556,11 +560,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_3_5.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(29).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 29, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(29).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 29, 0);
                 }
             }
         });
@@ -570,11 +574,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_3_6.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(30).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 30, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(30).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 30, 0);
                 }
             }
         });
@@ -584,11 +588,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_3_7.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(31).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 31, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(31).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 31, 0);
                 }
             }
         });
@@ -599,11 +603,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_4_0.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(32).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 32, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(32).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 32, 0);
                 }
             }
         });
@@ -613,11 +617,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_4_1.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(33).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 33, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(33).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 33, 0);
                 }
             }
         });
@@ -627,11 +631,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_4_2.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(34).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 34, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(34).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 34, 0);
                 }
             }
         });
@@ -641,11 +645,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_4_3.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(35).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 35, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(35).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 35, 0);
                 }
             }
         });
@@ -655,11 +659,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_4_4.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(36).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 36, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(36).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 36, 0);
                 }
             }
         });
@@ -669,11 +673,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_4_5.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(37).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 37, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(37).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 37, 0);
                 }
             }
         });
@@ -683,11 +687,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_4_6.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(38).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 38, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(38).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 38, 0);
                 }
             }
         });
@@ -697,11 +701,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_4_7.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(39).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 39, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(39).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 39, 0);
                 }
             }
         });
@@ -712,11 +716,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_5_0.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(40).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 40, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(40).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 40, 0);
                 }
             }
         });
@@ -726,11 +730,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_5_1.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(41).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 41, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(41).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 41, 0);
                 }
             }
         });
@@ -740,11 +744,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_5_2.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(42).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 42, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(42).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 42, 0);
                 }
             }
         });
@@ -754,11 +758,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_5_3.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(43).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 43, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(43).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 43, 0);
                 }
             }
         });
@@ -768,11 +772,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_5_4.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(44).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 44, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(44).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 44, 0);
                 }
             }
         });
@@ -782,11 +786,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_5_5.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(45).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 45, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(45).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 45, 0);
                 }
             }
         });
@@ -796,11 +800,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_5_6.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(46).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 46, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(46).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 46, 0);
                 }
             }
         });
@@ -810,11 +814,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_5_7.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(47).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 47, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(47).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 47, 0);
                 }
             }
         });
@@ -825,11 +829,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_6_0.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(48).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 48, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(48).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 48, 0);
                 }
             }
         });
@@ -839,11 +843,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_6_1.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(49).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 49, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(49).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 49, 0);
                 }
             }
         });
@@ -853,11 +857,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_6_2.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(50).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 50, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(50).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 50, 0);
                 }
             }
         });
@@ -867,11 +871,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_6_3.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(51).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 51, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(51).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 51, 0);
                 }
             }
         });
@@ -881,11 +885,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_6_4.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(52).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 52, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(52).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 52, 0);
                 }
             }
         });
@@ -895,11 +899,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_6_5.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(53).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 53, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(53).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 53, 0);
                 }
             }
         });
@@ -909,11 +913,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_6_6.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(54).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 54, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(54).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 54, 0);
                 }
             }
         });
@@ -923,11 +927,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_6_7.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(55).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 55, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(55).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 55, 0);
                 }
             }
         });
@@ -938,11 +942,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_7_0.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(56).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 56, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(56).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 56, 0);
                 }
             }
         });
@@ -952,11 +956,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_7_1.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(57).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 57, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(57).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 57, 0);
                 }
             }
         });
@@ -966,11 +970,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_7_2.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(58).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 58, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(58).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 58, 0);
                 }
             }
         });
@@ -980,11 +984,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_7_3.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(59).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 59, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(59).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 59, 0);
                 }
             }
         });
@@ -994,11 +998,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_7_4.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(60).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 60, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(60).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 60, 0);
                 }
             }
         });
@@ -1008,11 +1012,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_7_5.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(61).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 61, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(61).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 61, 0);
                 }
             }
         });
@@ -1022,11 +1026,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_7_6.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(62).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 62, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(62).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 62, 0);
                 }
             }
         });
@@ -1036,11 +1040,11 @@ public class FragmentTK extends Fragment{
             @Override
             public void onClick(View v) {
                 if (switch_tk_7_7.isChecked()) {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 1));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 1);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(63).getRegister(), 1));
+                    spaceAddress.setAddressSpace(startCellNumber + 63, 1);
                 } else {
-                    spaceAddress.setElementQueue(new ElementQueue(sectionNumber,0, 0));
-                    spaceAddress.setAddressSpace(startCellNumber + 0, 0);
+                    spaceAddress.setElementQueue(new ElementQueue(spaceSetting.getTkArrayList().get(63).getRegister(), 0));
+                    spaceAddress.setAddressSpace(startCellNumber + 63, 0);
                 }
             }
         });

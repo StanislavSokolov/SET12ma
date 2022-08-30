@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
                     spaceSetting.getAdcArrayList().get(i + j * 16).setPlus(sharedPreferences.getInt("adc_" + j + "_" + i + "_plus", 1024));
                     spaceSetting.getAdcArrayList().get(i + j * 16).setMinus(sharedPreferences.getInt("adc_" + j + "_" + i + "_minus", 1024));
                     spaceSetting.getAdcArrayList().get(i + j * 16).setColor(sharedPreferences.getInt("adc_" + j + "_" + i + "_color", i));
-                    spaceSetting.getAdcArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("out_" + j + "_" + i + "_register", 208 + i + j*16));
+                    spaceSetting.getAdcArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("out_" + j + "_" + i + "_register", 96 + i + j*16));
 
                     spaceSetting.getInArrayList().get(i + j * 16).setName(sharedPreferences.getString("in_" + j + "_" + i + "_name", "in_" + j + "_" + i + "_name"));
                     spaceSetting.getInArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("in_" + j + "_" + i + "_register", i + j*16));

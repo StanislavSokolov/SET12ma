@@ -48,7 +48,7 @@ public class SpaceSetting implements Parcelable {
         adcArrayList = new ArrayList<>();
         for (int j = 0; j < 3; j++) {
             for (int i = 0; i < 16; i++) {
-                adcArrayList.add(new ADC("ADC" + i, 1024, 1024, i, 208 + i + j*16));
+                adcArrayList.add(new ADC("ADC" + i, 1024, 1024, i, 96 + i + j*16));
             }
         }
 
