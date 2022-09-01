@@ -19,10 +19,14 @@ public class FragmentSetting extends Fragment {
     private SpaceStatus spaceStatus;
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
+    private SpaceSetting spaceSetting;
+    private ResultReceiverSettingSpace resultReceiverSettingSpace;
+
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
     private long timer = 500;
 
-    private ArrayList<ArrayAdapter> arrayList;
+    private ArrayList<Spinner> spinnerArrayList;
+    private ArrayList<ArrayAdapter> adapterArrayList;
     private Spinner spinner_adc_0_ch_0_color;
     private ArrayAdapter<String> adapter_color_adc_0_ch_0;
     private Spinner spinner_adc_0_ch_1_color;
@@ -60,6 +64,7 @@ public class FragmentSetting extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         resultReceiverStatusSpace = (ResultReceiverStatusSpace) context;
+        resultReceiverSettingSpace = (ResultReceiverSettingSpace) context;
     }
 
     private PageViewModel pageViewModel;
@@ -82,12 +87,17 @@ public class FragmentSetting extends Fragment {
         }
         pageViewModel.setIndex(index);
         spaceStatus = resultReceiverStatusSpace.getSpaceStatus();
+        spaceSetting = resultReceiverSettingSpace.getSpaceSetting();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        spinner_adc_0_ch_0_color.setSelection(3);
+        int i = 0;
+        for (Spinner spinner: spinnerArrayList) {
+            spinner.setSelection(spaceSetting.getAdcArrayList().get(i).getColor());
+            i= i + 1;
+        }
     }
 
     @Override
@@ -97,90 +107,106 @@ public class FragmentSetting extends Fragment {
         View root = inflater.inflate(R.layout.fragment_setting, container, false);
 
 
-
-        arrayList = new ArrayList<>();
+        spinnerArrayList = new ArrayList<>();
+        adapterArrayList = new ArrayList<>();
 
         spinner_adc_0_ch_0_color = root.findViewById(R.id.spinner_adc_0_ch_0_color);
         adapter_color_adc_0_ch_0 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_0.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_0);
+        adapterArrayList.add(adapter_color_adc_0_ch_0);
+        spinnerArrayList.add(spinner_adc_0_ch_0_color);
 
         spinner_adc_0_ch_1_color = root.findViewById(R.id.spinner_adc_0_ch_1_color);
         adapter_color_adc_0_ch_1 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_1);
+        adapterArrayList.add(adapter_color_adc_0_ch_1);
+        spinnerArrayList.add(spinner_adc_0_ch_1_color);
 
         spinner_adc_0_ch_2_color = root.findViewById(R.id.spinner_adc_0_ch_2_color);
         adapter_color_adc_0_ch_2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_2);
+        adapterArrayList.add(adapter_color_adc_0_ch_2);
+        spinnerArrayList.add(spinner_adc_0_ch_2_color);
 
         spinner_adc_0_ch_3_color = root.findViewById(R.id.spinner_adc_0_ch_3_color);
         adapter_color_adc_0_ch_3 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_3);
+        adapterArrayList.add(adapter_color_adc_0_ch_3);
+        spinnerArrayList.add(spinner_adc_0_ch_3_color);
 
         spinner_adc_0_ch_4_color = root.findViewById(R.id.spinner_adc_0_ch_4_color);
         adapter_color_adc_0_ch_4 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_4);
+        adapterArrayList.add(adapter_color_adc_0_ch_4);
+        spinnerArrayList.add(spinner_adc_0_ch_4_color);
 
         spinner_adc_0_ch_5_color = root.findViewById(R.id.spinner_adc_0_ch_5_color);
         adapter_color_adc_0_ch_5 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_5);
+        adapterArrayList.add(adapter_color_adc_0_ch_5);
+        spinnerArrayList.add(spinner_adc_0_ch_5_color);
 
         spinner_adc_0_ch_6_color = root.findViewById(R.id.spinner_adc_0_ch_6_color);
         adapter_color_adc_0_ch_6 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_6);
+        adapterArrayList.add(adapter_color_adc_0_ch_6);
+        spinnerArrayList.add(spinner_adc_0_ch_6_color);
 
         spinner_adc_0_ch_7_color = root.findViewById(R.id.spinner_adc_0_ch_7_color);
         adapter_color_adc_0_ch_7 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_7.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_7);
+        adapterArrayList.add(adapter_color_adc_0_ch_7);
+        spinnerArrayList.add(spinner_adc_0_ch_7_color);
 
         spinner_adc_0_ch_8_color = root.findViewById(R.id.spinner_adc_0_ch_8_color);
         adapter_color_adc_0_ch_8 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_8.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_8);
+        adapterArrayList.add(adapter_color_adc_0_ch_8);
+        spinnerArrayList.add(spinner_adc_0_ch_8_color);
 
         spinner_adc_0_ch_9_color = root.findViewById(R.id.spinner_adc_0_ch_9_color);
         adapter_color_adc_0_ch_9 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_9.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_9);
+        adapterArrayList.add(adapter_color_adc_0_ch_9);
+        spinnerArrayList.add(spinner_adc_0_ch_9_color);
 
         spinner_adc_0_ch_10_color = root.findViewById(R.id.spinner_adc_0_ch_10_color);
         adapter_color_adc_0_ch_10 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_10.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_10);
+        adapterArrayList.add(adapter_color_adc_0_ch_10);
+        spinnerArrayList.add(spinner_adc_0_ch_10_color);
 
         spinner_adc_0_ch_11_color = root.findViewById(R.id.spinner_adc_0_ch_11_color);
         adapter_color_adc_0_ch_11 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_11.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_11);
+        adapterArrayList.add(adapter_color_adc_0_ch_11);
+        spinnerArrayList.add(spinner_adc_0_ch_11_color);
 
         spinner_adc_0_ch_12_color = root.findViewById(R.id.spinner_adc_0_ch_12_color);
         adapter_color_adc_0_ch_12 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_12.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_12);
+        adapterArrayList.add(adapter_color_adc_0_ch_12);
+        spinnerArrayList.add(spinner_adc_0_ch_12_color);
 
         spinner_adc_0_ch_13_color = root.findViewById(R.id.spinner_adc_0_ch_13_color);
         adapter_color_adc_0_ch_13 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_13.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_13);
+        adapterArrayList.add(adapter_color_adc_0_ch_13);
+        spinnerArrayList.add(spinner_adc_0_ch_13_color);
 
         spinner_adc_0_ch_14_color = root.findViewById(R.id.spinner_adc_0_ch_14_color);
         adapter_color_adc_0_ch_14 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_14.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_14);
+        adapterArrayList.add(adapter_color_adc_0_ch_14);
+        spinnerArrayList.add(spinner_adc_0_ch_14_color);
 
         spinner_adc_0_ch_15_color = root.findViewById(R.id.spinner_adc_0_ch_15_color);
         adapter_color_adc_0_ch_15 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_15.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        arrayList.add(adapter_color_adc_0_ch_15);
+        adapterArrayList.add(adapter_color_adc_0_ch_15);
+        spinnerArrayList.add(spinner_adc_0_ch_15_color);
 
-        for (ArrayAdapter arrayAdapter: arrayList) {
+        for (ArrayAdapter arrayAdapter: adapterArrayList) {
             arrayAdapter.add("Color.GREEN");
             arrayAdapter.add("Color.RED");
             arrayAdapter.add("Color.BLUE");
@@ -211,7 +237,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_0 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_0_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_0_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_0_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(0).setColor(itemSelected);
             }
 
             @Override
@@ -223,7 +251,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_1 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_1_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_1_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_1_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(1).setColor(itemSelected);
             }
 
             @Override
@@ -235,7 +265,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_2 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_2_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_2_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_2_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(2).setColor(itemSelected);
             }
 
             @Override
@@ -247,7 +279,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_3 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_3_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_3_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_3_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(3).setColor(itemSelected);
             }
 
             @Override
@@ -259,7 +293,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_4 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_4_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_4_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_4_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(4).setColor(itemSelected);
             }
 
             @Override
@@ -271,7 +307,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_5 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_5_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_5_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_5_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(5).setColor(itemSelected);
             }
 
             @Override
@@ -283,7 +321,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_6 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_6_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_6_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_6_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(6).setColor(itemSelected);
             }
 
             @Override
@@ -295,7 +335,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_7 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_7_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_7_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_7_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(7).setColor(itemSelected);
             }
 
             @Override
@@ -307,7 +349,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_8 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_8_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_8_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_8_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(8).setColor(itemSelected);
             }
 
             @Override
@@ -319,7 +363,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_9 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_9_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_9_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_9_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(9).setColor(itemSelected);
             }
 
             @Override
@@ -331,7 +377,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_10 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_10_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_10_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_10_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(10).setColor(itemSelected);
             }
 
             @Override
@@ -343,7 +391,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_11 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_11_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_11_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_11_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(11).setColor(itemSelected);
             }
 
             @Override
@@ -355,7 +405,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_12 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_12_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_12_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_12_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(12).setColor(itemSelected);
             }
 
             @Override
@@ -367,7 +419,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_13 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_13_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_13_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_13_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(13).setColor(itemSelected);
             }
 
             @Override
@@ -379,7 +433,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_14 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_14_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_14_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_14_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(14).setColor(itemSelected);
             }
 
             @Override
@@ -391,7 +447,9 @@ public class FragmentSetting extends Fragment {
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_15 = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int itemSelectedFromTypeOfDevices = spinner_adc_0_ch_15_color.getSelectedItemPosition();
+                int itemSelected = spinner_adc_0_ch_15_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_0_15_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(15).setColor(itemSelected);
             }
 
             @Override

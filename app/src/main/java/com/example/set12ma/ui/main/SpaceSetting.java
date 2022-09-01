@@ -1,7 +1,9 @@
 package com.example.set12ma.ui.main;
 
+import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -11,6 +13,19 @@ public class SpaceSetting implements Parcelable {
     private ArrayList<InOut> tkArrayList;
     private ArrayList<InOut> inArrayList;
     private ArrayList<InOut> outArrayList;
+
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
+    public void setSharedPreferences(String teg, int value) {
+        editor.putInt(teg, value);
+        editor.apply();
+    }
+
+    public void setSharedPreferences(String teg, String value) {
+        editor.putString(teg, value);
+        editor.apply();
+    }
 
     public ArrayList<ADC> getAdcArrayList() {
         return adcArrayList;
@@ -44,36 +59,39 @@ public class SpaceSetting implements Parcelable {
         this.outArrayList = outArrayList;
     }
 
-    public SpaceSetting() {
+    public SpaceSetting(SharedPreferences sharedPreferences) {
         adcArrayList = new ArrayList<>();
         for (int j = 0; j < 3; j++) {
             for (int i = 0; i < 16; i++) {
-                adcArrayList.add(new ADC("ADC" + i, 1024, 1024, i, 96 + i + j*16));
+                if (i < 8) adcArrayList.add(new ADC("Channel " + i, 1024, 1024, i, 96 + i + j*16));
+                else adcArrayList.add(new ADC("Channel " + i, 1024, 1024, i - 8, 96 + i + j*16));
             }
         }
 
         tkArrayList = new ArrayList<>();
         for (int j = 0; j < 8; j++) {
             for (int i = 0; i < 8; i++) {
-                tkArrayList.add(new InOut("TK" + i, 144 + i + j*8));
+                tkArrayList.add(new InOut("Channel " + i, 144 + i + j*8));
             }
         }
 
         inArrayList = new ArrayList<>();
         for (int j = 0; j < 3; j++) {
             for (int i = 0; i < 16; i++) {
-                inArrayList.add(new InOut("IN" + i, i + j*16));
+                inArrayList.add(new InOut("Channel " + i, i + j*16));
             }
         }
 
         outArrayList = new ArrayList<>();
         for (int j = 0; j < 3; j++) {
             for (int i = 0; i < 16; i++) {
-                outArrayList.add(new InOut("OUT" + i, 48 + i + j*16));
+                outArrayList.add(new InOut("Channel " + i, 48 + i + j*16));
             }
 
         }
 
+        this.sharedPreferences = sharedPreferences;
+        editor = sharedPreferences.edit();
     }
 
     protected SpaceSetting(Parcel in) {

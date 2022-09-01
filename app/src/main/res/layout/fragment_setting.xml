@@ -1353,7 +1353,7 @@
                             android:text="Регистр:"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" android:id="@+id/textView_adc_0_15_register" android:layout_weight="1"/>
-                    <EditText_0
+                    <EditText
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:inputType="number"
@@ -2761,7 +2761,7 @@
                             android:text="Регистр:"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" android:id="@+id/textView_adc_1_15_register" android:layout_weight="1"/>
-                    <EditText_0
+                    <EditText
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:inputType="number"
@@ -4167,7 +4167,7 @@
                             android:text="Регистр:"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" android:id="@+id/textView_adc_2_15_register" android:layout_weight="1"/>
-                    <EditText_0
+                    <EditText
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:inputType="number"

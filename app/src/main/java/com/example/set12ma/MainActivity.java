@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
 
     SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -99,13 +100,16 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
         upDateViewPager(viewPagerNumber);
 
+        sharedPreferences = getSharedPreferences("Setting", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
 //        FloatingActionButton fab = findViewById(R.id.fab_SET12MA);
 
         spaceAddress = new SpaceAddress(300);
         spaceMemory = new SpaceMemory();
         spaceStatus = new SpaceStatus();
         spaceFileLogs = new SpaceFileLogs();
-        spaceSetting = new SpaceSetting();
+        spaceSetting = new SpaceSetting(sharedPreferences);
 //        addressSpace.setAddressSpace(150, 1);
 //        addressSpace.setAddressSpace(210, 150);
 
@@ -132,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 //                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
 //                1);
 
-        sharedPreferences = getSharedPreferences("Setting", MODE_PRIVATE);
+
         dataRecovery();
     }
 
@@ -141,52 +145,53 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         if (!sharedPreferences.contains("start")) {
             for (int j = 0; j < 3; j++) {
                 for (int i = 0; i < 16; i++) {
-                    sharedPreferences.edit().putString("adc_" + j + "_" + i + "_name", spaceSetting.getAdcArrayList().get(i+j*16).getName());
-                    sharedPreferences.edit().putInt("adc_" + j + "_" + i + "_plus", spaceSetting.getAdcArrayList().get(i+j*16).getPlus());
-                    sharedPreferences.edit().putInt("adc_" + j + "_" + i + "_minus", spaceSetting.getAdcArrayList().get(i+j*16).getMinus());
-                    sharedPreferences.edit().putInt("adc_" + j + "_" + i + "_color", spaceSetting.getAdcArrayList().get(i+j*16).getColor());
-                    sharedPreferences.edit().putInt("adc_" + j + "_" + i + "_register", spaceSetting.getAdcArrayList().get(i+j*16).getRegister());
+                    editor.putString("adc_" + j + "_" + i + "_name", spaceSetting.getAdcArrayList().get(i+j*16).getName());
+                    editor.putInt("adc_" + j + "_" + i + "_plus", spaceSetting.getAdcArrayList().get(i+j*16).getPlus());
+                    editor.putInt("adc_" + j + "_" + i + "_minus", spaceSetting.getAdcArrayList().get(i+j*16).getMinus());
+                    editor.putInt("adc_" + j + "_" + i + "_color", spaceSetting.getAdcArrayList().get(i+j*16).getColor());
+                    editor.putInt("adc_" + j + "_" + i + "_register", spaceSetting.getAdcArrayList().get(i+j*16).getRegister());
 
-                    sharedPreferences.edit().putString("in_" + j + "_" + i + "_name", spaceSetting.getInArrayList().get(i+j*16).getName());
-                    sharedPreferences.edit().putInt("in_" + j + "_" + i + "_register", spaceSetting.getInArrayList().get(i+j*16).getRegister());
+                    editor.putString("in_" + j + "_" + i + "_name", spaceSetting.getInArrayList().get(i+j*16).getName());
+                    editor.putInt("in_" + j + "_" + i + "_register", spaceSetting.getInArrayList().get(i+j*16).getRegister());
 
-                    sharedPreferences.edit().putString("out_" + j + "_" + i + "_name", spaceSetting.getOutArrayList().get(i+j*16).getName());
-                    sharedPreferences.edit().putInt("out_" + j + "_" + i + "_register", spaceSetting.getOutArrayList().get(i+j*16).getRegister());
+                    editor.putString("out_" + j + "_" + i + "_name", spaceSetting.getOutArrayList().get(i+j*16).getName());
+                    editor.putInt("out_" + j + "_" + i + "_register", spaceSetting.getOutArrayList().get(i+j*16).getRegister());
                 }
             }
 
             for (int j = 0; j < 8; j++) {
                 for (int i = 0; i < 8; i++) {
-                    sharedPreferences.edit().putString("tk_" + j + "_" + i + "_name", spaceSetting.getTkArrayList().get(i+j*8).getName());
-                    sharedPreferences.edit().putInt("tk_" + j + "_" + i + "_register", spaceSetting.getTkArrayList().get(i+j*8).getRegister());
+                    editor.putString("tk_" + j + "_" + i + "_name", spaceSetting.getTkArrayList().get(i+j*8).getName());
+                    editor.putInt("tk_" + j + "_" + i + "_register", spaceSetting.getTkArrayList().get(i+j*8).getRegister());
                 }
             }
 
-            sharedPreferences.edit().putString("start", "start");
-            sharedPreferences.edit().apply();
+            editor.putString("start", "start");
+            editor.apply();
+            Log.i("LOG123", "222");
         } else {
+            Log.i("LOG123", "123");
             for (int j = 0; j < 3; j++) {
                 for (int i = 0; i < 16; i++) {
                     spaceSetting.getAdcArrayList().get(i + j * 16).setName(sharedPreferences.getString("adc_" + j + "_" + i + "_name", "adc_" + j + "_" + i + "_name"));
                     spaceSetting.getAdcArrayList().get(i + j * 16).setPlus(sharedPreferences.getInt("adc_" + j + "_" + i + "_plus", 1024));
                     spaceSetting.getAdcArrayList().get(i + j * 16).setMinus(sharedPreferences.getInt("adc_" + j + "_" + i + "_minus", 1024));
-                    spaceSetting.getAdcArrayList().get(i + j * 16).setColor(sharedPreferences.getInt("adc_" + j + "_" + i + "_color", i));
+                    if (i < 8) spaceSetting.getAdcArrayList().get(i + j * 16).setColor(sharedPreferences.getInt("adc_" + j + "_" + i + "_color", i));
+                    else spaceSetting.getAdcArrayList().get(i + j * 16).setColor(sharedPreferences.getInt("adc_" + j + "_" + i + "_color", i - 8));
                     spaceSetting.getAdcArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("out_" + j + "_" + i + "_register", 96 + i + j*16));
 
                     spaceSetting.getInArrayList().get(i + j * 16).setName(sharedPreferences.getString("in_" + j + "_" + i + "_name", "in_" + j + "_" + i + "_name"));
                     spaceSetting.getInArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("in_" + j + "_" + i + "_register", i + j*16));
 
-                    spaceSetting.getInArrayList().get(i + j * 16).setName(sharedPreferences.getString("out_" + j + "_" + i + "_name", "out_" + j + "_" + i + "_name"));
-                    spaceSetting.getInArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("out_" + j + "_" + i + "_register", 48 + i + j*16));
+                    spaceSetting.getOutArrayList().get(i + j * 16).setName(sharedPreferences.getString("out_" + j + "_" + i + "_name", "out_" + j + "_" + i + "_name"));
+                    spaceSetting.getOutArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("out_" + j + "_" + i + "_register", 48 + i + j*16));
                 }
             }
 
             for (int j = 0; j < 8; j++) {
                 for (int i = 0; i < 8; i++) {
-                    spaceSetting.getInArrayList().get(i + j * 8).setName(sharedPreferences.getString("tk_" + j + "_" + i + "_name", "tk_" + j + "_" + i + "_name"));
-                    spaceSetting.getInArrayList().get(i + j * 8).setRegister(sharedPreferences.getInt("tk_" + j + "_" + i + "_name", 144+i+j*8));
-                    sharedPreferences.edit().putString("tk_" + j + "_" + i + "_name", spaceSetting.getTkArrayList().get(i+j*8).getName());
-                    sharedPreferences.edit().putInt("tk_" + j + "_" + i + "_register", spaceSetting.getTkArrayList().get(i+j*8).getRegister());
+                    spaceSetting.getTkArrayList().get(i + j * 8).setName(sharedPreferences.getString("tk_" + j + "_" + i + "_name", "tk_" + j + "_" + i + "_name"));
+                    spaceSetting.getTkArrayList().get(i + j * 8).setRegister(sharedPreferences.getInt("tk_" + j + "_" + i + "_register", 144+i+j*8));
                 }
             }
         }
