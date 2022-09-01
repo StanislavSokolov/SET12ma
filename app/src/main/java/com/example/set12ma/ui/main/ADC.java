@@ -6,6 +6,15 @@ public class ADC {
     private int minus;
     private int color;
     private int register;
+    private boolean enable;
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
 
     public int getRegister() {
         return register;
@@ -15,12 +24,13 @@ public class ADC {
         this.register = register;
     }
 
-    public ADC(String name, int plus, int minus, int color, int register) {
+    public ADC(String name, int plus, int minus, int color, int register, boolean enable) {
         this.name = name;
         if (plus > 2048) plus = 2048; else this.plus = plus;
         if (minus < -2048) minus = -2048; else this.minus = minus;
         this.color = color;
         this.register = register;
+        this.enable = enable;
     }
 
     public String getName() {

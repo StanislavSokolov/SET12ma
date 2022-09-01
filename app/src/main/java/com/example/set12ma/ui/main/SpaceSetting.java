@@ -27,6 +27,11 @@ public class SpaceSetting implements Parcelable {
         editor.apply();
     }
 
+    public void setSharedPreferences(String teg, Boolean value) {
+        editor.putBoolean(teg, value);
+        editor.apply();
+    }
+
     public ArrayList<ADC> getAdcArrayList() {
         return adcArrayList;
     }
@@ -63,8 +68,8 @@ public class SpaceSetting implements Parcelable {
         adcArrayList = new ArrayList<>();
         for (int j = 0; j < 3; j++) {
             for (int i = 0; i < 16; i++) {
-                if (i < 8) adcArrayList.add(new ADC("Channel " + i, 1024, 1024, i, 96 + i + j*16));
-                else adcArrayList.add(new ADC("Channel " + i, 1024, 1024, i - 8, 96 + i + j*16));
+                if (i < 8) adcArrayList.add(new ADC("Channel " + i, 1024, 1024, i, 96 + i + j*16, false));
+                else adcArrayList.add(new ADC("Channel " + i, 1024, 1024, i - 8, 96 + i + j*16, false));
             }
         }
 

@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
                     editor.putInt("adc_" + j + "_" + i + "_minus", spaceSetting.getAdcArrayList().get(i+j*16).getMinus());
                     editor.putInt("adc_" + j + "_" + i + "_color", spaceSetting.getAdcArrayList().get(i+j*16).getColor());
                     editor.putInt("adc_" + j + "_" + i + "_register", spaceSetting.getAdcArrayList().get(i+j*16).getRegister());
+                    editor.putBoolean("adc_" + j + "_" + i + "_enable", spaceSetting.getAdcArrayList().get(i+j*16).isEnable());
 
                     editor.putString("in_" + j + "_" + i + "_name", spaceSetting.getInArrayList().get(i+j*16).getName());
                     editor.putInt("in_" + j + "_" + i + "_register", spaceSetting.getInArrayList().get(i+j*16).getRegister());
@@ -178,7 +179,8 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
                     spaceSetting.getAdcArrayList().get(i + j * 16).setMinus(sharedPreferences.getInt("adc_" + j + "_" + i + "_minus", 1024));
                     if (i < 8) spaceSetting.getAdcArrayList().get(i + j * 16).setColor(sharedPreferences.getInt("adc_" + j + "_" + i + "_color", i));
                     else spaceSetting.getAdcArrayList().get(i + j * 16).setColor(sharedPreferences.getInt("adc_" + j + "_" + i + "_color", i - 8));
-                    spaceSetting.getAdcArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("out_" + j + "_" + i + "_register", 96 + i + j*16));
+                    spaceSetting.getAdcArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("adc_" + j + "_" + i + "_register", 96 + i + j*16));
+                    spaceSetting.getAdcArrayList().get(i + j * 16).setEnable(sharedPreferences.getBoolean("adc_" + j + "_" + i + "_enable", true));
 
                     spaceSetting.getInArrayList().get(i + j * 16).setName(sharedPreferences.getString("in_" + j + "_" + i + "_name", "in_" + j + "_" + i + "_name"));
                     spaceSetting.getInArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("in_" + j + "_" + i + "_register", i + j*16));
