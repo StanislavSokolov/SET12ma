@@ -268,7 +268,7 @@ public class FragmentBluetooth extends Fragment {
                 buttonConnectToDevice.setText("Отключить");
                 textViewConnectedToDevice.setText("Подключение к " + stringConnectedToDevice);
                 textViewConnectedToDevice.setVisibility(View.VISIBLE);
-                currentByte = 48;
+                currentByte = 0;
                 bluetoothSoketThread = new BluetoothSoketThread();
                 bluetoothSoketThread.start();
             } else {
@@ -539,10 +539,11 @@ public class FragmentBluetooth extends Fragment {
                                                 nextByte = 0;
                                             }
 
-
                                             if ((currentByte == 47) || (currentByte == 143))
                                                 currentByte = nextByte;
                                             else currentByte++;
+                                        } else {
+                                            currentByte = 48;
                                         }
                                         statusError = false;
                                     } else {
@@ -1214,10 +1215,19 @@ public class FragmentBluetooth extends Fragment {
             bytesToCreateCRC = new byte[6];
             bytesToSend[0] = ADDRESS_DEVICE;
             bytesToSend[1] = READ;
-            if ((currentByte > -1) & (currentByte < 48)) {
-                bytesToSend[2] = (byte) spaceSetting.getInArrayList().get(currentByte).getRegister();
-            } else if ((currentByte > 95) & (currentByte < 144)) {
-                bytesToSend[2] = (byte) spaceSetting.getAdcArrayList().get(currentByte - 96).getRegister();
+            boolean b = true;
+            while (b) {
+                if ((currentByte > -1) & (currentByte < 48)) {
+                    bytesToSend[2] = (byte) spaceSetting.getInArrayList().get(currentByte).getRegister();
+                    b = false;
+                } else if ((currentByte > 95) & (currentByte < 144)) {
+                    if (spaceSetting.getAdcArrayList().get(currentByte - 96).isEnable()) {
+                        bytesToSend[2] = (byte) spaceSetting.getAdcArrayList().get(currentByte - 96).getRegister();
+                        b = false;
+                    } else {
+                        if (currentByte < 144) currentByte++; else currentByte = 0;
+                    }
+                }
             }
             bytesToSend[3] = 0;
             bytesToSend[4] = 0;
