@@ -123,7 +123,7 @@
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:inputType="textPersonName"
-                            android:text="@string/text_channel_2"
+                            android:text="@string/text_channel_1"
                             android:ems="10"
                             android:id="@+id/editText_adc_0_ch_1_name"/>
                 </LinearLayout>

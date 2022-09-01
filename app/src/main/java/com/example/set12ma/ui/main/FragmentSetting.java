@@ -2,6 +2,7 @@ package com.example.set12ma.ui.main;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,26 @@ public class FragmentSetting extends Fragment {
     private ArrayAdapter<String> adapter_color_adc_0_ch_14;
     private Spinner spinner_adc_0_ch_15_color;
     private ArrayAdapter<String> adapter_color_adc_0_ch_15;
+
+    private ArrayList<EditText> editTextArrayListName;
+    private EditText editText_adc_0_ch_0_name;
+    private EditText editText_adc_0_ch_1_name;
+    private EditText editText_adc_0_ch_2_name;
+    private EditText editText_adc_0_ch_3_name;
+    private EditText editText_adc_0_ch_4_name;
+    private EditText editText_adc_0_ch_5_name;
+    private EditText editText_adc_0_ch_6_name;
+    private EditText editText_adc_0_ch_7_name;
+    private EditText editText_adc_0_ch_8_name;
+    private EditText editText_adc_0_ch_9_name;
+    private EditText editText_adc_0_ch_10_name;
+    private EditText editText_adc_0_ch_11_name;
+    private EditText editText_adc_0_ch_12_name;
+    private EditText editText_adc_0_ch_13_name;
+    private EditText editText_adc_0_ch_14_name;
+    private EditText editText_adc_0_ch_15_name;
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -458,6 +479,270 @@ public class FragmentSetting extends Fragment {
         };
         spinner_adc_0_ch_15_color.setOnItemSelectedListener(itemSelectedListener_adc_0_ch_15);
 
+        editTextArrayListName = new ArrayList<>();
+
+        editText_adc_0_ch_0_name = root.findViewById(R.id.editText_adc_0_ch_0_name);
+        editTextArrayListName.add(editText_adc_0_ch_0_name);
+        editText_adc_0_ch_1_name = root.findViewById(R.id.editText_adc_0_ch_1_name);
+        editTextArrayListName.add(editText_adc_0_ch_1_name);
+        editText_adc_0_ch_2_name = root.findViewById(R.id.editText_adc_0_ch_2_name);
+        editTextArrayListName.add(editText_adc_0_ch_2_name);
+        editText_adc_0_ch_3_name = root.findViewById(R.id.editText_adc_0_ch_3_name);
+        editTextArrayListName.add(editText_adc_0_ch_3_name);
+        editText_adc_0_ch_4_name = root.findViewById(R.id.editText_adc_0_ch_4_name);
+        editTextArrayListName.add(editText_adc_0_ch_4_name);
+        editText_adc_0_ch_5_name = root.findViewById(R.id.editText_adc_0_ch_5_name);
+        editTextArrayListName.add(editText_adc_0_ch_5_name);
+        editText_adc_0_ch_6_name = root.findViewById(R.id.editText_adc_0_ch_6_name);
+        editTextArrayListName.add(editText_adc_0_ch_6_name);
+        editText_adc_0_ch_7_name = root.findViewById(R.id.editText_adc_0_ch_7_name);
+        editTextArrayListName.add(editText_adc_0_ch_7_name);
+        editText_adc_0_ch_8_name = root.findViewById(R.id.editText_adc_0_ch_8_name);
+        editTextArrayListName.add(editText_adc_0_ch_8_name);
+        editText_adc_0_ch_9_name = root.findViewById(R.id.editText_adc_0_ch_9_name);
+        editTextArrayListName.add(editText_adc_0_ch_9_name);
+        editText_adc_0_ch_10_name = root.findViewById(R.id.editText_adc_0_ch_10_name);
+        editTextArrayListName.add(editText_adc_0_ch_10_name);
+        editText_adc_0_ch_11_name = root.findViewById(R.id.editText_adc_0_ch_11_name);
+        editTextArrayListName.add(editText_adc_0_ch_11_name);
+        editText_adc_0_ch_12_name = root.findViewById(R.id.editText_adc_0_ch_12_name);
+        editTextArrayListName.add(editText_adc_0_ch_12_name);
+        editText_adc_0_ch_13_name = root.findViewById(R.id.editText_adc_0_ch_13_name);
+        editTextArrayListName.add(editText_adc_0_ch_13_name);
+        editText_adc_0_ch_14_name = root.findViewById(R.id.editText_adc_0_ch_14_name);
+        editTextArrayListName.add(editText_adc_0_ch_14_name);
+        editText_adc_0_ch_15_name = root.findViewById(R.id.editText_adc_0_ch_15_name);
+        editTextArrayListName.add(editText_adc_0_ch_15_name);
+
+        int i = 0;
+        for (EditText editText: editTextArrayListName) {
+            editText.setText(spaceSetting.getAdcArrayList().get(i).getName());
+            i = i + 1;
+        }
+
+        editText_adc_0_ch_0_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_0_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_0_name", text);
+                        spaceSetting.getAdcArrayList().get(0).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
+
+        editText_adc_0_ch_1_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_1_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_1_name", text);
+                        spaceSetting.getAdcArrayList().get(1).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
+
+        editText_adc_0_ch_2_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_2_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_2_name", text);
+                        spaceSetting.getAdcArrayList().get(2).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
+
+        editText_adc_0_ch_3_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_3_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_3_name", text);
+                        spaceSetting.getAdcArrayList().get(3).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
+
+        editText_adc_0_ch_4_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_4_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_4_name", text);
+                        spaceSetting.getAdcArrayList().get(4).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
+
+        editText_adc_0_ch_5_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_5_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_5_name", text);
+                        spaceSetting.getAdcArrayList().get(5).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
+
+        editText_adc_0_ch_6_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_6_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_6_name", text);
+                        spaceSetting.getAdcArrayList().get(6).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
+
+        editText_adc_0_ch_7_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_7_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_7_name", text);
+                        spaceSetting.getAdcArrayList().get(7).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
+
+        editText_adc_0_ch_8_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_8_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_8_name", text);
+                        spaceSetting.getAdcArrayList().get(8).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
+
+        editText_adc_0_ch_9_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_9_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_9_name", text);
+                        spaceSetting.getAdcArrayList().get(9).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
+
+        editText_adc_0_ch_10_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_10_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_10_name", text);
+                        spaceSetting.getAdcArrayList().get(10).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
+
+        editText_adc_0_ch_11_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_11_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_11_name", text);
+                        spaceSetting.getAdcArrayList().get(11).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
+
+        editText_adc_0_ch_12_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_12_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_12_name", text);
+                        spaceSetting.getAdcArrayList().get(12).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
+
+        editText_adc_0_ch_13_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_13_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_13_name", text);
+                        spaceSetting.getAdcArrayList().get(13).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
+
+        editText_adc_0_ch_14_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_14_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_14_name", text);
+                        spaceSetting.getAdcArrayList().get(14).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
+
+        editText_adc_0_ch_15_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editText_adc_0_ch_15_name.getText().toString();
+                    if (!text.equals("")) {
+                        spaceSetting.setSharedPreferences("adc_0_15_name", text);
+                        spaceSetting.getAdcArrayList().get(15).setName(text);
+                    }
+                }
+                return true;
+            }
+        });
 
 
         return root;
