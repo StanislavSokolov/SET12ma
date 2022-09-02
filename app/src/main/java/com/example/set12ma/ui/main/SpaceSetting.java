@@ -68,29 +68,29 @@ public class SpaceSetting implements Parcelable {
         adcArrayList = new ArrayList<>();
         for (int j = 0; j < 3; j++) {
             for (int i = 0; i < 16; i++) {
-                if (i < 8) adcArrayList.add(new ADC("Channel " + i, 1024, 1024, i, 96 + i + j*16, false));
-                else adcArrayList.add(new ADC("Channel " + i, 1024, 1024, i - 8, 96 + i + j*16, false));
+                if (i < 8) adcArrayList.add(new ADC("Channel " + i, 1024, 1024, i, 96 + i + j*16, true));
+                else adcArrayList.add(new ADC("Channel " + i, 1024, 1024, i - 8, 96 + i + j*16, true));
             }
         }
 
         tkArrayList = new ArrayList<>();
         for (int j = 0; j < 8; j++) {
             for (int i = 0; i < 8; i++) {
-                tkArrayList.add(new InOut("Channel " + i, 144 + i + j*8));
+                tkArrayList.add(new InOut("Channel " + i, 144 + i + j*8, true));
             }
         }
 
         inArrayList = new ArrayList<>();
         for (int j = 0; j < 3; j++) {
             for (int i = 0; i < 16; i++) {
-                inArrayList.add(new InOut("Channel " + i, i + j*16));
+                inArrayList.add(new InOut("Channel " + i, i + j*16, true));
             }
         }
 
         outArrayList = new ArrayList<>();
         for (int j = 0; j < 3; j++) {
             for (int i = 0; i < 16; i++) {
-                outArrayList.add(new InOut("Channel " + i, 48 + i + j*16));
+                outArrayList.add(new InOut("Channel " + i, 48 + i + j*16, true));
             }
 
         }

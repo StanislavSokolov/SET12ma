@@ -1218,14 +1218,18 @@ public class FragmentBluetooth extends Fragment {
             boolean b = true;
             while (b) {
                 if ((currentByte > -1) & (currentByte < 48)) {
-                    bytesToSend[2] = (byte) spaceSetting.getInArrayList().get(currentByte).getRegister();
-                    b = false;
+                    if (spaceSetting.getInArrayList().get(currentByte).isEnable()) {
+                        bytesToSend[2] = (byte) spaceSetting.getInArrayList().get(currentByte).getRegister();
+                        b = false;
+                    } else {
+                        if (currentByte < 47) currentByte++; else currentByte = 96;
+                    }
                 } else if ((currentByte > 95) & (currentByte < 144)) {
                     if (spaceSetting.getAdcArrayList().get(currentByte - 96).isEnable()) {
                         bytesToSend[2] = (byte) spaceSetting.getAdcArrayList().get(currentByte - 96).getRegister();
                         b = false;
                     } else {
-                        if (currentByte < 144) currentByte++; else currentByte = 0;
+                        if (currentByte < 143) currentByte++; else currentByte = 0;
                     }
                 }
             }

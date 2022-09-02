@@ -154,9 +154,11 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
                     editor.putString("in_" + j + "_" + i + "_name", spaceSetting.getInArrayList().get(i+j*16).getName());
                     editor.putInt("in_" + j + "_" + i + "_register", spaceSetting.getInArrayList().get(i+j*16).getRegister());
+                    editor.putBoolean("in_" + j + "_" + i + "_enable", spaceSetting.getInArrayList().get(i+j*16).isEnable());
 
                     editor.putString("out_" + j + "_" + i + "_name", spaceSetting.getOutArrayList().get(i+j*16).getName());
                     editor.putInt("out_" + j + "_" + i + "_register", spaceSetting.getOutArrayList().get(i+j*16).getRegister());
+                    editor.putBoolean("out_" + j + "_" + i + "_enable", spaceSetting.getOutArrayList().get(i+j*16).isEnable());
                 }
             }
 
@@ -164,14 +166,13 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
                 for (int i = 0; i < 8; i++) {
                     editor.putString("tk_" + j + "_" + i + "_name", spaceSetting.getTkArrayList().get(i+j*8).getName());
                     editor.putInt("tk_" + j + "_" + i + "_register", spaceSetting.getTkArrayList().get(i+j*8).getRegister());
+                    editor.putBoolean("in_" + j + "_" + i + "_enable", spaceSetting.getInArrayList().get(i+j*16).isEnable());
                 }
             }
 
             editor.putString("start", "start");
             editor.apply();
-            Log.i("LOG123", "222");
         } else {
-            Log.i("LOG123", "123");
             for (int j = 0; j < 3; j++) {
                 for (int i = 0; i < 16; i++) {
                     spaceSetting.getAdcArrayList().get(i + j * 16).setName(sharedPreferences.getString("adc_" + j + "_" + i + "_name", "adc_" + j + "_" + i + "_name"));
@@ -184,9 +185,11 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
                     spaceSetting.getInArrayList().get(i + j * 16).setName(sharedPreferences.getString("in_" + j + "_" + i + "_name", "in_" + j + "_" + i + "_name"));
                     spaceSetting.getInArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("in_" + j + "_" + i + "_register", i + j*16));
+                    spaceSetting.getInArrayList().get(i + j * 16).setEnable(sharedPreferences.getBoolean("in_" + j + "_" + i + "_enable", true));
 
                     spaceSetting.getOutArrayList().get(i + j * 16).setName(sharedPreferences.getString("out_" + j + "_" + i + "_name", "out_" + j + "_" + i + "_name"));
                     spaceSetting.getOutArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("out_" + j + "_" + i + "_register", 48 + i + j*16));
+                    spaceSetting.getOutArrayList().get(i + j * 16).setEnable(sharedPreferences.getBoolean("out_" + j + "_" + i + "_enable", true));
                 }
             }
 
@@ -194,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
                 for (int i = 0; i < 8; i++) {
                     spaceSetting.getTkArrayList().get(i + j * 8).setName(sharedPreferences.getString("tk_" + j + "_" + i + "_name", "tk_" + j + "_" + i + "_name"));
                     spaceSetting.getTkArrayList().get(i + j * 8).setRegister(sharedPreferences.getInt("tk_" + j + "_" + i + "_register", 144+i+j*8));
+                    spaceSetting.getTkArrayList().get(i + j * 16).setEnable(sharedPreferences.getBoolean("tk_" + j + "_" + i + "_enable", true));
                 }
             }
         }
