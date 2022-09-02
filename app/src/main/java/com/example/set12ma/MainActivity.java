@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
                 for (int i = 0; i < 8; i++) {
                     spaceSetting.getTkArrayList().get(i + j * 8).setName(sharedPreferences.getString("tk_" + j + "_" + i + "_name", "tk_" + j + "_" + i + "_name"));
                     spaceSetting.getTkArrayList().get(i + j * 8).setRegister(sharedPreferences.getInt("tk_" + j + "_" + i + "_register", 144+i+j*8));
-                    spaceSetting.getTkArrayList().get(i + j * 16).setEnable(sharedPreferences.getBoolean("tk_" + j + "_" + i + "_enable", true));
+                    spaceSetting.getTkArrayList().get(i + j * 8).setEnable(sharedPreferences.getBoolean("tk_" + j + "_" + i + "_enable", true));
                 }
             }
         }
