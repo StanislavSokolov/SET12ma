@@ -26,8 +26,8 @@ public class FragmentSetting extends Fragment {
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
     private long timer = 500;
 
-    private ArrayList<Spinner> spinnerArrayList;
-    private ArrayList<ArrayAdapter> adapterArrayList;
+    private ArrayList<Spinner> spinnerArrayListAdc;
+    private ArrayList<ArrayAdapter> adapterArrayListAdc;
     private Spinner spinner_adc_0_ch_0_color;
     private ArrayAdapter<String> adapter_color_adc_0_ch_0;
     private Spinner spinner_adc_0_ch_1_color;
@@ -61,7 +61,7 @@ public class FragmentSetting extends Fragment {
     private Spinner spinner_adc_0_ch_15_color;
     private ArrayAdapter<String> adapter_color_adc_0_ch_15;
 
-    private ArrayList<EditText> editTextArrayListName;
+    private ArrayList<EditText> editTextArrayListNameAdc;
 
     private EditText editText_adc_0_ch_0_name;
     private EditText editText_adc_0_ch_1_name;
@@ -114,7 +114,7 @@ public class FragmentSetting extends Fragment {
     private EditText editText_adc_2_ch_14_name;
     private EditText editText_adc_2_ch_15_name;
 
-    private ArrayList<EditText> editTextArrayListRegister;
+    private ArrayList<EditText> editTextArrayListRegisterAdc;
 
     private EditText editText_adc_0_ch_0_register;
     private EditText editText_adc_0_ch_1_register;
@@ -167,7 +167,7 @@ public class FragmentSetting extends Fragment {
     private EditText editText_adc_2_ch_14_register;
     private EditText editText_adc_2_ch_15_register;
 
-    private ArrayList<EditText> editTextArrayListPlus;
+    private ArrayList<EditText> editTextArrayListPlusAdc;
 
     private EditText editText_adc_0_ch_0_plus;
     private EditText editText_adc_0_ch_1_plus;
@@ -220,7 +220,7 @@ public class FragmentSetting extends Fragment {
     private EditText editText_adc_2_ch_14_plus;
     private EditText editText_adc_2_ch_15_plus;
 
-    private ArrayList<EditText> editTextArrayListMinus;
+    private ArrayList<EditText> editTextArrayListMinusAdc;
 
     private EditText editText_adc_0_ch_0_minus;
     private EditText editText_adc_0_ch_1_minus;
@@ -273,7 +273,7 @@ public class FragmentSetting extends Fragment {
     private EditText editText_adc_2_ch_14_minus;
     private EditText editText_adc_2_ch_15_minus;
 
-    private ArrayList<Switch> switchArrayListEnable;
+    private ArrayList<Switch> switchArrayListEnableAdc;
 
     private Switch switch_acd_0_ch_0_enable;
     private Switch switch_acd_0_ch_1_enable;
@@ -327,6 +327,170 @@ public class FragmentSetting extends Fragment {
     private Switch switch_acd_2_ch_15_enable;
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private ArrayList<EditText> editTextArrayListNameIn;
+
+    private EditText editText_in_0_ch_0_name;
+    private EditText editText_in_0_ch_1_name;
+    private EditText editText_in_0_ch_2_name;
+    private EditText editText_in_0_ch_3_name;
+    private EditText editText_in_0_ch_4_name;
+    private EditText editText_in_0_ch_5_name;
+    private EditText editText_in_0_ch_6_name;
+    private EditText editText_in_0_ch_7_name;
+    private EditText editText_in_0_ch_8_name;
+    private EditText editText_in_0_ch_9_name;
+    private EditText editText_in_0_ch_10_name;
+    private EditText editText_in_0_ch_11_name;
+    private EditText editText_in_0_ch_12_name;
+    private EditText editText_in_0_ch_13_name;
+    private EditText editText_in_0_ch_14_name;
+    private EditText editText_in_0_ch_15_name;
+
+    private EditText editText_in_1_ch_0_name;
+    private EditText editText_in_1_ch_1_name;
+    private EditText editText_in_1_ch_2_name;
+    private EditText editText_in_1_ch_3_name;
+    private EditText editText_in_1_ch_4_name;
+    private EditText editText_in_1_ch_5_name;
+    private EditText editText_in_1_ch_6_name;
+    private EditText editText_in_1_ch_7_name;
+    private EditText editText_in_1_ch_8_name;
+    private EditText editText_in_1_ch_9_name;
+    private EditText editText_in_1_ch_10_name;
+    private EditText editText_in_1_ch_11_name;
+    private EditText editText_in_1_ch_12_name;
+    private EditText editText_in_1_ch_13_name;
+    private EditText editText_in_1_ch_14_name;
+    private EditText editText_in_1_ch_15_name;
+
+    private EditText editText_in_2_ch_0_name;
+    private EditText editText_in_2_ch_1_name;
+    private EditText editText_in_2_ch_2_name;
+    private EditText editText_in_2_ch_3_name;
+    private EditText editText_in_2_ch_4_name;
+    private EditText editText_in_2_ch_5_name;
+    private EditText editText_in_2_ch_6_name;
+    private EditText editText_in_2_ch_7_name;
+    private EditText editText_in_2_ch_8_name;
+    private EditText editText_in_2_ch_9_name;
+    private EditText editText_in_2_ch_10_name;
+    private EditText editText_in_2_ch_11_name;
+    private EditText editText_in_2_ch_12_name;
+    private EditText editText_in_2_ch_13_name;
+    private EditText editText_in_2_ch_14_name;
+    private EditText editText_in_2_ch_15_name;
+
+    private ArrayList<EditText> editTextArrayListRegisterIn;
+
+    private EditText editText_in_0_ch_0_register;
+    private EditText editText_in_0_ch_1_register;
+    private EditText editText_in_0_ch_2_register;
+    private EditText editText_in_0_ch_3_register;
+    private EditText editText_in_0_ch_4_register;
+    private EditText editText_in_0_ch_5_register;
+    private EditText editText_in_0_ch_6_register;
+    private EditText editText_in_0_ch_7_register;
+    private EditText editText_in_0_ch_8_register;
+    private EditText editText_in_0_ch_9_register;
+    private EditText editText_in_0_ch_10_register;
+    private EditText editText_in_0_ch_11_register;
+    private EditText editText_in_0_ch_12_register;
+    private EditText editText_in_0_ch_13_register;
+    private EditText editText_in_0_ch_14_register;
+    private EditText editText_in_0_ch_15_register;
+
+    private EditText editText_in_1_ch_0_register;
+    private EditText editText_in_1_ch_1_register;
+    private EditText editText_in_1_ch_2_register;
+    private EditText editText_in_1_ch_3_register;
+    private EditText editText_in_1_ch_4_register;
+    private EditText editText_in_1_ch_5_register;
+    private EditText editText_in_1_ch_6_register;
+    private EditText editText_in_1_ch_7_register;
+    private EditText editText_in_1_ch_8_register;
+    private EditText editText_in_1_ch_9_register;
+    private EditText editText_in_1_ch_10_register;
+    private EditText editText_in_1_ch_11_register;
+    private EditText editText_in_1_ch_12_register;
+    private EditText editText_in_1_ch_13_register;
+    private EditText editText_in_1_ch_14_register;
+    private EditText editText_in_1_ch_15_register;
+
+    private EditText editText_in_2_ch_0_register;
+    private EditText editText_in_2_ch_1_register;
+    private EditText editText_in_2_ch_2_register;
+    private EditText editText_in_2_ch_3_register;
+    private EditText editText_in_2_ch_4_register;
+    private EditText editText_in_2_ch_5_register;
+    private EditText editText_in_2_ch_6_register;
+    private EditText editText_in_2_ch_7_register;
+    private EditText editText_in_2_ch_8_register;
+    private EditText editText_in_2_ch_9_register;
+    private EditText editText_in_2_ch_10_register;
+    private EditText editText_in_2_ch_11_register;
+    private EditText editText_in_2_ch_12_register;
+    private EditText editText_in_2_ch_13_register;
+    private EditText editText_in_2_ch_14_register;
+    private EditText editText_in_2_ch_15_register;
+
+    private ArrayList<Switch> switchArrayListEnableIn;
+
+    private Switch switch_acd_in_ch_0_enable;
+    private Switch switch_acd_in_ch_1_enable;
+    private Switch switch_acd_in_ch_2_enable;
+    private Switch switch_acd_in_ch_3_enable;
+    private Switch switch_acd_in_ch_4_enable;
+    private Switch switch_acd_in_ch_5_enable;
+    private Switch switch_acd_in_ch_6_enable;
+    private Switch switch_acd_in_ch_7_enable;
+    private Switch switch_acd_in_ch_8_enable;
+    private Switch switch_acd_in_ch_9_enable;
+    private Switch switch_acd_in_ch_10_enable;
+    private Switch switch_acd_in_ch_11_enable;
+    private Switch switch_acd_in_ch_12_enable;
+    private Switch switch_acd_in_ch_13_enable;
+    private Switch switch_acd_in_ch_14_enable;
+    private Switch switch_acd_in_ch_15_enable;
+
+    private Switch switch_in_1_ch_0_enable;
+    private Switch switch_in_1_ch_1_enable;
+    private Switch switch_in_1_ch_2_enable;
+    private Switch switch_in_1_ch_3_enable;
+    private Switch switch_in_1_ch_4_enable;
+    private Switch switch_in_1_ch_5_enable;
+    private Switch switch_in_1_ch_6_enable;
+    private Switch switch_in_1_ch_7_enable;
+    private Switch switch_in_1_ch_8_enable;
+    private Switch switch_in_1_ch_9_enable;
+    private Switch switch_in_1_ch_10_enable;
+    private Switch switch_in_1_ch_11_enable;
+    private Switch switch_in_1_ch_12_enable;
+    private Switch switch_in_1_ch_13_enable;
+    private Switch switch_in_1_ch_14_enable;
+    private Switch switch_in_1_ch_15_enable;
+
+    private Switch switch_in_2_ch_0_enable;
+    private Switch switch_in_2_ch_1_enable;
+    private Switch switch_in_2_ch_2_enable;
+    private Switch switch_in_2_ch_3_enable;
+    private Switch switch_in_2_ch_4_enable;
+    private Switch switch_in_2_ch_5_enable;
+    private Switch switch_in_2_ch_6_enable;
+    private Switch switch_in_2_ch_7_enable;
+    private Switch switch_in_2_ch_8_enable;
+    private Switch switch_in_2_ch_9_enable;
+    private Switch switch_in_2_ch_10_enable;
+    private Switch switch_in_2_ch_11_enable;
+    private Switch switch_in_2_ch_12_enable;
+    private Switch switch_in_2_ch_13_enable;
+    private Switch switch_in_2_ch_14_enable;
+    private Switch switch_in_2_ch_15_enable;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -361,7 +525,7 @@ public class FragmentSetting extends Fragment {
     public void onResume() {
         super.onResume();
         int i = 0;
-        for (Spinner spinner: spinnerArrayList) {
+        for (Spinner spinner: spinnerArrayListAdc) {
             spinner.setSelection(spaceSetting.getAdcArrayList().get(i).getColor());
             i= i + 1;
         }
@@ -374,106 +538,106 @@ public class FragmentSetting extends Fragment {
         View root = inflater.inflate(R.layout.fragment_setting, container, false);
 
 
-        spinnerArrayList = new ArrayList<>();
-        adapterArrayList = new ArrayList<>();
+        spinnerArrayListAdc = new ArrayList<>();
+        adapterArrayListAdc = new ArrayList<>();
 
         spinner_adc_0_ch_0_color = root.findViewById(R.id.spinner_adc_0_ch_0_color);
         adapter_color_adc_0_ch_0 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_0.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_0);
-        spinnerArrayList.add(spinner_adc_0_ch_0_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_0);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_0_color);
 
         spinner_adc_0_ch_1_color = root.findViewById(R.id.spinner_adc_0_ch_1_color);
         adapter_color_adc_0_ch_1 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_1);
-        spinnerArrayList.add(spinner_adc_0_ch_1_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_1);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_1_color);
 
         spinner_adc_0_ch_2_color = root.findViewById(R.id.spinner_adc_0_ch_2_color);
         adapter_color_adc_0_ch_2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_2);
-        spinnerArrayList.add(spinner_adc_0_ch_2_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_2);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_2_color);
 
         spinner_adc_0_ch_3_color = root.findViewById(R.id.spinner_adc_0_ch_3_color);
         adapter_color_adc_0_ch_3 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_3);
-        spinnerArrayList.add(spinner_adc_0_ch_3_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_3);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_3_color);
 
         spinner_adc_0_ch_4_color = root.findViewById(R.id.spinner_adc_0_ch_4_color);
         adapter_color_adc_0_ch_4 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_4);
-        spinnerArrayList.add(spinner_adc_0_ch_4_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_4);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_4_color);
 
         spinner_adc_0_ch_5_color = root.findViewById(R.id.spinner_adc_0_ch_5_color);
         adapter_color_adc_0_ch_5 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_5);
-        spinnerArrayList.add(spinner_adc_0_ch_5_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_5);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_5_color);
 
         spinner_adc_0_ch_6_color = root.findViewById(R.id.spinner_adc_0_ch_6_color);
         adapter_color_adc_0_ch_6 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_6);
-        spinnerArrayList.add(spinner_adc_0_ch_6_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_6);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_6_color);
 
         spinner_adc_0_ch_7_color = root.findViewById(R.id.spinner_adc_0_ch_7_color);
         adapter_color_adc_0_ch_7 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_7.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_7);
-        spinnerArrayList.add(spinner_adc_0_ch_7_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_7);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_7_color);
 
         spinner_adc_0_ch_8_color = root.findViewById(R.id.spinner_adc_0_ch_8_color);
         adapter_color_adc_0_ch_8 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_8.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_8);
-        spinnerArrayList.add(spinner_adc_0_ch_8_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_8);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_8_color);
 
         spinner_adc_0_ch_9_color = root.findViewById(R.id.spinner_adc_0_ch_9_color);
         adapter_color_adc_0_ch_9 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_9.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_9);
-        spinnerArrayList.add(spinner_adc_0_ch_9_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_9);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_9_color);
 
         spinner_adc_0_ch_10_color = root.findViewById(R.id.spinner_adc_0_ch_10_color);
         adapter_color_adc_0_ch_10 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_10.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_10);
-        spinnerArrayList.add(spinner_adc_0_ch_10_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_10);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_10_color);
 
         spinner_adc_0_ch_11_color = root.findViewById(R.id.spinner_adc_0_ch_11_color);
         adapter_color_adc_0_ch_11 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_11.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_11);
-        spinnerArrayList.add(spinner_adc_0_ch_11_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_11);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_11_color);
 
         spinner_adc_0_ch_12_color = root.findViewById(R.id.spinner_adc_0_ch_12_color);
         adapter_color_adc_0_ch_12 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_12.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_12);
-        spinnerArrayList.add(spinner_adc_0_ch_12_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_12);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_12_color);
 
         spinner_adc_0_ch_13_color = root.findViewById(R.id.spinner_adc_0_ch_13_color);
         adapter_color_adc_0_ch_13 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_13.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_13);
-        spinnerArrayList.add(spinner_adc_0_ch_13_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_13);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_13_color);
 
         spinner_adc_0_ch_14_color = root.findViewById(R.id.spinner_adc_0_ch_14_color);
         adapter_color_adc_0_ch_14 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_14.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_14);
-        spinnerArrayList.add(spinner_adc_0_ch_14_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_14);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_14_color);
 
         spinner_adc_0_ch_15_color = root.findViewById(R.id.spinner_adc_0_ch_15_color);
         adapter_color_adc_0_ch_15 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
         adapter_color_adc_0_ch_15.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterArrayList.add(adapter_color_adc_0_ch_15);
-        spinnerArrayList.add(spinner_adc_0_ch_15_color);
+        adapterArrayListAdc.add(adapter_color_adc_0_ch_15);
+        spinnerArrayListAdc.add(spinner_adc_0_ch_15_color);
 
-        for (ArrayAdapter arrayAdapter: adapterArrayList) {
+        for (ArrayAdapter arrayAdapter: adapterArrayListAdc) {
             arrayAdapter.add("Color.GREEN");
             arrayAdapter.add("Color.RED");
             arrayAdapter.add("Color.BLUE");
@@ -727,109 +891,109 @@ public class FragmentSetting extends Fragment {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        editTextArrayListName = new ArrayList<>();
+        editTextArrayListNameAdc = new ArrayList<>();
 
         editText_adc_0_ch_0_name = root.findViewById(R.id.editText_adc_0_ch_0_name);
-        editTextArrayListName.add(editText_adc_0_ch_0_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_0_name);
         editText_adc_0_ch_1_name = root.findViewById(R.id.editText_adc_0_ch_1_name);
-        editTextArrayListName.add(editText_adc_0_ch_1_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_1_name);
         editText_adc_0_ch_2_name = root.findViewById(R.id.editText_adc_0_ch_2_name);
-        editTextArrayListName.add(editText_adc_0_ch_2_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_2_name);
         editText_adc_0_ch_3_name = root.findViewById(R.id.editText_adc_0_ch_3_name);
-        editTextArrayListName.add(editText_adc_0_ch_3_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_3_name);
         editText_adc_0_ch_4_name = root.findViewById(R.id.editText_adc_0_ch_4_name);
-        editTextArrayListName.add(editText_adc_0_ch_4_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_4_name);
         editText_adc_0_ch_5_name = root.findViewById(R.id.editText_adc_0_ch_5_name);
-        editTextArrayListName.add(editText_adc_0_ch_5_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_5_name);
         editText_adc_0_ch_6_name = root.findViewById(R.id.editText_adc_0_ch_6_name);
-        editTextArrayListName.add(editText_adc_0_ch_6_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_6_name);
         editText_adc_0_ch_7_name = root.findViewById(R.id.editText_adc_0_ch_7_name);
-        editTextArrayListName.add(editText_adc_0_ch_7_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_7_name);
         editText_adc_0_ch_8_name = root.findViewById(R.id.editText_adc_0_ch_8_name);
-        editTextArrayListName.add(editText_adc_0_ch_8_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_8_name);
         editText_adc_0_ch_9_name = root.findViewById(R.id.editText_adc_0_ch_9_name);
-        editTextArrayListName.add(editText_adc_0_ch_9_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_9_name);
         editText_adc_0_ch_10_name = root.findViewById(R.id.editText_adc_0_ch_10_name);
-        editTextArrayListName.add(editText_adc_0_ch_10_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_10_name);
         editText_adc_0_ch_11_name = root.findViewById(R.id.editText_adc_0_ch_11_name);
-        editTextArrayListName.add(editText_adc_0_ch_11_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_11_name);
         editText_adc_0_ch_12_name = root.findViewById(R.id.editText_adc_0_ch_12_name);
-        editTextArrayListName.add(editText_adc_0_ch_12_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_12_name);
         editText_adc_0_ch_13_name = root.findViewById(R.id.editText_adc_0_ch_13_name);
-        editTextArrayListName.add(editText_adc_0_ch_13_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_13_name);
         editText_adc_0_ch_14_name = root.findViewById(R.id.editText_adc_0_ch_14_name);
-        editTextArrayListName.add(editText_adc_0_ch_14_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_14_name);
         editText_adc_0_ch_15_name = root.findViewById(R.id.editText_adc_0_ch_15_name);
-        editTextArrayListName.add(editText_adc_0_ch_15_name);
+        editTextArrayListNameAdc.add(editText_adc_0_ch_15_name);
 
         editText_adc_1_ch_0_name = root.findViewById(R.id.editText_adc_1_ch_0_name);
-        editTextArrayListName.add(editText_adc_1_ch_0_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_0_name);
         editText_adc_1_ch_1_name = root.findViewById(R.id.editText_adc_1_ch_1_name);
-        editTextArrayListName.add(editText_adc_1_ch_1_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_1_name);
         editText_adc_1_ch_2_name = root.findViewById(R.id.editText_adc_1_ch_2_name);
-        editTextArrayListName.add(editText_adc_1_ch_2_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_2_name);
         editText_adc_1_ch_3_name = root.findViewById(R.id.editText_adc_1_ch_3_name);
-        editTextArrayListName.add(editText_adc_1_ch_3_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_3_name);
         editText_adc_1_ch_4_name = root.findViewById(R.id.editText_adc_1_ch_4_name);
-        editTextArrayListName.add(editText_adc_1_ch_4_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_4_name);
         editText_adc_1_ch_5_name = root.findViewById(R.id.editText_adc_1_ch_5_name);
-        editTextArrayListName.add(editText_adc_1_ch_5_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_5_name);
         editText_adc_1_ch_6_name = root.findViewById(R.id.editText_adc_1_ch_6_name);
-        editTextArrayListName.add(editText_adc_1_ch_6_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_6_name);
         editText_adc_1_ch_7_name = root.findViewById(R.id.editText_adc_1_ch_7_name);
-        editTextArrayListName.add(editText_adc_1_ch_7_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_7_name);
         editText_adc_1_ch_8_name = root.findViewById(R.id.editText_adc_1_ch_8_name);
-        editTextArrayListName.add(editText_adc_1_ch_8_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_8_name);
         editText_adc_1_ch_9_name = root.findViewById(R.id.editText_adc_1_ch_9_name);
-        editTextArrayListName.add(editText_adc_1_ch_9_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_9_name);
         editText_adc_1_ch_10_name = root.findViewById(R.id.editText_adc_1_ch_10_name);
-        editTextArrayListName.add(editText_adc_1_ch_10_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_10_name);
         editText_adc_1_ch_11_name = root.findViewById(R.id.editText_adc_1_ch_11_name);
-        editTextArrayListName.add(editText_adc_1_ch_11_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_11_name);
         editText_adc_1_ch_12_name = root.findViewById(R.id.editText_adc_1_ch_12_name);
-        editTextArrayListName.add(editText_adc_1_ch_12_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_12_name);
         editText_adc_1_ch_13_name = root.findViewById(R.id.editText_adc_1_ch_13_name);
-        editTextArrayListName.add(editText_adc_1_ch_13_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_13_name);
         editText_adc_1_ch_14_name = root.findViewById(R.id.editText_adc_1_ch_14_name);
-        editTextArrayListName.add(editText_adc_1_ch_14_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_14_name);
         editText_adc_1_ch_15_name = root.findViewById(R.id.editText_adc_1_ch_15_name);
-        editTextArrayListName.add(editText_adc_1_ch_15_name);
+        editTextArrayListNameAdc.add(editText_adc_1_ch_15_name);
 
         editText_adc_2_ch_0_name = root.findViewById(R.id.editText_adc_2_ch_0_name);
-        editTextArrayListName.add(editText_adc_2_ch_0_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_0_name);
         editText_adc_2_ch_1_name = root.findViewById(R.id.editText_adc_2_ch_1_name);
-        editTextArrayListName.add(editText_adc_2_ch_1_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_1_name);
         editText_adc_2_ch_2_name = root.findViewById(R.id.editText_adc_2_ch_2_name);
-        editTextArrayListName.add(editText_adc_2_ch_2_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_2_name);
         editText_adc_2_ch_3_name = root.findViewById(R.id.editText_adc_2_ch_3_name);
-        editTextArrayListName.add(editText_adc_2_ch_3_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_3_name);
         editText_adc_2_ch_4_name = root.findViewById(R.id.editText_adc_2_ch_4_name);
-        editTextArrayListName.add(editText_adc_2_ch_4_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_4_name);
         editText_adc_2_ch_5_name = root.findViewById(R.id.editText_adc_2_ch_5_name);
-        editTextArrayListName.add(editText_adc_2_ch_5_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_5_name);
         editText_adc_2_ch_6_name = root.findViewById(R.id.editText_adc_2_ch_6_name);
-        editTextArrayListName.add(editText_adc_2_ch_6_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_6_name);
         editText_adc_2_ch_7_name = root.findViewById(R.id.editText_adc_2_ch_7_name);
-        editTextArrayListName.add(editText_adc_2_ch_7_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_7_name);
         editText_adc_2_ch_8_name = root.findViewById(R.id.editText_adc_2_ch_8_name);
-        editTextArrayListName.add(editText_adc_2_ch_8_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_8_name);
         editText_adc_2_ch_9_name = root.findViewById(R.id.editText_adc_2_ch_9_name);
-        editTextArrayListName.add(editText_adc_2_ch_9_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_9_name);
         editText_adc_2_ch_10_name = root.findViewById(R.id.editText_adc_2_ch_10_name);
-        editTextArrayListName.add(editText_adc_2_ch_10_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_10_name);
         editText_adc_2_ch_11_name = root.findViewById(R.id.editText_adc_2_ch_11_name);
-        editTextArrayListName.add(editText_adc_2_ch_11_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_11_name);
         editText_adc_2_ch_12_name = root.findViewById(R.id.editText_adc_2_ch_12_name);
-        editTextArrayListName.add(editText_adc_2_ch_12_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_12_name);
         editText_adc_2_ch_13_name = root.findViewById(R.id.editText_adc_2_ch_13_name);
-        editTextArrayListName.add(editText_adc_2_ch_13_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_13_name);
         editText_adc_2_ch_14_name = root.findViewById(R.id.editText_adc_2_ch_14_name);
-        editTextArrayListName.add(editText_adc_2_ch_14_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_14_name);
         editText_adc_2_ch_15_name = root.findViewById(R.id.editText_adc_2_ch_15_name);
-        editTextArrayListName.add(editText_adc_2_ch_15_name);
+        editTextArrayListNameAdc.add(editText_adc_2_ch_15_name);
 
         int i = 0;
-        for (final EditText editText: editTextArrayListName) {
+        for (final EditText editText: editTextArrayListNameAdc) {
             editText.setText(String.valueOf(spaceSetting.getAdcArrayList().get(i).getName()));
             final int finalI = i;
             editText.setOnKeyListener(new View.OnKeyListener() {
@@ -1076,109 +1240,109 @@ public class FragmentSetting extends Fragment {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        editTextArrayListRegister = new ArrayList<>();
+        editTextArrayListRegisterAdc = new ArrayList<>();
 
         editText_adc_0_ch_0_register = root.findViewById(R.id.editText_adc_0_ch_0_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_0_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_0_register);
         editText_adc_0_ch_1_register = root.findViewById(R.id.editText_adc_0_ch_1_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_1_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_1_register);
         editText_adc_0_ch_2_register = root.findViewById(R.id.editText_adc_0_ch_2_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_2_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_2_register);
         editText_adc_0_ch_3_register = root.findViewById(R.id.editText_adc_0_ch_3_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_3_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_3_register);
         editText_adc_0_ch_4_register = root.findViewById(R.id.editText_adc_0_ch_4_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_4_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_4_register);
         editText_adc_0_ch_5_register = root.findViewById(R.id.editText_adc_0_ch_5_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_5_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_5_register);
         editText_adc_0_ch_6_register = root.findViewById(R.id.editText_adc_0_ch_6_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_6_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_6_register);
         editText_adc_0_ch_7_register = root.findViewById(R.id.editText_adc_0_ch_7_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_7_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_7_register);
         editText_adc_0_ch_8_register = root.findViewById(R.id.editText_adc_0_ch_8_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_8_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_8_register);
         editText_adc_0_ch_9_register = root.findViewById(R.id.editText_adc_0_ch_9_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_9_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_9_register);
         editText_adc_0_ch_10_register = root.findViewById(R.id.editText_adc_0_ch_10_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_10_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_10_register);
         editText_adc_0_ch_11_register = root.findViewById(R.id.editText_adc_0_ch_11_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_11_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_11_register);
         editText_adc_0_ch_12_register = root.findViewById(R.id.editText_adc_0_ch_12_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_12_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_12_register);
         editText_adc_0_ch_13_register = root.findViewById(R.id.editText_adc_0_ch_13_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_13_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_13_register);
         editText_adc_0_ch_14_register = root.findViewById(R.id.editText_adc_0_ch_14_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_14_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_14_register);
         editText_adc_0_ch_15_register = root.findViewById(R.id.editText_adc_0_ch_15_register);
-        editTextArrayListRegister.add(editText_adc_0_ch_15_register);
+        editTextArrayListRegisterAdc.add(editText_adc_0_ch_15_register);
 
         editText_adc_1_ch_0_register = root.findViewById(R.id.editText_adc_1_ch_0_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_0_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_0_register);
         editText_adc_1_ch_1_register = root.findViewById(R.id.editText_adc_1_ch_1_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_1_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_1_register);
         editText_adc_1_ch_2_register = root.findViewById(R.id.editText_adc_1_ch_2_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_2_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_2_register);
         editText_adc_1_ch_3_register = root.findViewById(R.id.editText_adc_1_ch_3_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_3_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_3_register);
         editText_adc_1_ch_4_register = root.findViewById(R.id.editText_adc_1_ch_4_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_4_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_4_register);
         editText_adc_1_ch_5_register = root.findViewById(R.id.editText_adc_1_ch_5_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_5_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_5_register);
         editText_adc_1_ch_6_register = root.findViewById(R.id.editText_adc_1_ch_6_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_6_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_6_register);
         editText_adc_1_ch_7_register = root.findViewById(R.id.editText_adc_1_ch_7_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_7_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_7_register);
         editText_adc_1_ch_8_register = root.findViewById(R.id.editText_adc_1_ch_8_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_8_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_8_register);
         editText_adc_1_ch_9_register = root.findViewById(R.id.editText_adc_1_ch_9_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_9_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_9_register);
         editText_adc_1_ch_10_register = root.findViewById(R.id.editText_adc_1_ch_10_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_10_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_10_register);
         editText_adc_1_ch_11_register = root.findViewById(R.id.editText_adc_1_ch_11_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_11_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_11_register);
         editText_adc_1_ch_12_register = root.findViewById(R.id.editText_adc_1_ch_12_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_12_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_12_register);
         editText_adc_1_ch_13_register = root.findViewById(R.id.editText_adc_1_ch_13_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_13_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_13_register);
         editText_adc_1_ch_14_register = root.findViewById(R.id.editText_adc_1_ch_14_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_14_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_14_register);
         editText_adc_1_ch_15_register = root.findViewById(R.id.editText_adc_1_ch_15_register);
-        editTextArrayListRegister.add(editText_adc_1_ch_15_register);
+        editTextArrayListRegisterAdc.add(editText_adc_1_ch_15_register);
 
         editText_adc_2_ch_0_register = root.findViewById(R.id.editText_adc_2_ch_0_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_0_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_0_register);
         editText_adc_2_ch_1_register = root.findViewById(R.id.editText_adc_2_ch_1_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_1_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_1_register);
         editText_adc_2_ch_2_register = root.findViewById(R.id.editText_adc_2_ch_2_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_2_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_2_register);
         editText_adc_2_ch_3_register = root.findViewById(R.id.editText_adc_2_ch_3_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_3_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_3_register);
         editText_adc_2_ch_4_register = root.findViewById(R.id.editText_adc_2_ch_4_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_4_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_4_register);
         editText_adc_2_ch_5_register = root.findViewById(R.id.editText_adc_2_ch_5_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_5_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_5_register);
         editText_adc_2_ch_6_register = root.findViewById(R.id.editText_adc_2_ch_6_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_6_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_6_register);
         editText_adc_2_ch_7_register = root.findViewById(R.id.editText_adc_2_ch_7_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_7_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_7_register);
         editText_adc_2_ch_8_register = root.findViewById(R.id.editText_adc_2_ch_8_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_8_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_8_register);
         editText_adc_2_ch_9_register = root.findViewById(R.id.editText_adc_2_ch_9_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_9_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_9_register);
         editText_adc_2_ch_10_register = root.findViewById(R.id.editText_adc_2_ch_10_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_10_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_10_register);
         editText_adc_2_ch_11_register = root.findViewById(R.id.editText_adc_2_ch_11_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_11_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_11_register);
         editText_adc_2_ch_12_register = root.findViewById(R.id.editText_adc_2_ch_12_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_12_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_12_register);
         editText_adc_2_ch_13_register = root.findViewById(R.id.editText_adc_2_ch_13_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_13_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_13_register);
         editText_adc_2_ch_14_register = root.findViewById(R.id.editText_adc_2_ch_14_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_14_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_14_register);
         editText_adc_2_ch_15_register = root.findViewById(R.id.editText_adc_2_ch_15_register);
-        editTextArrayListRegister.add(editText_adc_2_ch_15_register);
+        editTextArrayListRegisterAdc.add(editText_adc_2_ch_15_register);
 
         i = 0;
-        for (final EditText editText: editTextArrayListRegister) {
+        for (final EditText editText: editTextArrayListRegisterAdc) {
             editText.setText(String.valueOf(spaceSetting.getAdcArrayList().get(i).getRegister()));
             final int finalI = i;
             editText.setOnKeyListener(new View.OnKeyListener() {
@@ -1442,109 +1606,109 @@ public class FragmentSetting extends Fragment {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        editTextArrayListPlus = new ArrayList<>();
+        editTextArrayListPlusAdc = new ArrayList<>();
 
         editText_adc_0_ch_0_plus = root.findViewById(R.id.editText_adc_0_ch_0_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_0_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_0_plus);
         editText_adc_0_ch_1_plus = root.findViewById(R.id.editText_adc_0_ch_1_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_1_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_1_plus);
         editText_adc_0_ch_2_plus = root.findViewById(R.id.editText_adc_0_ch_2_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_2_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_2_plus);
         editText_adc_0_ch_3_plus = root.findViewById(R.id.editText_adc_0_ch_3_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_3_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_3_plus);
         editText_adc_0_ch_4_plus = root.findViewById(R.id.editText_adc_0_ch_4_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_4_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_4_plus);
         editText_adc_0_ch_5_plus = root.findViewById(R.id.editText_adc_0_ch_5_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_5_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_5_plus);
         editText_adc_0_ch_6_plus = root.findViewById(R.id.editText_adc_0_ch_6_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_6_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_6_plus);
         editText_adc_0_ch_7_plus = root.findViewById(R.id.editText_adc_0_ch_7_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_7_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_7_plus);
         editText_adc_0_ch_8_plus = root.findViewById(R.id.editText_adc_0_ch_8_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_8_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_8_plus);
         editText_adc_0_ch_9_plus = root.findViewById(R.id.editText_adc_0_ch_9_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_9_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_9_plus);
         editText_adc_0_ch_10_plus = root.findViewById(R.id.editText_adc_0_ch_10_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_10_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_10_plus);
         editText_adc_0_ch_11_plus = root.findViewById(R.id.editText_adc_0_ch_11_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_11_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_11_plus);
         editText_adc_0_ch_12_plus = root.findViewById(R.id.editText_adc_0_ch_12_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_12_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_12_plus);
         editText_adc_0_ch_13_plus = root.findViewById(R.id.editText_adc_0_ch_13_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_13_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_13_plus);
         editText_adc_0_ch_14_plus = root.findViewById(R.id.editText_adc_0_ch_14_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_14_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_14_plus);
         editText_adc_0_ch_15_plus = root.findViewById(R.id.editText_adc_0_ch_15_plus);
-        editTextArrayListPlus.add(editText_adc_0_ch_15_plus);
+        editTextArrayListPlusAdc.add(editText_adc_0_ch_15_plus);
 
         editText_adc_1_ch_0_plus = root.findViewById(R.id.editText_adc_1_ch_0_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_0_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_0_plus);
         editText_adc_1_ch_1_plus = root.findViewById(R.id.editText_adc_1_ch_1_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_1_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_1_plus);
         editText_adc_1_ch_2_plus = root.findViewById(R.id.editText_adc_1_ch_2_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_2_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_2_plus);
         editText_adc_1_ch_3_plus = root.findViewById(R.id.editText_adc_1_ch_3_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_3_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_3_plus);
         editText_adc_1_ch_4_plus = root.findViewById(R.id.editText_adc_1_ch_4_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_4_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_4_plus);
         editText_adc_1_ch_5_plus = root.findViewById(R.id.editText_adc_1_ch_5_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_5_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_5_plus);
         editText_adc_1_ch_6_plus = root.findViewById(R.id.editText_adc_1_ch_6_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_6_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_6_plus);
         editText_adc_1_ch_7_plus = root.findViewById(R.id.editText_adc_1_ch_7_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_7_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_7_plus);
         editText_adc_1_ch_8_plus = root.findViewById(R.id.editText_adc_1_ch_8_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_8_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_8_plus);
         editText_adc_1_ch_9_plus = root.findViewById(R.id.editText_adc_1_ch_9_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_9_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_9_plus);
         editText_adc_1_ch_10_plus = root.findViewById(R.id.editText_adc_1_ch_10_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_10_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_10_plus);
         editText_adc_1_ch_11_plus = root.findViewById(R.id.editText_adc_1_ch_11_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_11_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_11_plus);
         editText_adc_1_ch_12_plus = root.findViewById(R.id.editText_adc_1_ch_12_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_12_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_12_plus);
         editText_adc_1_ch_13_plus = root.findViewById(R.id.editText_adc_1_ch_13_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_13_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_13_plus);
         editText_adc_1_ch_14_plus = root.findViewById(R.id.editText_adc_1_ch_14_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_14_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_14_plus);
         editText_adc_1_ch_15_plus = root.findViewById(R.id.editText_adc_1_ch_15_plus);
-        editTextArrayListPlus.add(editText_adc_1_ch_15_plus);
+        editTextArrayListPlusAdc.add(editText_adc_1_ch_15_plus);
 
         editText_adc_2_ch_0_plus = root.findViewById(R.id.editText_adc_2_ch_0_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_0_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_0_plus);
         editText_adc_2_ch_1_plus = root.findViewById(R.id.editText_adc_2_ch_1_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_1_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_1_plus);
         editText_adc_2_ch_2_plus = root.findViewById(R.id.editText_adc_2_ch_2_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_2_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_2_plus);
         editText_adc_2_ch_3_plus = root.findViewById(R.id.editText_adc_2_ch_3_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_3_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_3_plus);
         editText_adc_2_ch_4_plus = root.findViewById(R.id.editText_adc_2_ch_4_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_4_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_4_plus);
         editText_adc_2_ch_5_plus = root.findViewById(R.id.editText_adc_2_ch_5_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_5_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_5_plus);
         editText_adc_2_ch_6_plus = root.findViewById(R.id.editText_adc_2_ch_6_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_6_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_6_plus);
         editText_adc_2_ch_7_plus = root.findViewById(R.id.editText_adc_2_ch_7_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_7_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_7_plus);
         editText_adc_2_ch_8_plus = root.findViewById(R.id.editText_adc_2_ch_8_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_8_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_8_plus);
         editText_adc_2_ch_9_plus = root.findViewById(R.id.editText_adc_2_ch_9_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_9_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_9_plus);
         editText_adc_2_ch_10_plus = root.findViewById(R.id.editText_adc_2_ch_10_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_10_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_10_plus);
         editText_adc_2_ch_11_plus = root.findViewById(R.id.editText_adc_2_ch_11_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_11_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_11_plus);
         editText_adc_2_ch_12_plus = root.findViewById(R.id.editText_adc_2_ch_12_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_12_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_12_plus);
         editText_adc_2_ch_13_plus = root.findViewById(R.id.editText_adc_2_ch_13_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_13_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_13_plus);
         editText_adc_2_ch_14_plus = root.findViewById(R.id.editText_adc_2_ch_14_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_14_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_14_plus);
         editText_adc_2_ch_15_plus = root.findViewById(R.id.editText_adc_2_ch_15_plus);
-        editTextArrayListPlus.add(editText_adc_2_ch_15_plus);
+        editTextArrayListPlusAdc.add(editText_adc_2_ch_15_plus);
 
         i = 0;
-        for (final EditText editText: editTextArrayListPlus) {
+        for (final EditText editText: editTextArrayListPlusAdc) {
             editText.setText(String.valueOf(spaceSetting.getAdcArrayList().get(i).getPlus()));
             final int finalI = i;
             editText.setOnKeyListener(new View.OnKeyListener() {
@@ -1809,109 +1973,109 @@ public class FragmentSetting extends Fragment {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        editTextArrayListMinus = new ArrayList<>();
+        editTextArrayListMinusAdc = new ArrayList<>();
 
         editText_adc_0_ch_0_minus = root.findViewById(R.id.editText_adc_0_ch_0_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_0_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_0_minus);
         editText_adc_0_ch_1_minus = root.findViewById(R.id.editText_adc_0_ch_1_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_1_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_1_minus);
         editText_adc_0_ch_2_minus = root.findViewById(R.id.editText_adc_0_ch_2_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_2_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_2_minus);
         editText_adc_0_ch_3_minus = root.findViewById(R.id.editText_adc_0_ch_3_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_3_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_3_minus);
         editText_adc_0_ch_4_minus = root.findViewById(R.id.editText_adc_0_ch_4_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_4_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_4_minus);
         editText_adc_0_ch_5_minus = root.findViewById(R.id.editText_adc_0_ch_5_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_5_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_5_minus);
         editText_adc_0_ch_6_minus = root.findViewById(R.id.editText_adc_0_ch_6_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_6_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_6_minus);
         editText_adc_0_ch_7_minus = root.findViewById(R.id.editText_adc_0_ch_7_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_7_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_7_minus);
         editText_adc_0_ch_8_minus = root.findViewById(R.id.editText_adc_0_ch_8_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_8_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_8_minus);
         editText_adc_0_ch_9_minus = root.findViewById(R.id.editText_adc_0_ch_9_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_9_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_9_minus);
         editText_adc_0_ch_10_minus = root.findViewById(R.id.editText_adc_0_ch_10_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_10_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_10_minus);
         editText_adc_0_ch_11_minus = root.findViewById(R.id.editText_adc_0_ch_11_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_11_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_11_minus);
         editText_adc_0_ch_12_minus = root.findViewById(R.id.editText_adc_0_ch_12_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_12_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_12_minus);
         editText_adc_0_ch_13_minus = root.findViewById(R.id.editText_adc_0_ch_13_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_13_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_13_minus);
         editText_adc_0_ch_14_minus = root.findViewById(R.id.editText_adc_0_ch_14_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_14_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_14_minus);
         editText_adc_0_ch_15_minus = root.findViewById(R.id.editText_adc_0_ch_15_minus);
-        editTextArrayListMinus.add(editText_adc_0_ch_15_minus);
+        editTextArrayListMinusAdc.add(editText_adc_0_ch_15_minus);
 
         editText_adc_1_ch_0_minus = root.findViewById(R.id.editText_adc_1_ch_0_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_0_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_0_minus);
         editText_adc_1_ch_1_minus = root.findViewById(R.id.editText_adc_1_ch_1_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_1_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_1_minus);
         editText_adc_1_ch_2_minus = root.findViewById(R.id.editText_adc_1_ch_2_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_2_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_2_minus);
         editText_adc_1_ch_3_minus = root.findViewById(R.id.editText_adc_1_ch_3_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_3_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_3_minus);
         editText_adc_1_ch_4_minus = root.findViewById(R.id.editText_adc_1_ch_4_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_4_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_4_minus);
         editText_adc_1_ch_5_minus = root.findViewById(R.id.editText_adc_1_ch_5_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_5_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_5_minus);
         editText_adc_1_ch_6_minus = root.findViewById(R.id.editText_adc_1_ch_6_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_6_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_6_minus);
         editText_adc_1_ch_7_minus = root.findViewById(R.id.editText_adc_1_ch_7_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_7_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_7_minus);
         editText_adc_1_ch_8_minus = root.findViewById(R.id.editText_adc_1_ch_8_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_8_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_8_minus);
         editText_adc_1_ch_9_minus = root.findViewById(R.id.editText_adc_1_ch_9_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_9_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_9_minus);
         editText_adc_1_ch_10_minus = root.findViewById(R.id.editText_adc_1_ch_10_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_10_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_10_minus);
         editText_adc_1_ch_11_minus = root.findViewById(R.id.editText_adc_1_ch_11_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_11_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_11_minus);
         editText_adc_1_ch_12_minus = root.findViewById(R.id.editText_adc_1_ch_12_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_12_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_12_minus);
         editText_adc_1_ch_13_minus = root.findViewById(R.id.editText_adc_1_ch_13_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_13_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_13_minus);
         editText_adc_1_ch_14_minus = root.findViewById(R.id.editText_adc_1_ch_14_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_14_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_14_minus);
         editText_adc_1_ch_15_minus = root.findViewById(R.id.editText_adc_1_ch_15_minus);
-        editTextArrayListMinus.add(editText_adc_1_ch_15_minus);
+        editTextArrayListMinusAdc.add(editText_adc_1_ch_15_minus);
 
         editText_adc_2_ch_0_minus = root.findViewById(R.id.editText_adc_2_ch_0_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_0_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_0_minus);
         editText_adc_2_ch_1_minus = root.findViewById(R.id.editText_adc_2_ch_1_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_1_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_1_minus);
         editText_adc_2_ch_2_minus = root.findViewById(R.id.editText_adc_2_ch_2_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_2_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_2_minus);
         editText_adc_2_ch_3_minus = root.findViewById(R.id.editText_adc_2_ch_3_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_3_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_3_minus);
         editText_adc_2_ch_4_minus = root.findViewById(R.id.editText_adc_2_ch_4_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_4_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_4_minus);
         editText_adc_2_ch_5_minus = root.findViewById(R.id.editText_adc_2_ch_5_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_5_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_5_minus);
         editText_adc_2_ch_6_minus = root.findViewById(R.id.editText_adc_2_ch_6_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_6_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_6_minus);
         editText_adc_2_ch_7_minus = root.findViewById(R.id.editText_adc_2_ch_7_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_7_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_7_minus);
         editText_adc_2_ch_8_minus = root.findViewById(R.id.editText_adc_2_ch_8_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_8_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_8_minus);
         editText_adc_2_ch_9_minus = root.findViewById(R.id.editText_adc_2_ch_9_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_9_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_9_minus);
         editText_adc_2_ch_10_minus = root.findViewById(R.id.editText_adc_2_ch_10_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_10_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_10_minus);
         editText_adc_2_ch_11_minus = root.findViewById(R.id.editText_adc_2_ch_11_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_11_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_11_minus);
         editText_adc_2_ch_12_minus = root.findViewById(R.id.editText_adc_2_ch_12_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_12_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_12_minus);
         editText_adc_2_ch_13_minus = root.findViewById(R.id.editText_adc_2_ch_13_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_13_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_13_minus);
         editText_adc_2_ch_14_minus = root.findViewById(R.id.editText_adc_2_ch_14_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_14_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_14_minus);
         editText_adc_2_ch_15_minus = root.findViewById(R.id.editText_adc_2_ch_15_minus);
-        editTextArrayListMinus.add(editText_adc_2_ch_15_minus);
+        editTextArrayListMinusAdc.add(editText_adc_2_ch_15_minus);
 
         i = 0;
-        for (final EditText editText: editTextArrayListMinus) {
+        for (final EditText editText: editTextArrayListMinusAdc) {
             editText.setText(String.valueOf(spaceSetting.getAdcArrayList().get(i).getMinus()));
             final int finalI = i;
             editText.setOnKeyListener(new View.OnKeyListener() {
@@ -2175,109 +2339,109 @@ public class FragmentSetting extends Fragment {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        switchArrayListEnable = new ArrayList<>();
+        switchArrayListEnableAdc = new ArrayList<>();
 
         switch_acd_0_ch_0_enable = root.findViewById(R.id.switch_adc_0_ch_0_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_0_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_0_enable);
         switch_acd_0_ch_1_enable = root.findViewById(R.id.switch_adc_0_ch_1_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_1_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_1_enable);
         switch_acd_0_ch_2_enable = root.findViewById(R.id.switch_adc_0_ch_2_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_2_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_2_enable);
         switch_acd_0_ch_3_enable = root.findViewById(R.id.switch_adc_0_ch_3_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_3_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_3_enable);
         switch_acd_0_ch_4_enable = root.findViewById(R.id.switch_adc_0_ch_4_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_4_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_4_enable);
         switch_acd_0_ch_5_enable = root.findViewById(R.id.switch_adc_0_ch_5_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_5_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_5_enable);
         switch_acd_0_ch_6_enable = root.findViewById(R.id.switch_adc_0_ch_6_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_6_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_6_enable);
         switch_acd_0_ch_7_enable = root.findViewById(R.id.switch_adc_0_ch_7_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_7_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_7_enable);
         switch_acd_0_ch_8_enable = root.findViewById(R.id.switch_adc_0_ch_8_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_8_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_8_enable);
         switch_acd_0_ch_9_enable = root.findViewById(R.id.switch_adc_0_ch_9_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_9_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_9_enable);
         switch_acd_0_ch_10_enable = root.findViewById(R.id.switch_adc_0_ch_10_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_10_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_10_enable);
         switch_acd_0_ch_11_enable = root.findViewById(R.id.switch_adc_0_ch_11_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_11_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_11_enable);
         switch_acd_0_ch_12_enable = root.findViewById(R.id.switch_adc_0_ch_12_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_12_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_12_enable);
         switch_acd_0_ch_13_enable = root.findViewById(R.id.switch_adc_0_ch_13_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_13_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_13_enable);
         switch_acd_0_ch_14_enable = root.findViewById(R.id.switch_adc_0_ch_14_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_14_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_14_enable);
         switch_acd_0_ch_15_enable = root.findViewById(R.id.switch_adc_0_ch_15_enable);
-        switchArrayListEnable.add(switch_acd_0_ch_15_enable);
+        switchArrayListEnableAdc.add(switch_acd_0_ch_15_enable);
 
         switch_acd_1_ch_0_enable = root.findViewById(R.id.switch_adc_1_ch_0_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_0_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_0_enable);
         switch_acd_1_ch_1_enable = root.findViewById(R.id.switch_adc_1_ch_1_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_1_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_1_enable);
         switch_acd_1_ch_2_enable = root.findViewById(R.id.switch_adc_1_ch_2_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_2_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_2_enable);
         switch_acd_1_ch_3_enable = root.findViewById(R.id.switch_adc_1_ch_3_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_3_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_3_enable);
         switch_acd_1_ch_4_enable = root.findViewById(R.id.switch_adc_1_ch_4_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_4_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_4_enable);
         switch_acd_1_ch_5_enable = root.findViewById(R.id.switch_adc_1_ch_5_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_5_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_5_enable);
         switch_acd_1_ch_6_enable = root.findViewById(R.id.switch_adc_1_ch_6_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_6_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_6_enable);
         switch_acd_1_ch_7_enable = root.findViewById(R.id.switch_adc_1_ch_7_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_7_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_7_enable);
         switch_acd_1_ch_8_enable = root.findViewById(R.id.switch_adc_1_ch_8_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_8_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_8_enable);
         switch_acd_1_ch_9_enable = root.findViewById(R.id.switch_adc_1_ch_9_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_9_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_9_enable);
         switch_acd_1_ch_10_enable = root.findViewById(R.id.switch_adc_1_ch_10_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_10_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_10_enable);
         switch_acd_1_ch_11_enable = root.findViewById(R.id.switch_adc_1_ch_11_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_11_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_11_enable);
         switch_acd_1_ch_12_enable = root.findViewById(R.id.switch_adc_1_ch_12_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_12_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_12_enable);
         switch_acd_1_ch_13_enable = root.findViewById(R.id.switch_adc_1_ch_13_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_13_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_13_enable);
         switch_acd_1_ch_14_enable = root.findViewById(R.id.switch_adc_1_ch_14_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_14_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_14_enable);
         switch_acd_1_ch_15_enable = root.findViewById(R.id.switch_adc_1_ch_15_enable);
-        switchArrayListEnable.add(switch_acd_1_ch_15_enable);
+        switchArrayListEnableAdc.add(switch_acd_1_ch_15_enable);
 
         switch_acd_2_ch_0_enable = root.findViewById(R.id.switch_adc_2_ch_0_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_0_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_0_enable);
         switch_acd_2_ch_1_enable = root.findViewById(R.id.switch_adc_2_ch_1_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_1_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_1_enable);
         switch_acd_2_ch_2_enable = root.findViewById(R.id.switch_adc_2_ch_2_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_2_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_2_enable);
         switch_acd_2_ch_3_enable = root.findViewById(R.id.switch_adc_2_ch_3_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_3_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_3_enable);
         switch_acd_2_ch_4_enable = root.findViewById(R.id.switch_adc_2_ch_4_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_4_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_4_enable);
         switch_acd_2_ch_5_enable = root.findViewById(R.id.switch_adc_2_ch_5_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_5_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_5_enable);
         switch_acd_2_ch_6_enable = root.findViewById(R.id.switch_adc_2_ch_6_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_6_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_6_enable);
         switch_acd_2_ch_7_enable = root.findViewById(R.id.switch_adc_2_ch_7_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_7_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_7_enable);
         switch_acd_2_ch_8_enable = root.findViewById(R.id.switch_adc_2_ch_8_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_8_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_8_enable);
         switch_acd_2_ch_9_enable = root.findViewById(R.id.switch_adc_2_ch_9_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_9_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_9_enable);
         switch_acd_2_ch_10_enable = root.findViewById(R.id.switch_adc_2_ch_10_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_10_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_10_enable);
         switch_acd_2_ch_11_enable = root.findViewById(R.id.switch_adc_2_ch_11_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_11_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_11_enable);
         switch_acd_2_ch_12_enable = root.findViewById(R.id.switch_adc_2_ch_12_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_12_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_12_enable);
         switch_acd_2_ch_13_enable = root.findViewById(R.id.switch_adc_2_ch_13_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_13_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_13_enable);
         switch_acd_2_ch_14_enable = root.findViewById(R.id.switch_adc_2_ch_14_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_14_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_14_enable);
         switch_acd_2_ch_15_enable = root.findViewById(R.id.switch_adc_2_ch_15_enable);
-        switchArrayListEnable.add(switch_acd_2_ch_15_enable);
+        switchArrayListEnableAdc.add(switch_acd_2_ch_15_enable);
 
         i = 0;
-        for (final Switch switchFromList: switchArrayListEnable) {
+        for (final Switch switchFromList: switchArrayListEnableAdc) {
             switchFromList.setChecked(spaceSetting.getAdcArrayList().get(i).isEnable());
             final int finalI = i;
             switchFromList.setOnClickListener(new View.OnClickListener() {
@@ -2301,6 +2465,389 @@ public class FragmentSetting extends Fragment {
         }
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        editTextArrayListNameIn = new ArrayList<>();
+
+        editText_in_0_ch_0_name = root.findViewById(R.id.editText_in_0_ch_0_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_0_name);
+        editText_in_0_ch_1_name = root.findViewById(R.id.editText_in_0_ch_1_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_1_name);
+        editText_in_0_ch_2_name = root.findViewById(R.id.editText_in_0_ch_2_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_2_name);
+        editText_in_0_ch_3_name = root.findViewById(R.id.editText_in_0_ch_3_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_3_name);
+        editText_in_0_ch_4_name = root.findViewById(R.id.editText_in_0_ch_4_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_4_name);
+        editText_in_0_ch_5_name = root.findViewById(R.id.editText_in_0_ch_5_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_5_name);
+        editText_in_0_ch_6_name = root.findViewById(R.id.editText_in_0_ch_6_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_6_name);
+        editText_in_0_ch_7_name = root.findViewById(R.id.editText_in_0_ch_7_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_7_name);
+        editText_in_0_ch_8_name = root.findViewById(R.id.editText_in_0_ch_8_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_8_name);
+        editText_in_0_ch_9_name = root.findViewById(R.id.editText_in_0_ch_9_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_9_name);
+        editText_in_0_ch_10_name = root.findViewById(R.id.editText_in_0_ch_10_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_10_name);
+        editText_in_0_ch_11_name = root.findViewById(R.id.editText_in_0_ch_11_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_11_name);
+        editText_in_0_ch_12_name = root.findViewById(R.id.editText_in_0_ch_12_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_12_name);
+        editText_in_0_ch_13_name = root.findViewById(R.id.editText_in_0_ch_13_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_13_name);
+        editText_in_0_ch_14_name = root.findViewById(R.id.editText_in_0_ch_14_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_14_name);
+        editText_in_0_ch_15_name = root.findViewById(R.id.editText_in_0_ch_15_name);
+        editTextArrayListNameIn.add(editText_in_0_ch_15_name);
+
+        editText_in_1_ch_0_name = root.findViewById(R.id.editText_in_1_ch_0_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_0_name);
+        editText_in_1_ch_1_name = root.findViewById(R.id.editText_in_1_ch_1_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_1_name);
+        editText_in_1_ch_2_name = root.findViewById(R.id.editText_in_1_ch_2_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_2_name);
+        editText_in_1_ch_3_name = root.findViewById(R.id.editText_in_1_ch_3_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_3_name);
+        editText_in_1_ch_4_name = root.findViewById(R.id.editText_in_1_ch_4_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_4_name);
+        editText_in_1_ch_5_name = root.findViewById(R.id.editText_in_1_ch_5_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_5_name);
+        editText_in_1_ch_6_name = root.findViewById(R.id.editText_in_1_ch_6_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_6_name);
+        editText_in_1_ch_7_name = root.findViewById(R.id.editText_in_1_ch_7_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_7_name);
+        editText_in_1_ch_8_name = root.findViewById(R.id.editText_in_1_ch_8_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_8_name);
+        editText_in_1_ch_9_name = root.findViewById(R.id.editText_in_1_ch_9_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_9_name);
+        editText_in_1_ch_10_name = root.findViewById(R.id.editText_in_1_ch_10_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_10_name);
+        editText_in_1_ch_11_name = root.findViewById(R.id.editText_in_1_ch_11_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_11_name);
+        editText_in_1_ch_12_name = root.findViewById(R.id.editText_in_1_ch_12_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_12_name);
+        editText_in_1_ch_13_name = root.findViewById(R.id.editText_in_1_ch_13_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_13_name);
+        editText_in_1_ch_14_name = root.findViewById(R.id.editText_in_1_ch_14_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_14_name);
+        editText_in_1_ch_15_name = root.findViewById(R.id.editText_in_1_ch_15_name);
+        editTextArrayListNameIn.add(editText_in_1_ch_15_name);
+
+        editText_in_2_ch_0_name = root.findViewById(R.id.editText_in_2_ch_0_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_0_name);
+        editText_in_2_ch_1_name = root.findViewById(R.id.editText_in_2_ch_1_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_1_name);
+        editText_in_2_ch_2_name = root.findViewById(R.id.editText_in_2_ch_2_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_2_name);
+        editText_in_2_ch_3_name = root.findViewById(R.id.editText_in_2_ch_3_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_3_name);
+        editText_in_2_ch_4_name = root.findViewById(R.id.editText_in_2_ch_4_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_4_name);
+        editText_in_2_ch_5_name = root.findViewById(R.id.editText_in_2_ch_5_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_5_name);
+        editText_in_2_ch_6_name = root.findViewById(R.id.editText_in_2_ch_6_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_6_name);
+        editText_in_2_ch_7_name = root.findViewById(R.id.editText_in_2_ch_7_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_7_name);
+        editText_in_2_ch_8_name = root.findViewById(R.id.editText_in_2_ch_8_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_8_name);
+        editText_in_2_ch_9_name = root.findViewById(R.id.editText_in_2_ch_9_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_9_name);
+        editText_in_2_ch_10_name = root.findViewById(R.id.editText_in_2_ch_10_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_10_name);
+        editText_in_2_ch_11_name = root.findViewById(R.id.editText_in_2_ch_11_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_11_name);
+        editText_in_2_ch_12_name = root.findViewById(R.id.editText_in_2_ch_12_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_12_name);
+        editText_in_2_ch_13_name = root.findViewById(R.id.editText_in_2_ch_13_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_13_name);
+        editText_in_2_ch_14_name = root.findViewById(R.id.editText_in_2_ch_14_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_14_name);
+        editText_in_2_ch_15_name = root.findViewById(R.id.editText_in_2_ch_15_name);
+        editTextArrayListNameIn.add(editText_in_2_ch_15_name);
+
+        i = 0;
+        for (final EditText editText: editTextArrayListNameIn) {
+            editText.setText(String.valueOf(spaceSetting.getInArrayList().get(i).getName()));
+            final int finalI = i;
+            editText.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                        String text = editText.getText().toString();
+                        if (!text.equals("")) {
+                            if (finalI < 16) spaceSetting.setSharedPreferences("in_0_" + finalI + "_name", text);
+                            else if (finalI < 32) spaceSetting.setSharedPreferences("in_1_" + finalI + "_name", text);
+                            else spaceSetting.setSharedPreferences("in_2_" + finalI + "_name", text);
+                            spaceSetting.getInArrayList().get(finalI).setName(text);
+                        }
+                    }
+                    return true;
+                }
+            });
+            i = i + 1;
+        }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        editTextArrayListRegisterIn = new ArrayList<>();
+
+        editText_adc_0_ch_0_register = root.findViewById(R.id.editText_adc_0_ch_0_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_0_register);
+        editText_adc_0_ch_1_register = root.findViewById(R.id.editText_adc_0_ch_1_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_1_register);
+        editText_adc_0_ch_2_register = root.findViewById(R.id.editText_adc_0_ch_2_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_2_register);
+        editText_adc_0_ch_3_register = root.findViewById(R.id.editText_adc_0_ch_3_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_3_register);
+        editText_adc_0_ch_4_register = root.findViewById(R.id.editText_adc_0_ch_4_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_4_register);
+        editText_adc_0_ch_5_register = root.findViewById(R.id.editText_adc_0_ch_5_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_5_register);
+        editText_adc_0_ch_6_register = root.findViewById(R.id.editText_adc_0_ch_6_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_6_register);
+        editText_adc_0_ch_7_register = root.findViewById(R.id.editText_adc_0_ch_7_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_7_register);
+        editText_adc_0_ch_8_register = root.findViewById(R.id.editText_adc_0_ch_8_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_8_register);
+        editText_adc_0_ch_9_register = root.findViewById(R.id.editText_adc_0_ch_9_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_9_register);
+        editText_adc_0_ch_10_register = root.findViewById(R.id.editText_adc_0_ch_10_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_10_register);
+        editText_adc_0_ch_11_register = root.findViewById(R.id.editText_adc_0_ch_11_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_11_register);
+        editText_adc_0_ch_12_register = root.findViewById(R.id.editText_adc_0_ch_12_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_12_register);
+        editText_adc_0_ch_13_register = root.findViewById(R.id.editText_adc_0_ch_13_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_13_register);
+        editText_adc_0_ch_14_register = root.findViewById(R.id.editText_adc_0_ch_14_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_14_register);
+        editText_adc_0_ch_15_register = root.findViewById(R.id.editText_adc_0_ch_15_register);
+        editTextArrayListRegisterIn.add(editText_adc_0_ch_15_register);
+
+        editText_adc_1_ch_0_register = root.findViewById(R.id.editText_adc_1_ch_0_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_0_register);
+        editText_adc_1_ch_1_register = root.findViewById(R.id.editText_adc_1_ch_1_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_1_register);
+        editText_adc_1_ch_2_register = root.findViewById(R.id.editText_adc_1_ch_2_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_2_register);
+        editText_adc_1_ch_3_register = root.findViewById(R.id.editText_adc_1_ch_3_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_3_register);
+        editText_adc_1_ch_4_register = root.findViewById(R.id.editText_adc_1_ch_4_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_4_register);
+        editText_adc_1_ch_5_register = root.findViewById(R.id.editText_adc_1_ch_5_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_5_register);
+        editText_adc_1_ch_6_register = root.findViewById(R.id.editText_adc_1_ch_6_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_6_register);
+        editText_adc_1_ch_7_register = root.findViewById(R.id.editText_adc_1_ch_7_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_7_register);
+        editText_adc_1_ch_8_register = root.findViewById(R.id.editText_adc_1_ch_8_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_8_register);
+        editText_adc_1_ch_9_register = root.findViewById(R.id.editText_adc_1_ch_9_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_9_register);
+        editText_adc_1_ch_10_register = root.findViewById(R.id.editText_adc_1_ch_10_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_10_register);
+        editText_adc_1_ch_11_register = root.findViewById(R.id.editText_adc_1_ch_11_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_11_register);
+        editText_adc_1_ch_12_register = root.findViewById(R.id.editText_adc_1_ch_12_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_12_register);
+        editText_adc_1_ch_13_register = root.findViewById(R.id.editText_adc_1_ch_13_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_13_register);
+        editText_adc_1_ch_14_register = root.findViewById(R.id.editText_adc_1_ch_14_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_14_register);
+        editText_adc_1_ch_15_register = root.findViewById(R.id.editText_adc_1_ch_15_register);
+        editTextArrayListRegisterIn.add(editText_adc_1_ch_15_register);
+
+        editText_adc_2_ch_0_register = root.findViewById(R.id.editText_adc_2_ch_0_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_0_register);
+        editText_adc_2_ch_1_register = root.findViewById(R.id.editText_adc_2_ch_1_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_1_register);
+        editText_adc_2_ch_2_register = root.findViewById(R.id.editText_adc_2_ch_2_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_2_register);
+        editText_adc_2_ch_3_register = root.findViewById(R.id.editText_adc_2_ch_3_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_3_register);
+        editText_adc_2_ch_4_register = root.findViewById(R.id.editText_adc_2_ch_4_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_4_register);
+        editText_adc_2_ch_5_register = root.findViewById(R.id.editText_adc_2_ch_5_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_5_register);
+        editText_adc_2_ch_6_register = root.findViewById(R.id.editText_adc_2_ch_6_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_6_register);
+        editText_adc_2_ch_7_register = root.findViewById(R.id.editText_adc_2_ch_7_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_7_register);
+        editText_adc_2_ch_8_register = root.findViewById(R.id.editText_adc_2_ch_8_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_8_register);
+        editText_adc_2_ch_9_register = root.findViewById(R.id.editText_adc_2_ch_9_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_9_register);
+        editText_adc_2_ch_10_register = root.findViewById(R.id.editText_adc_2_ch_10_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_10_register);
+        editText_adc_2_ch_11_register = root.findViewById(R.id.editText_adc_2_ch_11_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_11_register);
+        editText_adc_2_ch_12_register = root.findViewById(R.id.editText_adc_2_ch_12_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_12_register);
+        editText_adc_2_ch_13_register = root.findViewById(R.id.editText_adc_2_ch_13_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_13_register);
+        editText_adc_2_ch_14_register = root.findViewById(R.id.editText_adc_2_ch_14_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_14_register);
+        editText_adc_2_ch_15_register = root.findViewById(R.id.editText_adc_2_ch_15_register);
+        editTextArrayListRegisterIn.add(editText_adc_2_ch_15_register);
+
+        i = 0;
+        for (final EditText editText: editTextArrayListRegisterIn) {
+            editText.setText(String.valueOf(spaceSetting.getInArrayList().get(i).getRegister()));
+            final int finalI = i;
+            editText.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                        String text = editText.getText().toString();
+                        if (!text.equals("")) {
+                            int register = Integer.parseInt(text);
+                            if (finalI < 16) spaceSetting.setSharedPreferences("in_0_" + finalI + "_register", register);
+                            else if (finalI < 32) spaceSetting.setSharedPreferences("in_1_" + finalI + "_register", register);
+                            else spaceSetting.setSharedPreferences("in_2_" + finalI + "_register", register);
+                            spaceSetting.getInArrayList().get(finalI).setRegister(register);
+                        }
+                    }
+                    return true;
+                }
+            });
+            i = i + 1;
+        }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        switchArrayListEnableIn = new ArrayList<>();
+
+        switch_acd_0_ch_0_enable = root.findViewById(R.id.switch_adc_0_ch_0_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_0_enable);
+        switch_acd_0_ch_1_enable = root.findViewById(R.id.switch_adc_0_ch_1_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_1_enable);
+        switch_acd_0_ch_2_enable = root.findViewById(R.id.switch_adc_0_ch_2_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_2_enable);
+        switch_acd_0_ch_3_enable = root.findViewById(R.id.switch_adc_0_ch_3_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_3_enable);
+        switch_acd_0_ch_4_enable = root.findViewById(R.id.switch_adc_0_ch_4_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_4_enable);
+        switch_acd_0_ch_5_enable = root.findViewById(R.id.switch_adc_0_ch_5_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_5_enable);
+        switch_acd_0_ch_6_enable = root.findViewById(R.id.switch_adc_0_ch_6_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_6_enable);
+        switch_acd_0_ch_7_enable = root.findViewById(R.id.switch_adc_0_ch_7_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_7_enable);
+        switch_acd_0_ch_8_enable = root.findViewById(R.id.switch_adc_0_ch_8_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_8_enable);
+        switch_acd_0_ch_9_enable = root.findViewById(R.id.switch_adc_0_ch_9_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_9_enable);
+        switch_acd_0_ch_10_enable = root.findViewById(R.id.switch_adc_0_ch_10_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_10_enable);
+        switch_acd_0_ch_11_enable = root.findViewById(R.id.switch_adc_0_ch_11_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_11_enable);
+        switch_acd_0_ch_12_enable = root.findViewById(R.id.switch_adc_0_ch_12_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_12_enable);
+        switch_acd_0_ch_13_enable = root.findViewById(R.id.switch_adc_0_ch_13_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_13_enable);
+        switch_acd_0_ch_14_enable = root.findViewById(R.id.switch_adc_0_ch_14_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_14_enable);
+        switch_acd_0_ch_15_enable = root.findViewById(R.id.switch_adc_0_ch_15_enable);
+        switchArrayListEnableIn.add(switch_acd_0_ch_15_enable);
+
+        switch_acd_1_ch_0_enable = root.findViewById(R.id.switch_adc_1_ch_0_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_0_enable);
+        switch_acd_1_ch_1_enable = root.findViewById(R.id.switch_adc_1_ch_1_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_1_enable);
+        switch_acd_1_ch_2_enable = root.findViewById(R.id.switch_adc_1_ch_2_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_2_enable);
+        switch_acd_1_ch_3_enable = root.findViewById(R.id.switch_adc_1_ch_3_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_3_enable);
+        switch_acd_1_ch_4_enable = root.findViewById(R.id.switch_adc_1_ch_4_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_4_enable);
+        switch_acd_1_ch_5_enable = root.findViewById(R.id.switch_adc_1_ch_5_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_5_enable);
+        switch_acd_1_ch_6_enable = root.findViewById(R.id.switch_adc_1_ch_6_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_6_enable);
+        switch_acd_1_ch_7_enable = root.findViewById(R.id.switch_adc_1_ch_7_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_7_enable);
+        switch_acd_1_ch_8_enable = root.findViewById(R.id.switch_adc_1_ch_8_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_8_enable);
+        switch_acd_1_ch_9_enable = root.findViewById(R.id.switch_adc_1_ch_9_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_9_enable);
+        switch_acd_1_ch_10_enable = root.findViewById(R.id.switch_adc_1_ch_10_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_10_enable);
+        switch_acd_1_ch_11_enable = root.findViewById(R.id.switch_adc_1_ch_11_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_11_enable);
+        switch_acd_1_ch_12_enable = root.findViewById(R.id.switch_adc_1_ch_12_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_12_enable);
+        switch_acd_1_ch_13_enable = root.findViewById(R.id.switch_adc_1_ch_13_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_13_enable);
+        switch_acd_1_ch_14_enable = root.findViewById(R.id.switch_adc_1_ch_14_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_14_enable);
+        switch_acd_1_ch_15_enable = root.findViewById(R.id.switch_adc_1_ch_15_enable);
+        switchArrayListEnableIn.add(switch_acd_1_ch_15_enable);
+
+        switch_acd_2_ch_0_enable = root.findViewById(R.id.switch_adc_2_ch_0_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_0_enable);
+        switch_acd_2_ch_1_enable = root.findViewById(R.id.switch_adc_2_ch_1_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_1_enable);
+        switch_acd_2_ch_2_enable = root.findViewById(R.id.switch_adc_2_ch_2_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_2_enable);
+        switch_acd_2_ch_3_enable = root.findViewById(R.id.switch_adc_2_ch_3_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_3_enable);
+        switch_acd_2_ch_4_enable = root.findViewById(R.id.switch_adc_2_ch_4_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_4_enable);
+        switch_acd_2_ch_5_enable = root.findViewById(R.id.switch_adc_2_ch_5_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_5_enable);
+        switch_acd_2_ch_6_enable = root.findViewById(R.id.switch_adc_2_ch_6_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_6_enable);
+        switch_acd_2_ch_7_enable = root.findViewById(R.id.switch_adc_2_ch_7_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_7_enable);
+        switch_acd_2_ch_8_enable = root.findViewById(R.id.switch_adc_2_ch_8_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_8_enable);
+        switch_acd_2_ch_9_enable = root.findViewById(R.id.switch_adc_2_ch_9_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_9_enable);
+        switch_acd_2_ch_10_enable = root.findViewById(R.id.switch_adc_2_ch_10_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_10_enable);
+        switch_acd_2_ch_11_enable = root.findViewById(R.id.switch_adc_2_ch_11_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_11_enable);
+        switch_acd_2_ch_12_enable = root.findViewById(R.id.switch_adc_2_ch_12_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_12_enable);
+        switch_acd_2_ch_13_enable = root.findViewById(R.id.switch_adc_2_ch_13_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_13_enable);
+        switch_acd_2_ch_14_enable = root.findViewById(R.id.switch_adc_2_ch_14_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_14_enable);
+        switch_acd_2_ch_15_enable = root.findViewById(R.id.switch_adc_2_ch_15_enable);
+        switchArrayListEnableIn.add(switch_acd_2_ch_15_enable);
+
+        i = 0;
+        for (final Switch switchFromList: switchArrayListEnableIn) {
+            switchFromList.setChecked(spaceSetting.getInArrayList().get(i).isEnable());
+            final int finalI = i;
+            switchFromList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (switchFromList.isChecked()) {
+                        spaceSetting.getInArrayList().get(finalI).setEnable(true);
+                        if (finalI < 16) spaceSetting.setSharedPreferences("in_0_" + finalI + "_enable", true);
+                        else if (finalI < 32) spaceSetting.setSharedPreferences("in_1_" + finalI + "_enable", true);
+                        else spaceSetting.setSharedPreferences("in_2_" + finalI + "_enable", true);
+                    }
+                    else {
+                        spaceSetting.getInArrayList().get(finalI).setEnable(false);
+                        if (finalI < 16) spaceSetting.setSharedPreferences("in_0_" + finalI + "_enable", false);
+                        else if (finalI < 32) spaceSetting.setSharedPreferences("in_1_" + finalI + "_enable", false);
+                        else spaceSetting.setSharedPreferences("in_2_" + finalI + "_enable", false);
+                    }
+                }
+            });
+            i = i + 1;
+        }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         return root;
     }
 
