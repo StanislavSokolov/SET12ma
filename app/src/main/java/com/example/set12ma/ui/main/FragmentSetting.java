@@ -61,6 +61,72 @@ public class FragmentSetting extends Fragment {
     private Spinner spinner_adc_0_ch_15_color;
     private ArrayAdapter<String> adapter_color_adc_0_ch_15;
 
+    private Spinner spinner_adc_1_ch_0_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_0;
+    private Spinner spinner_adc_1_ch_1_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_1;
+    private Spinner spinner_adc_1_ch_2_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_2;
+    private Spinner spinner_adc_1_ch_3_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_3;
+    private Spinner spinner_adc_1_ch_4_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_4;
+    private Spinner spinner_adc_1_ch_5_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_5;
+    private Spinner spinner_adc_1_ch_6_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_6;
+    private Spinner spinner_adc_1_ch_7_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_7;
+    private Spinner spinner_adc_1_ch_8_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_8;
+    private Spinner spinner_adc_1_ch_9_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_9;
+    private Spinner spinner_adc_1_ch_10_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_10;
+    private Spinner spinner_adc_1_ch_11_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_11;
+    private Spinner spinner_adc_1_ch_12_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_12;
+    private Spinner spinner_adc_1_ch_13_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_13;
+    private Spinner spinner_adc_1_ch_14_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_14;
+    private Spinner spinner_adc_1_ch_15_color;
+    private ArrayAdapter<String> adapter_color_adc_1_ch_15;
+
+    private Spinner spinner_adc_2_ch_0_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_0;
+    private Spinner spinner_adc_2_ch_1_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_1;
+    private Spinner spinner_adc_2_ch_2_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_2;
+    private Spinner spinner_adc_2_ch_3_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_3;
+    private Spinner spinner_adc_2_ch_4_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_4;
+    private Spinner spinner_adc_2_ch_5_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_5;
+    private Spinner spinner_adc_2_ch_6_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_6;
+    private Spinner spinner_adc_2_ch_7_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_7;
+    private Spinner spinner_adc_2_ch_8_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_8;
+    private Spinner spinner_adc_2_ch_9_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_9;
+    private Spinner spinner_adc_2_ch_10_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_10;
+    private Spinner spinner_adc_2_ch_11_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_11;
+    private Spinner spinner_adc_2_ch_12_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_12;
+    private Spinner spinner_adc_2_ch_13_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_13;
+    private Spinner spinner_adc_2_ch_14_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_14;
+    private Spinner spinner_adc_2_ch_15_color;
+    private ArrayAdapter<String> adapter_color_adc_2_ch_15;
+
     private ArrayList<EditText> editTextArrayListNameAdc;
 
     private EditText editText_adc_0_ch_0_name;
@@ -437,22 +503,22 @@ public class FragmentSetting extends Fragment {
 
     private ArrayList<Switch> switchArrayListEnableIn;
 
-    private Switch switch_acd_in_ch_0_enable;
-    private Switch switch_acd_in_ch_1_enable;
-    private Switch switch_acd_in_ch_2_enable;
-    private Switch switch_acd_in_ch_3_enable;
-    private Switch switch_acd_in_ch_4_enable;
-    private Switch switch_acd_in_ch_5_enable;
-    private Switch switch_acd_in_ch_6_enable;
-    private Switch switch_acd_in_ch_7_enable;
-    private Switch switch_acd_in_ch_8_enable;
-    private Switch switch_acd_in_ch_9_enable;
-    private Switch switch_acd_in_ch_10_enable;
-    private Switch switch_acd_in_ch_11_enable;
-    private Switch switch_acd_in_ch_12_enable;
-    private Switch switch_acd_in_ch_13_enable;
-    private Switch switch_acd_in_ch_14_enable;
-    private Switch switch_acd_in_ch_15_enable;
+    private Switch switch_in_0_ch_0_enable;
+    private Switch switch_in_0_ch_1_enable;
+    private Switch switch_in_0_ch_2_enable;
+    private Switch switch_in_0_ch_3_enable;
+    private Switch switch_in_0_ch_4_enable;
+    private Switch switch_in_0_ch_5_enable;
+    private Switch switch_in_0_ch_6_enable;
+    private Switch switch_in_0_ch_7_enable;
+    private Switch switch_in_0_ch_8_enable;
+    private Switch switch_in_0_ch_9_enable;
+    private Switch switch_in_0_ch_10_enable;
+    private Switch switch_in_0_ch_11_enable;
+    private Switch switch_in_0_ch_12_enable;
+    private Switch switch_in_0_ch_13_enable;
+    private Switch switch_in_0_ch_14_enable;
+    private Switch switch_in_0_ch_15_enable;
 
     private Switch switch_in_1_ch_0_enable;
     private Switch switch_in_1_ch_1_enable;
@@ -637,6 +703,198 @@ public class FragmentSetting extends Fragment {
         adapterArrayListAdc.add(adapter_color_adc_0_ch_15);
         spinnerArrayListAdc.add(spinner_adc_0_ch_15_color);
 
+        spinner_adc_1_ch_0_color = root.findViewById(R.id.spinner_adc_1_ch_0_color);
+        adapter_color_adc_1_ch_0 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_0.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_0);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_0_color);
+
+        spinner_adc_1_ch_1_color = root.findViewById(R.id.spinner_adc_1_ch_1_color);
+        adapter_color_adc_1_ch_1 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_1);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_1_color);
+
+        spinner_adc_1_ch_2_color = root.findViewById(R.id.spinner_adc_1_ch_2_color);
+        adapter_color_adc_1_ch_2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_2);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_2_color);
+
+        spinner_adc_1_ch_3_color = root.findViewById(R.id.spinner_adc_1_ch_3_color);
+        adapter_color_adc_1_ch_3 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_3);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_3_color);
+
+        spinner_adc_1_ch_4_color = root.findViewById(R.id.spinner_adc_1_ch_4_color);
+        adapter_color_adc_1_ch_4 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_4);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_4_color);
+
+        spinner_adc_1_ch_5_color = root.findViewById(R.id.spinner_adc_1_ch_5_color);
+        adapter_color_adc_1_ch_5 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_5);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_5_color);
+
+        spinner_adc_1_ch_6_color = root.findViewById(R.id.spinner_adc_1_ch_6_color);
+        adapter_color_adc_1_ch_6 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_6);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_6_color);
+
+        spinner_adc_1_ch_7_color = root.findViewById(R.id.spinner_adc_1_ch_7_color);
+        adapter_color_adc_1_ch_7 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_7.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_7);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_7_color);
+
+        spinner_adc_1_ch_8_color = root.findViewById(R.id.spinner_adc_1_ch_8_color);
+        adapter_color_adc_1_ch_8 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_8.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_8);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_8_color);
+
+        spinner_adc_1_ch_9_color = root.findViewById(R.id.spinner_adc_1_ch_9_color);
+        adapter_color_adc_1_ch_9 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_9.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_9);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_9_color);
+
+        spinner_adc_1_ch_10_color = root.findViewById(R.id.spinner_adc_1_ch_10_color);
+        adapter_color_adc_1_ch_10 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_10.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_10);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_10_color);
+
+        spinner_adc_1_ch_11_color = root.findViewById(R.id.spinner_adc_1_ch_11_color);
+        adapter_color_adc_1_ch_11 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_11.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_11);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_11_color);
+
+        spinner_adc_1_ch_12_color = root.findViewById(R.id.spinner_adc_1_ch_12_color);
+        adapter_color_adc_1_ch_12 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_12.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_12);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_12_color);
+
+        spinner_adc_1_ch_13_color = root.findViewById(R.id.spinner_adc_1_ch_13_color);
+        adapter_color_adc_1_ch_13 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_13.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_13);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_13_color);
+
+        spinner_adc_1_ch_14_color = root.findViewById(R.id.spinner_adc_1_ch_14_color);
+        adapter_color_adc_1_ch_14 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_14.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_14);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_14_color);
+
+        spinner_adc_1_ch_15_color = root.findViewById(R.id.spinner_adc_1_ch_15_color);
+        adapter_color_adc_1_ch_15 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_1_ch_15.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_1_ch_15);
+        spinnerArrayListAdc.add(spinner_adc_1_ch_15_color);
+
+        spinner_adc_2_ch_0_color = root.findViewById(R.id.spinner_adc_2_ch_0_color);
+        adapter_color_adc_2_ch_0 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_0.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_0);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_0_color);
+
+        spinner_adc_2_ch_1_color = root.findViewById(R.id.spinner_adc_2_ch_1_color);
+        adapter_color_adc_2_ch_1 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_1);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_1_color);
+
+        spinner_adc_2_ch_2_color = root.findViewById(R.id.spinner_adc_2_ch_2_color);
+        adapter_color_adc_2_ch_2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_2);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_2_color);
+
+        spinner_adc_2_ch_3_color = root.findViewById(R.id.spinner_adc_2_ch_3_color);
+        adapter_color_adc_2_ch_3 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_3);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_3_color);
+
+        spinner_adc_2_ch_4_color = root.findViewById(R.id.spinner_adc_2_ch_4_color);
+        adapter_color_adc_2_ch_4 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_4);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_4_color);
+
+        spinner_adc_2_ch_5_color = root.findViewById(R.id.spinner_adc_2_ch_5_color);
+        adapter_color_adc_2_ch_5 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_5);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_5_color);
+
+        spinner_adc_2_ch_6_color = root.findViewById(R.id.spinner_adc_2_ch_6_color);
+        adapter_color_adc_2_ch_6 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_6);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_6_color);
+
+        spinner_adc_2_ch_7_color = root.findViewById(R.id.spinner_adc_2_ch_7_color);
+        adapter_color_adc_2_ch_7 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_7.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_7);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_7_color);
+
+        spinner_adc_2_ch_8_color = root.findViewById(R.id.spinner_adc_2_ch_8_color);
+        adapter_color_adc_2_ch_8 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_8.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_8);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_8_color);
+
+        spinner_adc_2_ch_9_color = root.findViewById(R.id.spinner_adc_2_ch_9_color);
+        adapter_color_adc_2_ch_9 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_9.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_9);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_9_color);
+
+        spinner_adc_2_ch_10_color = root.findViewById(R.id.spinner_adc_2_ch_10_color);
+        adapter_color_adc_2_ch_10 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_10.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_10);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_10_color);
+
+        spinner_adc_2_ch_11_color = root.findViewById(R.id.spinner_adc_2_ch_11_color);
+        adapter_color_adc_2_ch_11 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_11.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_11);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_11_color);
+
+        spinner_adc_2_ch_12_color = root.findViewById(R.id.spinner_adc_2_ch_12_color);
+        adapter_color_adc_2_ch_12 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_12.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_12);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_12_color);
+
+        spinner_adc_2_ch_13_color = root.findViewById(R.id.spinner_adc_2_ch_13_color);
+        adapter_color_adc_2_ch_13 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_13.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_13);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_13_color);
+
+        spinner_adc_2_ch_14_color = root.findViewById(R.id.spinner_adc_2_ch_14_color);
+        adapter_color_adc_2_ch_14 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_14.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_14);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_14_color);
+
+        spinner_adc_2_ch_15_color = root.findViewById(R.id.spinner_adc_2_ch_15_color);
+        adapter_color_adc_2_ch_15 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapter_color_adc_2_ch_15.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterArrayListAdc.add(adapter_color_adc_2_ch_15);
+        spinnerArrayListAdc.add(spinner_adc_2_ch_15_color);
+
         for (ArrayAdapter arrayAdapter: adapterArrayListAdc) {
             arrayAdapter.add("Color.GREEN");
             arrayAdapter.add("Color.RED");
@@ -664,6 +922,40 @@ public class FragmentSetting extends Fragment {
         spinner_adc_0_ch_13_color.setAdapter(adapter_color_adc_0_ch_13);
         spinner_adc_0_ch_14_color.setAdapter(adapter_color_adc_0_ch_14);
         spinner_adc_0_ch_15_color.setAdapter(adapter_color_adc_0_ch_15);
+
+        spinner_adc_1_ch_0_color.setAdapter(adapter_color_adc_1_ch_0);
+        spinner_adc_1_ch_1_color.setAdapter(adapter_color_adc_1_ch_1);
+        spinner_adc_1_ch_2_color.setAdapter(adapter_color_adc_1_ch_2);
+        spinner_adc_1_ch_3_color.setAdapter(adapter_color_adc_1_ch_3);
+        spinner_adc_1_ch_4_color.setAdapter(adapter_color_adc_1_ch_4);
+        spinner_adc_1_ch_5_color.setAdapter(adapter_color_adc_1_ch_5);
+        spinner_adc_1_ch_6_color.setAdapter(adapter_color_adc_1_ch_6);
+        spinner_adc_1_ch_7_color.setAdapter(adapter_color_adc_1_ch_7);
+        spinner_adc_1_ch_8_color.setAdapter(adapter_color_adc_1_ch_8);
+        spinner_adc_1_ch_9_color.setAdapter(adapter_color_adc_1_ch_9);
+        spinner_adc_1_ch_10_color.setAdapter(adapter_color_adc_1_ch_10);
+        spinner_adc_1_ch_11_color.setAdapter(adapter_color_adc_1_ch_11);
+        spinner_adc_1_ch_12_color.setAdapter(adapter_color_adc_1_ch_12);
+        spinner_adc_1_ch_13_color.setAdapter(adapter_color_adc_1_ch_13);
+        spinner_adc_1_ch_14_color.setAdapter(adapter_color_adc_1_ch_14);
+        spinner_adc_1_ch_15_color.setAdapter(adapter_color_adc_1_ch_15);
+
+        spinner_adc_2_ch_0_color.setAdapter(adapter_color_adc_2_ch_0);
+        spinner_adc_2_ch_1_color.setAdapter(adapter_color_adc_2_ch_1);
+        spinner_adc_2_ch_2_color.setAdapter(adapter_color_adc_2_ch_2);
+        spinner_adc_2_ch_3_color.setAdapter(adapter_color_adc_2_ch_3);
+        spinner_adc_2_ch_4_color.setAdapter(adapter_color_adc_2_ch_4);
+        spinner_adc_2_ch_5_color.setAdapter(adapter_color_adc_2_ch_5);
+        spinner_adc_2_ch_6_color.setAdapter(adapter_color_adc_2_ch_6);
+        spinner_adc_2_ch_7_color.setAdapter(adapter_color_adc_2_ch_7);
+        spinner_adc_2_ch_8_color.setAdapter(adapter_color_adc_2_ch_8);
+        spinner_adc_2_ch_9_color.setAdapter(adapter_color_adc_2_ch_9);
+        spinner_adc_2_ch_10_color.setAdapter(adapter_color_adc_2_ch_10);
+        spinner_adc_2_ch_11_color.setAdapter(adapter_color_adc_2_ch_11);
+        spinner_adc_2_ch_12_color.setAdapter(adapter_color_adc_2_ch_12);
+        spinner_adc_2_ch_13_color.setAdapter(adapter_color_adc_2_ch_13);
+        spinner_adc_2_ch_14_color.setAdapter(adapter_color_adc_2_ch_14);
+        spinner_adc_2_ch_15_color.setAdapter(adapter_color_adc_2_ch_15);
 
         AdapterView.OnItemSelectedListener itemSelectedListener_adc_0_ch_0 = new AdapterView.OnItemSelectedListener() {
             @Override
@@ -889,6 +1181,454 @@ public class FragmentSetting extends Fragment {
         };
         spinner_adc_0_ch_15_color.setOnItemSelectedListener(itemSelectedListener_adc_0_ch_15);
 
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_0 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_0_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_0_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(0).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_0_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_0);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_1 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_1_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_1_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(1).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_1_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_1);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_2 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_2_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_2_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(2).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_2_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_2);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_3 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_3_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_3_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(3).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_3_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_3);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_4 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_4_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_4_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(4).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_4_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_4);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_5 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_5_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_5_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(5).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_5_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_5);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_6 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_6_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_6_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(6).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_6_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_6);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_7 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_7_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_7_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(7).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_7_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_7);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_8 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_8_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_8_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(8).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_8_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_8);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_9 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_9_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_9_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(9).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_9_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_9);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_10 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_10_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_10_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(10).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_10_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_10);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_11 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_11_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_11_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(11).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_11_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_11);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_12 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_12_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_12_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(12).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_12_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_12);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_13 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_13_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_13_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(13).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_13_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_13);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_14 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_14_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_14_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(14).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_14_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_14);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_1_ch_15 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_1_ch_15_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_1_15_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(15).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_1_ch_15_color.setOnItemSelectedListener(itemSelectedListener_adc_1_ch_15);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_0 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_0_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_0_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(0).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_0_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_0);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_1 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_1_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_1_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(1).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_1_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_1);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_2 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_2_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_2_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(2).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_2_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_2);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_3 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_3_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_3_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(3).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_3_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_3);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_4 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_4_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_4_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(4).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_4_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_4);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_5 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_5_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_5_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(5).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_5_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_5);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_6 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_6_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_6_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(6).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_6_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_6);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_7 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_7_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_7_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(7).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_7_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_7);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_8 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_8_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_8_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(8).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_8_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_8);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_9 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_9_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_9_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(9).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_9_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_9);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_10 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_10_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_10_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(10).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_10_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_10);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_11 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_11_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_11_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(11).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_11_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_11);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_12 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_12_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_12_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(12).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_12_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_12);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_13 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_13_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_13_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(13).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_13_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_13);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_14 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_14_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_14_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(14).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_14_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_14);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener_adc_2_ch_15 = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int itemSelected = spinner_adc_2_ch_15_color.getSelectedItemPosition();
+                spaceSetting.setSharedPreferences("adc_2_15_color", itemSelected);
+                spaceSetting.getAdcArrayList().get(15).setColor(itemSelected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinner_adc_2_ch_15_color.setOnItemSelectedListener(itemSelectedListener_adc_2_ch_15);
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         editTextArrayListNameAdc = new ArrayList<>();
@@ -1013,230 +1753,6 @@ public class FragmentSetting extends Fragment {
             });
             i = i + 1;
         }
-
-//        editText_adc_0_ch_0_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_0_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_0_name", text);
-//                        spaceSetting.getAdcArrayList().get(0).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_1_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_1_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_1_name", text);
-//                        spaceSetting.getAdcArrayList().get(1).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_2_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_2_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_2_name", text);
-//                        spaceSetting.getAdcArrayList().get(2).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_3_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_3_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_3_name", text);
-//                        spaceSetting.getAdcArrayList().get(3).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_4_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_4_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_4_name", text);
-//                        spaceSetting.getAdcArrayList().get(4).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_5_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_5_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_5_name", text);
-//                        spaceSetting.getAdcArrayList().get(5).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_6_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_6_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_6_name", text);
-//                        spaceSetting.getAdcArrayList().get(6).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_7_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_7_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_7_name", text);
-//                        spaceSetting.getAdcArrayList().get(7).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_8_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_8_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_8_name", text);
-//                        spaceSetting.getAdcArrayList().get(8).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_9_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_9_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_9_name", text);
-//                        spaceSetting.getAdcArrayList().get(9).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_10_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_10_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_10_name", text);
-//                        spaceSetting.getAdcArrayList().get(10).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_11_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_11_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_11_name", text);
-//                        spaceSetting.getAdcArrayList().get(11).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_12_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_12_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_12_name", text);
-//                        spaceSetting.getAdcArrayList().get(12).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_13_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_13_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_13_name", text);
-//                        spaceSetting.getAdcArrayList().get(13).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_14_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_14_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_14_name", text);
-//                        spaceSetting.getAdcArrayList().get(14).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_15_name.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_15_name.getText().toString();
-//                    if (!text.equals("")) {
-//                        spaceSetting.setSharedPreferences("adc_0_15_name", text);
-//                        spaceSetting.getAdcArrayList().get(15).setName(text);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1364,246 +1880,6 @@ public class FragmentSetting extends Fragment {
             i = i + 1;
         }
 
-//        editText_adc_0_ch_0_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_0_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_0_register", register);
-//                        spaceSetting.getAdcArrayList().get(0).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_1_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_1_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_1_register", register);
-//                        spaceSetting.getAdcArrayList().get(1).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_2_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_2_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_2_register", register);
-//                        spaceSetting.getAdcArrayList().get(2).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_3_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_3_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_3_register", register);
-//                        spaceSetting.getAdcArrayList().get(3).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_4_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_4_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_4_register", register);
-//                        spaceSetting.getAdcArrayList().get(4).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_5_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_5_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_5_register", register);
-//                        spaceSetting.getAdcArrayList().get(5).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_6_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_6_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_6_register", register);
-//                        spaceSetting.getAdcArrayList().get(6).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_7_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_7_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_7_register", register);
-//                        spaceSetting.getAdcArrayList().get(7).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_8_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_8_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_8_register", register);
-//                        spaceSetting.getAdcArrayList().get(8).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_9_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_9_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_9_register", register);
-//                        spaceSetting.getAdcArrayList().get(9).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_10_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_10_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_10_register", register);
-//                        spaceSetting.getAdcArrayList().get(10).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_11_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_11_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_11_register", register);
-//                        spaceSetting.getAdcArrayList().get(11).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_12_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_12_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_12_register", register);
-//                        spaceSetting.getAdcArrayList().get(12).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_13_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_13_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_13_register", register);
-//                        spaceSetting.getAdcArrayList().get(13).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_14_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_14_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_14_register", register);
-//                        spaceSetting.getAdcArrayList().get(14).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_15_register.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_15_register.getText().toString();
-//                    if (!text.equals("")) {
-//                        int register = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_15_register", register);
-//                        spaceSetting.getAdcArrayList().get(15).setRegister(register);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         editTextArrayListPlusAdc = new ArrayList<>();
@@ -1730,247 +2006,6 @@ public class FragmentSetting extends Fragment {
             i = i + 1;
         }
 
-//        editText_adc_0_ch_0_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_0_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_0_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(0).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_1_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_1_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_1_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(1).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_2_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_2_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_2_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(2).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_3_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_3_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_3_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(3).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_4_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_4_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_4_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(4).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_5_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_5_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_5_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(5).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_6_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_6_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_6_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(6).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_7_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_7_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_7_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(7).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_8_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_8_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_8_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(8).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_9_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_9_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_9_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(9).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_10_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_10_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_10_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(10).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_11_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_11_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_11_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(11).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_12_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_12_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_12_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(12).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_13_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_13_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_13_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(13).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_14_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_14_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_14_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(14).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_15_plus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_15_plus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int plus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_15_plus", plus);
-//                        spaceSetting.getAdcArrayList().get(15).setRegister(plus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         editTextArrayListMinusAdc = new ArrayList<>();
@@ -2096,246 +2131,6 @@ public class FragmentSetting extends Fragment {
             });
             i = i + 1;
         }
-
-//        editText_adc_0_ch_0_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_0_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_0_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(0).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_1_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_1_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_1_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(1).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_2_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_2_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_2_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(2).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_3_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_3_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_3_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(3).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_4_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_4_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_4_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(4).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_5_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_5_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_5_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(5).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_6_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_6_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_6_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(6).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_7_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_7_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_7_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(7).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_8_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_8_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_8_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(8).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_9_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_9_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_9_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(9).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_10_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_10_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_10_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(10).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_11_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_11_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_11_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(11).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_12_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_12_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_12_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(12).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_13_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_13_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_13_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(13).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_14_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_14_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_14_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(14).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
-//
-//        editText_adc_0_ch_15_minus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    String text = editText_adc_0_ch_15_minus.getText().toString();
-//                    if (!text.equals("")) {
-//                        int minus = Integer.parseInt(text);
-//                        spaceSetting.setSharedPreferences("adc_0_15_minus", minus);
-//                        spaceSetting.getAdcArrayList().get(15).setRegister(minus);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2598,104 +2393,104 @@ public class FragmentSetting extends Fragment {
 
         editTextArrayListRegisterIn = new ArrayList<>();
 
-        editText_adc_0_ch_0_register = root.findViewById(R.id.editText_adc_0_ch_0_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_0_register);
-        editText_adc_0_ch_1_register = root.findViewById(R.id.editText_adc_0_ch_1_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_1_register);
-        editText_adc_0_ch_2_register = root.findViewById(R.id.editText_adc_0_ch_2_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_2_register);
-        editText_adc_0_ch_3_register = root.findViewById(R.id.editText_adc_0_ch_3_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_3_register);
-        editText_adc_0_ch_4_register = root.findViewById(R.id.editText_adc_0_ch_4_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_4_register);
-        editText_adc_0_ch_5_register = root.findViewById(R.id.editText_adc_0_ch_5_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_5_register);
-        editText_adc_0_ch_6_register = root.findViewById(R.id.editText_adc_0_ch_6_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_6_register);
-        editText_adc_0_ch_7_register = root.findViewById(R.id.editText_adc_0_ch_7_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_7_register);
-        editText_adc_0_ch_8_register = root.findViewById(R.id.editText_adc_0_ch_8_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_8_register);
-        editText_adc_0_ch_9_register = root.findViewById(R.id.editText_adc_0_ch_9_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_9_register);
-        editText_adc_0_ch_10_register = root.findViewById(R.id.editText_adc_0_ch_10_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_10_register);
-        editText_adc_0_ch_11_register = root.findViewById(R.id.editText_adc_0_ch_11_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_11_register);
-        editText_adc_0_ch_12_register = root.findViewById(R.id.editText_adc_0_ch_12_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_12_register);
-        editText_adc_0_ch_13_register = root.findViewById(R.id.editText_adc_0_ch_13_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_13_register);
-        editText_adc_0_ch_14_register = root.findViewById(R.id.editText_adc_0_ch_14_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_14_register);
-        editText_adc_0_ch_15_register = root.findViewById(R.id.editText_adc_0_ch_15_register);
-        editTextArrayListRegisterIn.add(editText_adc_0_ch_15_register);
+        editText_in_0_ch_0_register = root.findViewById(R.id.editText_in_0_ch_0_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_0_register);
+        editText_in_0_ch_1_register = root.findViewById(R.id.editText_in_0_ch_1_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_1_register);
+        editText_in_0_ch_2_register = root.findViewById(R.id.editText_in_0_ch_2_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_2_register);
+        editText_in_0_ch_3_register = root.findViewById(R.id.editText_in_0_ch_3_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_3_register);
+        editText_in_0_ch_4_register = root.findViewById(R.id.editText_in_0_ch_4_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_4_register);
+        editText_in_0_ch_5_register = root.findViewById(R.id.editText_in_0_ch_5_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_5_register);
+        editText_in_0_ch_6_register = root.findViewById(R.id.editText_in_0_ch_6_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_6_register);
+        editText_in_0_ch_7_register = root.findViewById(R.id.editText_in_0_ch_7_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_7_register);
+        editText_in_0_ch_8_register = root.findViewById(R.id.editText_in_0_ch_8_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_8_register);
+        editText_in_0_ch_9_register = root.findViewById(R.id.editText_in_0_ch_9_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_9_register);
+        editText_in_0_ch_10_register = root.findViewById(R.id.editText_in_0_ch_10_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_10_register);
+        editText_in_0_ch_11_register = root.findViewById(R.id.editText_in_0_ch_11_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_11_register);
+        editText_in_0_ch_12_register = root.findViewById(R.id.editText_in_0_ch_12_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_12_register);
+        editText_in_0_ch_13_register = root.findViewById(R.id.editText_in_0_ch_13_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_13_register);
+        editText_in_0_ch_14_register = root.findViewById(R.id.editText_in_0_ch_14_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_14_register);
+        editText_in_0_ch_15_register = root.findViewById(R.id.editText_in_0_ch_15_register);
+        editTextArrayListRegisterIn.add(editText_in_0_ch_15_register);
 
-        editText_adc_1_ch_0_register = root.findViewById(R.id.editText_adc_1_ch_0_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_0_register);
-        editText_adc_1_ch_1_register = root.findViewById(R.id.editText_adc_1_ch_1_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_1_register);
-        editText_adc_1_ch_2_register = root.findViewById(R.id.editText_adc_1_ch_2_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_2_register);
-        editText_adc_1_ch_3_register = root.findViewById(R.id.editText_adc_1_ch_3_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_3_register);
-        editText_adc_1_ch_4_register = root.findViewById(R.id.editText_adc_1_ch_4_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_4_register);
-        editText_adc_1_ch_5_register = root.findViewById(R.id.editText_adc_1_ch_5_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_5_register);
-        editText_adc_1_ch_6_register = root.findViewById(R.id.editText_adc_1_ch_6_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_6_register);
-        editText_adc_1_ch_7_register = root.findViewById(R.id.editText_adc_1_ch_7_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_7_register);
-        editText_adc_1_ch_8_register = root.findViewById(R.id.editText_adc_1_ch_8_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_8_register);
-        editText_adc_1_ch_9_register = root.findViewById(R.id.editText_adc_1_ch_9_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_9_register);
-        editText_adc_1_ch_10_register = root.findViewById(R.id.editText_adc_1_ch_10_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_10_register);
-        editText_adc_1_ch_11_register = root.findViewById(R.id.editText_adc_1_ch_11_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_11_register);
-        editText_adc_1_ch_12_register = root.findViewById(R.id.editText_adc_1_ch_12_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_12_register);
-        editText_adc_1_ch_13_register = root.findViewById(R.id.editText_adc_1_ch_13_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_13_register);
-        editText_adc_1_ch_14_register = root.findViewById(R.id.editText_adc_1_ch_14_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_14_register);
-        editText_adc_1_ch_15_register = root.findViewById(R.id.editText_adc_1_ch_15_register);
-        editTextArrayListRegisterIn.add(editText_adc_1_ch_15_register);
+        editText_in_1_ch_0_register = root.findViewById(R.id.editText_in_1_ch_0_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_0_register);
+        editText_in_1_ch_1_register = root.findViewById(R.id.editText_in_1_ch_1_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_1_register);
+        editText_in_1_ch_2_register = root.findViewById(R.id.editText_in_1_ch_2_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_2_register);
+        editText_in_1_ch_3_register = root.findViewById(R.id.editText_in_1_ch_3_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_3_register);
+        editText_in_1_ch_4_register = root.findViewById(R.id.editText_in_1_ch_4_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_4_register);
+        editText_in_1_ch_5_register = root.findViewById(R.id.editText_in_1_ch_5_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_5_register);
+        editText_in_1_ch_6_register = root.findViewById(R.id.editText_in_1_ch_6_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_6_register);
+        editText_in_1_ch_7_register = root.findViewById(R.id.editText_in_1_ch_7_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_7_register);
+        editText_in_1_ch_8_register = root.findViewById(R.id.editText_in_1_ch_8_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_8_register);
+        editText_in_1_ch_9_register = root.findViewById(R.id.editText_in_1_ch_9_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_9_register);
+        editText_in_1_ch_10_register = root.findViewById(R.id.editText_in_1_ch_10_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_10_register);
+        editText_in_1_ch_11_register = root.findViewById(R.id.editText_in_1_ch_11_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_11_register);
+        editText_in_1_ch_12_register = root.findViewById(R.id.editText_in_1_ch_12_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_12_register);
+        editText_in_1_ch_13_register = root.findViewById(R.id.editText_in_1_ch_13_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_13_register);
+        editText_in_1_ch_14_register = root.findViewById(R.id.editText_in_1_ch_14_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_14_register);
+        editText_in_1_ch_15_register = root.findViewById(R.id.editText_in_1_ch_15_register);
+        editTextArrayListRegisterIn.add(editText_in_1_ch_15_register);
 
-        editText_adc_2_ch_0_register = root.findViewById(R.id.editText_adc_2_ch_0_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_0_register);
-        editText_adc_2_ch_1_register = root.findViewById(R.id.editText_adc_2_ch_1_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_1_register);
-        editText_adc_2_ch_2_register = root.findViewById(R.id.editText_adc_2_ch_2_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_2_register);
-        editText_adc_2_ch_3_register = root.findViewById(R.id.editText_adc_2_ch_3_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_3_register);
-        editText_adc_2_ch_4_register = root.findViewById(R.id.editText_adc_2_ch_4_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_4_register);
-        editText_adc_2_ch_5_register = root.findViewById(R.id.editText_adc_2_ch_5_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_5_register);
-        editText_adc_2_ch_6_register = root.findViewById(R.id.editText_adc_2_ch_6_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_6_register);
-        editText_adc_2_ch_7_register = root.findViewById(R.id.editText_adc_2_ch_7_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_7_register);
-        editText_adc_2_ch_8_register = root.findViewById(R.id.editText_adc_2_ch_8_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_8_register);
-        editText_adc_2_ch_9_register = root.findViewById(R.id.editText_adc_2_ch_9_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_9_register);
-        editText_adc_2_ch_10_register = root.findViewById(R.id.editText_adc_2_ch_10_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_10_register);
-        editText_adc_2_ch_11_register = root.findViewById(R.id.editText_adc_2_ch_11_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_11_register);
-        editText_adc_2_ch_12_register = root.findViewById(R.id.editText_adc_2_ch_12_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_12_register);
-        editText_adc_2_ch_13_register = root.findViewById(R.id.editText_adc_2_ch_13_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_13_register);
-        editText_adc_2_ch_14_register = root.findViewById(R.id.editText_adc_2_ch_14_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_14_register);
-        editText_adc_2_ch_15_register = root.findViewById(R.id.editText_adc_2_ch_15_register);
-        editTextArrayListRegisterIn.add(editText_adc_2_ch_15_register);
+        editText_in_2_ch_0_register = root.findViewById(R.id.editText_in_2_ch_0_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_0_register);
+        editText_in_2_ch_1_register = root.findViewById(R.id.editText_in_2_ch_1_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_1_register);
+        editText_in_2_ch_2_register = root.findViewById(R.id.editText_in_2_ch_2_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_2_register);
+        editText_in_2_ch_3_register = root.findViewById(R.id.editText_in_2_ch_3_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_3_register);
+        editText_in_2_ch_4_register = root.findViewById(R.id.editText_in_2_ch_4_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_4_register);
+        editText_in_2_ch_5_register = root.findViewById(R.id.editText_in_2_ch_5_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_5_register);
+        editText_in_2_ch_6_register = root.findViewById(R.id.editText_in_2_ch_6_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_6_register);
+        editText_in_2_ch_7_register = root.findViewById(R.id.editText_in_2_ch_7_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_7_register);
+        editText_in_2_ch_8_register = root.findViewById(R.id.editText_in_2_ch_8_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_8_register);
+        editText_in_2_ch_9_register = root.findViewById(R.id.editText_in_2_ch_9_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_9_register);
+        editText_in_2_ch_10_register = root.findViewById(R.id.editText_in_2_ch_10_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_10_register);
+        editText_in_2_ch_11_register = root.findViewById(R.id.editText_in_2_ch_11_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_11_register);
+        editText_in_2_ch_12_register = root.findViewById(R.id.editText_in_2_ch_12_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_12_register);
+        editText_in_2_ch_13_register = root.findViewById(R.id.editText_in_2_ch_13_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_13_register);
+        editText_in_2_ch_14_register = root.findViewById(R.id.editText_in_2_ch_14_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_14_register);
+        editText_in_2_ch_15_register = root.findViewById(R.id.editText_in_2_ch_15_register);
+        editTextArrayListRegisterIn.add(editText_in_2_ch_15_register);
 
         i = 0;
         for (final EditText editText: editTextArrayListRegisterIn) {
@@ -2724,104 +2519,104 @@ public class FragmentSetting extends Fragment {
 
         switchArrayListEnableIn = new ArrayList<>();
 
-        switch_acd_0_ch_0_enable = root.findViewById(R.id.switch_adc_0_ch_0_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_0_enable);
-        switch_acd_0_ch_1_enable = root.findViewById(R.id.switch_adc_0_ch_1_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_1_enable);
-        switch_acd_0_ch_2_enable = root.findViewById(R.id.switch_adc_0_ch_2_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_2_enable);
-        switch_acd_0_ch_3_enable = root.findViewById(R.id.switch_adc_0_ch_3_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_3_enable);
-        switch_acd_0_ch_4_enable = root.findViewById(R.id.switch_adc_0_ch_4_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_4_enable);
-        switch_acd_0_ch_5_enable = root.findViewById(R.id.switch_adc_0_ch_5_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_5_enable);
-        switch_acd_0_ch_6_enable = root.findViewById(R.id.switch_adc_0_ch_6_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_6_enable);
-        switch_acd_0_ch_7_enable = root.findViewById(R.id.switch_adc_0_ch_7_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_7_enable);
-        switch_acd_0_ch_8_enable = root.findViewById(R.id.switch_adc_0_ch_8_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_8_enable);
-        switch_acd_0_ch_9_enable = root.findViewById(R.id.switch_adc_0_ch_9_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_9_enable);
-        switch_acd_0_ch_10_enable = root.findViewById(R.id.switch_adc_0_ch_10_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_10_enable);
-        switch_acd_0_ch_11_enable = root.findViewById(R.id.switch_adc_0_ch_11_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_11_enable);
-        switch_acd_0_ch_12_enable = root.findViewById(R.id.switch_adc_0_ch_12_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_12_enable);
-        switch_acd_0_ch_13_enable = root.findViewById(R.id.switch_adc_0_ch_13_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_13_enable);
-        switch_acd_0_ch_14_enable = root.findViewById(R.id.switch_adc_0_ch_14_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_14_enable);
-        switch_acd_0_ch_15_enable = root.findViewById(R.id.switch_adc_0_ch_15_enable);
-        switchArrayListEnableIn.add(switch_acd_0_ch_15_enable);
+        switch_in_0_ch_0_enable = root.findViewById(R.id.switch_in_0_ch_0_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_0_enable);
+        switch_in_0_ch_1_enable = root.findViewById(R.id.switch_in_0_ch_1_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_1_enable);
+        switch_in_0_ch_2_enable = root.findViewById(R.id.switch_in_0_ch_2_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_2_enable);
+        switch_in_0_ch_3_enable = root.findViewById(R.id.switch_in_0_ch_3_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_3_enable);
+        switch_in_0_ch_4_enable = root.findViewById(R.id.switch_in_0_ch_4_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_4_enable);
+        switch_in_0_ch_5_enable = root.findViewById(R.id.switch_in_0_ch_5_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_5_enable);
+        switch_in_0_ch_6_enable = root.findViewById(R.id.switch_in_0_ch_6_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_6_enable);
+        switch_in_0_ch_7_enable = root.findViewById(R.id.switch_in_0_ch_7_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_7_enable);
+        switch_in_0_ch_8_enable = root.findViewById(R.id.switch_in_0_ch_8_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_8_enable);
+        switch_in_0_ch_9_enable = root.findViewById(R.id.switch_in_0_ch_9_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_9_enable);
+        switch_in_0_ch_10_enable = root.findViewById(R.id.switch_in_0_ch_10_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_10_enable);
+        switch_in_0_ch_11_enable = root.findViewById(R.id.switch_in_0_ch_11_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_11_enable);
+        switch_in_0_ch_12_enable = root.findViewById(R.id.switch_in_0_ch_12_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_12_enable);
+        switch_in_0_ch_13_enable = root.findViewById(R.id.switch_in_0_ch_13_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_13_enable);
+        switch_in_0_ch_14_enable = root.findViewById(R.id.switch_in_0_ch_14_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_14_enable);
+        switch_in_0_ch_15_enable = root.findViewById(R.id.switch_in_0_ch_15_enable);
+        switchArrayListEnableIn.add(switch_in_0_ch_15_enable);
 
-        switch_acd_1_ch_0_enable = root.findViewById(R.id.switch_adc_1_ch_0_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_0_enable);
-        switch_acd_1_ch_1_enable = root.findViewById(R.id.switch_adc_1_ch_1_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_1_enable);
-        switch_acd_1_ch_2_enable = root.findViewById(R.id.switch_adc_1_ch_2_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_2_enable);
-        switch_acd_1_ch_3_enable = root.findViewById(R.id.switch_adc_1_ch_3_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_3_enable);
-        switch_acd_1_ch_4_enable = root.findViewById(R.id.switch_adc_1_ch_4_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_4_enable);
-        switch_acd_1_ch_5_enable = root.findViewById(R.id.switch_adc_1_ch_5_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_5_enable);
-        switch_acd_1_ch_6_enable = root.findViewById(R.id.switch_adc_1_ch_6_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_6_enable);
-        switch_acd_1_ch_7_enable = root.findViewById(R.id.switch_adc_1_ch_7_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_7_enable);
-        switch_acd_1_ch_8_enable = root.findViewById(R.id.switch_adc_1_ch_8_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_8_enable);
-        switch_acd_1_ch_9_enable = root.findViewById(R.id.switch_adc_1_ch_9_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_9_enable);
-        switch_acd_1_ch_10_enable = root.findViewById(R.id.switch_adc_1_ch_10_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_10_enable);
-        switch_acd_1_ch_11_enable = root.findViewById(R.id.switch_adc_1_ch_11_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_11_enable);
-        switch_acd_1_ch_12_enable = root.findViewById(R.id.switch_adc_1_ch_12_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_12_enable);
-        switch_acd_1_ch_13_enable = root.findViewById(R.id.switch_adc_1_ch_13_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_13_enable);
-        switch_acd_1_ch_14_enable = root.findViewById(R.id.switch_adc_1_ch_14_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_14_enable);
-        switch_acd_1_ch_15_enable = root.findViewById(R.id.switch_adc_1_ch_15_enable);
-        switchArrayListEnableIn.add(switch_acd_1_ch_15_enable);
+        switch_in_1_ch_0_enable = root.findViewById(R.id.switch_in_1_ch_0_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_0_enable);
+        switch_in_1_ch_1_enable = root.findViewById(R.id.switch_in_1_ch_1_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_1_enable);
+        switch_in_1_ch_2_enable = root.findViewById(R.id.switch_in_1_ch_2_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_2_enable);
+        switch_in_1_ch_3_enable = root.findViewById(R.id.switch_in_1_ch_3_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_3_enable);
+        switch_in_1_ch_4_enable = root.findViewById(R.id.switch_in_1_ch_4_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_4_enable);
+        switch_in_1_ch_5_enable = root.findViewById(R.id.switch_in_1_ch_5_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_5_enable);
+        switch_in_1_ch_6_enable = root.findViewById(R.id.switch_in_1_ch_6_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_6_enable);
+        switch_in_1_ch_7_enable = root.findViewById(R.id.switch_in_1_ch_7_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_7_enable);
+        switch_in_1_ch_8_enable = root.findViewById(R.id.switch_in_1_ch_8_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_8_enable);
+        switch_in_1_ch_9_enable = root.findViewById(R.id.switch_in_1_ch_9_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_9_enable);
+        switch_in_1_ch_10_enable = root.findViewById(R.id.switch_in_1_ch_10_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_10_enable);
+        switch_in_1_ch_11_enable = root.findViewById(R.id.switch_in_1_ch_11_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_11_enable);
+        switch_in_1_ch_12_enable = root.findViewById(R.id.switch_in_1_ch_12_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_12_enable);
+        switch_in_1_ch_13_enable = root.findViewById(R.id.switch_in_1_ch_13_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_13_enable);
+        switch_in_1_ch_14_enable = root.findViewById(R.id.switch_in_1_ch_14_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_14_enable);
+        switch_in_1_ch_15_enable = root.findViewById(R.id.switch_in_1_ch_15_enable);
+        switchArrayListEnableIn.add(switch_in_1_ch_15_enable);
 
-        switch_acd_2_ch_0_enable = root.findViewById(R.id.switch_adc_2_ch_0_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_0_enable);
-        switch_acd_2_ch_1_enable = root.findViewById(R.id.switch_adc_2_ch_1_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_1_enable);
-        switch_acd_2_ch_2_enable = root.findViewById(R.id.switch_adc_2_ch_2_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_2_enable);
-        switch_acd_2_ch_3_enable = root.findViewById(R.id.switch_adc_2_ch_3_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_3_enable);
-        switch_acd_2_ch_4_enable = root.findViewById(R.id.switch_adc_2_ch_4_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_4_enable);
-        switch_acd_2_ch_5_enable = root.findViewById(R.id.switch_adc_2_ch_5_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_5_enable);
-        switch_acd_2_ch_6_enable = root.findViewById(R.id.switch_adc_2_ch_6_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_6_enable);
-        switch_acd_2_ch_7_enable = root.findViewById(R.id.switch_adc_2_ch_7_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_7_enable);
-        switch_acd_2_ch_8_enable = root.findViewById(R.id.switch_adc_2_ch_8_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_8_enable);
-        switch_acd_2_ch_9_enable = root.findViewById(R.id.switch_adc_2_ch_9_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_9_enable);
-        switch_acd_2_ch_10_enable = root.findViewById(R.id.switch_adc_2_ch_10_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_10_enable);
-        switch_acd_2_ch_11_enable = root.findViewById(R.id.switch_adc_2_ch_11_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_11_enable);
-        switch_acd_2_ch_12_enable = root.findViewById(R.id.switch_adc_2_ch_12_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_12_enable);
-        switch_acd_2_ch_13_enable = root.findViewById(R.id.switch_adc_2_ch_13_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_13_enable);
-        switch_acd_2_ch_14_enable = root.findViewById(R.id.switch_adc_2_ch_14_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_14_enable);
-        switch_acd_2_ch_15_enable = root.findViewById(R.id.switch_adc_2_ch_15_enable);
-        switchArrayListEnableIn.add(switch_acd_2_ch_15_enable);
+        switch_in_2_ch_0_enable = root.findViewById(R.id.switch_in_2_ch_0_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_0_enable);
+        switch_in_2_ch_1_enable = root.findViewById(R.id.switch_in_2_ch_1_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_1_enable);
+        switch_in_2_ch_2_enable = root.findViewById(R.id.switch_in_2_ch_2_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_2_enable);
+        switch_in_2_ch_3_enable = root.findViewById(R.id.switch_in_2_ch_3_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_3_enable);
+        switch_in_2_ch_4_enable = root.findViewById(R.id.switch_in_2_ch_4_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_4_enable);
+        switch_in_2_ch_5_enable = root.findViewById(R.id.switch_in_2_ch_5_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_5_enable);
+        switch_in_2_ch_6_enable = root.findViewById(R.id.switch_in_2_ch_6_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_6_enable);
+        switch_in_2_ch_7_enable = root.findViewById(R.id.switch_in_2_ch_7_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_7_enable);
+        switch_in_2_ch_8_enable = root.findViewById(R.id.switch_in_2_ch_8_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_8_enable);
+        switch_in_2_ch_9_enable = root.findViewById(R.id.switch_in_2_ch_9_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_9_enable);
+        switch_in_2_ch_10_enable = root.findViewById(R.id.switch_in_2_ch_10_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_10_enable);
+        switch_in_2_ch_11_enable = root.findViewById(R.id.switch_in_2_ch_11_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_11_enable);
+        switch_in_2_ch_12_enable = root.findViewById(R.id.switch_in_2_ch_12_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_12_enable);
+        switch_in_2_ch_13_enable = root.findViewById(R.id.switch_in_2_ch_13_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_13_enable);
+        switch_in_2_ch_14_enable = root.findViewById(R.id.switch_in_2_ch_14_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_14_enable);
+        switch_in_2_ch_15_enable = root.findViewById(R.id.switch_in_2_ch_15_enable);
+        switchArrayListEnableIn.add(switch_in_2_ch_15_enable);
 
         i = 0;
         for (final Switch switchFromList: switchArrayListEnableIn) {
