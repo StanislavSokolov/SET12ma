@@ -2,7 +2,6 @@ package com.example.set12ma.ui.main;
 
 import android.graphics.Color;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -28,14 +27,6 @@ public class Line {
             case 5: color = Color.WHITE; break;
             case 6: color = Color.YELLOW; break;
             case 7: color = Color.MAGENTA; break;
-            case 8: color = Color.GREEN; break;
-            case 9: color = Color.RED; break;
-            case 10: color = Color.BLUE; break;
-            case 11: color = Color.CYAN; break;
-            case 12: color = Color.GRAY; break;
-            case 13: color = Color.WHITE; break;
-            case 14: color = Color.YELLOW; break;
-            case 15: color = Color.MAGENTA; break;
         }
         return color;
     }
@@ -55,6 +46,10 @@ public class Line {
         for (Entry entry: queue) {
             arrayList.add(entry);
         }
+    }
+
+    public void eraseQueue() {
+        queue.clear();
     }
 
     public Line(String name, boolean enableShow, int color) {

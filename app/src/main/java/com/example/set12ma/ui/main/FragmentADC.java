@@ -908,18 +908,23 @@ public class FragmentADC extends Fragment {
             while (true) {
                 try {
                     UpDateGraphicalDisplay.sleep(timer);
-                    upDateValues();
                 } catch (InterruptedException e) {
                     break;
                 }
                 if (spaceStatus.isReadyFlagToExchangeData()) {
-                    time = time + 1;
+                    upDateValues();
                     for (Chart chart: arrayListChart) {
                         addValueToLine(chart.getArrayList(), time, chart.getAdc());
                         upDateChart(chart.getArrayList(), chart.getLineChart());
                     }
+                    time = time + 1;
                 } else {
                     time = 0;
+                    for (Chart chart: arrayListChart) {
+                        for (int i = 0; i < chart.getArrayList().size(); i++) {
+                            chart.getArrayList().get(i).eraseQueue();
+                        }
+                    }
                 }
 
             }
