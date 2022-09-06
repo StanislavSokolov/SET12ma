@@ -118,34 +118,26 @@ public class FragmentLogging extends Fragment {
     }
 
     private void send() {
-        File file = new File(String.valueOf(getContext().getFilesDir() + "/logs.txt"));
-        if (file.exists()) {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(file.getAbsolutePath()));
-            sendIntent.setType("application/txt*");
+        if (!spaceStatus.isStatusProcessOfUpdatingSoftware() & !spaceStatus.isStatusProcessOfLoadingSoftware()) {
+            if (!spaceStatus.isReadyFlagToDownloadLog()) {
+                File file = new File(getContext().getFilesDir() + "/logs.txt");
+                if (file.exists()) {
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(file.getAbsolutePath()));
+                    sendIntent.setType("application/txt*");
 
-            Intent shareIntent = Intent.createChooser(sendIntent, null);
-            startActivity(shareIntent);
+                    Intent shareIntent = Intent.createChooser(sendIntent, null);
+                    startActivity(shareIntent);
+                } else {
+                    Toast.makeText(getActivity(), "Нет данных для отправки", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getContext(), "Дождитесь завершения загрузки логов", Toast.LENGTH_LONG).show();
+            }
         } else {
-            Toast.makeText(getActivity(), "Нет данных для отправки", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
         }
-
-//        if (spaceStatus.isReadyFlagToExchangeData()) {
-//
-////            Intent intent = new Intent()
-////                    .setType("*/*")
-////                    .setAction(Intent.ACTION_SEND);
-////            startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
-//
-//            Intent sendIntent = new Intent();
-//            sendIntent.setAction(Intent.ACTION_SEND);
-//            sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-//            sendIntent.setType("text/plain");
-//
-//            Intent shareIntent = Intent.createChooser(sendIntent, null);
-//            startActivity(shareIntent);
-//        } else Toast.makeText(getActivity(), "Подключитесь к устройству", Toast.LENGTH_SHORT).show();
     }
 
     public class UpDateGraphicalDisplay extends Thread {

@@ -1037,7 +1037,7 @@ public class FragmentBluetooth extends Fragment {
                             }
                         } if (spaceStatus.isReadyFlagToExchangeData()) {
                             if (getCommand() == READ) {
-                                if (counterAttemptsToConection < 10) {
+                                if (counterAttemptsToConection < 5) {
                                     if (countWaitConnection < 500000) {
                                         countWaitConnection = countWaitConnection + 1;
                                     } else {

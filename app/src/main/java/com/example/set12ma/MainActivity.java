@@ -339,7 +339,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         }
         if (value == 3) {
             tabsSET12MA.setupWithViewPager(viewPagerLogging);
-            tabsSET12MA.setVisibility(View.VISIBLE);
+            tabsSET12MA.setVisibility(View.INVISIBLE);
             viewPagerConnecting.setVisibility(View.INVISIBLE);
             viewPagerLogging.setVisibility(View.VISIBLE);
             viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
