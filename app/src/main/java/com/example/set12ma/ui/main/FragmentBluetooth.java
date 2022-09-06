@@ -1004,6 +1004,8 @@ public class FragmentBluetooth extends Fragment {
                                 });
                             }
                         }
+                        countWaitConnection = 0;
+                        counterAttemptsToConection = 0;
                     } else {
                         if (latchInit) {
                             setCommand(READ);
@@ -1032,6 +1034,34 @@ public class FragmentBluetooth extends Fragment {
                                 });
                                 latchInit = false;
                                 interrupt();
+                            }
+                        } if (spaceStatus.isReadyFlagToExchangeData()) {
+                            if (getCommand() == READ) {
+                                if (counterAttemptsToConection < 10) {
+                                    if (countWaitConnection < 500000) {
+                                        countWaitConnection = countWaitConnection + 1;
+                                    } else {
+                                        countWaitConnection = 0;
+                                        counterAttemptsToConection = counterAttemptsToConection + 1;
+                                    }
+                                } else {
+                                    textViewConnectedToDevice.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            buttonConnectToDevice.setText("Подключить");
+                                            textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение.");
+                                            progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+                                            spaceStatus.setReadyFlagToExchangeData(false);
+                                            spaceStatus.setDevice("");
+                                            getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                                            spaceStatus.setReadyFlagRecordingInitialValues(false);
+                                            bluetoothSoketThread.cancel();
+                                            Toast.makeText(getContext(), "Не удается связаться с процессорным модулем. Проверьте соединение.", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                    latchInit = false;
+                                    interrupt();
+                                }
                             }
                         }
                     }
