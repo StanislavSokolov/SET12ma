@@ -59,27 +59,16 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
     int viewPagerNumber = 0;
 
-    ImageView bigIcon;
-    ImageView smallIcon;
-
-
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         Log.i("AndroidExample", "onCreate");
         setContentView(R.layout.activity_main);
-
-        bigIcon = findViewById(R.id.bigIcon);
-//        smallIcon = findViewById(R.id.smallIcon);
-
-        Animation animRotateIn_icon = AnimationUtils.loadAnimation(this,
-                R.anim.rotate);
-
-        bigIcon.startAnimation(animRotateIn_icon);
 
         sectionsPagerAdapterDataInput = new MainActivitySectionsPagerAdapterDataInput(this, getSupportFragmentManager());
         sectionsPagerAdapterDataOutput = new MainActivitySectionsPagerAdapterDataOutput(this, getSupportFragmentManager());
