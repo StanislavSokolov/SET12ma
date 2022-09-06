@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -56,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
     int viewPagerNumber = 0;
 
+    ImageView bigIcon;
+    ImageView smallIcon;
+
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -66,6 +72,15 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         super.onCreate(savedInstanceState);
         Log.i("AndroidExample", "onCreate");
         setContentView(R.layout.activity_main);
+
+        bigIcon = findViewById(R.id.bigIcon);
+//        smallIcon = findViewById(R.id.smallIcon);
+
+        Animation animRotateIn_icon = AnimationUtils.loadAnimation(this,
+                R.anim.rotate);
+
+        bigIcon.startAnimation(animRotateIn_icon);
+
         sectionsPagerAdapterDataInput = new MainActivitySectionsPagerAdapterDataInput(this, getSupportFragmentManager());
         sectionsPagerAdapterDataOutput = new MainActivitySectionsPagerAdapterDataOutput(this, getSupportFragmentManager());
         sectionsPagerAdapterLoadingSoftware = new MainActivitySectionsPagerAdapterLoadingSoftware(this, getSupportFragmentManager());
@@ -138,6 +153,14 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
 
         dataRecovery();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        Animation animRotateIn_big = AnimationUtils.loadAnimation(this,
+//                R.anim.rotate);
+//        bigIcon.startAnimation(animRotateIn_big);
     }
 
     @SuppressLint("CommitPrefEdits")
