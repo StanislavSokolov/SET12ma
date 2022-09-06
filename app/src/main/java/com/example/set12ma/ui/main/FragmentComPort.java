@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
 
 public class FragmentComPort extends Fragment {
-    private static final String ARG_SECTION_NUMBER = "CP";
+    private static final String ARG_SECTION_NUMBER = "ComPort";
 
     private PageViewModel pageViewModel;
 
