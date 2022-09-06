@@ -18,6 +18,7 @@
 
     <string name="tab_SET12MA_text_10">Скачать</string>
     <string name="tab_SET12MA_text_11">Посмотреть</string>
+    <string name="tab_SET12MA_text_12">Настройки</string>
 
     <string name="tip_text_01">Выберите тип устройства</string>
 
@@ -77,6 +78,7 @@
     <string name="menu_connection">Подключение</string>
     <string name="menu_logging">Логирование</string>
     <string name="menu_loadingSoftware">Загрузка ПО</string>
+    <string name="menu_setting">Настройки</string>
 
     <string name="main_connection">Bluetooth соединения</string>
     <string name="main_text_connected_devices">Сопряженные устройства</string>

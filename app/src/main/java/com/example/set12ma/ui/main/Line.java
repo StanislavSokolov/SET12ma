@@ -1,7 +1,7 @@
 package com.example.set12ma.ui.main;
 
+import android.graphics.Color;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -16,6 +16,27 @@ public class Line {
     private ArrayList<Entry> arrayList;
     private boolean enableShow;
 
+    public int getColor() {
+        int color = 0;
+        switch (this.color) {
+            case 0: color = Color.GREEN; break;
+            case 1: color = Color.RED; break;
+            case 2: color = Color.BLUE; break;
+            case 3: color = Color.CYAN; break;
+            case 4: color = Color.GRAY; break;
+            case 5: color = Color.WHITE; break;
+            case 6: color = Color.YELLOW; break;
+            case 7: color = Color.MAGENTA; break;
+        }
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+    private int color = 0;
+
     public void setData(float x, float y) {
         if (queue.size() > SIZE_QUEUE) {
             queue.remove();
@@ -27,9 +48,14 @@ public class Line {
         }
     }
 
-    public Line(String name, boolean enableShow) {
+    public void eraseQueue() {
+        queue.clear();
+    }
+
+    public Line(String name, boolean enableShow, int color) {
         this.name = name;
         this.enableShow = enableShow;
+        this.color = color;
         queue = new LinkedList<>();
     }
 

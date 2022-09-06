@@ -1,5 +1,7 @@
 package com.example.set12ma;
 
+import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +21,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace, ResultReceiverStatusSpace, ResultReceiverFileLogsSpace {
+public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace, ResultReceiverStatusSpace, ResultReceiverFileLogsSpace, ResultReceiverSettingSpace {
 
     // Адресное пространство приложения
     SpaceAddress spaceAddress;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     SpaceStatus spaceStatus;
     // Пространство памяти для хранения считанных логов
     SpaceFileLogs spaceFileLogs;
+    SpaceSetting spaceSetting;
     // SET12MA
     TabLayout tabsSET12MA;
     ViewPager viewPagerDataInput;
@@ -40,18 +43,22 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     // Connection
     ViewPager viewPagerConnecting;
 
-    MenuItem indicator;
+    ViewPager viewPagerSetting;
 
     MainActivitySectionsPagerAdapterDataInput sectionsPagerAdapterDataInput;
     MainActivitySectionsPagerAdapterDataOutput sectionsPagerAdapterDataOutput;
     MainActivitySectionsPagerAdapterLoadingSoftware sectionsPagerAdapterLoadingSoftware;
     MainActivitySectionsPagerAdapterLogging sectionsPagerAdapterLogging;
     MainActivitySectionsPagerAdapterConnecting sectionsPagerAdapterConnecting;
+    MainActivitySectionsPagerAdapterSetting sectionsPagerAdapterSetting;
 
     String selectedTabPosition = "selectedTabPosition";
 
     int viewPagerNumber = 0;
 
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -64,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         sectionsPagerAdapterLoadingSoftware = new MainActivitySectionsPagerAdapterLoadingSoftware(this, getSupportFragmentManager());
         sectionsPagerAdapterLogging = new MainActivitySectionsPagerAdapterLogging(this, getSupportFragmentManager());
         sectionsPagerAdapterConnecting = new MainActivitySectionsPagerAdapterConnecting(this, getSupportFragmentManager());
+        sectionsPagerAdapterSetting = new MainActivitySectionsPagerAdapterSetting(this, getSupportFragmentManager());
 
         // Terminal
         viewPagerDataInput = findViewById(R.id.view_pager_dataInput);
@@ -83,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         viewPagerConnecting = findViewById(R.id.view_pager_connecting);
         viewPagerConnecting.setAdapter(sectionsPagerAdapterConnecting);
 //        viewPagerConnecting.setVisibility(View.INVISIBLE);
+        viewPagerSetting = findViewById(R.id.view_pager_setting);
+        viewPagerSetting.setAdapter(sectionsPagerAdapterSetting);
 
         // main tab
         tabsSET12MA = findViewById(R.id.tabs_SET12MA);
@@ -90,12 +100,16 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
         upDateViewPager(viewPagerNumber);
 
+        sharedPreferences = getSharedPreferences("Setting", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
 //        FloatingActionButton fab = findViewById(R.id.fab_SET12MA);
 
         spaceAddress = new SpaceAddress(300);
         spaceMemory = new SpaceMemory();
         spaceStatus = new SpaceStatus();
         spaceFileLogs = new SpaceFileLogs();
+        spaceSetting = new SpaceSetting(sharedPreferences);
 //        addressSpace.setAddressSpace(150, 1);
 //        addressSpace.setAddressSpace(210, 150);
 
@@ -121,6 +135,72 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 //        ActivityCompat.requestPermissions(MainActivity.this,
 //                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
 //                1);
+
+
+        dataRecovery();
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    private void dataRecovery() {
+        if (!sharedPreferences.contains("start")) {
+            for (int j = 0; j < 3; j++) {
+                for (int i = 0; i < 16; i++) {
+                    editor.putString("adc_" + j + "_" + i + "_name", spaceSetting.getAdcArrayList().get(i+j*16).getName());
+                    editor.putInt("adc_" + j + "_" + i + "_plus", spaceSetting.getAdcArrayList().get(i+j*16).getPlus());
+                    editor.putInt("adc_" + j + "_" + i + "_minus", spaceSetting.getAdcArrayList().get(i+j*16).getMinus());
+                    editor.putInt("adc_" + j + "_" + i + "_color", spaceSetting.getAdcArrayList().get(i+j*16).getColor());
+                    editor.putInt("adc_" + j + "_" + i + "_register", spaceSetting.getAdcArrayList().get(i+j*16).getRegister());
+                    editor.putBoolean("adc_" + j + "_" + i + "_enable", spaceSetting.getAdcArrayList().get(i+j*16).isEnable());
+
+                    editor.putString("in_" + j + "_" + i + "_name", spaceSetting.getInArrayList().get(i+j*16).getName());
+                    editor.putInt("in_" + j + "_" + i + "_register", spaceSetting.getInArrayList().get(i+j*16).getRegister());
+                    editor.putBoolean("in_" + j + "_" + i + "_enable", spaceSetting.getInArrayList().get(i+j*16).isEnable());
+
+                    editor.putString("out_" + j + "_" + i + "_name", spaceSetting.getOutArrayList().get(i+j*16).getName());
+                    editor.putInt("out_" + j + "_" + i + "_register", spaceSetting.getOutArrayList().get(i+j*16).getRegister());
+                    editor.putBoolean("out_" + j + "_" + i + "_enable", spaceSetting.getOutArrayList().get(i+j*16).isEnable());
+                }
+            }
+
+            for (int j = 0; j < 8; j++) {
+                for (int i = 0; i < 8; i++) {
+                    editor.putString("tk_" + j + "_" + i + "_name", spaceSetting.getTkArrayList().get(i+j*8).getName());
+                    editor.putInt("tk_" + j + "_" + i + "_register", spaceSetting.getTkArrayList().get(i+j*8).getRegister());
+                    editor.putBoolean("in_" + j + "_" + i + "_enable", spaceSetting.getInArrayList().get(i+j*16).isEnable());
+                }
+            }
+
+            editor.putString("start", "start");
+            editor.apply();
+        } else {
+            for (int j = 0; j < 3; j++) {
+                for (int i = 0; i < 16; i++) {
+                    spaceSetting.getAdcArrayList().get(i + j * 16).setName(sharedPreferences.getString("adc_" + j + "_" + i + "_name", "adc_" + j + "_" + i + "_name"));
+                    spaceSetting.getAdcArrayList().get(i + j * 16).setPlus(sharedPreferences.getInt("adc_" + j + "_" + i + "_plus", 1024));
+                    spaceSetting.getAdcArrayList().get(i + j * 16).setMinus(sharedPreferences.getInt("adc_" + j + "_" + i + "_minus", 1024));
+                    if (i < 8) spaceSetting.getAdcArrayList().get(i + j * 16).setColor(sharedPreferences.getInt("adc_" + j + "_" + i + "_color", i));
+                    else spaceSetting.getAdcArrayList().get(i + j * 16).setColor(sharedPreferences.getInt("adc_" + j + "_" + i + "_color", i - 8));
+                    spaceSetting.getAdcArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("adc_" + j + "_" + i + "_register", 96 + i + j*16));
+                    spaceSetting.getAdcArrayList().get(i + j * 16).setEnable(sharedPreferences.getBoolean("adc_" + j + "_" + i + "_enable", true));
+
+                    spaceSetting.getInArrayList().get(i + j * 16).setName(sharedPreferences.getString("in_" + j + "_" + i + "_name", "in_" + j + "_" + i + "_name"));
+                    spaceSetting.getInArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("in_" + j + "_" + i + "_register", i + j*16));
+                    spaceSetting.getInArrayList().get(i + j * 16).setEnable(sharedPreferences.getBoolean("in_" + j + "_" + i + "_enable", true));
+
+                    spaceSetting.getOutArrayList().get(i + j * 16).setName(sharedPreferences.getString("out_" + j + "_" + i + "_name", "out_" + j + "_" + i + "_name"));
+                    spaceSetting.getOutArrayList().get(i + j * 16).setRegister(sharedPreferences.getInt("out_" + j + "_" + i + "_register", 48 + i + j*16));
+                    spaceSetting.getOutArrayList().get(i + j * 16).setEnable(sharedPreferences.getBoolean("out_" + j + "_" + i + "_enable", true));
+                }
+            }
+
+            for (int j = 0; j < 8; j++) {
+                for (int i = 0; i < 8; i++) {
+                    spaceSetting.getTkArrayList().get(i + j * 8).setName(sharedPreferences.getString("tk_" + j + "_" + i + "_name", "tk_" + j + "_" + i + "_name"));
+                    spaceSetting.getTkArrayList().get(i + j * 8).setRegister(sharedPreferences.getInt("tk_" + j + "_" + i + "_register", 144+i+j*8));
+                    spaceSetting.getTkArrayList().get(i + j * 8).setEnable(sharedPreferences.getBoolean("tk_" + j + "_" + i + "_enable", true));
+                }
+            }
+        }
     }
 
     @Override
@@ -186,13 +266,13 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
                 }
                 return true;
             case R.id.menu_dataInput:
-                upDateViewPager(0);
-                return true;
-            case R.id.menu_dataOutput:
                 upDateViewPager(1);
                 return true;
-            case R.id.menu_connecting:
+            case R.id.menu_dataOutput:
                 upDateViewPager(2);
+                return true;
+            case R.id.menu_connecting:
+                upDateViewPager(0);
                 return true;
             case R.id.menu_logging:
                 upDateViewPager(3);
@@ -200,13 +280,16 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
             case R.id.menu_loadingSoftware:
                 upDateViewPager(4);
                 return true;
+            case R.id.menu_setting:
+                upDateViewPager(5);
+                return true;
         }
 //        headerView.setText(item.getTitle());
         return super.onOptionsItemSelected(item);
     }
 
     private void upDateViewPager(int value) {
-        if (value == 0) {
+        if (value == 1) {
             tabsSET12MA.setupWithViewPager(viewPagerDataInput);
             tabsSET12MA.setVisibility(View.VISIBLE);
             viewPagerConnecting.setVisibility(View.INVISIBLE);
@@ -214,10 +297,11 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
             viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
             viewPagerDataInput.setVisibility(View.VISIBLE);
             viewPagerDataOutput.setVisibility(View.INVISIBLE);
+            viewPagerSetting.setVisibility(View.INVISIBLE);
             getSupportActionBar().setTitle("Входы");
-            viewPagerNumber = 0;
+            viewPagerNumber = 1;
         }
-        if (value == 1) {
+        if (value == 2) {
             tabsSET12MA.setupWithViewPager(viewPagerDataOutput);
             tabsSET12MA.setVisibility(View.VISIBLE);
             viewPagerConnecting.setVisibility(View.INVISIBLE);
@@ -225,10 +309,11 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
             viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
             viewPagerDataInput.setVisibility(View.INVISIBLE);
             viewPagerDataOutput.setVisibility(View.VISIBLE);
+            viewPagerSetting.setVisibility(View.INVISIBLE);
             getSupportActionBar().setTitle("Выходы");
-            viewPagerNumber = 1;
+            viewPagerNumber = 2;
         }
-        if (value == 2) {
+        if (value == 0) {
             tabsSET12MA.setupWithViewPager(viewPagerConnecting);
             tabsSET12MA.setVisibility(View.VISIBLE);
             viewPagerConnecting.setVisibility(View.VISIBLE);
@@ -236,8 +321,9 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
             viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
             viewPagerDataInput.setVisibility(View.INVISIBLE);
             viewPagerDataOutput.setVisibility(View.INVISIBLE);
+            viewPagerSetting.setVisibility(View.INVISIBLE);
             getSupportActionBar().setTitle("Подключение");
-            viewPagerNumber = 2;
+            viewPagerNumber = 0;
         }
         if (value == 3) {
             tabsSET12MA.setupWithViewPager(viewPagerLogging);
@@ -247,6 +333,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
             viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
             viewPagerDataInput.setVisibility(View.INVISIBLE);
             viewPagerDataOutput.setVisibility(View.INVISIBLE);
+            viewPagerSetting.setVisibility(View.INVISIBLE);
             getSupportActionBar().setTitle("Логирование");
             viewPagerNumber = 3;
         }
@@ -258,8 +345,21 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
             viewPagerLoadingSoftware.setVisibility(View.VISIBLE);
             viewPagerDataInput.setVisibility(View.INVISIBLE);
             viewPagerDataOutput.setVisibility(View.INVISIBLE);
+            viewPagerSetting.setVisibility(View.INVISIBLE);
             getSupportActionBar().setTitle("Загрузка ПО");
             viewPagerNumber = 4;
+        }
+        if (value == 5) {
+            tabsSET12MA.setupWithViewPager(viewPagerSetting);
+            tabsSET12MA.setVisibility(View.INVISIBLE);
+            viewPagerConnecting.setVisibility(View.INVISIBLE);
+            viewPagerLogging.setVisibility(View.INVISIBLE);
+            viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
+            viewPagerDataInput.setVisibility(View.INVISIBLE);
+            viewPagerDataOutput.setVisibility(View.INVISIBLE);
+            viewPagerSetting.setVisibility(View.VISIBLE);
+            getSupportActionBar().setTitle("Настройки");
+            viewPagerNumber = 5;
         }
     }
 
@@ -281,5 +381,10 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     @Override
     public SpaceFileLogs getSpaceFileLogs() {
         return spaceFileLogs;
+    }
+
+    @Override
+    public SpaceSetting getSpaceSetting() {
+        return spaceSetting;
     }
 }

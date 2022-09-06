@@ -81,6 +81,9 @@ public class FragmentBluetooth extends Fragment {
     private SpaceFileLogs spaceFileLogs;
     private ResultReceiverFileLogsSpace resultReceiverFileLogsSpace;
 
+    private SpaceSetting spaceSetting;
+    private ResultReceiverSettingSpace resultReceiverSettingSpace;
+
     private ArrayList<BluetoothDevice> arrayListAvailableDevices;                               // список устройств, доступных к сопряжению
     private ArrayList<BluetoothDevice> arrayListConnectedDevices;                               // список устройств, доступных к сопряжению
     private int itemSelectedFromConnectedDevices = 0;
@@ -94,8 +97,8 @@ public class FragmentBluetooth extends Fragment {
     private TextView textViewConnectedDevices;
     private Spinner spinnerConnectedDevices;
     private Button buttonConnectToDevice;
-    private static TextView textViewConnectedToDevice;
-    private static ProgressBar progressBarConnectedToDevice;
+    private TextView textViewConnectedToDevice;
+    private ProgressBar progressBarConnectedToDevice;
     private TextView textViewAvailableDevices;
     private Spinner spinnerAvailableDevices;
     private Button buttonFindNewDevices;
@@ -107,6 +110,7 @@ public class FragmentBluetooth extends Fragment {
         resultReceiverMemorySpace = (ResultReceiverMemorySpace) context;
         resultReceiverStatusSpace = (ResultReceiverStatusSpace) context;
         resultReceiverFileLogsSpace = (ResultReceiverFileLogsSpace) context;
+        resultReceiverSettingSpace = (ResultReceiverSettingSpace) context;
     }
 
 
@@ -207,6 +211,7 @@ public class FragmentBluetooth extends Fragment {
         spaceMemory = resultReceiverMemorySpace.getSpaceMemory();
         spaceStatus = resultReceiverStatusSpace.getSpaceStatus();
         spaceFileLogs = resultReceiverFileLogsSpace.getSpaceFileLogs();
+        spaceSetting = resultReceiverSettingSpace.getSpaceSetting();
 
         textViewConnectedDevices = root.findViewById(R.id.textView_tip_find_file);
         spinnerConnectedDevices = root.findViewById(R.id.spinner_connected_devices);
@@ -225,12 +230,7 @@ public class FragmentBluetooth extends Fragment {
         buttonConnectToDevice.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
-            public void onClick(View v) {         if (bluetooth.isEnabled()) {
-                try {
-                    setConnecting();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            public void onClick(View v) {         if (bluetooth.isEnabled()) { setConnecting();
             } else
                 Toast.makeText(getActivity(), "Необходимо включить Bluetooth", Toast.LENGTH_SHORT).show();
             }
@@ -247,7 +247,7 @@ public class FragmentBluetooth extends Fragment {
     }
 
 
-    private void setConnecting() throws InterruptedException {
+    private void setConnecting() {
         if (!adapterConnectedDevices.getItem(itemSelectedFromConnectedDevices + 1).equals("Выберите устройство")) {
 
             spaceStatus.setReadyFlagToExchangeData(false);
@@ -268,7 +268,7 @@ public class FragmentBluetooth extends Fragment {
                 buttonConnectToDevice.setText("Отключить");
                 textViewConnectedToDevice.setText("Подключение к " + stringConnectedToDevice);
                 textViewConnectedToDevice.setVisibility(View.VISIBLE);
-                currentByte = 48;
+                currentByte = 0;
                 bluetoothSoketThread = new BluetoothSoketThread();
                 bluetoothSoketThread.start();
             } else {
@@ -298,19 +298,25 @@ public class FragmentBluetooth extends Fragment {
     }
 
     private void checkEnableBluetooth(){
-        if (bluetooth.isEnabled()) {
-        }
-        else
-        {
+        if (!bluetooth.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, 12);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 12) {
+            showConnectedDevices();
+            showAvailableDevices();
         }
     }
 
     private void showConnectedDevices(){
 
         arrayListConnectedDevices = new ArrayList<>();
-        adapterConnectedDevices = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapterConnectedDevices = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item);
         adapterConnectedDevices.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Set<BluetoothDevice> pairedDevices = bluetooth.getBondedDevices();
 
@@ -346,7 +352,7 @@ public class FragmentBluetooth extends Fragment {
 
     private void showAvailableDevices(){
         arrayListAvailableDevices = new ArrayList<>();
-        adapterAvailableDevices = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        adapterAvailableDevices = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item);
         adapterAvailableDevices.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapterAvailableDevices.add(firstStringAdapterAvailableDevices);
         spinnerAvailableDevices.setAdapter(adapterAvailableDevices);
@@ -421,7 +427,6 @@ public class FragmentBluetooth extends Fragment {
                 } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
                 }
-            } else {
             }
         }
 
@@ -430,6 +435,7 @@ public class FragmentBluetooth extends Fragment {
                 interrupt();
                 bluetoothSocket.close();
             } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 
@@ -447,10 +453,10 @@ public class FragmentBluetooth extends Fragment {
             int countByte = 0;
             byte[] bufferByte = null;
 
-            int crc = 0;
-            int high = 0;
+            int crc;
+            int high;
 
-            String answerTest = "";
+            String answerTest;
             int countWaitConnection = 0;
 
             int countReceivedMessage = 0;
@@ -491,14 +497,14 @@ public class FragmentBluetooth extends Fragment {
                                     bufferByte[i + countByte] = buffer[i];
                                 }
                                 countByte = countByte + buffer.length;
-                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + String.valueOf(countByte));
+                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
                             }
 
                             if (countByte == 10) {
                                 Log.i(LOG_TAG, "Получили нужное количество байт");
                                 answerTest = "";
                                 for (byte readByte : bufferByte) {
-                                    int bufInt = 0;
+                                    int bufInt;
                                     if (readByte < 0) bufInt = readByte + 256;
                                     else bufInt = readByte;
                                     answerTest = answerTest + " " + bufInt;
@@ -530,17 +536,14 @@ public class FragmentBluetooth extends Fragment {
                                             }
 
                                             if (currentByte == 143) {
-                                                nextByte = 208;
-                                            }
-
-                                            if (currentByte == 255) {
                                                 nextByte = 0;
                                             }
 
-
-                                            if ((currentByte == 47) || (currentByte == 143) || (currentByte == 255))
+                                            if ((currentByte == 47) || (currentByte == 143))
                                                 currentByte = nextByte;
                                             else currentByte++;
+                                        } else {
+                                            currentByte = 48;
                                         }
                                         statusError = false;
                                     } else {
@@ -574,14 +577,14 @@ public class FragmentBluetooth extends Fragment {
                                     bufferByte[i + countByte] = buffer[i];
                                 }
                                 countByte = countByte + buffer.length;
-                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + String.valueOf(countByte));
+                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
                             }
 
                             if (countByte == 6) {
                                 Log.i(LOG_TAG, "Получили нужное количество байт");
                                 answerTest = "";
                                 for (byte readByte : bufferByte) {
-                                    int bufInt = 0;
+                                    int bufInt;
                                     if (readByte < 0) bufInt = readByte + 256;
                                     else bufInt = readByte;
                                     answerTest = answerTest + " " + bufInt;
@@ -641,14 +644,14 @@ public class FragmentBluetooth extends Fragment {
                                     bufferByte[i + countByte] = buffer[i];
                                 }
                                 countByte = countByte + buffer.length;
-                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + String.valueOf(countByte));
+                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
                             }
 
                             if (countByte == 6) {
                                 Log.i(LOG_TAG, "Получили нужное количество байт");
                                 answerTest = "";
                                 for (byte readByte : bufferByte) {
-                                    int bufInt = 0;
+                                    int bufInt;
                                     if (readByte < 0) bufInt = readByte + 256;
                                     else bufInt = readByte;
                                     answerTest = answerTest + " " + bufInt;
@@ -699,14 +702,14 @@ public class FragmentBluetooth extends Fragment {
                                     bufferByte[i + countByte] = buffer[i];
                                 }
                                 countByte = countByte + buffer.length;
-                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + String.valueOf(countByte));
+                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
                             }
 
                             if (countByte == 6) {
                                 Log.i(LOG_TAG, "Получили нужное количество байт");
                                 answerTest = "";
                                 for (byte readByte : bufferByte) {
-                                    int bufInt = 0;
+                                    int bufInt;
                                     if (readByte < 0) bufInt = readByte + 256;
                                     else bufInt = readByte;
                                     answerTest = answerTest + " " + bufInt;
@@ -758,14 +761,14 @@ public class FragmentBluetooth extends Fragment {
                                     bufferByte[i + countByte] = buffer[i];
                                 }
                                 countByte = countByte + buffer.length;
-                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + String.valueOf(countByte));
+                                Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
                             }
 
                             if (countByte == 18) {
                                 Log.i(LOG_TAG, "Получили нужное количество байт");
                                 answerTest = "";
                                 for (byte readByte : bufferByte) {
-                                    int bufInt = 0;
+                                    int bufInt;
                                     if (readByte < 0) bufInt = readByte + 256;
                                     else bufInt = readByte;
                                     answerTest = answerTest + " " + bufInt;
@@ -823,7 +826,7 @@ public class FragmentBluetooth extends Fragment {
                                 Log.i(LOG_TAG, "Получили нужное количество байт");
                                 answerTest = "";
                                 for (byte readByte : bufferByte) {
-                                    int bufInt = 0;
+                                    int bufInt;
                                     if (readByte < 0) bufInt = readByte + 256;
                                     else bufInt = readByte;
                                     answerTest = answerTest + " " + bufInt;
@@ -964,16 +967,17 @@ public class FragmentBluetooth extends Fragment {
                                             latchQueue = true;
                                         }
                                         ElementQueue elementQueue = spaceAddress.getElementQueue();
-                                        if (elementQueue.getSectionNumber() == 0) {
-                                            currentByte = 48;
-                                        }
-                                        if (elementQueue.getSectionNumber() == 1) {
-                                            currentByte = 144;
-                                        }
-                                        currentByte = currentByte + elementQueue.getId();
+//                                        if (elementQueue.getSectionNumber() == 0) {
+//                                            currentByte = 48;
+//                                        }
+//                                        if (elementQueue.getSectionNumber() == 1) {
+//                                            currentByte = 144;
+//                                        }
+//                                        currentByte = currentByte + elementQueue.getId();
+                                        currentByte = elementQueue.getRegister();
                                         Log.i(LOG_TAG, "SUPRIM");
                                         setCommand(WRITE);
-                                        bluetoothConnectedOutputThread.write();
+                                        bluetoothConnectedOutputThread.write(elementQueue.getRegister(), elementQueue.getData());
                                     } else {
                                         if (latchQueue) {
                                             latchQueue = false;
@@ -1045,7 +1049,7 @@ public class FragmentBluetooth extends Fragment {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
-            byte[] buf = new byte[msg.arg2];
+            byte[] buf;
             buf = (byte[]) msg.obj;
             byte[] buffer = new byte[msg.arg1];
             String s = "";
@@ -1077,7 +1081,7 @@ public class FragmentBluetooth extends Fragment {
 
         public void run() {
             byte[] buffer = new byte[32];  // buffer store for the stream
-            int bytes = 20; // bytes returned from read()
+            int bytes; // bytes returned from read()
             while (!isInterrupted()) {
                 try {
                     // Read from the InputStream
@@ -1140,7 +1144,11 @@ public class FragmentBluetooth extends Fragment {
             bytesToCreateCRC = new byte[10];
             bytesToSend[0] = ADDRESS_DEVICE;
             bytesToSend[1] = WRITE;
-            bytesToSend[2] = (byte) currentByte;
+            if ((currentByte > 47) & (currentByte < 96)) {
+                bytesToSend[2] = (byte) spaceSetting.getOutArrayList().get(currentByte - 48).getRegister();
+            } else if ((currentByte > 143) & (currentByte < 208)) {
+                bytesToSend[2] = (byte) spaceSetting.getTkArrayList().get(currentByte - 144).getRegister();
+            }
             bytesToSend[3] = 0;
             bytesToSend[4] = 0;
             bytesToSend[5] = 0;
@@ -1159,7 +1167,40 @@ public class FragmentBluetooth extends Fragment {
             bytesToSend[10] = (byte) (crc - high * 256);
             bytesToSend[11] = (byte) high;
 
-            Log.i(LOG_TAG, "Номер регистра " + currentByte + " WRITE");
+            Log.i(LOG_TAG, "Номер регистра " + bytesToSend[2] + " WRITE");
+
+            try {
+                outputStream.write(bytesToSend);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        public void write(int register, int value) {
+            bytesToSend = new byte[12];
+            bytesToCreateCRC = new byte[10];
+            bytesToSend[0] = ADDRESS_DEVICE;
+            bytesToSend[1] = WRITE;
+            bytesToSend[2] = (byte) register;
+            bytesToSend[3] = 0;
+            bytesToSend[4] = 0;
+            bytesToSend[5] = 0;
+            int high = value / 256;
+            bytesToSend[6] = (byte) (value - high * 256);
+            bytesToSend[7] = (byte) high;
+            bytesToSend[8] = 0;
+            bytesToSend[9] = 0;
+
+            for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                bytesToCreateCRC[i] = bytesToSend[i];
+            }
+            int crc = (CRC16.getCRC4(bytesToCreateCRC));
+            high = crc / 256;
+            bytesToSend[10] = (byte) (crc - high * 256);
+            bytesToSend[11] = (byte) high;
+
+            Log.i(LOG_TAG, "Номер регистра " + register + " WRITE");
 
             try {
                 outputStream.write(bytesToSend);
@@ -1174,7 +1215,24 @@ public class FragmentBluetooth extends Fragment {
             bytesToCreateCRC = new byte[6];
             bytesToSend[0] = ADDRESS_DEVICE;
             bytesToSend[1] = READ;
-            bytesToSend[2] = (byte) currentByte;
+            boolean b = true;
+            while (b) {
+                if ((currentByte > -1) & (currentByte < 48)) {
+                    if (spaceSetting.getInArrayList().get(currentByte).isEnable()) {
+                        bytesToSend[2] = (byte) spaceSetting.getInArrayList().get(currentByte).getRegister();
+                        b = false;
+                    } else {
+                        if (currentByte < 47) currentByte++; else currentByte = 96;
+                    }
+                } else if ((currentByte > 95) & (currentByte < 144)) {
+                    if (spaceSetting.getAdcArrayList().get(currentByte - 96).isEnable()) {
+                        bytesToSend[2] = (byte) spaceSetting.getAdcArrayList().get(currentByte - 96).getRegister();
+                        b = false;
+                    } else {
+                        if (currentByte < 143) currentByte++; else currentByte = 0;
+                    }
+                }
+            }
             bytesToSend[3] = 0;
             bytesToSend[4] = 0;
             bytesToSend[5] = 0;
@@ -1206,7 +1264,7 @@ public class FragmentBluetooth extends Fragment {
             bytesToCreateCRC = new byte[bytesToSend.length - 2];
             bytesToSend[0] = ADDRESS_DEVICE;
             bytesToSend[1] = INIT_LOAD;
-            byte[] bytesToSendBuf = new byte[5];
+            byte[] bytesToSendBuf;
             bytesToSendBuf = determineDownloadMode();
             Log.i("LoGF", String.valueOf(bytesToSendBuf[0]));
             Log.i("LoGF", String.valueOf(bytesToSendBuf[1]));
@@ -1308,7 +1366,7 @@ public class FragmentBluetooth extends Fragment {
             bytesToCreateCRC = new byte[16];
             bytesToSend[0] = ADDRESS_DEVICE;
             bytesToSend[1] = EXTEND;
-            byte[] bytesToSendBuf = new byte[5];
+            byte[] bytesToSendBuf;
             bytesToSendBuf = determineDownloadMode();
             Log.i("LoGF", String.valueOf(bytesToSendBuf[0]));
             Log.i("LoGF", String.valueOf(bytesToSendBuf[1]));
@@ -1349,7 +1407,7 @@ public class FragmentBluetooth extends Fragment {
             }
         }
 
-        public void downloadLogs(int address, int length) throws IOException {
+        public void downloadLogs(int address, int length) {
             bytesToSend = new byte[12];
             bytesToCreateCRC = new byte[bytesToSend.length - 2];
             int highH = address/16777216;
@@ -1393,7 +1451,7 @@ public class FragmentBluetooth extends Fragment {
         @Override
         public void run() {
             super.run();
-            File file = new File(String.valueOf(getContext().getFilesDir() + "/logs.txt"));
+            File file = new File(getContext().getFilesDir() + "/logs.txt");
             if (file.exists()) file.delete();
             try {
                 file.createNewFile();
@@ -1407,13 +1465,8 @@ public class FragmentBluetooth extends Fragment {
                 e.printStackTrace();
             }
             for (int i = 0; i < spaceFileLogs.getSpaceFileLogsArrayListSize(); i++) {
-                byte[] bytes = new byte[spaceFileLogs.getSpaceFileLogsLength(i)];
+                byte[] bytes;
                 bytes = spaceFileLogs.getSpaceFileLogsByte(i);
-                for (byte readByte : bytes) {
-                    int bufInt = 0;
-                    if (readByte < 0) bufInt = readByte + 256;
-                    else bufInt = readByte;
-                }
                 try {
                     fileOutputStream.write(bytes);
                 } catch (IOException e) {

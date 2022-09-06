@@ -29,12 +29,15 @@ public class FragmentADC extends Fragment {
     private int stopCellNumber = 208;
 
     private ArrayList<Button> arrayListButton;
-    private ArrayList<TextView> arrayListTextView;
+    private ArrayList<TextView> arrayListValue;
+    private ArrayList<TextView> arrayListName;
     private ArrayList<Switch> arrayListSwitch;
     private SpaceAddress spaceAddress;
     private ResultReceiverAddressSpace resultReceiverAddressSpace;
     private SpaceStatus spaceStatus;
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
+    private SpaceSetting spaceSetting;
+    private ResultReceiverSettingSpace resultReceiverSettingSpace;
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
     private long timer = 1000;
@@ -103,6 +106,7 @@ public class FragmentADC extends Fragment {
         super.onAttach(context);
         resultReceiverAddressSpace = (ResultReceiverAddressSpace) context;
         resultReceiverStatusSpace = (ResultReceiverStatusSpace) context;
+        resultReceiverSettingSpace = (ResultReceiverSettingSpace) context;
     }
 
     private PageViewModel pageViewModel;
@@ -126,6 +130,7 @@ public class FragmentADC extends Fragment {
         pageViewModel.setIndex(index);
         spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
         spaceStatus = resultReceiverStatusSpace.getSpaceStatus();
+        spaceSetting = resultReceiverSettingSpace.getSpaceSetting();
     }
 
     @Override
@@ -141,7 +146,7 @@ public class FragmentADC extends Fragment {
 
         for (Chart chart: arrayListChart) {
             for (int i = 0; i <16; i++) {
-                chart.addArrayList(new Line("ADC" + i, false));
+                chart.addArrayList(new Line(spaceSetting.getAdcArrayList().get(i + chart.getAdc()*16).getName(), false, spaceSetting.getAdcArrayList().get(i + chart.getAdc()*16).getColor()));
             }
         }
 
@@ -154,108 +159,109 @@ public class FragmentADC extends Fragment {
 
             }
         });
-        arrayListTextView = new ArrayList<>();
+        arrayListValue = new ArrayList<>();
         arrayListButton = new ArrayList<>();
         arrayListSwitch = new ArrayList<>();
+        arrayListName = new ArrayList<>();
 
         TextView textViewValue_adc_0_0 = root.findViewById(R.id.textViewValue_adc_0_0);
-        arrayListTextView.add(textViewValue_adc_0_0);
+        arrayListValue.add(textViewValue_adc_0_0);
         TextView textViewValue_adc_0_1 = root.findViewById(R.id.textViewValue_adc_0_1);
-        arrayListTextView.add(textViewValue_adc_0_1);
+        arrayListValue.add(textViewValue_adc_0_1);
         TextView textViewValue_adc_0_2 = root.findViewById(R.id.textViewValue_adc_0_2);
-        arrayListTextView.add(textViewValue_adc_0_2);
+        arrayListValue.add(textViewValue_adc_0_2);
         TextView textViewValue_adc_0_3 = root.findViewById(R.id.textViewValue_adc_0_3);
-        arrayListTextView.add(textViewValue_adc_0_3);
+        arrayListValue.add(textViewValue_adc_0_3);
         TextView textViewValue_adc_0_4 = root.findViewById(R.id.textViewValue_adc_0_4);
-        arrayListTextView.add(textViewValue_adc_0_4);
+        arrayListValue.add(textViewValue_adc_0_4);
         TextView textViewValue_adc_0_5 = root.findViewById(R.id.textViewValue_adc_0_5);
-        arrayListTextView.add(textViewValue_adc_0_5);
+        arrayListValue.add(textViewValue_adc_0_5);
         TextView textViewValue_adc_0_6 = root.findViewById(R.id.textViewValue_adc_0_6);
-        arrayListTextView.add(textViewValue_adc_0_6);
+        arrayListValue.add(textViewValue_adc_0_6);
         TextView textViewValue_adc_0_7 = root.findViewById(R.id.textViewValue_adc_0_7);
-        arrayListTextView.add(textViewValue_adc_0_7);
+        arrayListValue.add(textViewValue_adc_0_7);
         TextView textViewValue_adc_0_8 = root.findViewById(R.id.textViewValue_adc_0_8);
-        arrayListTextView.add(textViewValue_adc_0_8);
+        arrayListValue.add(textViewValue_adc_0_8);
         TextView textViewValue_adc_0_9 = root.findViewById(R.id.textViewValue_adc_0_9);
-        arrayListTextView.add(textViewValue_adc_0_9);
+        arrayListValue.add(textViewValue_adc_0_9);
         TextView textViewValue_adc_0_10 = root.findViewById(R.id.textViewValue_adc_0_10);
-        arrayListTextView.add(textViewValue_adc_0_10);
+        arrayListValue.add(textViewValue_adc_0_10);
         TextView textViewValue_adc_0_11 = root.findViewById(R.id.textViewValue_adc_0_11);
-        arrayListTextView.add(textViewValue_adc_0_11);
+        arrayListValue.add(textViewValue_adc_0_11);
         TextView textViewValue_adc_0_12 = root.findViewById(R.id.textViewValue_adc_0_12);
-        arrayListTextView.add(textViewValue_adc_0_12);
+        arrayListValue.add(textViewValue_adc_0_12);
         TextView textViewValue_adc_0_13 = root.findViewById(R.id.textViewValue_adc_0_13);
-        arrayListTextView.add(textViewValue_adc_0_13);
+        arrayListValue.add(textViewValue_adc_0_13);
         TextView textViewValue_adc_0_14 = root.findViewById(R.id.textViewValue_adc_0_14);
-        arrayListTextView.add(textViewValue_adc_0_14);
+        arrayListValue.add(textViewValue_adc_0_14);
         TextView textViewValue_adc_0_15 = root.findViewById(R.id.textViewValue_adc_0_15);
-        arrayListTextView.add(textViewValue_adc_0_15);
+        arrayListValue.add(textViewValue_adc_0_15);
 
         TextView textViewValue_adc_1_0 = root.findViewById(R.id.textViewValue_adc_1_0);
-        arrayListTextView.add(textViewValue_adc_1_0);
+        arrayListValue.add(textViewValue_adc_1_0);
         TextView textViewValue_adc_1_1 = root.findViewById(R.id.textViewValue_adc_1_1);
-        arrayListTextView.add(textViewValue_adc_1_1);
+        arrayListValue.add(textViewValue_adc_1_1);
         TextView textViewValue_adc_1_2 = root.findViewById(R.id.textViewValue_adc_1_2);
-        arrayListTextView.add(textViewValue_adc_1_2);
+        arrayListValue.add(textViewValue_adc_1_2);
         TextView textViewValue_adc_1_3 = root.findViewById(R.id.textViewValue_adc_1_3);
-        arrayListTextView.add(textViewValue_adc_1_3);
+        arrayListValue.add(textViewValue_adc_1_3);
         TextView textViewValue_adc_1_4 = root.findViewById(R.id.textViewValue_adc_1_4);
-        arrayListTextView.add(textViewValue_adc_1_4);
+        arrayListValue.add(textViewValue_adc_1_4);
         TextView textViewValue_adc_1_5 = root.findViewById(R.id.textViewValue_adc_1_5);
-        arrayListTextView.add(textViewValue_adc_1_5);
+        arrayListValue.add(textViewValue_adc_1_5);
         TextView textViewValue_adc_1_6 = root.findViewById(R.id.textViewValue_adc_1_6);
-        arrayListTextView.add(textViewValue_adc_1_6);
+        arrayListValue.add(textViewValue_adc_1_6);
         TextView textViewValue_adc_1_7 = root.findViewById(R.id.textViewValue_adc_1_7);
-        arrayListTextView.add(textViewValue_adc_1_7);
+        arrayListValue.add(textViewValue_adc_1_7);
         TextView textViewValue_adc_1_8 = root.findViewById(R.id.textViewValue_adc_1_8);
-        arrayListTextView.add(textViewValue_adc_1_8);
+        arrayListValue.add(textViewValue_adc_1_8);
         TextView textViewValue_adc_1_9 = root.findViewById(R.id.textViewValue_adc_1_9);
-        arrayListTextView.add(textViewValue_adc_1_9);
+        arrayListValue.add(textViewValue_adc_1_9);
         TextView textViewValue_adc_1_10 = root.findViewById(R.id.textViewValue_adc_1_10);
-        arrayListTextView.add(textViewValue_adc_1_10);
+        arrayListValue.add(textViewValue_adc_1_10);
         TextView textViewValue_adc_1_11 = root.findViewById(R.id.textViewValue_adc_1_11);
-        arrayListTextView.add(textViewValue_adc_1_11);
+        arrayListValue.add(textViewValue_adc_1_11);
         TextView textViewValue_adc_1_12 = root.findViewById(R.id.textViewValue_adc_1_12);
-        arrayListTextView.add(textViewValue_adc_1_12);
+        arrayListValue.add(textViewValue_adc_1_12);
         TextView textViewValue_adc_1_13 = root.findViewById(R.id.textViewValue_adc_1_13);
-        arrayListTextView.add(textViewValue_adc_1_13);
+        arrayListValue.add(textViewValue_adc_1_13);
         TextView textViewValue_adc_1_14 = root.findViewById(R.id.textViewValue_adc_1_14);
-        arrayListTextView.add(textViewValue_adc_1_14);
+        arrayListValue.add(textViewValue_adc_1_14);
         TextView textViewValue_adc_1_15 = root.findViewById(R.id.textViewValue_adc_1_15);
-        arrayListTextView.add(textViewValue_adc_1_15);
+        arrayListValue.add(textViewValue_adc_1_15);
 
         TextView textViewValue_adc_2_0 = root.findViewById(R.id.textViewValue_adc_2_0);
-        arrayListTextView.add(textViewValue_adc_2_0);
+        arrayListValue.add(textViewValue_adc_2_0);
         TextView textViewValue_adc_2_1 = root.findViewById(R.id.textViewValue_adc_2_1);
-        arrayListTextView.add(textViewValue_adc_2_1);
+        arrayListValue.add(textViewValue_adc_2_1);
         TextView textViewValue_adc_2_2 = root.findViewById(R.id.textViewValue_adc_2_2);
-        arrayListTextView.add(textViewValue_adc_2_2);
+        arrayListValue.add(textViewValue_adc_2_2);
         TextView textViewValue_adc_2_3 = root.findViewById(R.id.textViewValue_adc_2_3);
-        arrayListTextView.add(textViewValue_adc_2_3);
+        arrayListValue.add(textViewValue_adc_2_3);
         TextView textViewValue_adc_2_4 = root.findViewById(R.id.textViewValue_adc_2_4);
-        arrayListTextView.add(textViewValue_adc_2_4);
+        arrayListValue.add(textViewValue_adc_2_4);
         TextView textViewValue_adc_2_5 = root.findViewById(R.id.textViewValue_adc_2_5);
-        arrayListTextView.add(textViewValue_adc_2_5);
+        arrayListValue.add(textViewValue_adc_2_5);
         TextView textViewValue_adc_2_6 = root.findViewById(R.id.textViewValue_adc_2_6);
-        arrayListTextView.add(textViewValue_adc_2_6);
+        arrayListValue.add(textViewValue_adc_2_6);
         TextView textViewValue_adc_2_7 = root.findViewById(R.id.textViewValue_adc_2_7);
-        arrayListTextView.add(textViewValue_adc_2_7);
+        arrayListValue.add(textViewValue_adc_2_7);
         TextView textViewValue_adc_2_8 = root.findViewById(R.id.textViewValue_adc_2_8);
-        arrayListTextView.add(textViewValue_adc_2_8);
+        arrayListValue.add(textViewValue_adc_2_8);
         TextView textViewValue_adc_2_9 = root.findViewById(R.id.textViewValue_adc_2_9);
-        arrayListTextView.add(textViewValue_adc_2_9);
+        arrayListValue.add(textViewValue_adc_2_9);
         TextView textViewValue_adc_2_10 = root.findViewById(R.id.textViewValue_adc_2_10);
-        arrayListTextView.add(textViewValue_adc_2_10);
+        arrayListValue.add(textViewValue_adc_2_10);
         TextView textViewValue_adc_2_11 = root.findViewById(R.id.textViewValue_adc_2_11);
-        arrayListTextView.add(textViewValue_adc_2_11);
+        arrayListValue.add(textViewValue_adc_2_11);
         TextView textViewValue_adc_2_12 = root.findViewById(R.id.textViewValue_adc_2_12);
-        arrayListTextView.add(textViewValue_adc_2_12);
+        arrayListValue.add(textViewValue_adc_2_12);
         TextView textViewValue_adc_2_13 = root.findViewById(R.id.textViewValue_adc_2_13);
-        arrayListTextView.add(textViewValue_adc_2_13);
+        arrayListValue.add(textViewValue_adc_2_13);
         TextView textViewValue_adc_2_14 = root.findViewById(R.id.textViewValue_adc_2_14);
-        arrayListTextView.add(textViewValue_adc_2_14);
+        arrayListValue.add(textViewValue_adc_2_14);
         TextView textViewValue_adc_2_15 = root.findViewById(R.id.textViewValue_adc_2_15);
-        arrayListTextView.add(textViewValue_adc_2_15);
+        arrayListValue.add(textViewValue_adc_2_15);
 
         Button indicator_button_adc_0_0 = root.findViewById(R.id.indicator_button_adc_0_0);
         arrayListButton.add(indicator_button_adc_0_0);
@@ -743,6 +749,105 @@ public class FragmentADC extends Fragment {
         });
         arrayListSwitch.add(switch_adc_2_15);
 
+        TextView textViewADC_0_0 = root.findViewById(R.id.textView_adc_0_0);
+        arrayListName.add(textViewADC_0_0);
+        TextView textViewADC_0_1 = root.findViewById(R.id.textView_adc_0_1);
+        arrayListName.add(textViewADC_0_1);
+        TextView textViewADC_0_2 = root.findViewById(R.id.textView_adc_0_2);
+        arrayListName.add(textViewADC_0_2);
+        TextView textViewADC_0_3 = root.findViewById(R.id.textView_adc_0_3);
+        arrayListName.add(textViewADC_0_3);
+        TextView textViewADC_0_4 = root.findViewById(R.id.textView_adc_0_4);
+        arrayListName.add(textViewADC_0_4);
+        TextView textViewADC_0_5 = root.findViewById(R.id.textView_adc_0_5);
+        arrayListName.add(textViewADC_0_5);
+        TextView textViewADC_0_6 = root.findViewById(R.id.textView_adc_0_6);
+        arrayListName.add(textViewADC_0_6);
+        TextView textViewADC_0_7 = root.findViewById(R.id.textView_adc_0_7);
+        arrayListName.add(textViewADC_0_7);
+        TextView textViewADC_0_8 = root.findViewById(R.id.textView_adc_0_8);
+        arrayListName.add(textViewADC_0_8);
+        TextView textViewADC_0_9 = root.findViewById(R.id.textView_adc_0_9);
+        arrayListName.add(textViewADC_0_9);
+        TextView textViewADC_0_10 = root.findViewById(R.id.textView_adc_0_10);
+        arrayListName.add(textViewADC_0_10);
+        TextView textViewADC_0_11 = root.findViewById(R.id.textView_adc_0_11);
+        arrayListName.add(textViewADC_0_11);
+        TextView textViewADC_0_12 = root.findViewById(R.id.textView_adc_0_12);
+        arrayListName.add(textViewADC_0_12);
+        TextView textViewADC_0_13 = root.findViewById(R.id.textView_adc_0_13);
+        arrayListName.add(textViewADC_0_13);
+        TextView textViewADC_0_14 = root.findViewById(R.id.textView_adc_0_14);
+        arrayListName.add(textViewADC_0_14);
+        TextView textViewADC_0_15 = root.findViewById(R.id.textView_adc_0_15);
+        arrayListName.add(textViewADC_0_15);
+
+        TextView textViewADC_1_0 = root.findViewById(R.id.textView_adc_1_0);
+        arrayListName.add(textViewADC_1_0);
+        TextView textViewADC_1_1 = root.findViewById(R.id.textView_adc_1_1);
+        arrayListName.add(textViewADC_1_1);
+        TextView textViewADC_1_2 = root.findViewById(R.id.textView_adc_1_2);
+        arrayListName.add(textViewADC_1_2);
+        TextView textViewADC_1_3 = root.findViewById(R.id.textView_adc_1_3);
+        arrayListName.add(textViewADC_1_3);
+        TextView textViewADC_1_4 = root.findViewById(R.id.textView_adc_1_4);
+        arrayListName.add(textViewADC_1_4);
+        TextView textViewADC_1_5 = root.findViewById(R.id.textView_adc_1_5);
+        arrayListName.add(textViewADC_1_5);
+        TextView textViewADC_1_6 = root.findViewById(R.id.textView_adc_1_6);
+        arrayListName.add(textViewADC_1_6);
+        TextView textViewADC_1_7 = root.findViewById(R.id.textView_adc_1_7);
+        arrayListName.add(textViewADC_1_7);
+        TextView textViewADC_1_8 = root.findViewById(R.id.textView_adc_1_8);
+        arrayListName.add(textViewADC_1_8);
+        TextView textViewADC_1_9 = root.findViewById(R.id.textView_adc_1_9);
+        arrayListName.add(textViewADC_1_9);
+        TextView textViewADC_1_10 = root.findViewById(R.id.textView_adc_1_10);
+        arrayListName.add(textViewADC_1_10);
+        TextView textViewADC_1_11 = root.findViewById(R.id.textView_adc_1_11);
+        arrayListName.add(textViewADC_1_11);
+        TextView textViewADC_1_12 = root.findViewById(R.id.textView_adc_1_12);
+        arrayListName.add(textViewADC_1_12);
+        TextView textViewADC_1_13 = root.findViewById(R.id.textView_adc_1_13);
+        arrayListName.add(textViewADC_1_13);
+        TextView textViewADC_1_14 = root.findViewById(R.id.textView_adc_1_14);
+        arrayListName.add(textViewADC_1_14);
+        TextView textViewADC_1_15 = root.findViewById(R.id.textView_adc_1_15);
+        arrayListName.add(textViewADC_1_15);
+
+        TextView textViewADC_2_0 = root.findViewById(R.id.textView_adc_2_0);
+        arrayListName.add(textViewADC_2_0);
+        TextView textViewADC_2_1 = root.findViewById(R.id.textView_adc_2_1);
+        arrayListName.add(textViewADC_2_1);
+        TextView textViewADC_2_2 = root.findViewById(R.id.textView_adc_2_2);
+        arrayListName.add(textViewADC_2_2);
+        TextView textViewADC_2_3 = root.findViewById(R.id.textView_adc_2_3);
+        arrayListName.add(textViewADC_2_3);
+        TextView textViewADC_2_4 = root.findViewById(R.id.textView_adc_2_4);
+        arrayListName.add(textViewADC_2_4);
+        TextView textViewADC_2_5 = root.findViewById(R.id.textView_adc_2_5);
+        arrayListName.add(textViewADC_2_5);
+        TextView textViewADC_2_6 = root.findViewById(R.id.textView_adc_2_6);
+        arrayListName.add(textViewADC_2_6);
+        TextView textViewADC_2_7 = root.findViewById(R.id.textView_adc_2_7);
+        arrayListName.add(textViewADC_2_7);
+        TextView textViewADC_2_8 = root.findViewById(R.id.textView_adc_2_8);
+        arrayListName.add(textViewADC_2_8);
+        TextView textViewADC_2_9 = root.findViewById(R.id.textView_adc_2_9);
+        arrayListName.add(textViewADC_2_9);
+        TextView textViewADC_2_10 = root.findViewById(R.id.textView_adc_2_10);
+        arrayListName.add(textViewADC_2_10);
+        TextView textViewADC_2_11 = root.findViewById(R.id.textView_adc_2_11);
+        arrayListName.add(textViewADC_2_11);
+        TextView textViewADC_2_12 = root.findViewById(R.id.textView_adc_2_12);
+        arrayListName.add(textViewADC_2_12);
+        TextView textViewADC_2_13 = root.findViewById(R.id.textView_adc_2_13);
+        arrayListName.add(textViewADC_2_13);
+        TextView textViewADC_2_14 = root.findViewById(R.id.textView_adc_2_14);
+        arrayListName.add(textViewADC_2_14);
+        TextView textViewADC_2_15 = root.findViewById(R.id.textView_adc_2_15);
+        arrayListName.add(textViewADC_2_15);
+
         upDateValues();
 
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
@@ -754,23 +859,25 @@ public class FragmentADC extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        upDateGraphicalDisplay.interrupt();
+//        upDateGraphicalDisplay.interrupt();
     }
 
     public void upDateValues() {
         for (int i = 0; i < 48; i++) {
-            int value = spaceAddress.getAddressSpace(stopCellNumber + i);
-            arrayListTextView.get(i).setText(String.valueOf(value));
-            if (value > 0)
-                arrayListButton.get(i).setBackgroundColor(Color.RED);
-            else arrayListButton.get(i).setBackgroundColor(Color.GREEN);
+            int value = spaceAddress.getAddressSpace(startCellNumber + i);
+            arrayListValue.get(i).setText(String.valueOf(value));
+            if ((value > spaceSetting.getAdcArrayList().get(i).getPlus()) || (value < spaceSetting.getAdcArrayList().get(i).getMinus())) {
+                arrayListButton.get(i).setBackgroundColor(Color.GREEN);
+            }
+            else arrayListButton.get(i).setBackgroundColor(Color.RED);
+            arrayListName.get(i).setText(spaceSetting.getAdcArrayList().get(i).getName());
         }
     }
 
     public void addValueToLine(ArrayList<Line> arrayList, int time, int adc) {
         int i = 0;
         for (Line line : arrayList) {
-            line.setData(time, spaceAddress.getAddressSpace(stopCellNumber + i + adc*16));
+            line.setData(time, spaceAddress.getAddressSpace(startCellNumber + i + adc*16));
             i = i + 1;
         }
     }
@@ -779,7 +886,10 @@ public class FragmentADC extends Fragment {
         ArrayList<ILineDataSet> dataSets = new ArrayList();
         for (Line line : arrayList) {
             if (line.isEnableShow()) {
-                dataSets.add(new LineDataSet(line.getArrayList(), line.getName()));
+                LineDataSet lineDataSet = new LineDataSet(line.getArrayList(), line.getName());
+                lineDataSet.setColor(line.getColor());
+                lineDataSet.setCircleColor(line.getColor());
+                dataSets.add(lineDataSet);
             }
         }
         LineData data = new LineData(dataSets);
@@ -798,18 +908,23 @@ public class FragmentADC extends Fragment {
             while (true) {
                 try {
                     UpDateGraphicalDisplay.sleep(timer);
-                    upDateValues();
                 } catch (InterruptedException e) {
                     break;
                 }
                 if (spaceStatus.isReadyFlagToExchangeData()) {
-                    time = time + 1;
+                    upDateValues();
                     for (Chart chart: arrayListChart) {
                         addValueToLine(chart.getArrayList(), time, chart.getAdc());
                         upDateChart(chart.getArrayList(), chart.getLineChart());
                     }
+                    time = time + 1;
                 } else {
                     time = 0;
+                    for (Chart chart: arrayListChart) {
+                        for (int i = 0; i < chart.getArrayList().size(); i++) {
+                            chart.getArrayList().get(i).eraseQueue();
+                        }
+                    }
                 }
 
             }
