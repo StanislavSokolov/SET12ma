@@ -1062,7 +1062,7 @@ public class FragmentTK extends Fragment{
     @Override
     public void onPause() {
         super.onPause();
-        upDateGraphicalDisplay.interrupt();
+//        upDateGraphicalDisplay.interrupt();
     }
 
     private void upDateValues() {

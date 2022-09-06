@@ -859,7 +859,7 @@ public class FragmentADC extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        upDateGraphicalDisplay.interrupt();
+//        upDateGraphicalDisplay.interrupt();
     }
 
     public void upDateValues() {

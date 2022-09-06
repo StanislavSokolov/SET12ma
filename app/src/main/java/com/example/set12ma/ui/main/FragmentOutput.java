@@ -813,7 +813,7 @@ public class FragmentOutput extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        upDateGraphicalDisplay.interrupt();
+//        upDateGraphicalDisplay.interrupt();
     }
 
     private void upDateEnables() {
@@ -1421,7 +1421,6 @@ public class FragmentOutput extends Fragment {
         public void run() {
             super.run();
             while (true) {
-                Log.i("sfv", "evtd");
                 try {
                     UpDateGraphicalDisplay.sleep(timer);
                 } catch (InterruptedException e) {
