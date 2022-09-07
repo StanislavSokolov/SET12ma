@@ -1,8 +1,10 @@
 package com.example.set12ma;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.hardware.usb.UsbManager;
 import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -23,6 +25,8 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.moxa.mxuportapi.*;
+import com.moxa.mxuportapi.MxUPort.*;
 
 public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace, ResultReceiverStatusSpace, ResultReceiverFileLogsSpace, ResultReceiverSettingSpace {
 
@@ -69,6 +73,10 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         super.onCreate(savedInstanceState);
         Log.i("AndroidExample", "onCreate");
         setContentView(R.layout.activity_main);
+
+        UsbManager mgr = (UsbManager)getSystemService(Context.USB_SERVICE);
+        MxUPortService.requestPermission( this, mgr,
+                "MY_PERMISSION", 0, 0, null);
 
         sectionsPagerAdapterDataInput = new MainActivitySectionsPagerAdapterDataInput(this, getSupportFragmentManager());
         sectionsPagerAdapterDataOutput = new MainActivitySectionsPagerAdapterDataOutput(this, getSupportFragmentManager());

@@ -1,5 +1,9 @@
 package com.example.set12ma.ui.main;
 
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbDeviceConnection;
+import android.hardware.usb.UsbEndpoint;
+import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +16,12 @@ import com.example.set12ma.R;
 
 public class FragmentComPort extends Fragment {
     private static final String ARG_SECTION_NUMBER = "ComPort";
+
+
+    private UsbManager mUsbManager;
+    private UsbDevice mDevice;
+    private UsbDeviceConnection mConnection;
+    private UsbEndpoint mEndpointIntr;
 
     private PageViewModel pageViewModel;
 
@@ -33,6 +43,7 @@ public class FragmentComPort extends Fragment {
         }
         pageViewModel.setIndex(index);
         Log.i("LOG", String.valueOf(index));
+
     }
 
     @Override
@@ -40,6 +51,9 @@ public class FragmentComPort extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_comport, container, false);
+
+
+
         return root;
     }
 }
