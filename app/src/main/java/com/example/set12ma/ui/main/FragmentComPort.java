@@ -17,11 +17,16 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
+import com.moxa.mxuportapi.MxException;
+import com.moxa.mxuportapi.MxUPort;
+import com.moxa.mxuportapi.MxUPortService;
+
+import java.util.List;
 
 public class FragmentComPort extends Fragment {
     private static final String ARG_SECTION_NUMBER = "ComPort";
 
-    private UsbManager mUsbManager;
+    private UsbManager mgr;
     private UsbDevice mDevice;
     private UsbDeviceConnection mConnection;
     private UsbEndpoint mEndpointIntr;
@@ -107,6 +112,49 @@ public class FragmentComPort extends Fragment {
     }
 
     private void setConnecting() {
+        if (buttonConnectToDevice.getText().equals("Подключить")) {
+            progressBarConnectedToDevice.setVisibility(View.VISIBLE);
+            buttonConnectToDevice.setText("Отключить");
+            textViewConnectedToDevice.setText("Подключение к устройству");
+            textViewConnectedToDevice.setVisibility(View.VISIBLE);
+            checkSend();
+//            currentByte = 0;
+        } else {
+            buttonConnectToDevice.setText("Подключить");
+            textViewConnectedToDevice.setText("Отключено от устройства");
+            progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+            spaceStatus.setReadyFlagToExchangeData(false);
+            spaceStatus.setDevice("");
+            getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+            spaceStatus.setReadyFlagRecordingInitialValues(false);
+        }
+    }
+
+    private void checkSend() {
+        mgr = spaceStatus.getMgr();
+        MxUPortService.requestPermission( getContext(), mgr,
+                "MY_PERMISSION", 0, 0, null);
+        List<MxUPort> portList = MxUPortService.getPortInfoList(mgr);
+        if( portList!=null ){
+            MxUPort.IoctlMode m = new MxUPort.IoctlMode(itemSelectedBaudRate, MxUPort.DATA_BITS_8,
+                    MxUPort.PARITY_NONE,
+                    MxUPort.STOP_BITS_1);
+            byte [] buf = {'H', 'e', 'l', 'l', 'o', ' ',
+                    'W', 'o', 'r', 'l', 'd'};
+
+            /* Get first UPort device */
+            MxUPort p = portList.get(0);
+            try {
+                p.open();
+                p.setIoctlMode(m);
+                p.write(buf, buf.length);
+                p.close();
+            } catch (MxException e) {
+                Log.i("USB11", "error");
+            }
+        } else {
+            Log.i("USB11", "null");
+        }
     }
 }
 

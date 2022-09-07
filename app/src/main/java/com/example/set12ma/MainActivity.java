@@ -152,31 +152,6 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         UsbManager mgr = (UsbManager)getSystemService(Context.USB_SERVICE);
 
         spaceStatus.setMgr(mgr);
-
-
-        MxUPortService.requestPermission( this, mgr,
-                "MY_PERMISSION", 0, 0, null);
-        List<MxUPort> portList = MxUPortService.getPortInfoList(mgr);
-        if( portList!=null ){
-            IoctlMode m = new IoctlMode( 9600, MxUPort.DATA_BITS_8,
-                    MxUPort.PARITY_NONE,
-                    MxUPort.STOP_BITS_1 );
-            byte [] buf = {'H', 'e', 'l', 'l', 'o', ' ',
-                    'W', 'o', 'r', 'l', 'd'};
-
-            /* Get first UPort device */
-            MxUPort p = portList.get(0);
-            try {
-                p.open();
-                p.setIoctlMode(m);
-                p.write(buf, buf.length);
-                p.close();
-            } catch (MxException e) {
-                Log.i("USB11", "error");
-            }
-        } else {
-            Log.i("USB11", "null");
-        }
     }
 
     @Override
