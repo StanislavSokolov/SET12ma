@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
         UsbManager mgr = (UsbManager)getSystemService(Context.USB_SERVICE);
 
-//        spaceStatus.setMgr(mgr);
+        spaceStatus.setMgr(mgr);
 
 
         MxUPortService.requestPermission( this, mgr,
