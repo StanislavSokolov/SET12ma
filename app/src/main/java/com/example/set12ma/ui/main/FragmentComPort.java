@@ -17,7 +17,6 @@ import com.example.set12ma.R;
 public class FragmentComPort extends Fragment {
     private static final String ARG_SECTION_NUMBER = "ComPort";
 
-
     private UsbManager mUsbManager;
     private UsbDevice mDevice;
     private UsbDeviceConnection mConnection;

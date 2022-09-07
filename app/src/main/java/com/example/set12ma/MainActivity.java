@@ -28,6 +28,8 @@ import android.view.MenuItem;
 import com.moxa.mxuportapi.*;
 import com.moxa.mxuportapi.MxUPort.*;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace, ResultReceiverStatusSpace, ResultReceiverFileLogsSpace, ResultReceiverSettingSpace {
 
     // Адресное пространство приложения
@@ -73,10 +75,6 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         super.onCreate(savedInstanceState);
         Log.i("AndroidExample", "onCreate");
         setContentView(R.layout.activity_main);
-
-        UsbManager mgr = (UsbManager)getSystemService(Context.USB_SERVICE);
-        MxUPortService.requestPermission( this, mgr,
-                "MY_PERMISSION", 0, 0, null);
 
         sectionsPagerAdapterDataInput = new MainActivitySectionsPagerAdapterDataInput(this, getSupportFragmentManager());
         sectionsPagerAdapterDataOutput = new MainActivitySectionsPagerAdapterDataOutput(this, getSupportFragmentManager());
@@ -150,6 +148,35 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
 
         dataRecovery();
+
+        UsbManager mgr = (UsbManager)getSystemService(Context.USB_SERVICE);
+
+//        spaceStatus.setMgr(mgr);
+
+
+        MxUPortService.requestPermission( this, mgr,
+                "MY_PERMISSION", 0, 0, null);
+        List<MxUPort> portList = MxUPortService.getPortInfoList(mgr);
+        if( portList!=null ){
+            IoctlMode m = new IoctlMode( 9600, MxUPort.DATA_BITS_8,
+                    MxUPort.PARITY_NONE,
+                    MxUPort.STOP_BITS_1 );
+            byte [] buf = {'H', 'e', 'l', 'l', 'o', ' ',
+                    'W', 'o', 'r', 'l', 'd'};
+
+            /* Get first UPort device */
+            MxUPort p = portList.get(0);
+            try {
+                p.open();
+                p.setIoctlMode(m);
+                p.write(buf, buf.length);
+                p.close();
+            } catch (MxException e) {
+                Log.i("USB11", "error");
+            }
+        } else {
+            Log.i("USB11", "null");
+        }
     }
 
     @Override
