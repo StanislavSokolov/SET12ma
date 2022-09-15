@@ -1,10 +1,10 @@
 package com.example.set12ma.ui.main;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbDeviceConnection;
-import android.hardware.usb.UsbEndpoint;
-import android.hardware.usb.UsbManager;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.hardware.usb.*;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,20 +16,43 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import com.example.set12ma.MainActivity;
 import com.example.set12ma.R;
+
+
 import com.moxa.mxuportapi.MxException;
 import com.moxa.mxuportapi.MxUPort;
+import com.moxa.mxuportapi.MxException.ErrorCode;
+import com.moxa.mxuportapi.MxUPort.*;
 import com.moxa.mxuportapi.MxUPortService;
+import com.moxa.mxuportapi.Version;
 
 import java.util.List;
 
 public class FragmentComPort extends Fragment {
     private static final String ARG_SECTION_NUMBER = "ComPort";
 
-    private UsbManager mgr;
+    private List<MxUPort> mPortList = null;
     private UsbDevice mDevice;
     private UsbDeviceConnection mConnection;
-    private UsbEndpoint mEndpointIntr;
+//    private UsbEndpoint mEndpointIntr;
+
+    boolean b = false;
+
+
+    private UsbManager mUsbManager;
+    private boolean mExitThread = false;
+    private MxUPort mCurrentUPort = null;
+    private int mPortSelection = -1;
+    private int mBaudRate = -1;
+    private int mDataBits = 8;
+    private int mParity = 0;
+    private int mStopBits = 1;
+    private int mFlowControl = 0;
+
+    private int mRtsEnable = MxUPort.RTS_ON;
+    private int mDtrEnable = MxUPort.DSR_ON;
+
 
     private PageViewModel pageViewModel;
 
@@ -44,6 +67,8 @@ public class FragmentComPort extends Fragment {
     private ArrayAdapter<Integer> adapterBaudRate;
     private Integer[] baudRate = {9600, 19200, 57600, 115200};
     int itemSelectedBaudRate;
+
+    Intent intent;
 
     @Override
     public void onAttach(Context context) {
@@ -68,8 +93,56 @@ public class FragmentComPort extends Fragment {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
         pageViewModel.setIndex(index);
-        Log.i("LOG", String.valueOf(index));
+
+        IntentFilter usbFilter = new IntentFilter(UsbManager.ACTION_USB_DEVICE_ATTACHED);
+        getContext().registerReceiver(mUsbReceiver, usbFilter);
     }
+
+    private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
+
+        public void onReceive(Context context, Intent intent) {
+
+            String action = intent.getAction();
+
+            if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
+                buttonConnectToDevice.setEnabled(true);
+
+                mDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+
+                Toast.makeText(getContext(), "Подключение к " + mDevice.getVendorId(), Toast.LENGTH_SHORT).show();
+
+                mPortList = MxUPortService.getPortInfoList(mUsbManager);
+
+            }
+        }
+    };
+
+    private final BroadcastReceiver mPermissionReceiver = new BroadcastReceiver() {
+
+        public void onReceive(Context context, Intent intent) {
+
+            String action = intent.getAction();
+
+            if (ACTION_USB_PERMISSION.equals(action)) {
+//                UsbDevice device = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+                    if (mDevice != null) {
+                        Toast.makeText(getContext(), "Подключение к " + mDevice.getVendorId(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), String.valueOf(mUsbManager.hasPermission(mDevice)), Toast.LENGTH_SHORT).show();
+                        try {
+                            Toast.makeText(getContext(), String.valueOf(mPortList.get(0).hasUsbPermission()), Toast.LENGTH_SHORT).show();
+                        } catch (MxException e) {
+                            Toast.makeText(getContext(), String.valueOf(e.getErrorCodeString()), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }
+            }
+        }
+    };
+
+    private static final String ACTION_USB_PERMISSION =
+            "USB_PERMISSION";
 
     @Override
     public View onCreateView(
@@ -91,6 +164,8 @@ public class FragmentComPort extends Fragment {
             }
         });
 
+        buttonConnectToDevice.setEnabled(true);
+
         adapterBaudRate = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item);
         adapterBaudRate.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         for (int i = 0; i < baudRate.length; i++) adapterBaudRate.add(baudRate[i]);
@@ -108,6 +183,13 @@ public class FragmentComPort extends Fragment {
         };
         spinnerBaudRate.setOnItemSelectedListener(itemSelectedListener);
 
+
+        mUsbManager = (UsbManager) getActivity().getSystemService(Context.USB_SERVICE);
+
+//        mUsbManager = spaceStatus.getMgr();
+
+//        MxUPortService.requestPermission(getContext(), mUsbManager, ACTION_USB_PERMISSION, 4362, 4433, null);
+
         return root;
     }
 
@@ -117,7 +199,10 @@ public class FragmentComPort extends Fragment {
             buttonConnectToDevice.setText("Отключить");
             textViewConnectedToDevice.setText("Подключение к устройству");
             textViewConnectedToDevice.setVisibility(View.VISIBLE);
-            checkSend();
+            step();
+//            firstStep();
+//            checkFind();
+//            checkSend();
 //            currentByte = 0;
         } else {
             buttonConnectToDevice.setText("Подключить");
@@ -130,30 +215,117 @@ public class FragmentComPort extends Fragment {
         }
     }
 
-    private void checkSend() {
-        mgr = spaceStatus.getMgr();
-        MxUPortService.requestPermission( getContext(), mgr,
-                "MY_PERMISSION", 0, 0, null);
-        List<MxUPort> portList = MxUPortService.getPortInfoList(mgr);
-        if( portList!=null ){
-            MxUPort.IoctlMode m = new MxUPort.IoctlMode(itemSelectedBaudRate, MxUPort.DATA_BITS_8,
-                    MxUPort.PARITY_NONE,
-                    MxUPort.STOP_BITS_1);
-            byte [] buf = {'H', 'e', 'l', 'l', 'o', ' ',
-                    'W', 'o', 'r', 'l', 'd'};
+    private void step() {
 
-            /* Get first UPort device */
-            MxUPort p = portList.get(0);
-            try {
-                p.open();
-                p.setIoctlMode(m);
-                p.write(buf, buf.length);
-                p.close();
-            } catch (MxException e) {
-                Log.i("USB11", "error");
+        if (mPortList != null) {
+            for( MxUPort p : mPortList ){
+                try {
+                    if( !p.hasUsbPermission() ){
+                        Thread.sleep(3000);
+                        MxUPortService.requestPermission(getContext(), mUsbManager, ACTION_USB_PERMISSION, 0, 0, mPermissionReceiver);
+                        break;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        } else {
-            Log.i("USB11", "null");
+        }
+    }
+
+
+    private void firstStep() {
+//        mUsbManager = spaceStatus.getMgr();
+
+
+//        ProbeTable customTable = new ProbeTable();
+////        customTable.addProduct(0x110A, 0x1151, FtdiSerialDriver.class);
+//
+//        customTable.addProduct(0x110A, 0x1151, Driver.class);
+////        customTable.addProduct(0x110A, 0x1151, ProlificSerialDriver.class);
+////        customTable.addProduct(0x110A, 0x1151, Ch34xSerialDriver.class);
+////        customTable.addProduct(0x110A, 0x1151, Cp21xxSerialDriver.class);
+////        customTable.addProduct(0x110A, 0x1151, CdcAcmSerialDriver.class);
+//        UsbSerialProber prober = new UsbSerialProber(customTable);
+//        List<UsbSerialDriver> drivers = prober.findAllDrivers(mUsbManager);
+
+
+
+//        List<UsbSerialDriver> availableDrivers = UsbSerialProber.getDefaultProber().findAllDrivers(mUsbManager);
+
+
+//        if (drivers.isEmpty()) {
+//            Toast.makeText(getContext(), "we are here 1", Toast.LENGTH_LONG).show();
+//            return;
+//        }
+//
+//        // Open a connection to the first available driver.
+//        UsbSerialDriver driver = drivers.get(0);
+//        UsbDeviceConnection connection = mUsbManager.openDevice(driver.getDevice());
+//        if (connection == null) {
+//            // add UsbManager.requestPermission(driver.getDevice(), ..) handling here
+//            Toast.makeText(getContext(), "we are here 2", Toast.LENGTH_LONG).show();
+//            return;
+//        }
+//
+//        byte [] buf = {'H', 'e', 'l', 'l', 'o', ' ',
+//                'W', 'o', 'r', 'l', 'd'};
+//
+//        Toast.makeText(getContext(), String.valueOf(driver.getDevice().getProductName()), Toast.LENGTH_LONG).show();
+//        Toast.makeText(getContext(), String.valueOf(driver.getDevice().getManufacturerName()), Toast.LENGTH_LONG).show();
+//
+//        UsbSerialPort port = driver.getPorts().get(0); // Most devices have just one port (port 0)
+//        try {
+//
+//            Toast.makeText(getContext(), "we are here 3", Toast.LENGTH_LONG).show();
+//            port.open(connection);
+//            Toast.makeText(getContext(), "we are here 4", Toast.LENGTH_LONG).show();
+//            port.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+//            Toast.makeText(getContext(), "we are here 5", Toast.LENGTH_LONG).show();
+//            port.write(buf, 200);
+//            Toast.makeText(getContext(), "we are here 6", Toast.LENGTH_LONG).show();
+//            port.close();
+//        } catch (IOException e) {
+//            Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+//        }
+
+
+    }
+
+
+
+//    if (mPortList != null) {
+//
+//        IoctlMode m = new IoctlMode( 115000, MxUPort.DATA_BITS_8,
+//                MxUPort.PARITY_NONE,
+//                MxUPort.STOP_BITS_1 );
+//        byte [] buf = {'H', 'e', 'l', 'l', 'o', ' ',
+//                'W', 'o', 'r', 'l', 'd'};
+//        MxUPort p = mPortList.get(0);
+//
+//        mDevice = p.getUsbDevice();
+//        Toast.makeText(getContext(), "Подключено к устройству product-id " + mDevice.getProductId(), Toast.LENGTH_LONG).show();
+//
+//        try {
+//            Toast.makeText(getContext(), "Шаг 1", Toast.LENGTH_LONG).show();
+//            p.open();
+//            Toast.makeText(getContext(), "Шаг 2", Toast.LENGTH_LONG).show();
+//            p.setIoctlMode(m);
+//            Toast.makeText(getContext(), "Шаг 3", Toast.LENGTH_LONG).show();
+//            p.write(buf, buf.length);
+//            Toast.makeText(getContext(), "Шаг 4", Toast.LENGTH_LONG).show();
+//            p.close();
+//        } catch (MxException e) {
+//            Toast.makeText(getContext(), "Шаг 5", Toast.LENGTH_LONG).show();
+//            Toast.makeText(getContext(), e.getErrorCodeString(), Toast.LENGTH_LONG).show();
+//        }
+//
+//    } else Toast.makeText(getContext(), "Нет доступных устройств", Toast.LENGTH_LONG).show();
+
+    private void checkSend() {
+        if (!b) {
+            mPortList = MxUPortService.getPortInfoList(mUsbManager);
+            b = true;
+            MxUPortService.requestPermission(getContext(), mUsbManager, ACTION_USB_PERMISSION, 4362, 4433, mPermissionReceiver);
         }
     }
 }

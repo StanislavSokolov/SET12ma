@@ -196,8 +196,6 @@ public class FragmentBluetooth extends Fragment {
         IntentFilter filterFinish = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         getContext().registerReceiver(broadcastReceiver, filterFinish);
 
-
-
     }
 
     @Override
@@ -1192,7 +1190,7 @@ public class FragmentBluetooth extends Fragment {
                         // здесь надо запрещать передачу данных, если cuttentByte == 207
                         // и возвращаться в менеджер потоков и обнулить значения контролирующих
                         // положение дел переменных, чтобы начать новую передачу.
-                        if (currentByte < 206) currentByte++; else currentByte = 0;
+                        if (currentByte < 206) currentByte++; else currentByte = 48;
                     }
                 }
             }

@@ -1,14 +1,8 @@
 package com.example.set12ma;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
-import android.hardware.usb.UsbManager;
+import android.content.*;
 import android.util.Log;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -19,16 +13,21 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.set12ma.ui.main.*;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.moxa.mxuportapi.*;
+import com.moxa.mxuportapi.MxException;
+import com.moxa.mxuportapi.MxUPort;
+import com.moxa.mxuportapi.MxException.ErrorCode;
 import com.moxa.mxuportapi.MxUPort.*;
+import com.moxa.mxuportapi.MxUPortService;
+import com.moxa.mxuportapi.Version;
 
 import java.util.List;
+
+import static com.moxa.mxuportapi.MxUPortService.getPortInfoList;
 
 public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace, ResultReceiverStatusSpace, ResultReceiverFileLogsSpace, ResultReceiverSettingSpace {
 
@@ -67,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,11 +145,12 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 //                1);
 
 
+
         dataRecovery();
 
-        UsbManager mgr = (UsbManager)getSystemService(Context.USB_SERVICE);
-
-        spaceStatus.setMgr(mgr);
+//        usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+//
+//        spaceStatus.setMgr(usbManager);
     }
 
     @Override
