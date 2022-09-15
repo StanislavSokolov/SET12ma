@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.hardware.usb.*;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.ParcelUuid;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +20,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.MainActivity;
 import com.example.set12ma.R;
-
-
 import com.moxa.mxuportapi.MxException;
 import com.moxa.mxuportapi.MxUPort;
-import com.moxa.mxuportapi.MxException.ErrorCode;
-import com.moxa.mxuportapi.MxUPort.*;
 import com.moxa.mxuportapi.MxUPortService;
-import com.moxa.mxuportapi.Version;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -35,28 +31,26 @@ import java.util.List;
 public class FragmentComPort extends Fragment {
     private static final String ARG_SECTION_NUMBER = "ComPort";
 
-    private List<MxUPort> mPortList = null;
+    private UsbThread usbThread;
+
     private UsbDevice mDevice;
     private UsbDeviceConnection mConnection;
 //    private UsbEndpoint mEndpointIntr;
 
-    boolean b = false;
+    private MxUPort mCurrentUPort = null;
+    private List<MxUPort> mPortList = null;
+
 
 
     private UsbManager mUsbManager;
     HashMap<String, UsbDevice> deviceList;
     private Collection<UsbDevice> mUsbDevice;
-    private boolean mExitThread = false;
-    private MxUPort mCurrentUPort = null;
     private int mPortSelection = -1;
     private int mBaudRate = -1;
     private int mDataBits = 8;
     private int mParity = 0;
     private int mStopBits = 1;
     private int mFlowControl = 0;
-
-    private int mRtsEnable = MxUPort.RTS_ON;
-    private int mDtrEnable = MxUPort.DSR_ON;
 
 
     private PageViewModel pageViewModel;
@@ -105,8 +99,6 @@ public class FragmentComPort extends Fragment {
         pageViewModel.setIndex(index);
 
         mUsbManager = (UsbManager) getActivity().getSystemService(Context.USB_SERVICE);
-//        IntentFilter usbFilter = new IntentFilter(UsbManager.ACTION_USB_DEVICE_ATTACHED);
-//        getContext().registerReceiver(mUsbReceiver, usbFilter);
 
         permissionIntent = PendingIntent.getBroadcast(getContext(), 0, new Intent(ACTION_USB_PERMISSION), 0);
         IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
@@ -126,94 +118,39 @@ public class FragmentComPort extends Fragment {
             if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
                 buttonConnectToDevice.setEnabled(true);
 
-
-//                mDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-//
-//                Toast.makeText(getContext(), "Подключение к " + mDevice.getVendorId(), Toast.LENGTH_SHORT).show();
-//
-//                mPortList = MxUPortService.getPortInfoList(mUsbManager);
-
             }
 
             if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
                 buttonConnectToDevice.setEnabled(false);
 
-//                mDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-//
-//                Toast.makeText(getContext(), "Подключение к " + mDevice.getVendorId(), Toast.LENGTH_SHORT).show();
-//
-//                mPortList = MxUPortService.getPortInfoList(mUsbManager);
-
             }
 
             if (ACTION_USB_PERMISSION.equals(action)) {
-                Toast.makeText(getContext(), "XP", Toast.LENGTH_SHORT).show();
 
                 synchronized (this) {
-                        UsbDevice device = (UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                        mDevice = (UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
 
                         if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
-                            if(device != null){
-                                Toast.makeText(getContext(), "call method to set up device communication " + mDevice.getVendorId(), Toast.LENGTH_SHORT).show();
-                            }
+                            if(mDevice != null){
+                                textViewConnectedToDevice.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        textViewConnectedToDevice.setText("Подключено к устройству " + mDevice.getProductName() + " " + mDevice.getManufacturerName());
+                                    }
+                                });
+                                Toast.makeText(getContext(), String.valueOf("Подключено к устройству " + mDevice.getProductName() + " " + mDevice.getManufacturerName()), Toast.LENGTH_LONG).show();
+                                usbThread = new UsbThread();
+                                usbThread.start();
+                            } else Toast.makeText(getContext(), "Не работает" + mDevice.getVendorId(), Toast.LENGTH_SHORT).show();
                         }
                         else {
                             Toast.makeText(getContext(), "XP", Toast.LENGTH_SHORT).show();
                         }
                     }
-
-//                action = intent.getAction();
-//                if (ACTION_USB_PERMISSION.equals(action)) {
-//                    synchronized (this) {
-//                        UsbDevice device = (UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-//
-//                        if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
-//                            if(device != null){
-//                                Toast.makeText(getContext(), "call method to set up device communication " + mDevice.getVendorId(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                        else {
-//                            Toast.makeText(getContext(), "XP", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                }
-
             }
         }
 
     };
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    private final BroadcastReceiver mPermissionReceiver = new BroadcastReceiver() {
-
-        public void onReceive(Context context, Intent intent) {
-
-            String action = intent.getAction();
-
-            if (ACTION_USB_PERMISSION.equals(action)) {
-//                UsbDevice device = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-                if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
-                    if (mDevice != null) {
-                        Toast.makeText(getContext(), "Подключение к " + mDevice.getVendorId(), Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getContext(), String.valueOf(mUsbManager.hasPermission(mDevice)), Toast.LENGTH_SHORT).show();
-                        try {
-                            Toast.makeText(getContext(), String.valueOf(mPortList.get(0).hasUsbPermission()), Toast.LENGTH_SHORT).show();
-                        } catch (MxException e) {
-                            Toast.makeText(getContext(), String.valueOf(e.getErrorCodeString()), Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                }
-            }
-        }
-    };
-
-//    private static final String ACTION_USB_PERMISSION =
-//            "USB_PERMISSION";
 
     @Override
     public View onCreateView(
@@ -254,13 +191,6 @@ public class FragmentComPort extends Fragment {
         };
         spinnerBaudRate.setOnItemSelectedListener(itemSelectedListener);
 
-
-//        mUsbManager = (UsbManager) getActivity().getSystemService(Context.USB_SERVICE);
-
-//        mUsbManager = spaceStatus.getMgr();
-
-//        MxUPortService.requestPermission(getContext(), mUsbManager, ACTION_USB_PERMISSION, 4362, 4433, null);
-
         return root;
     }
 
@@ -287,25 +217,10 @@ public class FragmentComPort extends Fragment {
     }
 
     private void step() {
-//        mDevice = mUsbManager.getDeviceList().get(0);
         mUsbDevice = mUsbManager.getDeviceList().values();
         mDevice = mUsbDevice.iterator().next();
         if (mDevice != null) mUsbManager.requestPermission(mDevice, permissionIntent);
         else Toast.makeText(getContext(), String.valueOf(deviceList.size()), Toast.LENGTH_LONG).show();
-
-//        if (mPortList != null) {
-//            for( MxUPort p : mPortList ){
-//                try {
-//                    if( !p.hasUsbPermission() ){
-//                        Thread.sleep(3000);
-//                        MxUPortService.requestPermission(getContext(), mUsbManager, ACTION_USB_PERMISSION, 0, 0, mPermissionReceiver);
-//                        break;
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
     }
 
 
@@ -397,8 +312,73 @@ public class FragmentComPort extends Fragment {
 //
 //    } else Toast.makeText(getContext(), "Нет доступных устройств", Toast.LENGTH_LONG).show();
 
-    private void checkSend() {
+    public class UsbThread extends Thread {
 
+        private byte [] buf = {'H', 'e', 'l', 'l', 'o', ' ',
+                        'W', 'o', 'r', 'l', 'd', 'H', 'e', 'l', 'l', 'o', ' ',
+                'W', 'o', 'r', 'l', 'd', 'H', 'e', 'l', 'l', 'o', ' ',
+                'W', 'o', 'r', 'l', 'd', 'H', 'e', 'l', 'l', 'o', ' ',
+                'W', 'o', 'r', 'l', 'd'};;
+        private int TIMEOUT = 100;
+        private boolean forceClaim = true;
+
+        UsbInterface usbInterface;
+        UsbEndpoint usbEndpoint;
+        UsbDeviceConnection usbDeviceConnection;
+
+        @Override
+        public void run() {
+            super.run();
+            if (mDevice != null) {
+                usbInterface = mDevice.getInterface(0);
+                usbEndpoint = usbInterface.getEndpoint(0);
+                usbDeviceConnection = mUsbManager.openDevice(mDevice);
+                usbDeviceConnection.claimInterface(usbInterface, forceClaim);
+                textViewConnectedToDevice.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        textViewConnectedToDevice.setText("usbInterface.getEndpointCount()");
+//                        Toast.makeText(getContext(), String.valueOf(usbEndpoint.getAddress()), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getContext(), String.valueOf(usbEndpoint.getInterval()), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getContext(), String.valueOf(usbEndpoint.getAttributes()), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getContext(), String.valueOf(usbEndpoint.getMaxPacketSize()), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getContext(), String.valueOf(usbEndpoint.getType()), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getContext(), String.valueOf(usbInterface.getId()), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getContext(), String.valueOf(usbInterface.getInterfaceProtocol()), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                for (int i = 0; i < 100; i++) {
+                    usbDeviceConnection.bulkTransfer(usbEndpoint, buf, buf.length, TIMEOUT);
+                    try {
+                        sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            } else {
+                textViewConnectedToDevice.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        textViewConnectedToDevice.setText("Н е ра бота ет");
+                    }
+                });
+            }
+
+            textViewConnectedToDevice.post(new Runnable() {
+                @Override
+                public void run() {
+                    textViewConnectedToDevice.setText("Конец");
+                }
+            });
+
+
+        }
+
+        public UsbThread() {
+
+        }
     }
 }
 
