@@ -1,5 +1,6 @@
 package com.example.set12ma.ui.main;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +28,8 @@ import com.moxa.mxuportapi.MxUPort.*;
 import com.moxa.mxuportapi.MxUPortService;
 import com.moxa.mxuportapi.Version;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 public class FragmentComPort extends Fragment {
@@ -41,6 +44,8 @@ public class FragmentComPort extends Fragment {
 
 
     private UsbManager mUsbManager;
+    HashMap<String, UsbDevice> deviceList;
+    private Collection<UsbDevice> mUsbDevice;
     private boolean mExitThread = false;
     private MxUPort mCurrentUPort = null;
     private int mPortSelection = -1;
@@ -68,7 +73,9 @@ public class FragmentComPort extends Fragment {
     private Integer[] baudRate = {9600, 19200, 57600, 115200};
     int itemSelectedBaudRate;
 
-    Intent intent;
+    PendingIntent permissionIntent;
+
+//    Intent intent;
 
     @Override
     public void onAttach(Context context) {
@@ -84,6 +91,9 @@ public class FragmentComPort extends Fragment {
         return fragment;
     }
 
+    private static final String ACTION_USB_PERMISSION =
+            "USB_PERMISSION";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,11 +104,20 @@ public class FragmentComPort extends Fragment {
         }
         pageViewModel.setIndex(index);
 
-        IntentFilter usbFilter = new IntentFilter(UsbManager.ACTION_USB_DEVICE_ATTACHED);
-        getContext().registerReceiver(mUsbReceiver, usbFilter);
+        mUsbManager = (UsbManager) getActivity().getSystemService(Context.USB_SERVICE);
+//        IntentFilter usbFilter = new IntentFilter(UsbManager.ACTION_USB_DEVICE_ATTACHED);
+//        getContext().registerReceiver(mUsbReceiver, usbFilter);
+
+        permissionIntent = PendingIntent.getBroadcast(getContext(), 0, new Intent(ACTION_USB_PERMISSION), 0);
+        IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
+        getContext().registerReceiver(usbReceiver, filter);
+        IntentFilter filterConnect = new IntentFilter(UsbManager.ACTION_USB_DEVICE_ATTACHED);
+        getContext().registerReceiver(usbReceiver, filterConnect);
+        IntentFilter filterDisconnect = new IntentFilter(UsbManager.ACTION_USB_DEVICE_DETACHED);
+        getContext().registerReceiver(usbReceiver, filterDisconnect);
     }
 
-    private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver usbReceiver = new BroadcastReceiver() {
 
         public void onReceive(Context context, Intent intent) {
 
@@ -107,15 +126,67 @@ public class FragmentComPort extends Fragment {
             if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
                 buttonConnectToDevice.setEnabled(true);
 
-                mDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
 
-                Toast.makeText(getContext(), "Подключение к " + mDevice.getVendorId(), Toast.LENGTH_SHORT).show();
+//                mDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+//
+//                Toast.makeText(getContext(), "Подключение к " + mDevice.getVendorId(), Toast.LENGTH_SHORT).show();
+//
+//                mPortList = MxUPortService.getPortInfoList(mUsbManager);
 
-                mPortList = MxUPortService.getPortInfoList(mUsbManager);
+            }
+
+            if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
+                buttonConnectToDevice.setEnabled(false);
+
+//                mDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+//
+//                Toast.makeText(getContext(), "Подключение к " + mDevice.getVendorId(), Toast.LENGTH_SHORT).show();
+//
+//                mPortList = MxUPortService.getPortInfoList(mUsbManager);
+
+            }
+
+            if (ACTION_USB_PERMISSION.equals(action)) {
+                Toast.makeText(getContext(), "XP", Toast.LENGTH_SHORT).show();
+
+                synchronized (this) {
+                        UsbDevice device = (UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+
+                        if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+                            if(device != null){
+                                Toast.makeText(getContext(), "call method to set up device communication " + mDevice.getVendorId(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else {
+                            Toast.makeText(getContext(), "XP", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+//                action = intent.getAction();
+//                if (ACTION_USB_PERMISSION.equals(action)) {
+//                    synchronized (this) {
+//                        UsbDevice device = (UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+//
+//                        if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+//                            if(device != null){
+//                                Toast.makeText(getContext(), "call method to set up device communication " + mDevice.getVendorId(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                        else {
+//                            Toast.makeText(getContext(), "XP", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                }
 
             }
         }
+
     };
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
     private final BroadcastReceiver mPermissionReceiver = new BroadcastReceiver() {
 
@@ -141,8 +212,8 @@ public class FragmentComPort extends Fragment {
         }
     };
 
-    private static final String ACTION_USB_PERMISSION =
-            "USB_PERMISSION";
+//    private static final String ACTION_USB_PERMISSION =
+//            "USB_PERMISSION";
 
     @Override
     public View onCreateView(
@@ -164,7 +235,7 @@ public class FragmentComPort extends Fragment {
             }
         });
 
-        buttonConnectToDevice.setEnabled(true);
+        buttonConnectToDevice.setEnabled(false);
 
         adapterBaudRate = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item);
         adapterBaudRate.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -184,7 +255,7 @@ public class FragmentComPort extends Fragment {
         spinnerBaudRate.setOnItemSelectedListener(itemSelectedListener);
 
 
-        mUsbManager = (UsbManager) getActivity().getSystemService(Context.USB_SERVICE);
+//        mUsbManager = (UsbManager) getActivity().getSystemService(Context.USB_SERVICE);
 
 //        mUsbManager = spaceStatus.getMgr();
 
@@ -216,20 +287,25 @@ public class FragmentComPort extends Fragment {
     }
 
     private void step() {
+//        mDevice = mUsbManager.getDeviceList().get(0);
+        mUsbDevice = mUsbManager.getDeviceList().values();
+        mDevice = mUsbDevice.iterator().next();
+        if (mDevice != null) mUsbManager.requestPermission(mDevice, permissionIntent);
+        else Toast.makeText(getContext(), String.valueOf(deviceList.size()), Toast.LENGTH_LONG).show();
 
-        if (mPortList != null) {
-            for( MxUPort p : mPortList ){
-                try {
-                    if( !p.hasUsbPermission() ){
-                        Thread.sleep(3000);
-                        MxUPortService.requestPermission(getContext(), mUsbManager, ACTION_USB_PERMISSION, 0, 0, mPermissionReceiver);
-                        break;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+//        if (mPortList != null) {
+//            for( MxUPort p : mPortList ){
+//                try {
+//                    if( !p.hasUsbPermission() ){
+//                        Thread.sleep(3000);
+//                        MxUPortService.requestPermission(getContext(), mUsbManager, ACTION_USB_PERMISSION, 0, 0, mPermissionReceiver);
+//                        break;
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
     }
 
 
@@ -322,11 +398,7 @@ public class FragmentComPort extends Fragment {
 //    } else Toast.makeText(getContext(), "Нет доступных устройств", Toast.LENGTH_LONG).show();
 
     private void checkSend() {
-        if (!b) {
-            mPortList = MxUPortService.getPortInfoList(mUsbManager);
-            b = true;
-            MxUPortService.requestPermission(getContext(), mUsbManager, ACTION_USB_PERMISSION, 4362, 4433, mPermissionReceiver);
-        }
+
     }
 }
 
