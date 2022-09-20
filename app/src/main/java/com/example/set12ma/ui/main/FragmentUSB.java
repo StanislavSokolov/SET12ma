@@ -6,34 +6,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.usb.*;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.ParcelUuid;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import com.example.set12ma.MainActivity;
 import com.example.set12ma.R;
 import com.hoho.android.usbserial.driver.ProbeTable;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
-import com.moxa.mxuportapi.MxException;
 import com.moxa.mxuportapi.MxUPort;
-import com.moxa.mxuportapi.MxUPortService;
 
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class FragmentComPort extends Fragment {
+public class FragmentUSB extends Fragment {
     private static final String ARG_SECTION_NUMBER = "ComPort";
 
     private UsbThread usbThread;
@@ -87,8 +80,8 @@ public class FragmentComPort extends Fragment {
         resultReceiverStatusSpace = (ResultReceiverStatusSpace) context;
     }
 
-    public static FragmentComPort newInstance(int index) {
-        FragmentComPort fragment = new FragmentComPort();
+    public static FragmentUSB newInstance(int index) {
+        FragmentUSB fragment = new FragmentUSB();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
