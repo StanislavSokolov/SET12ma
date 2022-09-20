@@ -80,13 +80,18 @@
     <string name="menu_loadingSoftware">Загрузка ПО</string>
     <string name="menu_setting">Настройки</string>
 
-    <string name="main_connection">Bluetooth соединения</string>
+    <string name="main_connection">Bluetooth соединение</string>
     <string name="main_text_connected_devices">Сопряженные устройства</string>
     <string name="main_text_connected_to_device">Не удалось выполнить подключение</string>
     <string name="main_button_connect_to_device">Подключить</string>
     <string name="main_button_unconnect_to_device">Отключить</string>
     <string name="main_text_available_devices">Доступные устройства</string>
     <string name="main_button_find_new_devices">Поиск новых устройств</string>
+
+    <string name="main_connection_comport">ComPort соединение</string>
+    <string name="main_text_connected_devices_cp">Выберите скорость передачи данных</string>
+    <string name="main_button_connect_to_device_cp">Подключить</string>
+    <string name="main_text_connected_to_device_cp">Не удалось выполнить подключение</string>
 
     <string name="download_log">Загрузить</string>
     <string name="save_log">Сохранить</string>

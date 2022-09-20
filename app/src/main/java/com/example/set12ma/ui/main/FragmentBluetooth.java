@@ -196,8 +196,6 @@ public class FragmentBluetooth extends Fragment {
         IntentFilter filterFinish = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         getContext().registerReceiver(broadcastReceiver, filterFinish);
 
-
-
     }
 
     @Override
@@ -974,7 +972,7 @@ public class FragmentBluetooth extends Fragment {
 //                                            currentByte = 144;
 //                                        }
 //                                        currentByte = currentByte + elementQueue.getId();
-                                        currentByte = elementQueue.getRegister();
+//                                        currentByte = elementQueue.getRegister();
                                         Log.i(LOG_TAG, "SUPRIM");
                                         setCommand(WRITE);
                                         bluetoothConnectedOutputThread.write(elementQueue.getRegister(), elementQueue.getData());
@@ -1004,6 +1002,8 @@ public class FragmentBluetooth extends Fragment {
                                 });
                             }
                         }
+                        countWaitConnection = 0;
+                        counterAttemptsToConection = 0;
                     } else {
                         if (latchInit) {
                             setCommand(READ);
@@ -1032,6 +1032,34 @@ public class FragmentBluetooth extends Fragment {
                                 });
                                 latchInit = false;
                                 interrupt();
+                            }
+                        } if (spaceStatus.isReadyFlagToExchangeData()) {
+                            if (getCommand() == READ) {
+                                if (counterAttemptsToConection < 5) {
+                                    if (countWaitConnection < 500000) {
+                                        countWaitConnection = countWaitConnection + 1;
+                                    } else {
+                                        countWaitConnection = 0;
+                                        counterAttemptsToConection = counterAttemptsToConection + 1;
+                                    }
+                                } else {
+                                    textViewConnectedToDevice.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            buttonConnectToDevice.setText("Подключить");
+                                            textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение.");
+                                            progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+                                            spaceStatus.setReadyFlagToExchangeData(false);
+                                            spaceStatus.setDevice("");
+                                            getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                                            spaceStatus.setReadyFlagRecordingInitialValues(false);
+                                            bluetoothSoketThread.cancel();
+                                            Toast.makeText(getContext(), "Не удается связаться с процессорным модулем. Проверьте соединение.", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                    latchInit = false;
+                                    interrupt();
+                                }
                             }
                         }
                     }
@@ -1144,10 +1172,27 @@ public class FragmentBluetooth extends Fragment {
             bytesToCreateCRC = new byte[10];
             bytesToSend[0] = ADDRESS_DEVICE;
             bytesToSend[1] = WRITE;
-            if ((currentByte > 47) & (currentByte < 96)) {
-                bytesToSend[2] = (byte) spaceSetting.getOutArrayList().get(currentByte - 48).getRegister();
-            } else if ((currentByte > 143) & (currentByte < 208)) {
-                bytesToSend[2] = (byte) spaceSetting.getTkArrayList().get(currentByte - 144).getRegister();
+            boolean b = true;
+            while (b) {
+                if ((currentByte > 47) & (currentByte < 96)) {
+                    if (spaceSetting.getOutArrayList().get(currentByte - 48).isEnable()) {
+                        bytesToSend[2] = (byte) spaceSetting.getOutArrayList().get(currentByte - 48).getRegister();
+                        b = false;
+                    } else {
+                        if (currentByte < 95) currentByte++; else currentByte = 144;
+                    }
+                } else if ((currentByte > 143) & (currentByte < 208)) {
+                    if (spaceSetting.getTkArrayList().get(currentByte - 144).isEnable()) {
+                        bytesToSend[2] = (byte) spaceSetting.getTkArrayList().get(currentByte - 144).getRegister();
+                        b = false;
+                    } else {
+                        // не сможем выйти из цикла;
+                        // здесь надо запрещать передачу данных, если cuttentByte == 207
+                        // и возвращаться в менеджер потоков и обнулить значения контролирующих
+                        // положение дел переменных, чтобы начать новую передачу.
+                        if (currentByte < 206) currentByte++; else currentByte = 48;
+                    }
+                }
             }
             bytesToSend[3] = 0;
             bytesToSend[4] = 0;

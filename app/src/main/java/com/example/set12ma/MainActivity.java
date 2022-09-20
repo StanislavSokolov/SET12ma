@@ -1,8 +1,7 @@
 package com.example.set12ma;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
+import android.content.*;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -14,12 +13,21 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.set12ma.ui.main.*;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.moxa.mxuportapi.*;
+import com.moxa.mxuportapi.MxException;
+import com.moxa.mxuportapi.MxUPort;
+import com.moxa.mxuportapi.MxException.ErrorCode;
+import com.moxa.mxuportapi.MxUPort.*;
+import com.moxa.mxuportapi.MxUPortService;
+import com.moxa.mxuportapi.Version;
+
+import java.util.List;
+
+import static com.moxa.mxuportapi.MxUPortService.getPortInfoList;
 
 public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace, ResultReceiverStatusSpace, ResultReceiverFileLogsSpace, ResultReceiverSettingSpace {
 
@@ -56,16 +64,16 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
     int viewPagerNumber = 0;
 
-
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         Log.i("AndroidExample", "onCreate");
         setContentView(R.layout.activity_main);
+
         sectionsPagerAdapterDataInput = new MainActivitySectionsPagerAdapterDataInput(this, getSupportFragmentManager());
         sectionsPagerAdapterDataOutput = new MainActivitySectionsPagerAdapterDataOutput(this, getSupportFragmentManager());
         sectionsPagerAdapterLoadingSoftware = new MainActivitySectionsPagerAdapterLoadingSoftware(this, getSupportFragmentManager());
@@ -137,7 +145,20 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 //                1);
 
 
+
         dataRecovery();
+
+//        usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+//
+//        spaceStatus.setMgr(usbManager);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        Animation animRotateIn_big = AnimationUtils.loadAnimation(this,
+//                R.anim.rotate);
+//        bigIcon.startAnimation(animRotateIn_big);
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -327,7 +348,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         }
         if (value == 3) {
             tabsSET12MA.setupWithViewPager(viewPagerLogging);
-            tabsSET12MA.setVisibility(View.VISIBLE);
+            tabsSET12MA.setVisibility(View.INVISIBLE);
             viewPagerConnecting.setVisibility(View.INVISIBLE);
             viewPagerLogging.setVisibility(View.VISIBLE);
             viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+     Remove the following enclosing comment
+     to launch program when specified UPort is plug-in -->
+
+    <!-- MOXA-1110 -->
+    <!-- <usb-device vendor-id="4362" product-id="4368" /> -->
+
+    <!-- MOXA-1130 -->
+    <!-- <usb-device vendor-id="4362" product-id="4400" /> -->
+
+    <!-- MOXA-1130I -->
+    <!-- <usb-device vendor-id="4362" product-id="4401" /> -->
+
+    <!-- MOXA-1150 -->
+<!--     <usb-device vendor-id="4362" product-id="4432" /> -->
+
+    <!-- MOXA-1150I -->
+     <usb-device vendor-id="4362" product-id="4433" />
+
+    <!-- MOXA-1250 -->
+    <!-- <usb-device vendor-id="4362" product-id="4688" /> -->
+
+    <!-- MOXA-1250I -->
+    <!-- <usb-device vendor-id="4362" product-id="4689" /> -->
+
+    <!-- MOXA-1410 -->
+    <!-- <usb-device vendor-id="4362" product-id="5136" /> -->
+
+    <!-- MOXA-1450 -->
+    <!-- <usb-device vendor-id="4362" product-id="5200" /> -->
+
+    <!-- MOXA-1450I -->
+    <!-- <usb-device vendor-id="4362" product-id="5201" /> -->
+
+    <!-- MOXA-1610-8 -->
+    <!-- <usb-device vendor-id="4362" product-id="5656" /> -->
+
+    <!-- MOXA-1650-8 -->
+    <!-- <usb-device vendor-id="4362" product-id="5720" /> -->
+
+    <!-- MOXA-1610-16 -->
+    <!-- <usb-device vendor-id="4362" product-id="5651" /> -->
+
+    <!-- MOXA-1650-16 -->
+    <!-- <usb-device vendor-id="4362" product-id="5715" /> -->
+
+</resources>

@@ -1,9 +1,20 @@
 package com.example.set12ma.ui.main;
 
+import android.hardware.usb.UsbManager;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class SpaceStatus implements Parcelable {
+
+    private UsbManager mgr;
+
+    public UsbManager getMgr() {
+        return mgr;
+    }
+
+    public void setMgr(UsbManager mgr) {
+        this.mgr = mgr;
+    }
 
     private int addressOfDevice = 0;
     public int getAddressOfDevice() {

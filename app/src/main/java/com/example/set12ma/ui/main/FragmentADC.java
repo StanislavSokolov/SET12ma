@@ -1,5 +1,6 @@
 package com.example.set12ma.ui.main;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -133,6 +134,7 @@ public class FragmentADC extends Fragment {
         spaceSetting = resultReceiverSettingSpace.getSpaceSetting();
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
@@ -159,6 +161,7 @@ public class FragmentADC extends Fragment {
 
             }
         });
+        fab.setVisibility(View.INVISIBLE);
         arrayListValue = new ArrayList<>();
         arrayListButton = new ArrayList<>();
         arrayListSwitch = new ArrayList<>();

@@ -15,7 +15,7 @@ import com.example.set12ma.R;
 public class MainActivitySectionsPagerAdapterLogging extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_SET12MA_text_10, R.string.tab_SET12MA_text_11};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_SET12MA_text_10};
     private final Context mContext;
 
     public MainActivitySectionsPagerAdapterLogging(Context context, FragmentManager fm) {
@@ -28,11 +28,11 @@ public class MainActivitySectionsPagerAdapterLogging extends FragmentPagerAdapte
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
 //        return PlaceholderFragment.newInstance(position + 1);
-        if (position == 0) {
+//        if (position == 0) {
             return FragmentLogging.newInstance(position + 1);
-        } else {
-            return FragmentTK.newInstance(position + 1);
-        }
+//        } else {
+//            return FragmentTK.newInstance(position + 1);
+//        }
     }
 
     @Nullable
@@ -44,6 +44,6 @@ public class MainActivitySectionsPagerAdapterLogging extends FragmentPagerAdapte
     @Override
     public int getCount() {
         // Show 4 total pages.
-        return 2;
+        return 1;
     }
 }
