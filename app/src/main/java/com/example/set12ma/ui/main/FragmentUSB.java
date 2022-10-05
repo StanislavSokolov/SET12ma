@@ -19,7 +19,9 @@ import com.hoho.android.usbserial.driver.ProbeTable;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
+import com.moxa.mxuportapi.MxException;
 import com.moxa.mxuportapi.MxUPort;
+import com.moxa.mxuportapi.MxUPortService;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -119,12 +121,10 @@ public class FragmentUSB extends Fragment {
             String action = intent.getAction();
 
             if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
-//                buttonConnectToDevice.setEnabled(true);
-
+                checkPortList();
             }
 
             if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
-//                buttonConnectToDevice.setEnabled(false);
 
             }
 
@@ -142,7 +142,8 @@ public class FragmentUSB extends Fragment {
                                 }
                             });
                             Toast.makeText(getContext(), String.valueOf("Подключено к устройству " + mDevice.getProductName() + " " + mDevice.getManufacturerName()), Toast.LENGTH_LONG).show();
-                            firstStep();
+//                            firstStep();
+                            send();
                         } else Toast.makeText(getContext(), "Не работает" + mDevice.getVendorId(), Toast.LENGTH_SHORT).show();
                     }
                     else {
@@ -153,6 +154,41 @@ public class FragmentUSB extends Fragment {
         }
 
     };
+
+    public void checkPortList() {
+        mPortList = MxUPortService.getPortInfoList(mUsbManager);
+    }
+
+    public void checkPermission() {
+        try {
+            if (!mPortList.get(0).hasUsbPermission()) {
+                mUsbManager.requestPermission(mPortList.get(0).getUsbDevice(), permissionIntent);
+            } else {
+                send();
+            }
+        } catch (MxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void send() {
+        MxUPort.IoctlMode m = new MxUPort.IoctlMode( 9600, MxUPort.DATA_BITS_8,
+                MxUPort.PARITY_NONE,
+                MxUPort.STOP_BITS_1 );
+        byte [] buf = {'H', 'e', 'l', 'l', 'o', ' ',
+                'W', 'o', 'r', 'l', 'd'};
+
+        /* Get first UPort device */
+        MxUPort p = mPortList.get(0);
+        try {
+            p.open();
+            p.setIoctlMode(m);
+            p.write(buf, buf.length);
+            p.close();
+        } catch (MxException e) {
+            Toast.makeText(getContext(), String.valueOf(e.getErrorCodeString()), Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     public View onCreateView(
@@ -203,10 +239,11 @@ public class FragmentUSB extends Fragment {
             textViewConnectedToDevice.setText("Подключение к устройству");
             textViewConnectedToDevice.setVisibility(View.VISIBLE);
 //            step();
-            firstStep();
+//            firstStep();
 //            checkFind();
 //            checkSend();
 //            currentByte = 0;
+            checkPermission();
         } else {
             buttonConnectToDevice.setText("Подключить");
             textViewConnectedToDevice.setText("Отключено от устройства");
