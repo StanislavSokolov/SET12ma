@@ -33,33 +33,8 @@ import java.util.List;
 public class FragmentUSB extends Fragment {
     private static final String ARG_SECTION_NUMBER = "ComPort";
 
-//    private UsbThread usbThread;
-
-    private UsbDevice mDevice;
-    private UsbDeviceConnection mConnection;
-//    private UsbEndpoint mEndpointIntr;
-
-    private MxUPort mCurrentUPort = null;
-    List<MxUPort> mPortList = null;
-
-    private ProbeTable customTable;
-    private UsbSerialDriver driver;
-    private UsbDeviceConnection connection;
+    private UsbThread usbThread;
     UsbSerialPort port;
-
-
-
-    UsbManager mUsbManager;
-    HashMap<String, UsbDevice> deviceList;
-    private Collection<UsbDevice> mUsbDevice;
-    private int mPortSelection = -1;
-    private int mBaudRate = -1;
-    private int mDataBits = 8;
-    private int mParity = 0;
-    private int mStopBits = 1;
-    private int mFlowControl = 0;
-
-
     private PageViewModel pageViewModel;
 
     private SpaceStatus spaceStatus;
@@ -142,12 +117,14 @@ public class FragmentUSB extends Fragment {
 
     private final BroadcastReceiver mPermissionReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
+            Toast.makeText(getContext(), "1", Toast.LENGTH_LONG).show();
             String action = intent.getAction();
             if (ACTION_USB_TEST.equals(action)) {
+                Toast.makeText(getContext(), "2", Toast.LENGTH_LONG).show();
                 synchronized(this) {
                     UsbDevice device = (UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
                     if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
-
+                        Toast.makeText(getContext(), "3", Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -221,6 +198,7 @@ public class FragmentUSB extends Fragment {
 //        UsbSerialProber prober = new UsbSerialProber(customTable);
 //        List<UsbSerialDriver> drivers = prober.findAllDrivers(mUsbManager);
 
+        // Find all available drivers from attached devices.
         UsbManager manager = spaceStatus.getMgr();
         List<UsbSerialDriver> availableDrivers = UsbSerialProber.getDefaultProber().findAllDrivers(manager);
         if (availableDrivers.isEmpty()) {
@@ -228,109 +206,66 @@ public class FragmentUSB extends Fragment {
         } else {
             Toast.makeText(getContext(), "Подключение к " + availableDrivers.get(0).getDevice().getProductName() + " " + availableDrivers.get(0).getDevice().getManufacturerName(), Toast.LENGTH_LONG).show();
         }
-//        if (drivers.isEmpty()) {
-//            textViewConnectedToDevice.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    textViewConnectedToDevice.setText("Устройство не подключено");
-//                    Toast.makeText(getContext(), "Устройство не подключено", Toast.LENGTH_LONG).show();
-//                }
-//            });
-//            buttonConnectToDevice.setText("Подключить");
-//            progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
-//            spaceStatus.setReadyFlagToExchangeData(false);
-//            spaceStatus.setDevice("");
-//            getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
-//            spaceStatus.setReadyFlagRecordingInitialValues(false);
-//            return;
-//        } else {
-//            // Open a connection to the first available driver.
-//            driver = drivers.get(0);
-//            connection = mUsbManager.openDevice(driver.getDevice());
-//
-//            if (connection == null) {
-//                // add UsbManager.requestPermission(driver.getDevice(), ..) handling here
-//                mUsbManager.requestPermission(driver.getDevice(), permissionIntent);
-//                return;
-//            }
-//        }
-//        secondStep();
 
-    }
+        // Open a connection to the first available driver.
+        UsbSerialDriver driver = availableDrivers.get(0);
+        UsbDeviceConnection connection = manager.openDevice(driver.getDevice());
+        if (connection == null) {
+            Toast.makeText(getContext(), "Has no permittion", Toast.LENGTH_LONG).show();
+//             UsbManager.requestPermission(driver.getDevice(), permissionIntent);
+            return;
+        }
 
-    public void secondStep() {
-        byte [] buf = {'H', 'e', 'l', 'l', 'o', ' ',
-                'W', 'o', 'r', 'l', 'd', 'H', 'e', 'l', 'l', 'o', ' ',
-                'W', 'o', 'r', 'l', 'd', 'H', 'e', 'l', 'l', 'o', ' ',
-                'W', 'o', 'r', 'l', 'd', 'H', 'e', 'l', 'l', 'o', ' ',
-                'W', 'o', 'r', 'l', 'd'};
-        UsbSerialPort port = driver.getPorts().get(0); // Most devices have just one port (port 0)
+        port = driver.getPorts().get(0); // Most devices have just one port (port 0)
+
         try {
-
-            Toast.makeText(getContext(), "we are here 3", Toast.LENGTH_LONG).show();
-
+            Toast.makeText(getContext(), "SEND Start", Toast.LENGTH_LONG).show();
             port.open(connection);
-            Toast.makeText(getContext(), "we are here 4", Toast.LENGTH_LONG).show();
             port.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
-            Toast.makeText(getContext(), "we are here 5", Toast.LENGTH_LONG).show();
-            port.write(buf, 200);
-            Toast.makeText(getContext(), "we are here 6", Toast.LENGTH_LONG).show();
-            port.close();
+            usbThread = new UsbThread();
+            usbThread.start();
         } catch (IOException e) {
-            Toast.makeText(getContext(), String.valueOf(e.getLocalizedMessage()), Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), String.valueOf(e.getMessage()), Toast.LENGTH_LONG).show();
         }
     }
-//
-//    public class UsbThread extends Thread {
-//
-//        private byte [] buf = {'H', 'e', 'l', 'l', 'o', ' ',
-//                'W', 'o', 'r', 'l', 'd', 'H', 'e', 'l', 'l', 'o', ' ',
-//                'W', 'o', 'r', 'l', 'd', 'H', 'e', 'l', 'l', 'o', ' ',
-//                'W', 'o', 'r', 'l', 'd', 'H', 'e', 'l', 'l', 'o', ' ',
-//                'W', 'o', 'r', 'l', 'd'};;
-//        private int TIMEOUT = 100;
-//        private boolean forceClaim = true;
-//
-//        UsbInterface usbInterface;
-//        UsbEndpoint usbEndpoint;
-//        UsbDeviceConnection usbDeviceConnection;
-//
-//        @Override
-//        public void run() {
-//            super.run();
-//
-//            byte [] buf = {'H', 'e', 'l', 'l', 'o', ' ',
-//                    'W', 'o', 'r', 'l', 'd'};
-//
-////            Toast.makeText(getContext(), String.valueOf(driver.getDevice().getProductName()), Toast.LENGTH_LONG).show();
-////            Toast.makeText(getContext(), String.valueOf(driver.getDevice().getManufacturerName()), Toast.LENGTH_LONG).show();
-//            try {
-//                usbThread.sleep(2000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            if (driver != null) {
-//                UsbSerialPort port = driver.getPorts().get(0); // Most devices have just one port (port 0)
-//                try {
-//
-//                    Toast.makeText(getContext(), "we are here 3", Toast.LENGTH_LONG).show();
-//
-//                    port.open(connection);
-//                    Toast.makeText(getContext(), "we are here 4", Toast.LENGTH_LONG).show();
-//                    port.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
-//                    Toast.makeText(getContext(), "we are here 5", Toast.LENGTH_LONG).show();
-//                    port.write(buf, 200);
-//                    Toast.makeText(getContext(), "we are here 6", Toast.LENGTH_LONG).show();
-//                    port.close();
-//                } catch (IOException e) {
-//                    Toast.makeText(getContext(), String.valueOf(e.getLocalizedMessage()), Toast.LENGTH_LONG).show();
-//                }
-//            } else Toast.makeText(getContext(), "String.valueOf(e.getLocalizedMessage())", Toast.LENGTH_LONG).show();
-//        }
-//
-//        public UsbThread() {
-//
-//        }
-//    }
+
+    public class UsbThread extends Thread {
+
+        private byte [] buf = {'H', 'e', 'l', 'l', 'o', ' ',
+                'W', 'o', 'r', 'l', 'd', 'H', 'e', 'l', 'l', 'o', ' ',
+                'W', 'o', 'r', 'l', 'd', 'H', 'e', 'l', 'l', 'o', ' ',
+                'W', 'o', 'r', 'l', 'd', 'H', 'e', 'l', 'l', 'o', ' ',
+                'W', 'o', 'r', 'l', 'd'};;
+        private int TIMEOUT = 100;
+        private boolean forceClaim = true;
+
+        UsbInterface usbInterface;
+        UsbEndpoint usbEndpoint;
+        UsbDeviceConnection usbDeviceConnection;
+
+        @Override
+        public void run() {
+            super.run();
+
+            byte [] buf = {'H', 'e', 'l', 'l', 'o', ' ',
+                    'W', 'o', 'r', 'l', 'd'};
+
+//            Toast.makeText(getContext(), String.valueOf(driver.getDevice().getProductName()), Toast.LENGTH_LONG).show();
+//            Toast.makeText(getContext(), String.valueOf(driver.getDevice().getManufacturerName()), Toast.LENGTH_LONG).show();
+
+            while (!isInterrupted()) {
+                try {
+                    usbThread.sleep(1000);
+                    port.write(buf, 200);
+                } catch (InterruptedException | IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        public UsbThread() {
+
+        }
+    }
 }
 
