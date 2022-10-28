@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         dataRecovery();
         usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         spaceStatus.setMgr(usbManager);
+        spaceStatus.setCommunication(new Communication(spaceStatus, spaceSetting, spaceAddress, spaceMemory, spaceFileLogs));
     }
 
     @Override

@@ -9,24 +9,14 @@ import java.util.List;
 
 public class SpaceStatus implements Parcelable {
 
-    MxUPort p;
+    private Communication communication;
 
-    public MxUPort getP() {
-        return p;
+    public Communication getCommunication() {
+        return communication;
     }
 
-    public void setP(MxUPort p) {
-        this.p = p;
-    }
-
-    public void setPortList(List<MxUPort> portList) {
-        this.portList = portList;
-    }
-
-    private List<MxUPort> portList;
-
-    public List<MxUPort> getPortList() {
-        return portList;
+    public void setCommunication(Communication communication) {
+        this.communication = communication;
     }
 
     private UsbManager mgr;
