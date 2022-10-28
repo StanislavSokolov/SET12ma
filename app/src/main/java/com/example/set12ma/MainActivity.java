@@ -2,6 +2,8 @@ package com.example.set12ma;
 
 import android.annotation.SuppressLint;
 import android.content.*;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -25,6 +27,7 @@ import com.moxa.mxuportapi.MxUPort.*;
 import com.moxa.mxuportapi.MxUPortService;
 import com.moxa.mxuportapi.Version;
 
+import java.util.Iterator;
 import java.util.List;
 
 import static com.moxa.mxuportapi.MxUPortService.getPortInfoList;
@@ -67,12 +70,17 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
+    private List<MxUPort> portList;
+    private UsbManager usbManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         Log.i("AndroidExample", "onCreate");
         setContentView(R.layout.activity_main);
+
+        usbManager = (UsbManager) this.getSystemService(Context.USB_SERVICE);
 
         sectionsPagerAdapterDataInput = new MainActivitySectionsPagerAdapterDataInput(this, getSupportFragmentManager());
         sectionsPagerAdapterDataOutput = new MainActivitySectionsPagerAdapterDataOutput(this, getSupportFragmentManager());
@@ -148,10 +156,66 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
         dataRecovery();
 
-//        usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
-//
+
+//        MxUPortService.requestPermission(this, usbManager,
+//                "com.moxa.mxuportapidemo.USB_PERMISSION", 0, 0, mPermissionReceiver);
+
+        if(0==MxUPortService.requestPermission(this, usbManager, "com.moxa.mxuportapidemo.USB_PERMISSION", 0, 0, mPermissionReceiver)){
+            Toast.makeText(this, "permission", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "permission", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "permission", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "permission", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "permission", Toast.LENGTH_SHORT).show();
+//            portList = MxUPortService.getPortInfoList(usbManager);
+        } else {
+            Toast.makeText(this, "permission2", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "permission2", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "permission2", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "permission2", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "permission2", Toast.LENGTH_SHORT).show();
+//            portList = MxUPortService.getPortInfoList(usbManager);
+        }
+
+//        spaceStatus.setPortList(portList);
 //        spaceStatus.setMgr(usbManager);
     }
+
+    private final BroadcastReceiver mPermissionReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if ("com.moxa.mxuportapidemo.USB_PERMISSION".equals(action)) {
+//                Toast.makeText(MainActivity.this, "The permission of device PID: ___ is granted.", Toast.LENGTH_SHORT).show();
+                synchronized(this) {
+                    UsbDevice device = (UsbDevice)intent.getParcelableExtra("device");
+                    if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+                        Toast.makeText(MainActivity.this, "The permission of device PID: " + device.getVendorId() + " is granted.", Toast.LENGTH_SHORT).show();
+//                        portList = MxUPortService.getPortInfoList(usbManager);
+                        if (portList != null) {
+                            Toast.makeText(context, "portList!=null", Toast.LENGTH_SHORT).show();
+                            MxUPort p = portList.get(0);
+                            try {
+                                if (!p.hasUsbPermission()) {
+                                    Toast.makeText(context, "NO", Toast.LENGTH_SHORT).show();
+                                    Thread.sleep(500L);
+                                    MxUPortService.requestPermission(context, usbManager, "com.moxa.mxuportapidemo.USB_PERMISSION", 0, 0, MainActivity.this.mPermissionReceiver);
+                                } else {
+                                    Toast.makeText(context, "yes", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
+                                Toast.makeText(context, String.valueOf(e.getLocalizedMessage()), Toast.LENGTH_SHORT).show();
+                            }
+                            spaceStatus.setP(p);
+                        } else {
+                            Toast.makeText(context, "portList=null", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(context, "permission", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+        }
+    };
 
     @Override
     protected void onResume() {

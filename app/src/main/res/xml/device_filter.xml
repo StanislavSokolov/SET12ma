@@ -18,7 +18,7 @@
 <!--     <usb-device vendor-id="4362" product-id="4432" /> -->
 
     <!-- MOXA-1150I -->
-     <usb-device vendor-id="4362" product-id="4433" />
+<!--     <usb-device vendor-id="4362" product-id="4433" />-->
 
     <!-- MOXA-1250 -->
     <!-- <usb-device vendor-id="4362" product-id="4688" /> -->
