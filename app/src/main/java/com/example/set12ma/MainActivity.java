@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
-    private List<MxUPort> portList;
     private UsbManager usbManager;
 
     @Override
@@ -155,67 +154,9 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
 
         dataRecovery();
-
-
-//        MxUPortService.requestPermission(this, usbManager,
-//                "com.moxa.mxuportapidemo.USB_PERMISSION", 0, 0, mPermissionReceiver);
-
-        if(0==MxUPortService.requestPermission(this, usbManager, "com.moxa.mxuportapidemo.USB_PERMISSION", 0, 0, mPermissionReceiver)){
-            Toast.makeText(this, "permission", Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "permission", Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "permission", Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "permission", Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "permission", Toast.LENGTH_SHORT).show();
-//            portList = MxUPortService.getPortInfoList(usbManager);
-        } else {
-            Toast.makeText(this, "permission2", Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "permission2", Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "permission2", Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "permission2", Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "permission2", Toast.LENGTH_SHORT).show();
-//            portList = MxUPortService.getPortInfoList(usbManager);
-        }
-
-//        spaceStatus.setPortList(portList);
-//        spaceStatus.setMgr(usbManager);
+        usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+        spaceStatus.setMgr(usbManager);
     }
-
-    private final BroadcastReceiver mPermissionReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if ("com.moxa.mxuportapidemo.USB_PERMISSION".equals(action)) {
-//                Toast.makeText(MainActivity.this, "The permission of device PID: ___ is granted.", Toast.LENGTH_SHORT).show();
-                synchronized(this) {
-                    UsbDevice device = (UsbDevice)intent.getParcelableExtra("device");
-                    if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
-                        Toast.makeText(MainActivity.this, "The permission of device PID: " + device.getVendorId() + " is granted.", Toast.LENGTH_SHORT).show();
-//                        portList = MxUPortService.getPortInfoList(usbManager);
-                        if (portList != null) {
-                            Toast.makeText(context, "portList!=null", Toast.LENGTH_SHORT).show();
-                            MxUPort p = portList.get(0);
-                            try {
-                                if (!p.hasUsbPermission()) {
-                                    Toast.makeText(context, "NO", Toast.LENGTH_SHORT).show();
-                                    Thread.sleep(500L);
-                                    MxUPortService.requestPermission(context, usbManager, "com.moxa.mxuportapidemo.USB_PERMISSION", 0, 0, MainActivity.this.mPermissionReceiver);
-                                } else {
-                                    Toast.makeText(context, "yes", Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (Exception e) {
-                                Toast.makeText(context, String.valueOf(e.getLocalizedMessage()), Toast.LENGTH_SHORT).show();
-                            }
-                            spaceStatus.setP(p);
-                        } else {
-                            Toast.makeText(context, "portList=null", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(context, "permission", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-        }
-    };
 
     @Override
     protected void onResume() {
