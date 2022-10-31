@@ -1,10 +1,15 @@
 package com.example.set12ma.ui.main;
 
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+import com.example.set12ma.R;
 
 import java.io.IOException;
 
 public class Communication {
+
+    private static final String LOG_TAG = "Communication";
 
     private SpaceStatus spaceStatus;
     private SpaceSetting spaceSetting;
@@ -37,6 +42,647 @@ public class Communication {
     private int currentByte = 0;
     private int nextByte = 0;
     private int maxValueUnsuccessfulSending = 10;
+
+    private volatile int currentCommand = INIT_LOAD;
+    private boolean statusError = true;
+
+    int countByte = 0;
+    byte[] bufferByte = null;
+
+    int crc;
+    int high;
+
+    String answerTest;
+    int countWaitConnection = 0;
+
+    int countReceivedMessage = 0;
+
+    boolean latchInit = true;
+    boolean latchQueue = false;
+    boolean latchLoad = false;
+    boolean latchFinish = false;
+    boolean latchDownloadLog = false;
+
+    int counterAttemptsToConection = 0;
+    int counterUnsuccessfulSending = 0;
+
+    boolean statusAnswer = false; // true - ответ получен
+
+    public void prepare() {
+        answerTest = "";
+        countWaitConnection = 0;
+
+        countReceivedMessage = 0;
+
+        latchInit = true;
+        latchQueue = false;
+        latchLoad = false;
+        latchFinish = false;
+        latchDownloadLog = false;
+
+        counterAttemptsToConection = 0;
+        counterUnsuccessfulSending = 0;
+
+        statusAnswer = false; // true - ответ получен
+    }
+
+    public void communication() {
+            if (!spaceAddress.isEmptyByteQueue()) {
+                byte[] buffer = spaceAddress.getByteQueue();
+                switch (getCommand()) {
+                    case READ:
+
+                        Log.i(LOG_TAG, "count byte " + buffer.length);
+
+                        if (countByte == 0) {
+                            // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
+                            bufferByte = new byte[10];
+                            Log.i(LOG_TAG, "Начало сообщения");
+                        }
+
+                        if (buffer.length > 10 - countByte) {
+                            // получили избыточное количество байт в посылке
+                            // остаток положим во временный буфер
+                            Log.i(LOG_TAG, "Избыточное количество байт");
+                        } else {
+                            // получили байты
+                            for (int i = 0; i < buffer.length; i++) {
+                                bufferByte[i + countByte] = buffer[i];
+                            }
+                            countByte = countByte + buffer.length;
+                            Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
+                        }
+
+                        if (countByte == 10) {
+                            Log.i(LOG_TAG, "Получили нужное количество байт");
+                            answerTest = "";
+                            for (byte readByte : bufferByte) {
+                                int bufInt;
+                                if (readByte < 0) bufInt = readByte + 256;
+                                else bufInt = readByte;
+                                answerTest = answerTest + " " + bufInt;
+                            }
+                            Log.i(LOG_TAG, answerTest);
+                            countByte = 0;
+                            if ((bufferByte[0] == ADDRESS_DEVICE) & (bufferByte[1] == READ)) {
+                                Log.i(LOG_TAG, "Идентификатор корректен");
+                                // проверяем корректность сообщения по идентификатору
+                                byte[] bytesToCreateCRC = new byte[bufferByte.length - 2];
+                                for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                                    bytesToCreateCRC[i] = bufferByte[i];
+                                }
+                                crc = (CRC16.getCRC4(bytesToCreateCRC));
+                                high = crc / 256;
+//                                    answerTest = "";
+//                                    for (byte readByte: buffer) {
+//                                        int bufInt = 0;
+//                                        if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
+//                                        answerTest = answerTest + " " + bufInt;
+//                                    }
+//                                    Log.i(LOG_TAG, answerTest);
+                                if ((bufferByte[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (bufferByte[bytesToCreateCRC.length + 1] == (byte) high)) {
+                                    Log.i(LOG_TAG, "ЦРЦ в порядке");
+                                    if (!spaceStatus.isReadyFlagRecordingInitialValues()) {
+                                        spaceAddress.setAddressSpace(currentByte, bufferByte[2]);
+                                        if (currentByte == 47) {
+                                            nextByte = 96;
+                                        }
+
+                                        if (currentByte == 143) {
+                                            nextByte = 0;
+                                        }
+
+                                        if ((currentByte == 47) || (currentByte == 143))
+                                            currentByte = nextByte;
+                                        else currentByte++;
+                                    } else {
+                                        currentByte = 48;
+                                    }
+                                    statusError = false;
+                                } else {
+                                    Log.i(LOG_TAG, "CRC не совпало");
+                                    statusError = true;
+                                }
+                            } else {
+                                Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
+                                statusError = true;
+                            }
+                            statusAnswer = true;
+                        }
+                        break;
+                    case WRITE:
+
+                        Log.i(LOG_TAG, "count byte " + buffer.length + " for Write");
+
+                        if (countByte == 0) {
+                            // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
+                            bufferByte = new byte[6];
+                            Log.i(LOG_TAG, "Начало сообщения");
+                        }
+
+                        if (buffer.length > 6 - countByte) {
+                            // получили избыточное количество байт в посылке
+                            // остаток положим во временный буфер
+                            Log.i(LOG_TAG, "Избыточное количество байт");
+                        } else {
+                            // получили байты
+                            for (int i = 0; i < buffer.length; i++) {
+                                bufferByte[i + countByte] = buffer[i];
+                            }
+                            countByte = countByte + buffer.length;
+                            Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
+                        }
+
+                        if (countByte == 6) {
+                            Log.i(LOG_TAG, "Получили нужное количество байт");
+                            answerTest = "";
+                            for (byte readByte : bufferByte) {
+                                int bufInt;
+                                if (readByte < 0) bufInt = readByte + 256;
+                                else bufInt = readByte;
+                                answerTest = answerTest + " " + bufInt;
+                            }
+                            Log.i(LOG_TAG, answerTest);
+                            countByte = 0;
+                            if ((bufferByte[0] == ADDRESS_DEVICE) & (bufferByte[1] == WRITE)) {
+                                Log.i(LOG_TAG, "Идентификатор корректен");
+                                // проверяем корректность сообщения по идентификатору
+                                byte[] bytesToCreateCRC = new byte[bufferByte.length - 4];
+                                for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                                    bytesToCreateCRC[i] = bufferByte[i];
+                                }
+                                crc = (CRC16.getCRC4(bytesToCreateCRC));
+                                high = crc / 256;
+                                if ((bufferByte[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (bufferByte[bytesToCreateCRC.length + 1] == (byte) high)) {
+                                    Log.i(LOG_TAG, "ЦРЦ в порядке");
+                                    if (currentByte == 207) {
+                                        spaceStatus.setReadyFlagRecordingInitialValues(false);
+                                        nextByte = 0;
+                                    }
+                                    if (currentByte == 95) {
+                                        nextByte = 144;
+                                    }
+                                    if ((currentByte == 95) || (currentByte == 207)) currentByte = nextByte;
+                                    else currentByte++;
+                                    statusError = false;
+                                } else {
+                                    Log.i(LOG_TAG, "CRC не совпало");
+                                    statusError = true;
+                                }
+                            } else {
+                                Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
+                                statusError = true;
+                            }
+                            statusAnswer = true;
+                        }
+
+                        break;
+                    case INIT_LOAD:
+
+                        Log.i(LOG_TAG, "count byte " + buffer.length + " INIT_LOAD");
+
+                        if (countByte == 0) {
+                            // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
+                            bufferByte = new byte[6];
+                            Log.i(LOG_TAG, "Начало сообщения");
+                        }
+
+                        if (buffer.length > 6 - countByte) {
+                            // получили избыточное количество байт в посылке
+                            // остаток положим во временный буфер
+                            Log.i(LOG_TAG, "Избыточное количество байт");
+                        } else {
+                            // получили байты
+                            for (int i = 0; i < buffer.length; i++) {
+                                bufferByte[i + countByte] = buffer[i];
+                            }
+                            countByte = countByte + buffer.length;
+                            Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
+                        }
+
+                        if (countByte == 6) {
+                            Log.i(LOG_TAG, "Получили нужное количество байт");
+                            answerTest = "";
+                            for (byte readByte : bufferByte) {
+                                int bufInt;
+                                if (readByte < 0) bufInt = readByte + 256;
+                                else bufInt = readByte;
+                                answerTest = answerTest + " " + bufInt;
+                            }
+                            Log.i(LOG_TAG, answerTest);
+                            countByte = 0;
+                            if ((bufferByte[0] == ADDRESS_DEVICE) & (bufferByte[1] == INIT_LOAD)) {
+                                Log.i(LOG_TAG, "Идентификатор корректен");
+                                // проверяем корректность сообщения по идентификатору
+                                byte[] bytesToCreateCRC = new byte[bufferByte.length - 4];
+                                for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                                    bytesToCreateCRC[i] = bufferByte[i];
+                                }
+                                crc = (CRC16.getCRC4(bytesToCreateCRC));
+                                high = crc / 256;
+                                if ((bufferByte[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (bufferByte[bytesToCreateCRC.length + 1] == (byte) high)) {
+                                    Log.i(LOG_TAG, "ЦРЦ в порядке");
+                                    statusError = false;
+                                } else {
+                                    Log.i(LOG_TAG, "CRC не совпало");
+                                    statusError = true;
+                                }
+                            } else {
+                                Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
+                                statusError = true;
+                            }
+                            statusAnswer = true;
+                        }
+
+                        break;
+                    case LOAD:
+
+                        Log.i(LOG_TAG, "count byte " + buffer.length + " LOAD");
+
+                        if (countByte == 0) {
+                            // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
+                            bufferByte = new byte[6];
+                            Log.i(LOG_TAG, "Начало сообщения");
+                        }
+
+                        if (buffer.length > 6 - countByte) {
+                            // получили избыточное количество байт в посылке
+                            // остаток положим во временный буфер
+                            Log.i(LOG_TAG, "Избыточное количество байт");
+                        } else {
+                            // получили байты
+                            for (int i = 0; i < buffer.length; i++) {
+                                bufferByte[i + countByte] = buffer[i];
+                            }
+                            countByte = countByte + buffer.length;
+                            Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
+                        }
+
+                        if (countByte == 6) {
+                            Log.i(LOG_TAG, "Получили нужное количество байт");
+                            answerTest = "";
+                            for (byte readByte : bufferByte) {
+                                int bufInt;
+                                if (readByte < 0) bufInt = readByte + 256;
+                                else bufInt = readByte;
+                                answerTest = answerTest + " " + bufInt;
+                            }
+                            Log.i(LOG_TAG, answerTest);
+                            countByte = 0;
+                            if ((bufferByte[0] == ADDRESS_DEVICE) & (bufferByte[1] == LOAD)) {
+                                Log.i(LOG_TAG, "Идентификатор корректен");
+                                // проверяем корректность сообщения по идентификатору
+                                byte[] bytesToCreateCRC = new byte[bufferByte.length - 4];
+                                for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                                    bytesToCreateCRC[i] = bufferByte[i];
+                                }
+                                crc = (CRC16.getCRC4(bytesToCreateCRC));
+                                high = crc / 256;
+                                if ((bufferByte[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (bufferByte[bytesToCreateCRC.length + 1] == (byte) high)) {
+                                    Log.i(LOG_TAG, "ЦРЦ в порядке");
+                                    spaceStatus.setReadyFlagToFinishOfLoadingSoftware(true);
+                                    statusError = false;
+                                } else {
+                                    Log.i(LOG_TAG, "CRC не совпало");
+                                    statusError = true;
+                                }
+                            } else {
+                                Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
+                                statusError = true;
+                            }
+                            statusAnswer = true;
+                        }
+
+                        break;
+                    case EXTEND:
+
+                        Log.i(LOG_TAG, "count byte " + buffer.length + " EXTEND");
+
+                        if (countByte == 0) {
+                            // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
+                            bufferByte = new byte[18];
+                            Log.i(LOG_TAG, "Начало сообщения");
+                        }
+
+                        if (buffer.length > 18 - countByte) {
+                            // получили избыточное количество байт в посылке
+                            // остаток положим во временный буфер
+                            Log.i(LOG_TAG, "Избыточное количество байт");
+                        } else {
+                            // получили байты
+                            for (int i = 0; i < buffer.length; i++) {
+                                bufferByte[i + countByte] = buffer[i];
+                            }
+                            countByte = countByte + buffer.length;
+                            Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
+                        }
+
+                        if (countByte == 18) {
+                            Log.i(LOG_TAG, "Получили нужное количество байт");
+                            answerTest = "";
+                            for (byte readByte : bufferByte) {
+                                int bufInt;
+                                if (readByte < 0) bufInt = readByte + 256;
+                                else bufInt = readByte;
+                                answerTest = answerTest + " " + bufInt;
+                            }
+                            Log.i(LOG_TAG, answerTest);
+                            countByte = 0;
+                            if ((bufferByte[0] == ADDRESS_DEVICE) & (bufferByte[1] == EXTEND)) {
+                                Log.i(LOG_TAG, "Идентификатор корректен");
+                                // проверяем корректность сообщения по идентификатору
+                                byte[] bytesToCreateCRC = new byte[bufferByte.length - 4];
+                                for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                                    bytesToCreateCRC[i] = bufferByte[i];
+                                }
+                                crc = (CRC16.getCRC4(bytesToCreateCRC));
+                                high = crc / 256;
+                                if ((bufferByte[14] == (byte) (crc - high*256)) & (bufferByte[15] == (byte) high)) {
+                                    Log.i(LOG_TAG, "CRC is good from FinishLoad");
+                                    statusError = false;
+                                } else {
+                                    Log.i(LOG_TAG, "CRC is bed from FinishLoad");
+                                }
+                                spaceStatus.setLastNumberError(bufferByte[6]);
+                                spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(true);
+                            } else {
+                                Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
+                                statusError = true;
+                            }
+                            statusAnswer = true;
+                        }
+                        break;
+                    case UPLOAD:
+
+                        Log.i(LOG_TAG, "count byte " + buffer.length + " UPLOAD");
+
+                        if (countByte == 0) {
+                            // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
+                            bufferByte = new byte[BYTE_UPLOAD + 8];
+                            Log.i(LOG_TAG, "Начало сообщения");
+                        }
+
+                        if (buffer.length > BYTE_UPLOAD + 8 - countByte) {
+                            // получили избыточное количество байт в посылке
+                            // остаток положим во временный буфер
+                            Log.i(LOG_TAG, "Избыточное количество байт");
+                        } else {
+                            // получили байты
+                            for (int i = 0; i < buffer.length; i++) {
+                                bufferByte[i + countByte] = buffer[i];
+                            }
+                            countByte = countByte + buffer.length;
+                            Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
+                        }
+
+                        if (countByte == BYTE_UPLOAD + 8) {
+                            Log.i(LOG_TAG, "Получили нужное количество байт");
+                            answerTest = "";
+                            for (byte readByte : bufferByte) {
+                                int bufInt;
+                                if (readByte < 0) bufInt = readByte + 256;
+                                else bufInt = readByte;
+                                answerTest = answerTest + " " + bufInt;
+                            }
+                            Log.i(LOG_TAG, answerTest);
+                            countByte = 0;
+                            if ((bufferByte[0] == ADDRESS_DEVICE) & (bufferByte[1] == UPLOAD)) {
+                                Log.i(LOG_TAG, "Идентификатор корректен");
+                                // проверяем корректность сообщения по идентификатору
+                                byte[] bytesToCreateCRC = new byte[bufferByte.length - 6];
+                                for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                                    bytesToCreateCRC[i] = bufferByte[i];
+                                }
+                                crc = (CRC16.getCRC4(bytesToCreateCRC));
+                                high = crc / 256;
+                                if ((bufferByte[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bufferByte[bytesToCreateCRC.length + 1] == (byte) high)) {
+                                    Log.i(LOG_TAG, "CRC is good from UPLOAD");
+                                    spaceStatus.setReadyFlagToFinishOfDownloadingLogs(true);
+                                    statusError = false;
+                                    byte[] bytes = new byte[BYTE_UPLOAD];
+                                    for (int i = 0; i < BYTE_UPLOAD; i++) {
+                                        bytes[i] = bufferByte[i+2];
+                                    }
+                                    spaceFileLogs.setSpaceFileLogsArrayListByte(bytes);
+                                } else {
+                                    Log.i(LOG_TAG, "CRC is bed from UPLOAD");
+                                }
+                            } else {
+                                Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
+//                                    statusError = true;
+                            }
+                            statusAnswer = true;
+                        }
+
+
+                        break;
+                }
+            } else {
+                if (statusAnswer) {
+                    if (latchInit) {
+                        spaceStatus.setReadyFlagToExchangeData(true);
+                        textViewConnectedToDevice.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                textViewConnectedToDevice.setText("Подключено к " + stringConnectedToDevice);
+                                progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+                                Toast.makeText(getContext(), "Устройство подключено к процессорному модулю", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                    latchInit = false;
+                    statusAnswer = false;
+
+                    if (spaceStatus.isReadyFlagToLoadSoftware()) {
+                        if (spaceStatus.isStatusProcessOfLoadingSoftware()) {
+                            if (!latchLoad) {
+                                setCommand(LOAD);
+                                load();
+                                latchLoad = true;
+                            } else {
+                                if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
+                                    spaceStatus.setReadyFlagToLoadSoftware(false);
+                                    spaceStatus.setStatusProcessOfLoadingSoftware(false);
+                                    latchLoad = false;
+                                    statusAnswer = true;
+                                }
+
+                            }
+                        } else {
+                            spaceStatus.setStatusProcessOfLoadingSoftware(true);
+                            setCommand(INIT_LOAD);
+                            initLoad();
+                        }
+                    } else if (spaceStatus.isReadyFlagToUpdateSoftware()) {
+                        spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+                        if (!latchFinish) {
+                            spaceStatus.setStatusProcessOfUpdatingSoftware(true);
+                            setCommand(EXTEND);
+                            startToLoad();
+                            latchFinish = true;
+                            Log.i(LOG_TAG, "зАЙДЕМ сюда!");
+                        } else {
+                            if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
+                                latchFinish = false;
+                                spaceStatus.setReadyFlagToUpdateSoftware(false);
+                                spaceStatus.setStatusProcessOfUpdatingSoftware(false);
+                                spaceStatus.setReadyFlagToLoadSoftware(false);
+                                spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+                                Log.i(LOG_TAG, "всё в ноль!!!!");
+                                statusAnswer = true;
+                            }
+                        }
+                    } else if (spaceStatus.isReadyFlagToDownloadLog()) {
+                        if (!latchDownloadLog) {
+                            if (countReceivedMessage == 0) {
+                                spaceFileLogs.setSpaceFileLogsByte();
+                            }
+                            setCommand(UPLOAD);
+                            downloadLogs(ADDRESS_UPLOAD + BYTE_UPLOAD*countReceivedMessage, BYTE_UPLOAD);
+                            latchDownloadLog = true;
+                            Log.i(LOG_TAG, "We  are here!");
+                        } else {
+                            if (spaceStatus.isReadyFlagToFinishOfDownloadingLogs()) {
+                                // ЦИКЛ ДЛЯ СЧИТЫВАНИЯ ЛОГОВ
+                                spaceStatus.setReadyFlagToFinishOfDownloadingLogs(false);
+                                latchDownloadLog = false;
+                                Log.i(LOG_TAG, "Finish of downloadlog");
+                                statusAnswer = true;
+                                if (countReceivedMessage < COUNT) {
+                                    countReceivedMessage = countReceivedMessage + 1;
+                                    spaceStatus.setProgressBarDownload(countReceivedMessage);
+                                } else {
+                                    spaceStatus.setReadyFlagToDownloadLog(false);
+                                    Log.i("strartt", "finish");
+                                    countReceivedMessage = 0;
+                                    Log.i("strartt", "Длинна записанная в SpaceFileLogs " + spaceFileLogs.getSpaceFileLogsArrayListSize());
+
+//                                    logsToFile = new LogsToFile();
+//                                    logsToFile.start();
+                                }
+                            }
+                        }
+                    } else {
+                        if (counterUnsuccessfulSending < maxValueUnsuccessfulSending) {
+                            if (statusError) {
+                                counterUnsuccessfulSending = counterUnsuccessfulSending + 1;
+                            } else {
+                                counterUnsuccessfulSending = 0;
+                            }
+
+                            if (spaceStatus.isReadyFlagRecordingInitialValues()) {
+                                setCommand(WRITE);
+                                write();
+                            } else {
+                                if (!spaceAddress.isEmptyQueue()) {
+                                    if (!latchQueue) {
+                                        previousByte = currentByte;
+                                        latchQueue = true;
+                                    }
+                                    ElementQueue elementQueue = spaceAddress.getElementQueue();
+//                                        if (elementQueue.getSectionNumber() == 0) {
+//                                            currentByte = 48;
+//                                        }
+//                                        if (elementQueue.getSectionNumber() == 1) {
+//                                            currentByte = 144;
+//                                        }
+//                                        currentByte = currentByte + elementQueue.getId();
+//                                        currentByte = elementQueue.getRegister();
+                                    Log.i(LOG_TAG, "SUPRIM");
+                                    setCommand(WRITE);
+                                    write(elementQueue.getRegister(), elementQueue.getData());
+                                } else {
+                                    if (latchQueue) {
+                                        latchQueue = false;
+                                        currentByte = previousByte;
+                                    }
+                                    setCommand(READ);
+                                    read();
+                                }
+                            }
+                        } else {
+                            textViewConnectedToDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    buttonConnectToDevice.setText("Подключить");
+                                    textViewConnectedToDevice.setText("Процессорный модуль не отвечает. Проверьте соединение.");
+                                    progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+                                    spaceStatus.setReadyFlagToExchangeData(false);
+                                    spaceStatus.setDevice("");
+                                    getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                                    spaceStatus.setReadyFlagRecordingInitialValues(false);
+                                    bluetoothSoketThread.cancel();
+                                    Toast.makeText(getContext(), "Процессорный модуль не отвечает. Проверьте соединение.", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }
+                    countWaitConnection = 0;
+                    counterAttemptsToConection = 0;
+                } else {
+                    if (latchInit) {
+                        setCommand(READ);
+                        if (counterAttemptsToConection < 10) {
+                            if (countWaitConnection < 500000) {
+                                countWaitConnection = countWaitConnection + 1;
+                            } else {
+                                countWaitConnection = 0;
+                                counterAttemptsToConection = counterAttemptsToConection + 1;
+                                read();
+                            }
+                        } else {
+                            textViewConnectedToDevice.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    buttonConnectToDevice.setText("Подключить");
+                                    textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение.");
+                                    progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+                                    spaceStatus.setReadyFlagToExchangeData(false);
+                                    spaceStatus.setDevice("");
+                                    getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                                    spaceStatus.setReadyFlagRecordingInitialValues(false);
+                                    bluetoothSoketThread.cancel();
+                                    Toast.makeText(getContext(), "Не удается связаться с процессорным модулем. Проверьте соединение.", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                            latchInit = false;
+                            interrupt();
+                        }
+                    } if (spaceStatus.isReadyFlagToExchangeData()) {
+                        if (getCommand() == READ) {
+                            if (counterAttemptsToConection < 5) {
+                                if (countWaitConnection < 500000) {
+                                    countWaitConnection = countWaitConnection + 1;
+                                } else {
+                                    countWaitConnection = 0;
+                                    counterAttemptsToConection = counterAttemptsToConection + 1;
+                                }
+                            } else {
+                                textViewConnectedToDevice.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        buttonConnectToDevice.setText("Подключить");
+                                        textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение.");
+                                        progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
+                                        spaceStatus.setReadyFlagToExchangeData(false);
+                                        spaceStatus.setDevice("");
+                                        getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                                        spaceStatus.setReadyFlagRecordingInitialValues(false);
+                                        bluetoothSoketThread.cancel();
+                                        Toast.makeText(getContext(), "Не удается связаться с процессорным модулем. Проверьте соединение.", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                                latchInit = false;
+                                interrupt();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    private synchronized int getCommand() { return currentCommand; }
+    private synchronized void setCommand(int currentCommand) { this.currentCommand = currentCommand; }
 
     public byte[] write() {
         bytesToSend = new byte[12];

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.usb.*;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +26,16 @@ import java.util.List;
 public class FragmentUSB extends Fragment {
     private static final String ARG_SECTION_NUMBER = "USB";
 
-    private UsbThread usbThread;
+    private UsbThreadInput usbThreadInput;
+    private UsbThreadOutput usbThreadOutput;
     UsbSerialPort port;
     private PageViewModel pageViewModel;
 
     private SpaceStatus spaceStatus;
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
+
+    private SpaceAddress spaceAddress;
+    private ResultReceiverAddressSpace resultReceiverAddressSpace;
 
     private Spinner spinnerBaudRate;
     private Spinner spinnerDataBits;
@@ -64,6 +69,7 @@ public class FragmentUSB extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         resultReceiverStatusSpace = (ResultReceiverStatusSpace) context;
+        resultReceiverAddressSpace = (ResultReceiverAddressSpace) context;
     }
 
     public static FragmentUSB newInstance(int index) {
@@ -146,6 +152,7 @@ public class FragmentUSB extends Fragment {
         View root = inflater.inflate(R.layout.fragment_usb, container, false);
 
         spaceStatus = resultReceiverStatusSpace.getSpaceStatus();
+        spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
 
         spinnerBaudRate = root.findViewById(R.id.spinner_baudRate);
         spinnerDataBits = root.findViewById(R.id.spinner_dataBits);
@@ -246,6 +253,7 @@ public class FragmentUSB extends Fragment {
             List<UsbSerialDriver> availableDrivers = UsbSerialProber.getDefaultProber().findAllDrivers(manager);
             if (availableDrivers.isEmpty()) {
                 Toast.makeText(getContext(), "Подключитесь к устройству", Toast.LENGTH_LONG).show();
+                return;
             } else {
                 Toast.makeText(getContext(), "Подключение к " + availableDrivers.get(0).getDevice().getProductName() + " " + availableDrivers.get(0).getDevice().getManufacturerName(), Toast.LENGTH_LONG).show();
             }
@@ -266,8 +274,10 @@ public class FragmentUSB extends Fragment {
             try {
                 port.open(connection);
                 port.setParameters(itemSelectedBaudRate, itemSelectedDataBits, itemSelectedStopBits, itemSelectedParity);
-                usbThread = new UsbThread();
-                usbThread.start();
+                usbThreadInput = new UsbThreadInput();
+                usbThreadInput.start();
+                usbThreadOutput = new UsbThreadOutput();
+                usbThreadOutput.start();
             } catch (IOException e) {
                 Toast.makeText(getContext(), String.valueOf(e.getMessage()), Toast.LENGTH_LONG).show();
             }
@@ -292,7 +302,7 @@ public class FragmentUSB extends Fragment {
 //        UsbSerialProber prober = new UsbSerialProber(customTable);
 //        List<UsbSerialDriver> drivers = prober.findAllDrivers(mUsbManager);
 
-    public class UsbThread extends Thread {
+    public class UsbThreadOutput extends Thread {
 
         @Override
         public void run() {
@@ -300,7 +310,7 @@ public class FragmentUSB extends Fragment {
 
             while (port.isOpen()) {
                 try {
-                    usbThread.sleep(1000);
+                    usbThreadOutput.sleep(1000);
                     port.write(spaceStatus.getCommunication().write(5, 11), 200);
                 } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
@@ -308,7 +318,35 @@ public class FragmentUSB extends Fragment {
             }
         }
 
-        public UsbThread() {
+        public UsbThreadOutput() {
+
+        }
+    }
+
+    public class UsbThreadInput extends Thread {
+
+        @Override
+        public void run() {
+            super.run();
+            byte[] buffer = new byte[32];  // buffer store for the stream
+            int bytes; // bytes returned from read()
+            while (port.isOpen()) {
+                try {
+                    bytes = port.read(buffer, 8);
+                    byte[] buf = new byte[bytes];
+                    for (int i = 0; i < buf.length; i++) {
+                        buf[i] = buffer[i];
+                    }
+                    spaceAddress.setByteQueue(buf);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }
+
+        public UsbThreadInput() {
 
         }
     }
