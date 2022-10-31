@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.usb.*;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +15,15 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
-import com.hoho.android.usbserial.driver.ProbeTable;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
-import com.moxa.mxuportapi.MxException;
-import com.moxa.mxuportapi.MxUPort;
-import com.moxa.mxuportapi.MxUPortService;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 public class FragmentUSB extends Fragment {
-    private static final String ARG_SECTION_NUMBER = "ComPort";
+    private static final String ARG_SECTION_NUMBER = "USB";
 
     private UsbThread usbThread;
     UsbSerialPort port;
@@ -41,6 +33,9 @@ public class FragmentUSB extends Fragment {
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
     private Spinner spinnerBaudRate;
+    private Spinner spinnerDataBits;
+    private Spinner spinnerStopBits;
+    private Spinner spinnerParity;
     private Button buttonConnectToDevice;
     private TextView textViewConnectedToDevice;
     private ProgressBar progressBarConnectedToDevice;
@@ -48,6 +43,18 @@ public class FragmentUSB extends Fragment {
     private ArrayAdapter<Integer> adapterBaudRate;
     private Integer[] baudRate = {9600, 19200, 57600, 115200};
     int itemSelectedBaudRate;
+
+    private ArrayAdapter<Integer> adapterDataBits;
+    private Integer[] dataBits = {5, 6, 7, 8};
+    int itemSelectedDataBits;
+
+    private ArrayAdapter<Integer> adapterStopBits;
+    private Integer[] stopBits = {1, 2};
+    int itemSelectedStopBits;
+
+    private ArrayAdapter<String> adapterParity;
+    private String[] parity = {"NONE", "ODD", "EVEN", "MARK", "SPACE"};
+    int itemSelectedParity;
 
     PendingIntent permissionIntent;
 
@@ -136,11 +143,14 @@ public class FragmentUSB extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_comport, container, false);
+        View root = inflater.inflate(R.layout.fragment_usb, container, false);
 
         spaceStatus = resultReceiverStatusSpace.getSpaceStatus();
 
-        spinnerBaudRate = root.findViewById(R.id.spinner_connected_devices_cp);
+        spinnerBaudRate = root.findViewById(R.id.spinner_baudRate);
+        spinnerDataBits = root.findViewById(R.id.spinner_dataBits);
+        spinnerStopBits = root.findViewById(R.id.spinner_stopBits);
+        spinnerParity = root.findViewById(R.id.spinner_parity);
         buttonConnectToDevice = root.findViewById(R.id.button_connect_to_device_cp);
         textViewConnectedToDevice = root.findViewById(R.id.textView_path_to_load_file_for_sp6_cp);
         progressBarConnectedToDevice = root.findViewById(R.id.progressBar_loading_to_flesh_cp);
@@ -159,7 +169,7 @@ public class FragmentUSB extends Fragment {
         for (int i = 0; i < baudRate.length; i++) adapterBaudRate.add(baudRate[i]);
         spinnerBaudRate.setAdapter(adapterBaudRate);
 
-        AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
+        AdapterView.OnItemSelectedListener itemSelectedListenerBaudRate = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 itemSelectedBaudRate = (int) spinnerBaudRate.getSelectedItem();
@@ -169,14 +179,65 @@ public class FragmentUSB extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         };
-        spinnerBaudRate.setOnItemSelectedListener(itemSelectedListener);
+        spinnerBaudRate.setOnItemSelectedListener(itemSelectedListenerBaudRate);
+
+        adapterDataBits = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item);
+        adapterDataBits.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        for (int i = 0; i < dataBits.length; i++) adapterDataBits.add(dataBits[i]);
+        spinnerDataBits.setAdapter(adapterDataBits);
+
+        AdapterView.OnItemSelectedListener itemSelectedListenerDataBits = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                itemSelectedDataBits = (int) spinnerDataBits.getSelectedItem();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinnerDataBits.setOnItemSelectedListener(itemSelectedListenerDataBits);
+
+        adapterStopBits = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item);
+        adapterStopBits.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        for (int i = 0; i < stopBits.length; i++) adapterStopBits.add(stopBits[i]);
+        spinnerStopBits.setAdapter(adapterStopBits);
+
+        AdapterView.OnItemSelectedListener itemSelectedListenerStopBits = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                itemSelectedStopBits = (int) spinnerStopBits.getSelectedItem();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinnerStopBits.setOnItemSelectedListener(itemSelectedListenerStopBits);
+
+        adapterParity= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item);
+        adapterParity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        for (int i = 0; i < parity.length; i++) adapterParity.add(parity[i]);
+        spinnerParity.setAdapter(adapterParity);
+
+        AdapterView.OnItemSelectedListener itemSelectedListenerParity = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                itemSelectedParity = spinnerParity.getSelectedItemPosition();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinnerParity.setOnItemSelectedListener(itemSelectedListenerParity);
 
         return root;
     }
 
     private void setConnecting() {
         if (buttonConnectToDevice.getText().equals("Подключить")) {
-            progressBarConnectedToDevice.setVisibility(View.VISIBLE);
+//            progressBarConnectedToDevice.setVisibility(View.VISIBLE);
             buttonConnectToDevice.setText("Отключить");
             textViewConnectedToDevice.setVisibility(View.VISIBLE);
 
@@ -204,7 +265,7 @@ public class FragmentUSB extends Fragment {
 
             try {
                 port.open(connection);
-                port.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+                port.setParameters(itemSelectedBaudRate, itemSelectedDataBits, itemSelectedStopBits, itemSelectedParity);
                 usbThread = new UsbThread();
                 usbThread.start();
             } catch (IOException e) {
