@@ -28,7 +28,8 @@ public class FragmentUSB extends Fragment {
 
     private UsbThreadInput usbThreadInput;
     private UsbThreadOutput usbThreadOutput;
-    UsbSerialPort port;
+    private UsbSerialPort port = null;
+
     private PageViewModel pageViewModel;
 
     private SpaceStatus spaceStatus;
@@ -244,7 +245,13 @@ public class FragmentUSB extends Fragment {
 
     private void setConnecting() {
         if (buttonConnectToDevice.getText().equals("Подключить")) {
-//            progressBarConnectedToDevice.setVisibility(View.VISIBLE);
+            if (port != null) {
+                try {
+                    port.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             buttonConnectToDevice.setText("Отключить");
             textViewConnectedToDevice.setVisibility(View.VISIBLE);
 
@@ -268,6 +275,7 @@ public class FragmentUSB extends Fragment {
             }
 
             port = driver.getPorts().get(0); // Most devices have just one port (port 0)
+            spaceStatus.getCommunication().prepare();
 
             textViewConnectedToDevice.setText("Подключено к устройству " + availableDrivers.get(0).getDevice().getProductName() + " " + availableDrivers.get(0).getDevice().getManufacturerName());
 
@@ -297,6 +305,59 @@ public class FragmentUSB extends Fragment {
         }
     }
 
+    public void setStatus(int status) {
+        switch (status) {
+            case 0:
+                textViewConnectedToDevice.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        textViewConnectedToDevice.setText("Устройство не подключено");
+                    }
+                });
+                break;
+            case 1:
+                textViewConnectedToDevice.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        textViewConnectedToDevice.setText("Подключено к устройству");
+                    }
+                });
+                break;
+            case 2:
+                textViewConnectedToDevice.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        buttonConnectToDevice.setText("Подключить");
+                        textViewConnectedToDevice.setText("Процессорный модуль не отвечает. Проверьте соединение.");
+                        getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                    }
+                });
+                break;
+            case 3:
+                textViewConnectedToDevice.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        buttonConnectToDevice.setText("Подключить");
+                        textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение.");
+                        getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                    }
+                });
+                break;
+            case 4:
+                textViewConnectedToDevice.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        buttonConnectToDevice.setText("Подключить");
+                        textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение.");
+                        getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                    }
+                });
+                break;
+            default:
+                break;
+        }
+    }
+
 //        customTable = new ProbeTable();
 //        customTable.addProduct(0x110A, 0x1151, Driver.class);
 //        UsbSerialProber prober = new UsbSerialProber(customTable);
@@ -308,11 +369,19 @@ public class FragmentUSB extends Fragment {
         public void run() {
             super.run();
 
+            byte[] bytes;
+            int prevStatus = 0;
+
             while (port.isOpen()) {
                 try {
-                    usbThreadOutput.sleep(1000);
-                    port.write(spaceStatus.getCommunication().write(5, 11), 200);
-                } catch (InterruptedException | IOException e) {
+                    int status = spaceStatus.getStatusCommunication();
+                    if (prevStatus != status) {
+                        prevStatus = status;
+                        setStatus(status);
+                    }
+                    bytes = spaceStatus.getCommunication().communication();
+                    if (bytes != null) port.write(bytes, 200);
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -322,6 +391,7 @@ public class FragmentUSB extends Fragment {
 
         }
     }
+
 
     public class UsbThreadInput extends Thread {
 

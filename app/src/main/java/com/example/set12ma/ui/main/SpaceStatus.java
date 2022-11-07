@@ -9,6 +9,16 @@ import java.util.List;
 
 public class SpaceStatus implements Parcelable {
 
+    private int statusCommunication = 0;
+
+    public int getStatusCommunication() {
+        return statusCommunication;
+    }
+
+    public void setStatusCommunication(int statusCommunication) {
+        this.statusCommunication = statusCommunication;
+    }
+
     private Communication communication;
 
     public Communication getCommunication() {

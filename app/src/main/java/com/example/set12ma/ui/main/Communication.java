@@ -86,7 +86,7 @@ public class Communication {
         statusAnswer = false; // true - ответ получен
     }
 
-    public void communication() {
+    public byte[] communication() {
             if (!spaceAddress.isEmptyByteQueue()) {
                 byte[] buffer = spaceAddress.getByteQueue();
                 switch (getCommand()) {
@@ -477,18 +477,12 @@ public class Communication {
 
                         break;
                 }
+                return null;
             } else {
                 if (statusAnswer) {
                     if (latchInit) {
                         spaceStatus.setReadyFlagToExchangeData(true);
-                        textViewConnectedToDevice.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                textViewConnectedToDevice.setText("Подключено к " + stringConnectedToDevice);
-                                progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
-                                Toast.makeText(getContext(), "Устройство подключено к процессорному модулю", Toast.LENGTH_LONG).show();
-                            }
-                        });
+                        spaceStatus.setStatusCommunication(1);
                     }
                     latchInit = false;
                     statusAnswer = false;
@@ -497,8 +491,8 @@ public class Communication {
                         if (spaceStatus.isStatusProcessOfLoadingSoftware()) {
                             if (!latchLoad) {
                                 setCommand(LOAD);
-                                load();
                                 latchLoad = true;
+                                return load();
                             } else {
                                 if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
                                     spaceStatus.setReadyFlagToLoadSoftware(false);
@@ -511,16 +505,15 @@ public class Communication {
                         } else {
                             spaceStatus.setStatusProcessOfLoadingSoftware(true);
                             setCommand(INIT_LOAD);
-                            initLoad();
+                            return initLoad();
                         }
                     } else if (spaceStatus.isReadyFlagToUpdateSoftware()) {
                         spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
                         if (!latchFinish) {
                             spaceStatus.setStatusProcessOfUpdatingSoftware(true);
                             setCommand(EXTEND);
-                            startToLoad();
                             latchFinish = true;
-                            Log.i(LOG_TAG, "зАЙДЕМ сюда!");
+                            return startToLoad();
                         } else {
                             if (spaceStatus.isReadyFlagToFinishOfUpdatingSoftware()) {
                                 latchFinish = false;
@@ -528,7 +521,6 @@ public class Communication {
                                 spaceStatus.setStatusProcessOfUpdatingSoftware(false);
                                 spaceStatus.setReadyFlagToLoadSoftware(false);
                                 spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
-                                Log.i(LOG_TAG, "всё в ноль!!!!");
                                 statusAnswer = true;
                             }
                         }
@@ -538,9 +530,8 @@ public class Communication {
                                 spaceFileLogs.setSpaceFileLogsByte();
                             }
                             setCommand(UPLOAD);
-                            downloadLogs(ADDRESS_UPLOAD + BYTE_UPLOAD*countReceivedMessage, BYTE_UPLOAD);
                             latchDownloadLog = true;
-                            Log.i(LOG_TAG, "We  are here!");
+                            return downloadLogs(ADDRESS_UPLOAD + BYTE_UPLOAD*countReceivedMessage, BYTE_UPLOAD);
                         } else {
                             if (spaceStatus.isReadyFlagToFinishOfDownloadingLogs()) {
                                 // ЦИКЛ ДЛЯ СЧИТЫВАНИЯ ЛОГОВ
@@ -572,7 +563,7 @@ public class Communication {
 
                             if (spaceStatus.isReadyFlagRecordingInitialValues()) {
                                 setCommand(WRITE);
-                                write();
+                                return write();
                             } else {
                                 if (!spaceAddress.isEmptyQueue()) {
                                     if (!latchQueue) {
@@ -590,31 +581,21 @@ public class Communication {
 //                                        currentByte = elementQueue.getRegister();
                                     Log.i(LOG_TAG, "SUPRIM");
                                     setCommand(WRITE);
-                                    write(elementQueue.getRegister(), elementQueue.getData());
+                                    return write(elementQueue.getRegister(), elementQueue.getData());
                                 } else {
                                     if (latchQueue) {
                                         latchQueue = false;
                                         currentByte = previousByte;
                                     }
                                     setCommand(READ);
-                                    read();
+                                    return read();
                                 }
                             }
                         } else {
-                            textViewConnectedToDevice.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    buttonConnectToDevice.setText("Подключить");
-                                    textViewConnectedToDevice.setText("Процессорный модуль не отвечает. Проверьте соединение.");
-                                    progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
-                                    spaceStatus.setReadyFlagToExchangeData(false);
-                                    spaceStatus.setDevice("");
-                                    getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
-                                    spaceStatus.setReadyFlagRecordingInitialValues(false);
-                                    bluetoothSoketThread.cancel();
-                                    Toast.makeText(getContext(), "Процессорный модуль не отвечает. Проверьте соединение.", Toast.LENGTH_LONG).show();
-                                }
-                            });
+                            spaceStatus.setReadyFlagToExchangeData(false);
+                            spaceStatus.setDevice("");
+                            spaceStatus.setReadyFlagRecordingInitialValues(false);
+                            spaceStatus.setStatusCommunication(2);
                         }
                     }
                     countWaitConnection = 0;
@@ -628,25 +609,14 @@ public class Communication {
                             } else {
                                 countWaitConnection = 0;
                                 counterAttemptsToConection = counterAttemptsToConection + 1;
-                                read();
+                                return read();
                             }
                         } else {
-                            textViewConnectedToDevice.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    buttonConnectToDevice.setText("Подключить");
-                                    textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение.");
-                                    progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
-                                    spaceStatus.setReadyFlagToExchangeData(false);
-                                    spaceStatus.setDevice("");
-                                    getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
-                                    spaceStatus.setReadyFlagRecordingInitialValues(false);
-                                    bluetoothSoketThread.cancel();
-                                    Toast.makeText(getContext(), "Не удается связаться с процессорным модулем. Проверьте соединение.", Toast.LENGTH_LONG).show();
-                                }
-                            });
+                            spaceStatus.setReadyFlagToExchangeData(false);
+                            spaceStatus.setDevice("");;
+                            spaceStatus.setReadyFlagRecordingInitialValues(false);
+                            spaceStatus.setStatusCommunication(3);
                             latchInit = false;
-                            interrupt();
                         }
                     } if (spaceStatus.isReadyFlagToExchangeData()) {
                         if (getCommand() == READ) {
@@ -658,26 +628,16 @@ public class Communication {
                                     counterAttemptsToConection = counterAttemptsToConection + 1;
                                 }
                             } else {
-                                textViewConnectedToDevice.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        buttonConnectToDevice.setText("Подключить");
-                                        textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение.");
-                                        progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
-                                        spaceStatus.setReadyFlagToExchangeData(false);
-                                        spaceStatus.setDevice("");
-                                        getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
-                                        spaceStatus.setReadyFlagRecordingInitialValues(false);
-                                        bluetoothSoketThread.cancel();
-                                        Toast.makeText(getContext(), "Не удается связаться с процессорным модулем. Проверьте соединение.", Toast.LENGTH_LONG).show();
-                                    }
-                                });
+                                spaceStatus.setReadyFlagToExchangeData(false);
+                                spaceStatus.setDevice("");
+                                spaceStatus.setReadyFlagRecordingInitialValues(false);
                                 latchInit = false;
-                                interrupt();
+                                spaceStatus.setStatusCommunication(4);
                             }
                         }
                     }
                 }
+                return null;
             }
         }
 
