@@ -51,7 +51,7 @@
                     <EditText
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
+                            android:inputType="textPersonName"
                             android:ems="10"
                             android:id="@+id/editText_adc_0_ch_0_register"/>
                 </LinearLayout>
@@ -67,7 +67,7 @@
                     <EditText
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
+                            android:inputType="textPersonName"
                             android:ems="10"
                             android:id="@+id/editText_adc_0_ch_0_plus" android:layout_weight="0"/>
                 </LinearLayout>
@@ -83,7 +83,7 @@
                     <EditText
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
+                            android:inputType="textPersonName"
                             android:ems="10"
                             android:id="@+id/editText_adc_0_ch_0_minus" android:layout_weight="0"/>
                 </LinearLayout>
