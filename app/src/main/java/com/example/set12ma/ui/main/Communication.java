@@ -619,22 +619,22 @@ public class Communication {
                             latchInit = false;
                         }
                     } if (spaceStatus.isReadyFlagToExchangeData()) {
-                        if (getCommand() == READ) {
-                            if (counterAttemptsToConection < 5) {
-                                if (countWaitConnection < 500000) {
-                                    countWaitConnection = countWaitConnection + 1;
-                                } else {
-                                    countWaitConnection = 0;
-                                    counterAttemptsToConection = counterAttemptsToConection + 1;
-                                }
-                            } else {
-                                spaceStatus.setReadyFlagToExchangeData(false);
-                                spaceStatus.setDevice("");
-                                spaceStatus.setReadyFlagRecordingInitialValues(false);
-                                latchInit = false;
-                                spaceStatus.setStatusCommunication(4);
-                            }
-                        }
+//                        if (getCommand() == READ) {
+//                            if (counterAttemptsToConection < 10) {
+//                                if (countWaitConnection < 500000) {
+//                                    countWaitConnection = countWaitConnection + 1;
+//                                } else {
+//                                    countWaitConnection = 0;
+//                                    counterAttemptsToConection = counterAttemptsToConection + 1;
+//                                }
+//                            } else {
+//                                spaceStatus.setReadyFlagToExchangeData(false);
+//                                spaceStatus.setDevice("");
+//                                spaceStatus.setReadyFlagRecordingInitialValues(false);
+//                                latchInit = false;
+//                                spaceStatus.setStatusCommunication(4);
+//                            }
+//                        }
                     }
                 }
                 return null;

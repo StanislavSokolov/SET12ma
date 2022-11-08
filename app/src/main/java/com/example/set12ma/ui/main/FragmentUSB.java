@@ -312,6 +312,7 @@ public class FragmentUSB extends Fragment {
                     @Override
                     public void run() {
                         textViewConnectedToDevice.setText("Устройство не подключено");
+                        Toast.makeText(getContext(), "0", Toast.LENGTH_LONG).show();
                     }
                 });
                 break;
@@ -320,6 +321,7 @@ public class FragmentUSB extends Fragment {
                     @Override
                     public void run() {
                         textViewConnectedToDevice.setText("Подключено к устройству");
+                        Toast.makeText(getContext(), "1", Toast.LENGTH_LONG).show();
                     }
                 });
                 break;
@@ -348,7 +350,7 @@ public class FragmentUSB extends Fragment {
                     @Override
                     public void run() {
                         buttonConnectToDevice.setText("Подключить");
-                        textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение.");
+                        textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение. 2");
                         getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
                     }
                 });
@@ -380,7 +382,7 @@ public class FragmentUSB extends Fragment {
                         setStatus(status);
                     }
                     bytes = spaceStatus.getCommunication().communication();
-                    if (bytes != null) port.write(bytes, 200);
+                    if (bytes != null) port.write(bytes, 0);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -402,7 +404,7 @@ public class FragmentUSB extends Fragment {
             int bytes; // bytes returned from read()
             while (port.isOpen()) {
                 try {
-                    bytes = port.read(buffer, 8);
+                    bytes = port.read(buffer, 0);
                     byte[] buf = new byte[bytes];
                     for (int i = 0; i < buf.length; i++) {
                         buf[i] = buffer[i];
