@@ -376,8 +376,9 @@ public class FragmentUSB extends Fragment {
                     @Override
                     public void run() {
                         buttonConnectToDevice.setText("Подключить");
-                        textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение. 2");
+                        textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение.");
                         getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                        Toast.makeText(getContext(), "Не удается связаться с процессорным модулем. Проверьте соединение.", Toast.LENGTH_LONG).show();
                     }
                 });
                 break;
