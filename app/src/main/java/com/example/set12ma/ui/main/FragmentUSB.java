@@ -245,6 +245,10 @@ public class FragmentUSB extends Fragment {
 
     private void setConnecting() {
         if (buttonConnectToDevice.getText().equals("Подключить")) {
+            if (spaceStatus.isReadyFlagToExchangeData()) {
+                Toast.makeText(getContext(), "Устройство уже подключено", Toast.LENGTH_LONG).show();
+                return;
+            }
             if (port != null) {
                 try {
                     port.close();

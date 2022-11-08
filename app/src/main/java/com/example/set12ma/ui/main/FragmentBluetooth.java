@@ -248,18 +248,23 @@ public class FragmentBluetooth extends Fragment {
     private void setConnecting() {
         if (!adapterConnectedDevices.getItem(itemSelectedFromConnectedDevices + 1).equals("Выберите устройство")) {
 
-            spaceStatus.setReadyFlagToExchangeData(false);
-            spaceStatus.setReadyFlagToLoadSoftware(false);
-            spaceStatus.setReadyFlagToUpdateSoftware(false);
-            spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
-            spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(false);
-            spaceStatus.setStatusProcessOfLoadingSoftware(false);
-            spaceStatus.setStatusProcessOfUpdatingSoftware(false);
-
-            setCommand(INIT_LOAD);
-            statusError = true;
-
             if (buttonConnectToDevice.getText().equals("Подключить")) {
+                if (spaceStatus.isReadyFlagToExchangeData()) {
+                    Toast.makeText(getContext(), "Устройство уже подключено", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                spaceStatus.setReadyFlagToExchangeData(false);
+                spaceStatus.setReadyFlagToLoadSoftware(false);
+                spaceStatus.setReadyFlagToUpdateSoftware(false);
+                spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+                spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(false);
+                spaceStatus.setStatusProcessOfLoadingSoftware(false);
+                spaceStatus.setStatusProcessOfUpdatingSoftware(false);
+
+                setCommand(INIT_LOAD);
+                statusError = true;
+
                 stringConnectedToDevice = arrayListConnectedDevices.get(itemSelectedFromConnectedDevices).getName();
                 bluetoothDevice = arrayListConnectedDevices.get(itemSelectedFromConnectedDevices);
                 progressBarConnectedToDevice.setVisibility(View.VISIBLE);
@@ -270,6 +275,17 @@ public class FragmentBluetooth extends Fragment {
                 bluetoothSoketThread = new BluetoothSoketThread();
                 bluetoothSoketThread.start();
             } else {
+                spaceStatus.setReadyFlagToExchangeData(false);
+                spaceStatus.setReadyFlagToLoadSoftware(false);
+                spaceStatus.setReadyFlagToUpdateSoftware(false);
+                spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+                spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(false);
+                spaceStatus.setStatusProcessOfLoadingSoftware(false);
+                spaceStatus.setStatusProcessOfUpdatingSoftware(false);
+
+                setCommand(INIT_LOAD);
+                statusError = true;
+
                 buttonConnectToDevice.setText("Подключить");
                 textViewConnectedToDevice.setText("Отключено от " + stringConnectedToDevice);
                 progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
