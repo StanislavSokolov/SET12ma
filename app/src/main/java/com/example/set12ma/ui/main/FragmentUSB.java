@@ -244,11 +244,24 @@ public class FragmentUSB extends Fragment {
     }
 
     private void setConnecting() {
+
+
+
         if (buttonConnectToDevice.getText().equals("Подключить")) {
             if (spaceStatus.isReadyFlagToExchangeData()) {
                 Toast.makeText(getContext(), "Устройство уже подключено", Toast.LENGTH_LONG).show();
                 return;
             }
+
+            spaceStatus.setReadyFlagToExchangeData(false);
+            spaceStatus.setReadyFlagToLoadSoftware(false);
+            spaceStatus.setReadyFlagToUpdateSoftware(false);
+            spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+            spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(false);
+            spaceStatus.setStatusProcessOfLoadingSoftware(false);
+            spaceStatus.setStatusProcessOfUpdatingSoftware(false);
+
+
             if (port != null) {
                 try {
                     port.close();
@@ -281,6 +294,8 @@ public class FragmentUSB extends Fragment {
             port = driver.getPorts().get(0); // Most devices have just one port (port 0)
             spaceStatus.getCommunication().prepare();
 
+            spaceStatus.setReadyFlagRecordingInitialValues(true);
+
             textViewConnectedToDevice.setText("Подключено к устройству " + availableDrivers.get(0).getDevice().getProductName() + " " + availableDrivers.get(0).getDevice().getManufacturerName());
 
             try {
@@ -299,6 +314,15 @@ public class FragmentUSB extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            spaceStatus.setReadyFlagToExchangeData(false);
+            spaceStatus.setReadyFlagToLoadSoftware(false);
+            spaceStatus.setReadyFlagToUpdateSoftware(false);
+            spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
+            spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(false);
+            spaceStatus.setStatusProcessOfLoadingSoftware(false);
+            spaceStatus.setStatusProcessOfUpdatingSoftware(false);
+
             buttonConnectToDevice.setText("Подключить");
             textViewConnectedToDevice.setText("Отключено от устройства");
             progressBarConnectedToDevice.setVisibility(View.INVISIBLE);
@@ -316,7 +340,6 @@ public class FragmentUSB extends Fragment {
                     @Override
                     public void run() {
                         textViewConnectedToDevice.setText("Устройство не подключено");
-                        Toast.makeText(getContext(), "0", Toast.LENGTH_LONG).show();
                     }
                 });
                 break;
@@ -325,7 +348,6 @@ public class FragmentUSB extends Fragment {
                     @Override
                     public void run() {
                         textViewConnectedToDevice.setText("Подключено к устройству");
-                        Toast.makeText(getContext(), "1", Toast.LENGTH_LONG).show();
                     }
                 });
                 break;

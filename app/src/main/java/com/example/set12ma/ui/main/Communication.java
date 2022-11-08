@@ -69,6 +69,9 @@ public class Communication {
     boolean statusAnswer = false; // true - ответ получен
 
     public void prepare() {
+        setCommand(READ);
+        statusError = true;
+
         answerTest = "";
         countWaitConnection = 0;
 
@@ -82,6 +85,8 @@ public class Communication {
 
         counterAttemptsToConection = 0;
         counterUnsuccessfulSending = 0;
+
+        currentByte = 0;
 
         statusAnswer = false; // true - ответ получен
     }
