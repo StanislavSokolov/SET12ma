@@ -2,6 +2,8 @@ package com.example.set12ma;
 
 import android.annotation.SuppressLint;
 import android.content.*;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -25,6 +27,7 @@ import com.moxa.mxuportapi.MxUPort.*;
 import com.moxa.mxuportapi.MxUPortService;
 import com.moxa.mxuportapi.Version;
 
+import java.util.Iterator;
 import java.util.List;
 
 import static com.moxa.mxuportapi.MxUPortService.getPortInfoList;
@@ -67,12 +70,16 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
+    private UsbManager usbManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         Log.i("AndroidExample", "onCreate");
         setContentView(R.layout.activity_main);
+
+        usbManager = (UsbManager) this.getSystemService(Context.USB_SERVICE);
 
         sectionsPagerAdapterDataInput = new MainActivitySectionsPagerAdapterDataInput(this, getSupportFragmentManager());
         sectionsPagerAdapterDataOutput = new MainActivitySectionsPagerAdapterDataOutput(this, getSupportFragmentManager());
@@ -147,10 +154,9 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
 
         dataRecovery();
-
-//        usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
-//
-//        spaceStatus.setMgr(usbManager);
+        usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+        spaceStatus.setMgr(usbManager);
+        spaceStatus.setCommunication(new Communication(spaceStatus, spaceSetting, spaceAddress, spaceMemory, spaceFileLogs));
     }
 
     @Override

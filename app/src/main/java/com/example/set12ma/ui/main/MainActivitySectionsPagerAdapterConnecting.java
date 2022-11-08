@@ -31,7 +31,7 @@ public class MainActivitySectionsPagerAdapterConnecting extends FragmentPagerAda
         if (position == 0) {
             return FragmentBluetooth.newInstance(position + 1);
         } else {
-            return FragmentComPort.newInstance(position + 1);
+            return FragmentUSB.newInstance(position + 1);
         }
     }
 

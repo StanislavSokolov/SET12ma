@@ -5,7 +5,7 @@
                                                    android:id="@+id/constraintLayout"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
-                                                   tools:context=".ui.main.FragmentComPort">
+                                                   tools:context=".ui.main.FragmentUSB">
 
     <ScrollView
             android:layout_width="match_parent"
@@ -26,14 +26,42 @@
                     android:layout_height="wrap_content" android:id="@+id/textView_SP6_cp" android:textSize="24sp"
                     android:gravity="center" android:padding="20dp"/>
             <TextView
-                    android:text="@string/main_text_connected_devices_cp"
+                    android:text="@string/main_text_baudRate"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/textView_tip_find_file_cp"
+                    android:layout_height="wrap_content" android:id="@+id/textView_tip_baudRate"
                     android:textSize="14sp" android:gravity="center" android:padding="5dp"/>
             <Spinner
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/spinner_connected_devices_cp"
+                    android:layout_height="wrap_content" android:id="@+id/spinner_baudRate"
                     android:padding="10dp"/>
+            <TextView
+                    android:text="@string/main_text_dataBits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView_tip_dataBits"
+                    android:textSize="14sp" android:gravity="center" android:padding="5dp"/>
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/spinner_dataBits"
+                    android:padding="10dp"/>
+            <TextView
+                    android:text="@string/main_text_stopBits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView_tip_stopBits"
+                    android:textSize="14sp" android:gravity="center" android:padding="5dp"/>
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/spinner_stopBits"
+                    android:padding="10dp"/>
+            <TextView
+                    android:text="@string/main_text_parity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView_tip_parity"
+                    android:textSize="14sp" android:gravity="center" android:padding="5dp"/>
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/spinner_parity"
+                    android:padding="10dp"/>
+
             <Button
                     android:text="@string/main_button_connect_to_device_cp"
                     android:layout_width="match_parent"

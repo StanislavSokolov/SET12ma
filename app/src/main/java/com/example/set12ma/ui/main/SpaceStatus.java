@@ -3,8 +3,31 @@ package com.example.set12ma.ui.main;
 import android.hardware.usb.UsbManager;
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.moxa.mxuportapi.MxUPort;
+
+import java.util.List;
 
 public class SpaceStatus implements Parcelable {
+
+    private int statusCommunication = 0;
+
+    public int getStatusCommunication() {
+        return statusCommunication;
+    }
+
+    public void setStatusCommunication(int statusCommunication) {
+        this.statusCommunication = statusCommunication;
+    }
+
+    private Communication communication;
+
+    public Communication getCommunication() {
+        return communication;
+    }
+
+    public void setCommunication(Communication communication) {
+        this.communication = communication;
+    }
 
     private UsbManager mgr;
 

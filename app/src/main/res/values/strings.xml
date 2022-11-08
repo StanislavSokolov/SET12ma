@@ -7,7 +7,7 @@
     <string name="tab_SET12MA_text_3">Ключи</string>
 
     <string name="tab_SET12MA_text_4">Bluetooth</string>
-    <string name="tab_SET12MA_text_5">COM-port</string>
+    <string name="tab_SET12MA_text_5">USB</string>
 
     <string name="tab_SET12MA_text_6">Загрузка ПО</string>
 
@@ -88,8 +88,11 @@
     <string name="main_text_available_devices">Доступные устройства</string>
     <string name="main_button_find_new_devices">Поиск новых устройств</string>
 
-    <string name="main_connection_comport">ComPort соединение</string>
-    <string name="main_text_connected_devices_cp">Выберите скорость передачи данных</string>
+    <string name="main_connection_comport">USB соединение</string>
+    <string name="main_text_baudRate">BaudRate</string>
+    <string name="main_text_dataBits">DataBits</string>
+    <string name="main_text_stopBits">StopBits</string>
+    <string name="main_text_parity">Parity</string>
     <string name="main_button_connect_to_device_cp">Подключить</string>
     <string name="main_text_connected_to_device_cp">Не удалось выполнить подключение</string>
 
