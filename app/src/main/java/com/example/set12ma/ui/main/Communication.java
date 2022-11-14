@@ -5,6 +5,9 @@ import android.view.View;
 import android.widget.Toast;
 import com.example.set12ma.R;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Communication {

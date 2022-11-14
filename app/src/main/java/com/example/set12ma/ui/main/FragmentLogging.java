@@ -22,8 +22,13 @@ public class FragmentLogging extends Fragment {
     private SpaceStatus spaceStatus;
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
+    private SpaceFileLogs spaceFileLogs;
+    private ResultReceiverFileLogsSpace resultReceiverFileLogsSpace;
+
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
     private long timer = 500;
+
+    private LogsToFile logsToFile;
 
     private Button buttonDownload;
     private Button buttonSend;
@@ -34,6 +39,7 @@ public class FragmentLogging extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         resultReceiverStatusSpace = (ResultReceiverStatusSpace) context;
+        resultReceiverFileLogsSpace = (ResultReceiverFileLogsSpace) context;
     }
 
     private PageViewModel pageViewModel;
@@ -67,6 +73,8 @@ public class FragmentLogging extends Fragment {
         View root = inflater.inflate(R.layout.fragment_logging, container, false);
         buttonDownload = root.findViewById(R.id.button_download);
         buttonSend = root.findViewById(R.id.button_send);
+
+        spaceFileLogs = resultReceiverFileLogsSpace.getSpaceFileLogs();
 
         buttonDownload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +150,8 @@ public class FragmentLogging extends Fragment {
 
     public class UpDateGraphicalDisplay extends Thread {
 
+        boolean state = false;
+        boolean prevState = false;
         boolean latch = false;
 
         @Override
@@ -186,11 +196,62 @@ public class FragmentLogging extends Fragment {
                         latch = false;
                     }
                 }
+                state = spaceStatus.isReadyFlagToDownloadLog();
+                if (state == false & prevState == true) {
+                    logsToFile = new LogsToFile();
+                    logsToFile.start();
+                }
+                prevState = state;
+                if (spaceStatus.isReadyFinishFlagToDownloadLog()) {
+                    spaceStatus.setReadyFinishFlagToDownloadLog(false);
+                    progressBar.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), "Файл logs.txt находится в дириктории приложения", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
             }
 
         }
 
         public UpDateGraphicalDisplay() {
+        }
+    }
+
+    public class LogsToFile extends Thread {
+
+        @Override
+        public void run() {
+            super.run();
+            File file = new File(getContext().getFilesDir() + "/logs.txt");
+            if (file.exists()) file.delete();
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            FileOutputStream fileOutputStream = null;
+            try {
+                fileOutputStream = new FileOutputStream(file, true);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            for (int i = 0; i < spaceFileLogs.getSpaceFileLogsArrayListSize(); i++) {
+                byte[] bytes;
+                bytes = spaceFileLogs.getSpaceFileLogsByte(i);
+                try {
+                    fileOutputStream.write(bytes);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                fileOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            spaceStatus.setReadyFinishFlagToDownloadLog(true);
         }
     }
 }

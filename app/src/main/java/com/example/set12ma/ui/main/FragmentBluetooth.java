@@ -38,33 +38,6 @@ public class FragmentBluetooth extends Fragment {
     private BluetoothConnectedInputThread bluetoothConnectedInputThread;
     private BluetoothConnectedOutputThread bluetoothConnectedOutputThread;
 
-    private LogsToFile logsToFile;
-
-    private final int ADDRESS_DEVICE = 10;
-    private final int READ = 56;
-    private final int WRITE = 57;
-    private final int INIT_LOAD = 58;
-    private final int LOAD = 51;
-    private final int EXTEND = 60;
-    private final int UPLOAD = 52;
-    private final int BYTE_UPLOAD = 2048;
-    private final int ADDRESS_UPLOAD = 655360; // 000A0000
-    private final int COUNT = 170;
-
-
-    private volatile int currentCommand = INIT_LOAD;
-
-    private boolean statusError = true;
-
-
-    // for BluetoothConnectedThread
-    byte[] bytesToSend = null;
-    byte[] bytesToCreateCRC = null;
-    private int previousByte = 0;
-    private int currentByte = 0;
-    private int nextByte = 0;
-    private int maxValueUnsuccessfulSending = 10;
-
     // for
     private static final String ARG_SECTION_NUMBER = "BT";
     private static final String LOG_TAG = "AndroidExample";
@@ -72,17 +45,8 @@ public class FragmentBluetooth extends Fragment {
     private SpaceAddress spaceAddress;
     private ResultReceiverAddressSpace resultReceiverAddressSpace;
 
-    private SpaceMemory spaceMemory;
-    private ResultReceiverMemorySpace resultReceiverMemorySpace;
-
     private SpaceStatus spaceStatus;
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
-
-    private SpaceFileLogs spaceFileLogs;
-    private ResultReceiverFileLogsSpace resultReceiverFileLogsSpace;
-
-    private SpaceSetting spaceSetting;
-    private ResultReceiverSettingSpace resultReceiverSettingSpace;
 
     private ArrayList<BluetoothDevice> arrayListAvailableDevices;                               // список устройств, доступных к сопряжению
     private ArrayList<BluetoothDevice> arrayListConnectedDevices;                               // список устройств, доступных к сопряжению
@@ -107,10 +71,7 @@ public class FragmentBluetooth extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         resultReceiverAddressSpace = (ResultReceiverAddressSpace) context;
-        resultReceiverMemorySpace = (ResultReceiverMemorySpace) context;
         resultReceiverStatusSpace = (ResultReceiverStatusSpace) context;
-        resultReceiverFileLogsSpace = (ResultReceiverFileLogsSpace) context;
-        resultReceiverSettingSpace = (ResultReceiverSettingSpace) context;
     }
 
 
@@ -206,10 +167,7 @@ public class FragmentBluetooth extends Fragment {
         bluetooth = BluetoothAdapter.getDefaultAdapter();
 
         spaceAddress = resultReceiverAddressSpace.getSpaceAddress();
-        spaceMemory = resultReceiverMemorySpace.getSpaceMemory();
         spaceStatus = resultReceiverStatusSpace.getSpaceStatus();
-        spaceFileLogs = resultReceiverFileLogsSpace.getSpaceFileLogs();
-        spaceSetting = resultReceiverSettingSpace.getSpaceSetting();
 
         textViewConnectedDevices = root.findViewById(R.id.textView_tip_find_file);
         spinnerConnectedDevices = root.findViewById(R.id.spinner_connected_devices);
@@ -270,7 +228,6 @@ public class FragmentBluetooth extends Fragment {
                 buttonConnectToDevice.setText("Отключить");
                 textViewConnectedToDevice.setText("Подключение к " + stringConnectedToDevice);
                 textViewConnectedToDevice.setVisibility(View.VISIBLE);
-                currentByte = 0;
                 bluetoothSoketThread = new BluetoothSoketThread();
                 bluetoothSoketThread.start();
             } else {
@@ -634,41 +591,6 @@ public class FragmentBluetooth extends Fragment {
             try {
                 outputStream.close();
             } catch (IOException e) { }
-        }
-    }
-
-    public class LogsToFile extends Thread {
-
-        @Override
-        public void run() {
-            super.run();
-            File file = new File(getContext().getFilesDir() + "/logs.txt");
-            if (file.exists()) file.delete();
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            FileOutputStream fileOutputStream = null;
-            try {
-                fileOutputStream = new FileOutputStream(file, true);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            for (int i = 0; i < spaceFileLogs.getSpaceFileLogsArrayListSize(); i++) {
-                byte[] bytes;
-                bytes = spaceFileLogs.getSpaceFileLogsByte(i);
-                try {
-                    fileOutputStream.write(bytes);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            try {
-                fileOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
