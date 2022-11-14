@@ -116,18 +116,15 @@ public class FragmentUSB extends Fragment {
             }
 
             if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
-
+                Toast.makeText(getContext(), "Устройство отключено", Toast.LENGTH_LONG).show();
             }
 
             if (ACTION_USB_PERMISSION.equals(action)) {
+                Toast.makeText(getContext(), "Выполните повторное подключение", Toast.LENGTH_LONG).show();
             }
         }
 
     };
-
-//    public void checkPortList() {
-//        mPortList = MxUPortService.getPortInfoList(mUsbManager);
-//    }
 
     private final BroadcastReceiver mPermissionReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
@@ -244,9 +241,6 @@ public class FragmentUSB extends Fragment {
     }
 
     private void setConnecting() {
-
-
-
         if (buttonConnectToDevice.getText().equals("Подключить")) {
             if (spaceStatus.isReadyFlagToExchangeData()) {
                 Toast.makeText(getContext(), "Устройство уже подключено", Toast.LENGTH_LONG).show();
@@ -260,17 +254,6 @@ public class FragmentUSB extends Fragment {
             spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(false);
             spaceStatus.setStatusProcessOfLoadingSoftware(false);
             spaceStatus.setStatusProcessOfUpdatingSoftware(false);
-
-
-            if (port != null) {
-                try {
-                    port.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            buttonConnectToDevice.setText("Отключить");
-            textViewConnectedToDevice.setVisibility(View.VISIBLE);
 
             // Find all available drivers from attached devices.
             UsbManager manager = spaceStatus.getMgr();
@@ -286,34 +269,11 @@ public class FragmentUSB extends Fragment {
             UsbSerialDriver driver = availableDrivers.get(0);
             UsbDeviceConnection connection = manager.openDevice(driver.getDevice());
             if (connection == null) {
-                Toast.makeText(getContext(), "Has no permittion", Toast.LENGTH_LONG).show();
-//             UsbManager.requestPermission(driver.getDevice(), permissionIntent);
+                manager.requestPermission(driver.getDevice(), permissionIntent);
                 return;
             }
-
-            port = driver.getPorts().get(0); // Most devices have just one port (port 0)
-            spaceStatus.getCommunication().prepare();
-
-            spaceStatus.setReadyFlagRecordingInitialValues(true);
-
-            textViewConnectedToDevice.setText("Подключено к устройству " + availableDrivers.get(0).getDevice().getProductName() + " " + availableDrivers.get(0).getDevice().getManufacturerName());
-
-            try {
-                port.open(connection);
-                port.setParameters(itemSelectedBaudRate, itemSelectedDataBits, itemSelectedStopBits, itemSelectedParity);
-                usbThreadInput = new UsbThreadInput();
-                usbThreadInput.start();
-                usbThreadOutput = new UsbThreadOutput();
-                usbThreadOutput.start();
-            } catch (IOException e) {
-                Toast.makeText(getContext(), String.valueOf(e.getMessage()), Toast.LENGTH_LONG).show();
-            }
+            openPort(driver, availableDrivers, connection);
         } else {
-            try {
-                port.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
             spaceStatus.setReadyFlagToExchangeData(false);
             spaceStatus.setReadyFlagToLoadSoftware(false);
@@ -330,7 +290,37 @@ public class FragmentUSB extends Fragment {
             spaceStatus.setDevice("");
             getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
             spaceStatus.setReadyFlagRecordingInitialValues(false);
+
+            if (usbThreadInput.isAlive()) {
+                usbThreadInput.interrupt();
+            }
+            if (usbThreadOutput.isAlive()) {
+                usbThreadOutput.interrupt();
+            }
         }
+    }
+
+    private void openPort(UsbSerialDriver driver, List<UsbSerialDriver> availableDrivers, UsbDeviceConnection connection) {
+        port = driver.getPorts().get(0); // Most devices have just one port (port 0)
+        spaceStatus.getCommunication().prepare();
+
+        spaceStatus.setReadyFlagRecordingInitialValues(true);
+
+        textViewConnectedToDevice.setText("Подключено к устройству " + availableDrivers.get(0).getDevice().getProductName() + " " + availableDrivers.get(0).getDevice().getManufacturerName());
+
+        try {
+            port.open(connection);
+            port.setParameters(itemSelectedBaudRate, itemSelectedDataBits, itemSelectedStopBits, itemSelectedParity);
+            usbThreadInput = new UsbThreadInput();
+            usbThreadInput.start();
+            usbThreadOutput = new UsbThreadOutput();
+            usbThreadOutput.start();
+        } catch (IOException e) {
+            Toast.makeText(getContext(), String.valueOf(e.getMessage()), Toast.LENGTH_LONG).show();
+        }
+
+        buttonConnectToDevice.setText("Отключить");
+        textViewConnectedToDevice.setVisibility(View.VISIBLE);
     }
 
     public void setStatus(int status) {
@@ -340,6 +330,7 @@ public class FragmentUSB extends Fragment {
                     @Override
                     public void run() {
                         textViewConnectedToDevice.setText("Устройство не подключено");
+                        setConnecting();
                     }
                 });
                 break;
@@ -355,9 +346,9 @@ public class FragmentUSB extends Fragment {
                 textViewConnectedToDevice.post(new Runnable() {
                     @Override
                     public void run() {
-                        buttonConnectToDevice.setText("Подключить");
                         textViewConnectedToDevice.setText("Процессорный модуль не отвечает. Проверьте соединение.");
                         getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                        setConnecting();
                     }
                 });
                 break;
@@ -365,9 +356,9 @@ public class FragmentUSB extends Fragment {
                 textViewConnectedToDevice.post(new Runnable() {
                     @Override
                     public void run() {
-                        buttonConnectToDevice.setText("Подключить");
                         textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение.");
                         getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                        setConnecting();
                     }
                 });
                 break;
@@ -375,10 +366,10 @@ public class FragmentUSB extends Fragment {
                 textViewConnectedToDevice.post(new Runnable() {
                     @Override
                     public void run() {
-                        buttonConnectToDevice.setText("Подключить");
                         textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение.");
                         getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
                         Toast.makeText(getContext(), "Не удается связаться с процессорным модулем. Проверьте соединение.", Toast.LENGTH_LONG).show();
+                        setConnecting();
                     }
                 });
                 break;
@@ -401,7 +392,7 @@ public class FragmentUSB extends Fragment {
             byte[] bytes;
             int prevStatus = 0;
 
-            while (port.isOpen()) {
+            while (!isInterrupted()) {
                 try {
                     int status = spaceStatus.getStatusCommunication();
                     if (prevStatus != status) {
@@ -414,6 +405,7 @@ public class FragmentUSB extends Fragment {
                     e.printStackTrace();
                 }
             }
+            portClose();
         }
 
         public UsbThreadOutput() {
@@ -429,7 +421,7 @@ public class FragmentUSB extends Fragment {
             super.run();
             byte[] buffer = new byte[32];  // buffer store for the stream
             int bytes; // bytes returned from read()
-            while (port.isOpen()) {
+            while (!isInterrupted()) {
                 try {
                     bytes = port.read(buffer, 0);
                     byte[] buf = new byte[bytes];
@@ -440,13 +432,22 @@ public class FragmentUSB extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
             }
+            portClose();
         }
 
         public UsbThreadInput() {
 
+        }
+    }
+
+    private synchronized void portClose() {
+        if (port.isOpen()) {
+            try {
+                port.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
