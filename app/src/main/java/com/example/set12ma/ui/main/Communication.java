@@ -5,6 +5,9 @@ import android.view.View;
 import android.widget.Toast;
 import com.example.set12ma.R;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Communication {
@@ -32,7 +35,7 @@ public class Communication {
     private final int LOAD = 51;
     private final int EXTEND = 60;
     private final int UPLOAD = 52;
-    private final int BYTE_UPLOAD = 2048;
+    private int BYTE_UPLOAD = 2048;
     private final int ADDRESS_UPLOAD = 655360; // 000A0000
     private final int COUNT = 170;
 
@@ -69,6 +72,9 @@ public class Communication {
     boolean statusAnswer = false; // true - ответ получен
 
     public void prepare() {
+        setCommand(READ);
+        statusError = true;
+
         answerTest = "";
         countWaitConnection = 0;
 
@@ -82,6 +88,8 @@ public class Communication {
 
         counterAttemptsToConection = 0;
         counterUnsuccessfulSending = 0;
+
+        currentByte = 0;
 
         statusAnswer = false; // true - ответ получен
     }
@@ -143,7 +151,12 @@ public class Communication {
                                 if ((bufferByte[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (bufferByte[bytesToCreateCRC.length + 1] == (byte) high)) {
                                     Log.i(LOG_TAG, "ЦРЦ в порядке");
                                     if (!spaceStatus.isReadyFlagRecordingInitialValues()) {
-                                        spaceAddress.setAddressSpace(currentByte, bufferByte[2]);
+                                        int highByte = bufferByte[3];
+                                        int lowByte = bufferByte[2];
+                                        if (lowByte < 0) lowByte = bufferByte[2] + 256;
+                                        if (highByte < 0) lowByte = lowByte - 2 * lowByte;
+                                        Log.i(LOG_TAG, String.valueOf(lowByte + highByte*256));
+                                        spaceAddress.setAddressSpace(currentByte, lowByte + highByte*256);
                                         if (currentByte == 47) {
                                             nextByte = 96;
                                         }
@@ -480,6 +493,8 @@ public class Communication {
                 return null;
             } else {
                 if (statusAnswer) {
+                    countWaitConnection = 0;
+                    counterAttemptsToConection = 0;
                     if (latchInit) {
                         spaceStatus.setReadyFlagToExchangeData(true);
                         spaceStatus.setStatusCommunication(1);
@@ -531,7 +546,8 @@ public class Communication {
                             }
                             setCommand(UPLOAD);
                             latchDownloadLog = true;
-                            return downloadLogs(ADDRESS_UPLOAD + BYTE_UPLOAD*countReceivedMessage, BYTE_UPLOAD);
+                            BYTE_UPLOAD = spaceFileLogs.getSizeOfBlock();
+                            return downloadLogs(spaceFileLogs.getStartOfRAM() + BYTE_UPLOAD*countReceivedMessage, BYTE_UPLOAD);
                         } else {
                             if (spaceStatus.isReadyFlagToFinishOfDownloadingLogs()) {
                                 // ЦИКЛ ДЛЯ СЧИТЫВАНИЯ ЛОГОВ
@@ -539,7 +555,7 @@ public class Communication {
                                 latchDownloadLog = false;
                                 Log.i(LOG_TAG, "Finish of downloadlog");
                                 statusAnswer = true;
-                                if (countReceivedMessage < COUNT) {
+                                if (countReceivedMessage < spaceFileLogs.getLengthOfArray()/spaceFileLogs.getSizeOfBlock()) {
                                     countReceivedMessage = countReceivedMessage + 1;
                                     spaceStatus.setProgressBarDownload(countReceivedMessage);
                                 } else {
@@ -598,8 +614,6 @@ public class Communication {
                             spaceStatus.setStatusCommunication(2);
                         }
                     }
-                    countWaitConnection = 0;
-                    counterAttemptsToConection = 0;
                 } else {
                     if (latchInit) {
                         setCommand(READ);
@@ -619,22 +633,22 @@ public class Communication {
                             latchInit = false;
                         }
                     } if (spaceStatus.isReadyFlagToExchangeData()) {
-//                        if (getCommand() == READ) {
-//                            if (counterAttemptsToConection < 10) {
-//                                if (countWaitConnection < 500000) {
-//                                    countWaitConnection = countWaitConnection + 1;
-//                                } else {
-//                                    countWaitConnection = 0;
-//                                    counterAttemptsToConection = counterAttemptsToConection + 1;
-//                                }
-//                            } else {
-//                                spaceStatus.setReadyFlagToExchangeData(false);
-//                                spaceStatus.setDevice("");
-//                                spaceStatus.setReadyFlagRecordingInitialValues(false);
-//                                latchInit = false;
-//                                spaceStatus.setStatusCommunication(4);
-//                            }
-//                        }
+                        if (getCommand() == READ) {
+                            if (counterAttemptsToConection < 10) {
+                                if (countWaitConnection < 500000) {
+                                    countWaitConnection = countWaitConnection + 1;
+                                } else {
+                                    countWaitConnection = 0;
+                                    counterAttemptsToConection = counterAttemptsToConection + 1;
+                                }
+                            } else {
+                                spaceStatus.setReadyFlagToExchangeData(false);
+                                spaceStatus.setDevice("");
+                                spaceStatus.setReadyFlagRecordingInitialValues(false);
+                                latchInit = false;
+                                spaceStatus.setStatusCommunication(4);
+                            }
+                        }
                     }
                 }
                 return null;

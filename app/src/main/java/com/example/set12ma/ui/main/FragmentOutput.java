@@ -31,7 +31,7 @@ public class FragmentOutput extends Fragment {
     private ResultReceiverSettingSpace resultReceiverSettingSpace;
 
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
-    private long timer = 250;
+    private long timer = 100;
 
     boolean latch = true;
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class FragmentLogging extends Fragment {
     private static final String ARG_SECTION_NUMBER = "Logging";
@@ -22,18 +24,28 @@ public class FragmentLogging extends Fragment {
     private SpaceStatus spaceStatus;
     private ResultReceiverStatusSpace resultReceiverStatusSpace;
 
+    private SpaceFileLogs spaceFileLogs;
+    private ResultReceiverFileLogsSpace resultReceiverFileLogsSpace;
+
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
     private long timer = 500;
+
+    private LogsToFile logsToFile;
 
     private Button buttonDownload;
     private Button buttonSend;
     private ProgressBar progressBar;
     private ProgressBar progressBar2;
 
+    private EditText editTextStartOfRam;
+    private EditText editTextLengthOfArray;
+    private EditText editTextSizeOfBlock;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         resultReceiverStatusSpace = (ResultReceiverStatusSpace) context;
+        resultReceiverFileLogsSpace = (ResultReceiverFileLogsSpace) context;
     }
 
     private PageViewModel pageViewModel;
@@ -68,6 +80,8 @@ public class FragmentLogging extends Fragment {
         buttonDownload = root.findViewById(R.id.button_download);
         buttonSend = root.findViewById(R.id.button_send);
 
+        spaceFileLogs = resultReceiverFileLogsSpace.getSpaceFileLogs();
+
         buttonDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,8 +105,53 @@ public class FragmentLogging extends Fragment {
         progressBar2 = root.findViewById(R.id.progressBar2);
         progressBar2.setVisibility(View.INVISIBLE);
         progressBar = root.findViewById(R.id.progressBar);
-        progressBar.setMax(175);
+        progressBar.setMax(100);
         progressBar.setVisibility(View.INVISIBLE);
+
+        editTextStartOfRam = root.findViewById(R.id.editText_start_of_ram);
+        editTextStartOfRam.setText(Integer.toHexString(spaceFileLogs.getStartOfRAM()));
+        editTextStartOfRam.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editTextStartOfRam.getText().toString();
+                    if (!text.equals("")) {
+                        spaceFileLogs.setStartOfRAM(getIntFromString(text));
+                    }
+                }
+                return true;
+            }
+        });
+
+        editTextLengthOfArray = root.findViewById(R.id.editText2_length_of_array);
+        editTextLengthOfArray.setText(Integer.toHexString(spaceFileLogs.getLengthOfArray()));
+        editTextLengthOfArray.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editTextLengthOfArray.getText().toString();
+                    if (!text.equals("")) {
+                        spaceFileLogs.setLengthOfArray(getIntFromString(text));
+                    }
+                }
+                return true;
+            }
+        });
+
+        editTextSizeOfBlock = root.findViewById(R.id.editText_size_of_block);
+        editTextSizeOfBlock.setText(Integer.toHexString(spaceFileLogs.getSizeOfBlock()));
+        editTextSizeOfBlock.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String text = editTextSizeOfBlock.getText().toString();
+                    if (!text.equals("")) {
+                        spaceFileLogs.setSizeOfBlock(getIntFromString(text));
+                    }
+                }
+                return true;
+            }
+        });
 
         upDateGraphicalDisplay = new UpDateGraphicalDisplay();
         upDateGraphicalDisplay.start();
@@ -100,11 +159,47 @@ public class FragmentLogging extends Fragment {
         return root;
     }
 
+    private int getIntFromString(String text) {
+        int data = 0;
+        ArrayList<Integer> integers = new ArrayList<>();
+        if (!text.equals("")) {
+            for (char ch: text.toCharArray()) {
+                integers.add(convertStringToInt(ch));
+            }
+            int j = 0;
+            for (int i = integers.size() - 1; i > - 1; i--) {
+                data = data + ((int) Math.pow(16, i)) * integers.get(j);
+                j = j + 1;
+            }
+        }
+        return data;
+    }
+
+    private Integer convertStringToInt(char ch) {
+        if (ch == '0') return 0;
+        else if (ch == '1') return 1;
+        else if (ch == '2') return 2;
+        else if (ch == '3') return 3;
+        else if (ch == '4') return 4;
+        else if (ch == '5') return 5;
+        else if (ch == '6') return 6;
+        else if (ch == '7') return 7;
+        else if (ch == '8') return 8;
+        else if (ch == '9') return 9;
+        else if ((ch == 'A') || (ch == 'a')) return 10;
+        else if ((ch == 'B') || (ch == 'b')) return 11;
+        else if ((ch == 'C') || (ch == 'c')) return 12;
+        else if ((ch == 'D') || (ch == 'd')) return 13;
+        else if ((ch == 'E') || (ch == 'e')) return 14;
+        else if ((ch == 'F') || (ch == 'f')) return 15;
+        return 0;
+    }
+
     private void download() {
         if (spaceStatus.isReadyFlagToExchangeData()) {
             if (!spaceStatus.isStatusProcessOfUpdatingSoftware() & !spaceStatus.isStatusProcessOfLoadingSoftware()) {
                 if (!spaceStatus.isReadyFlagToDownloadLog()) {
-                    Log.i("strartt", "start");
+                    progressBar.setMax(spaceFileLogs.getLengthOfArray()/spaceFileLogs.getSizeOfBlock());
                     spaceStatus.setReadyFlagToDownloadLog(true);
                 } else {
                     Toast.makeText(getContext(), "Дождитесь завершения загрузки логов", Toast.LENGTH_LONG).show();
@@ -142,6 +237,8 @@ public class FragmentLogging extends Fragment {
 
     public class UpDateGraphicalDisplay extends Thread {
 
+        boolean state = false;
+        boolean prevState = false;
         boolean latch = false;
 
         @Override
@@ -186,11 +283,62 @@ public class FragmentLogging extends Fragment {
                         latch = false;
                     }
                 }
+                state = spaceStatus.isReadyFlagToDownloadLog();
+                if (state == false & prevState == true) {
+                    logsToFile = new LogsToFile();
+                    logsToFile.start();
+                }
+                prevState = state;
+                if (spaceStatus.isReadyFinishFlagToDownloadLog()) {
+                    spaceStatus.setReadyFinishFlagToDownloadLog(false);
+                    progressBar.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), "Файл logs.txt находится в дириктории приложения", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
             }
 
         }
 
         public UpDateGraphicalDisplay() {
+        }
+    }
+
+    public class LogsToFile extends Thread {
+
+        @Override
+        public void run() {
+            super.run();
+            File file = new File(getContext().getFilesDir() + "/logs.txt");
+            if (file.exists()) file.delete();
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            FileOutputStream fileOutputStream = null;
+            try {
+                fileOutputStream = new FileOutputStream(file, true);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            for (int i = 0; i < spaceFileLogs.getSpaceFileLogsArrayListSize(); i++) {
+                byte[] bytes;
+                bytes = spaceFileLogs.getSpaceFileLogsByte(i);
+                try {
+                    fileOutputStream.write(bytes);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                fileOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            spaceStatus.setReadyFinishFlagToDownloadLog(true);
         }
     }
 }

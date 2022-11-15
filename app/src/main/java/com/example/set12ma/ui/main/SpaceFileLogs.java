@@ -8,7 +8,34 @@ import java.util.ArrayList;
 public class SpaceFileLogs implements Parcelable {
 
     private ArrayList<byte[]> spaceFileLogsArrayList;
-    private int spaceFileLogsByteLength = 4096;
+
+    private int startOfRAM = 655360;
+    private int lengthOfArray = 385024;
+    private int sizeOfBlock = 8192;
+
+    public int getStartOfRAM() {
+        return startOfRAM;
+    }
+
+    public void setStartOfRAM(int startOfRAM) {
+        this.startOfRAM = startOfRAM;
+    }
+
+    public int getLengthOfArray() {
+        return lengthOfArray;
+    }
+
+    public void setLengthOfArray(int lengthOfArray) {
+        this.lengthOfArray = lengthOfArray;
+    }
+
+    public int getSizeOfBlock() {
+        return sizeOfBlock;
+    }
+
+    public void setSizeOfBlock(int sizeOfBlock) {
+        this.sizeOfBlock = sizeOfBlock;
+    }
 
     public SpaceFileLogs() {
         spaceFileLogsArrayList = new ArrayList<>();
@@ -24,10 +51,6 @@ public class SpaceFileLogs implements Parcelable {
 
     public int getSpaceFileLogsLength(int number) {
         return spaceFileLogsArrayList.get(number).length;
-    }
-
-    public int getSpaceFileLogsLength() {
-        return spaceFileLogsByteLength;
     }
 
     public void setSpaceFileLogsArrayListByte(byte[] spaceFileLogsBytes) {
