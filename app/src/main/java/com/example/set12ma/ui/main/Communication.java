@@ -35,7 +35,7 @@ public class Communication {
     private final int LOAD = 51;
     private final int EXTEND = 60;
     private final int UPLOAD = 52;
-    private final int BYTE_UPLOAD = 2048;
+    private int BYTE_UPLOAD = 2048;
     private final int ADDRESS_UPLOAD = 655360; // 000A0000
     private final int COUNT = 170;
 
@@ -541,7 +541,8 @@ public class Communication {
                             }
                             setCommand(UPLOAD);
                             latchDownloadLog = true;
-                            return downloadLogs(ADDRESS_UPLOAD + BYTE_UPLOAD*countReceivedMessage, BYTE_UPLOAD);
+                            BYTE_UPLOAD = spaceFileLogs.getSizeOfBlock();
+                            return downloadLogs(spaceFileLogs.getStartOfRAM() + BYTE_UPLOAD*countReceivedMessage, BYTE_UPLOAD);
                         } else {
                             if (spaceStatus.isReadyFlagToFinishOfDownloadingLogs()) {
                                 // ЦИКЛ ДЛЯ СЧИТЫВАНИЯ ЛОГОВ
@@ -549,7 +550,7 @@ public class Communication {
                                 latchDownloadLog = false;
                                 Log.i(LOG_TAG, "Finish of downloadlog");
                                 statusAnswer = true;
-                                if (countReceivedMessage < COUNT) {
+                                if (countReceivedMessage < spaceFileLogs.getLengthOfArray()/spaceFileLogs.getSizeOfBlock()) {
                                     countReceivedMessage = countReceivedMessage + 1;
                                     spaceStatus.setProgressBarDownload(countReceivedMessage);
                                 } else {

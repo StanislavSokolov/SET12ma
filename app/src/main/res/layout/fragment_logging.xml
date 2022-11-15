@@ -23,14 +23,14 @@
             <TextView
                     android:text="@string/start_of_ram"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/textView"/>
+                    android:layout_height="wrap_content" android:id="@+id/start_of_ram"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:text="A0000"
                     android:ems="10"
-                    android:id="@+id/editText"/>
+                    android:id="@+id/editText_start_of_ram"/>
             <TextView
                     android:id="@+id/section_label5"
                     android:layout_width="match_parent"
@@ -42,14 +42,14 @@
             <TextView
                     android:text="@string/length_of_array"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/textView2"/>
+                    android:layout_height="wrap_content" android:id="@+id/length_of_array"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:text="5E000"
                     android:ems="10"
-                    android:id="@+id/editText2"/>
+                    android:id="@+id/editText2_length_of_array"/>
             <TextView
                     android:id="@+id/section_label6"
                     android:layout_width="match_parent"
@@ -59,16 +59,16 @@
                     tools:layout_constraintLeft_creator="1"
             />
             <TextView
-                    android:text="@string/length_of_array"
+                    android:text="@string/size_of_block"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/textView3"/>
+                    android:layout_height="wrap_content" android:id="@+id/size_of_block"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:text="2000"
                     android:ems="10"
-                    android:id="@+id/editText3"/>
+                    android:id="@+id/editText_size_of_block"/>
             <TextView
                     android:id="@+id/section_label7"
                     android:layout_width="match_parent"
