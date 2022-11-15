@@ -100,4 +100,9 @@
     <string name="save_log">Сохранить</string>
     <string name="send_log">Отправить</string>
 
+    <string name="start_of_ram">Укажите начальный адрес RAM</string>
+    <string name="length_of_array">Укажите длину массива</string>
+    <string name="size_of_block">Укажите размер одного блока</string>
+    <string name="tip_of_HEX">Убедитесь, что значения указаны в HEX</string>
+
 </resources>

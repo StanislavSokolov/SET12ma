@@ -20,18 +20,78 @@
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     tools:layout_constraintLeft_creator="1"
             />
-            <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/button_download"
-                    android:text="@string/download_log"/>
             <TextView
-                    android:id="@+id/section_label4"
+                    android:text="@string/start_of_ram"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="A0000"
+                    android:ems="10"
+                    android:id="@+id/editText"/>
+            <TextView
+                    android:id="@+id/section_label5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:layout_constraintTop_creator="1"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     tools:layout_constraintLeft_creator="1"
             />
+            <TextView
+                    android:text="@string/length_of_array"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView2"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="5E000"
+                    android:ems="10"
+                    android:id="@+id/editText2"/>
+            <TextView
+                    android:id="@+id/section_label6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout_constraintTop_creator="1"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    tools:layout_constraintLeft_creator="1"
+            />
+            <TextView
+                    android:text="@string/length_of_array"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView3"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="2000"
+                    android:ems="10"
+                    android:id="@+id/editText3"/>
+            <TextView
+                    android:id="@+id/section_label7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout_constraintTop_creator="1"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    tools:layout_constraintLeft_creator="1"
+            />
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView5" android:text="@string/tip_of_HEX"/>
+            <TextView
+                    android:id="@+id/section_label3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout_constraintTop_creator="1"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    tools:layout_constraintLeft_creator="1"
+            />
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/button_download"
+                    android:text="@string/download_log"/>
             <ProgressBar
                     style="?android:attr/progressBarStyle"
                     android:layout_width="match_parent"
@@ -50,14 +110,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/progressBar"/>
-            <TextView
-                    android:id="@+id/section_label3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:layout_constraintTop_creator="1"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    tools:layout_constraintLeft_creator="1"
-            />
             <Button
                     android:text="@string/send_log"
                     android:layout_width="match_parent"
