@@ -151,7 +151,12 @@ public class Communication {
                                 if ((bufferByte[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (bufferByte[bytesToCreateCRC.length + 1] == (byte) high)) {
                                     Log.i(LOG_TAG, "ЦРЦ в порядке");
                                     if (!spaceStatus.isReadyFlagRecordingInitialValues()) {
-                                        spaceAddress.setAddressSpace(currentByte, bufferByte[2]);
+                                        int highByte = bufferByte[3];
+                                        int lowByte = bufferByte[2];
+                                        if (lowByte < 0) lowByte = bufferByte[2] + 256;
+                                        if (highByte < 0) lowByte = lowByte - 2 * lowByte;
+                                        Log.i(LOG_TAG, String.valueOf(lowByte + highByte*256));
+                                        spaceAddress.setAddressSpace(currentByte, lowByte + highByte*256);
                                         if (currentByte == 47) {
                                             nextByte = 96;
                                         }
