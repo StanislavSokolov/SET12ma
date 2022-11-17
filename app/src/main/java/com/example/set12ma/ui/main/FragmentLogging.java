@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -11,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.set12ma.R;
 
 import java.io.*;
 import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
 
 public class FragmentLogging extends Fragment {
     private static final String ARG_SECTION_NUMBER = "Logging";
@@ -30,7 +34,8 @@ public class FragmentLogging extends Fragment {
     private UpDateGraphicalDisplay upDateGraphicalDisplay;
     private long timer = 500;
 
-    private LogsToFile logsToFile;
+    private LogsToFileInternalStorage logsToFileInternalStorage;
+    private LogsToFileExternalStorage logsToFileExternalStorage;
 
     private Button buttonDownload;
     private Button buttonSend;
@@ -57,8 +62,6 @@ public class FragmentLogging extends Fragment {
         fragment.setArguments(bundle);
         return fragment;
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -209,24 +212,52 @@ public class FragmentLogging extends Fragment {
                 Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
             }
         } else Toast.makeText(getActivity(), "Подключитесь к устройству", Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 10 && resultCode == RESULT_OK) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_STREAM, data.getData());
+            sendIntent.setType("*/*");
+
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            startActivity(shareIntent);
+        }
     }
 
     private void send() {
         if (!spaceStatus.isStatusProcessOfUpdatingSoftware() & !spaceStatus.isStatusProcessOfLoadingSoftware()) {
             if (!spaceStatus.isReadyFlagToDownloadLog()) {
-                File file = new File(getContext().getFilesDir() + "/logs.txt");
-                if (file.exists()) {
+                String state = Environment.getExternalStorageState();
+                if (Environment.MEDIA_MOUNTED.equals(state)) {
+                    Intent intent = new Intent()
+                        .setType("*/*")
+                        .setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select a file"), 10);
+                } else {
+                    Toast.makeText(getActivity(), "Идет разработка...", Toast.LENGTH_SHORT).show();
+
+                    File file = new File(getContext().getFilesDir() + "/logs.txt");
+
+                    if (file.exists()) {
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(file.getAbsolutePath()));
-                    sendIntent.setType("application/txt*");
+                    sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(getContext().getFilesDir() + "/logs.txt"));
+                    sendIntent.setType("*/*");
 
                     Intent shareIntent = Intent.createChooser(sendIntent, null);
                     startActivity(shareIntent);
-                } else {
-                    Toast.makeText(getActivity(), "Нет данных для отправки", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "Нет данных для отправки", Toast.LENGTH_SHORT).show();
+                    }
                 }
+//                Intent intent = new Intent()
+//                        .setType("*/*")
+//                        .setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
             } else {
                 Toast.makeText(getContext(), "Дождитесь завершения загрузки логов", Toast.LENGTH_LONG).show();
             }
@@ -285,18 +316,43 @@ public class FragmentLogging extends Fragment {
                 }
                 state = spaceStatus.isReadyFlagToDownloadLog();
                 if (state == false & prevState == true) {
-                    logsToFile = new LogsToFile();
-                    logsToFile.start();
+                    String state = Environment.getExternalStorageState();
+                    if (Environment.MEDIA_MOUNTED.equals(state)) {
+                        logsToFileExternalStorage = new LogsToFileExternalStorage();
+                        logsToFileExternalStorage.start();
+                    } else {
+                        logsToFileInternalStorage = new LogsToFileInternalStorage();
+                        logsToFileInternalStorage.start();
+                    }
+//                    logsToFileInternalStorage = new LogsToFileInternalStorage();
+//                    logsToFileInternalStorage.start();
+
                 }
                 prevState = state;
                 if (spaceStatus.isReadyFinishFlagToDownloadLog()) {
                     spaceStatus.setReadyFinishFlagToDownloadLog(false);
-                    progressBar.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), "Файл logs.txt находится в дириктории приложения", Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    String state = Environment.getExternalStorageState();
+                    if (Environment.MEDIA_MOUNTED.equals(state)) {
+                        progressBar.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getContext(), "Файл logs.txt находится в дириктории внутреннего общего накопителя " + getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    } else {
+                        progressBar.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getContext(), "Файл logs.txt находится в дириктории приложения", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+//                    progressBar.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Toast.makeText(getContext(), "Файл logs.txt находится в дириктории приложения", Toast.LENGTH_LONG).show();
+//                        }
+//                    });
                 }
             }
 
@@ -306,7 +362,44 @@ public class FragmentLogging extends Fragment {
         }
     }
 
-    public class LogsToFile extends Thread {
+    public class LogsToFileExternalStorage extends Thread {
+
+        @Override
+        public void run() {
+            super.run();
+            File file = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "logs.txt");
+            if (file.exists()) file.delete();
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            FileOutputStream fileOutputStream = null;
+            try {
+                fileOutputStream = new FileOutputStream(file, true);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            for (int i = 0; i < spaceFileLogs.getSpaceFileLogsArrayListSize(); i++) {
+                byte[] bytes;
+                bytes = spaceFileLogs.getSpaceFileLogsByte(i);
+                try {
+                    fileOutputStream.write(bytes);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                fileOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            spaceStatus.setReadyFinishFlagToDownloadLog(true);
+        }
+    }
+
+    public class LogsToFileInternalStorage extends Thread {
 
         @Override
         public void run() {
@@ -338,6 +431,7 @@ public class FragmentLogging extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             spaceStatus.setReadyFinishFlagToDownloadLog(true);
         }
     }
