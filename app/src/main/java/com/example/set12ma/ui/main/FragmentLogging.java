@@ -63,8 +63,6 @@ public class FragmentLogging extends Fragment {
         return fragment;
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -214,17 +212,14 @@ public class FragmentLogging extends Fragment {
                 Toast.makeText(getContext(), "Дождитесь завершения обновления ПО", Toast.LENGTH_LONG).show();
             }
         } else Toast.makeText(getActivity(), "Подключитесь к устройству", Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 10 && resultCode == RESULT_OK) {
-//            data.getData();
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-//                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Uri.parse(file.getAbsolutePath())");
             sendIntent.putExtra(Intent.EXTRA_STREAM, data.getData());
             sendIntent.setType("*/*");
 
@@ -341,7 +336,7 @@ public class FragmentLogging extends Fragment {
                         progressBar.post(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getContext(), "Файл logs.txt находится в дириктории общего накопителя", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "Файл logs.txt находится в дириктории внутреннего общего накопителя " + getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), Toast.LENGTH_LONG).show();
                             }
                         });
                     } else {
