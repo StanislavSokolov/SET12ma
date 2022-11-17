@@ -779,14 +779,10 @@ public class Communication {
         bytesToSend[1] = INIT_LOAD;
         byte[] bytesToSendBuf;
         bytesToSendBuf = determineDownloadMode();
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[0]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[1]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[2]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[3]));
-        bytesToSend[2] = bytesToSendBuf[0];
-        bytesToSend[3] = bytesToSendBuf[1];
-        bytesToSend[4] = bytesToSendBuf[2];
-        bytesToSend[5] = bytesToSendBuf[3];
+        bytesToSend[2] = 0;
+        bytesToSend[3] = 0;
+        bytesToSend[4] = 10;
+        bytesToSend[5] = 0;
         int i = (spaceMemory.getMemorySpaceArrayListSize() - 1)* spaceMemory.getMemorySpaceByteLength() + spaceMemory.getMemorySpaceByteLength(spaceMemory.getMemorySpaceArrayListSize() - 1);
         int highH = i/16777216;
         bytesToSend[9] = (byte) highH;
@@ -805,6 +801,18 @@ public class Communication {
         bytesToSend[11] = (byte) high;
 
         Log.i("LOG_TAG_1", "START INIT LOAD");
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[0]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[1]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[2]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[3]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[4]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[5]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[6]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[7]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[8]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[9]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[10]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[11]));
         return bytesToSend;
     }
 
@@ -869,18 +877,13 @@ public class Communication {
         bytesToSend[1] = EXTEND;
         byte[] bytesToSendBuf;
         bytesToSendBuf = determineDownloadMode();
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[0]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[1]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[2]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[3]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[4]));
-        bytesToSend[2] = bytesToSendBuf[0];
-        bytesToSend[3] = bytesToSendBuf[1];
-        bytesToSend[4] = bytesToSendBuf[2];
-        bytesToSend[5] = bytesToSendBuf[3];
-        bytesToSend[6] = 0;
-        bytesToSend[7] = 0;
-        bytesToSend[8] = 0;
+        bytesToSend[2] = 0;
+        bytesToSend[3] = 0;
+        bytesToSend[4] = 10;
+        bytesToSend[5] = 0;
+        bytesToSend[6] = 124;
+        bytesToSend[7] = 50;
+        bytesToSend[8] = 15;
         bytesToSend[9] = 0;
         int i = (spaceMemory.getMemorySpaceArrayListSize() - 1)* spaceMemory.getMemorySpaceByteLength() + spaceMemory.getMemorySpaceByteLength(spaceMemory.getMemorySpaceArrayListSize() - 1);
         int highH = i/16777216;
@@ -900,6 +903,24 @@ public class Communication {
         int high = crc / 256;
         bytesToSend[bytesToSend.length-2] = (byte) (crc - high * 256);
         bytesToSend[bytesToSend.length-1] = (byte) high;
+
+        Log.i("LOG_TAG_1", "START INIT LOAD");
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[0]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[1]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[2]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[3]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[4]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[5]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[6]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[7]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[8]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[9]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[10]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[11]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[12]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[13]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[14]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[15]));
         return bytesToSend;
     }
 
@@ -933,6 +954,19 @@ public class Communication {
         bytesToSend[bytesToSend.length-1] = (byte) high;
 //            Log.i(LOG_TAG, "highH " + highH + "; highL " + highL + "; lowH " + lowH + "; lowL " + lowL + ";");
         Log.i("LOG_TAG_1", "DOWNLOAD");
+
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[0]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[1]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[2]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[3]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[4]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[5]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[6]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[7]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[8]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[9]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[10]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[11]));
         return bytesToSend;
     }
 }
