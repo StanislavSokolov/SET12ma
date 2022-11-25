@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         viewPagerSetting = findViewById(R.id.view_pager_setting);
         viewPagerSetting.setAdapter(sectionsPagerAdapterSetting);
         viewPagerDataExchange = findViewById(R.id.view_pager_dataExchange);
+        viewPagerDataExchange.setAdapter(sectionsPagerAdapterDataExchange);
 
         // main tab
         tabsSET12MA = findViewById(R.id.tabs_SET12MA);
@@ -388,7 +389,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
             viewPagerNumber = 5;
         }
         if (value == 6) {
-            tabsSET12MA.setupWithViewPager(viewPagerSetting);
+            tabsSET12MA.setupWithViewPager(viewPagerDataExchange);
             tabsSET12MA.setVisibility(View.INVISIBLE);
             viewPagerConnecting.setVisibility(View.INVISIBLE);
             viewPagerLogging.setVisibility(View.INVISIBLE);

@@ -13,7 +13,7 @@ import com.example.set12ma.R;
 public class FragmentTest extends Fragment {
 
     private static final String LOG_TAG = "AndroidExample";
-    private static final String ARG_SECTION_NUMBER = "Output";
+    private static final String ARG_SECTION_NUMBER = "Test";
 
     private SpaceAddress spaceAddress;
     private SpaceStatus spaceStatus;
@@ -35,8 +35,8 @@ public class FragmentTest extends Fragment {
 
     private PageViewModel pageViewModel;
 
-    public static FragmentOutput newInstance(int index) {
-        FragmentOutput fragment = new FragmentOutput();
+    public static FragmentTest newInstance(int index) {
+        FragmentTest fragment = new FragmentTest();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);

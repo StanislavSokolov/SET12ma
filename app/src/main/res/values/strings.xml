@@ -79,6 +79,7 @@
     <string name="menu_logging">Логирование</string>
     <string name="menu_loadingSoftware">Загрузка ПО</string>
     <string name="menu_setting">Настройки</string>
+    <string name="menu_dataExchange">Тест</string>
 
     <string name="main_connection">Bluetooth соединение</string>
     <string name="main_text_connected_devices">Сопряженные устройства</string>

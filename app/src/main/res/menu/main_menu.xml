@@ -36,6 +36,6 @@
     <item
             android:id="@+id/menu_dataExchange"
             android:orderInCategory="6"
-            android:title="@string/menu_setting" android:visible="true"/>
+            android:title="@string/menu_dataExchange" android:visible="true"/>
 
 </menu>
