@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
                 for (int i = 0; i < 8; i++) {
                     editor.putString("tk_" + j + "_" + i + "_name", spaceSetting.getTkArrayList().get(i+j*8).getName());
                     editor.putInt("tk_" + j + "_" + i + "_register", spaceSetting.getTkArrayList().get(i+j*8).getRegister());
-                    editor.putBoolean("in_" + j + "_" + i + "_enable", spaceSetting.getInArrayList().get(i+j*16).isEnable());
+                    editor.putBoolean("in_" + j + "_" + i + "_enable", spaceSetting.getTkArrayList().get(i+j*8).isEnable());
                 }
             }
 
