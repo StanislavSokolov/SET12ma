@@ -94,6 +94,14 @@ public class Communication {
         statusAnswer = false; // true - ответ получен
     }
 
+    public byte[] communicationToARTIX() {
+        byte[] buffer = null;
+        if (!spaceAddress.isEmptyByteQueue()) {
+            buffer = spaceAddress.getByteQueue();
+        }
+        return buffer;
+    }
+
     public byte[] communication() {
             if (!spaceAddress.isEmptyByteQueue()) {
                 byte[] buffer = spaceAddress.getByteQueue();

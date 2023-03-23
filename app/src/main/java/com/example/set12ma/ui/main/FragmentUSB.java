@@ -378,12 +378,25 @@ public class FragmentUSB extends Fragment {
         }
     }
 
+    public void setValue(int value) {
+        textViewConnectedToDevice.post(new Runnable() {
+            @Override
+            public void run() {
+                textViewConnectedToDevice.setText(String.valueOf(value));
+            }
+        });
+
+    }
+
 //        customTable = new ProbeTable();
 //        customTable.addProduct(0x110A, 0x1151, Driver.class);
 //        UsbSerialProber prober = new UsbSerialProber(customTable);
 //        List<UsbSerialDriver> drivers = prober.findAllDrivers(mUsbManager);
 
     public class UsbThreadOutput extends Thread {
+
+        int deviceType = 0;
+        int count = 0;
 
         @Override
         public void run() {
@@ -393,16 +406,29 @@ public class FragmentUSB extends Fragment {
             int prevStatus = 0;
 
             while (!isInterrupted()) {
-                try {
-                    int status = spaceStatus.getStatusCommunication();
-                    if (prevStatus != status) {
-                        prevStatus = status;
-                        setStatus(status);
+                if (deviceType == 0) {
+                    byte[] buffer = spaceStatus.getCommunication().communicationToARTIX();
+                    if (buffer != null) {
+                        spaceStatus.setStatusCommunication(spaceStatus.getStatusCommunication() + 1);
                     }
-                    bytes = spaceStatus.getCommunication().communication();
-                    if (bytes != null) port.write(bytes, 0);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    if (count < 100000) {
+                        count++;
+                    } else {
+                        count = 0;
+                        setValue(spaceStatus.getStatusCommunication());
+                    }
+                } else {
+                    try {
+                        int status = spaceStatus.getStatusCommunication();
+                        if (prevStatus != status) {
+                            prevStatus = status;
+//                            setStatus(status);
+                        }
+                        bytes = spaceStatus.getCommunication().communication();
+                        if (bytes != null) port.write(bytes, 0);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             portClose();
