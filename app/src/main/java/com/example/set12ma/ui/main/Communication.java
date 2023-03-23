@@ -102,6 +102,15 @@ public class Communication {
         return buffer;
     }
 
+    public int communicationToARTIXint() {
+        byte[] buffer = null;
+        if (!spaceAddress.isEmptyByteQueue()) {
+            buffer = spaceAddress.getByteQueue();
+            return buffer.length;
+        }
+        return 100;
+    }
+
     public byte[] communication() {
             if (!spaceAddress.isEmptyByteQueue()) {
                 byte[] buffer = spaceAddress.getByteQueue();

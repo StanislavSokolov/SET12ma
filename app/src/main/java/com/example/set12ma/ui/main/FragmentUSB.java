@@ -388,6 +388,16 @@ public class FragmentUSB extends Fragment {
 
     }
 
+    public void setValue(String value) {
+        textViewConnectedToDevice.post(new Runnable() {
+            @Override
+            public void run() {
+                textViewConnectedToDevice.setText(value);
+            }
+        });
+
+    }
+
 //        customTable = new ProbeTable();
 //        customTable.addProduct(0x110A, 0x1151, Driver.class);
 //        UsbSerialProber prober = new UsbSerialProber(customTable);
@@ -397,6 +407,8 @@ public class FragmentUSB extends Fragment {
 
         int deviceType = 0;
         int count = 0;
+        String s;
+
 
         @Override
         public void run() {
@@ -410,12 +422,18 @@ public class FragmentUSB extends Fragment {
                     byte[] buffer = spaceStatus.getCommunication().communicationToARTIX();
                     if (buffer != null) {
                         spaceStatus.setStatusCommunication(spaceStatus.getStatusCommunication() + 1);
+                        s = "";
+                        for (int i = 0; i < buffer.length; i++) {
+                            s = s + buffer[i];
+                            s = s + " ";
+                        }
                     }
-                    if (count < 100000) {
+                    // если 1000 - работает стабильно, если 100 - не работает
+                    if (count < 1000) {
                         count++;
                     } else {
                         count = 0;
-                        setValue(spaceStatus.getStatusCommunication());
+                        setValue(s);
                     }
                 } else {
                     try {
