@@ -419,21 +419,31 @@ public class FragmentUSB extends Fragment {
 
             while (!isInterrupted()) {
                 if (deviceType == 0) {
-                    byte[] buffer = spaceStatus.getCommunication().communicationToARTIX();
-                    if (buffer != null) {
-                        spaceStatus.setStatusCommunication(spaceStatus.getStatusCommunication() + 1);
-                        s = "";
-                        for (int i = 0; i < buffer.length; i++) {
-                            s = s + buffer[i];
-                            s = s + " ";
+                    try {
+                        int status = spaceStatus.getStatusCommunication();
+                        if (prevStatus != status) {
+                            prevStatus = status;
+                            setStatus(status);
                         }
-                    }
-                    // если 1000 - работает стабильно, если 100 - не работает
-                    if (count < 1000) {
-                        count++;
-                    } else {
-                        count = 0;
-                        setValue(s);
+                        bytes = spaceStatus.getCommunication().communicationToARTIX();
+                        if (bytes != null) port.write(bytes, 0); else {
+                            if (!spaceAddress.isEmptyByteQueue()) {
+                                byte[] buffer = spaceAddress.getByteQueue();
+                                s = "";
+                                for (int i = 0; i < buffer.length; i++) {
+                                    s = s + buffer[i];
+                                    s = s + " ";
+                                }
+                            }
+                        }
+                        if (count < 10000) {
+                            count++;
+                        } else {
+                            count = 0;
+                            setValue(s);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 } else {
                     try {

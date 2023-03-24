@@ -94,12 +94,150 @@ public class Communication {
         statusAnswer = false; // true - ответ получен
     }
 
+//    public byte[] communicationToARTIX() {
+//        byte[] buffer = null;
+//        if (!spaceAddress.isEmptyByteQueue()) {
+//            buffer = spaceAddress.getByteQueue();
+//        }
+//        return buffer;
+//    }
+
     public byte[] communicationToARTIX() {
         byte[] buffer = null;
         if (!spaceAddress.isEmptyByteQueue()) {
-            buffer = spaceAddress.getByteQueue();
+//            buffer = spaceAddress.getByteQueue();
+            statusAnswer = true;
+        } else {
+            if (statusAnswer) {
+                countWaitConnection = 0;
+                counterAttemptsToConection = 0;
+                if (latchInit) {
+                    spaceStatus.setReadyFlagToExchangeData(true);
+                    spaceStatus.setStatusCommunication(1);
+                }
+                latchInit = false;
+                statusAnswer = false;
+
+                if (counterUnsuccessfulSending < maxValueUnsuccessfulSending) {
+                    if (statusError) {
+                        counterUnsuccessfulSending = counterUnsuccessfulSending + 1;
+                    } else {
+                        counterUnsuccessfulSending = 0;
+                    }
+
+                    if (spaceStatus.isReadyFlagRecordingInitialValues()) {
+                        setCommand(WRITE);
+//                        return writeArtix();
+                        return readArtix();
+                    } else {
+                        if (!spaceAddress.isEmptyQueue()) {
+                            if (!latchQueue) {
+                                previousByte = currentByte;
+                                latchQueue = true;
+                            }
+                            ElementQueue elementQueue = spaceAddress.getElementQueue();
+//                                        if (elementQueue.getSectionNumber() == 0) {
+//                                            currentByte = 48;
+//                                        }
+//                                        if (elementQueue.getSectionNumber() == 1) {
+//                                            currentByte = 144;
+//                                        }
+//                                        currentByte = currentByte + elementQueue.getId();
+//                                        currentByte = elementQueue.getRegister();
+                            setCommand(WRITE);
+//                            return writeArtix(elementQueue.getRegister(), elementQueue.getData());
+                            return readArtix();
+                        } else {
+                            if (latchQueue) {
+                                latchQueue = false;
+                                currentByte = previousByte;
+                            }
+                            setCommand(READ);
+                            return readArtix();
+                        }
+                    }
+                } else {
+                    spaceStatus.setReadyFlagToExchangeData(false);
+                    spaceStatus.setDevice("");
+                    spaceStatus.setReadyFlagRecordingInitialValues(false);
+                    spaceStatus.setStatusCommunication(2);
+                }
+            } else {
+                if (latchInit) {
+                    setCommand(READ);
+                    if (counterAttemptsToConection < 10) {
+                        if (countWaitConnection < 500000) {
+                            countWaitConnection = countWaitConnection + 1;
+                        } else {
+                            countWaitConnection = 0;
+                            counterAttemptsToConection = counterAttemptsToConection + 1;
+                            buffer = readArtix();
+                        }
+                    } else {
+                        spaceStatus.setReadyFlagToExchangeData(false);
+                        spaceStatus.setDevice("");;
+                        spaceStatus.setReadyFlagRecordingInitialValues(false);
+                        spaceStatus.setStatusCommunication(3);
+                        latchInit = false;
+                    }
+                } if (spaceStatus.isReadyFlagToExchangeData()) {
+                    if (getCommand() == READ) {
+                        if (counterAttemptsToConection < 10) {
+                            if (countWaitConnection < 500000) {
+                                countWaitConnection = countWaitConnection + 1;
+                            } else {
+                                countWaitConnection = 0;
+                                counterAttemptsToConection = counterAttemptsToConection + 1;
+                            }
+                        } else {
+                            spaceStatus.setReadyFlagToExchangeData(false);
+                            spaceStatus.setDevice("");
+                            spaceStatus.setReadyFlagRecordingInitialValues(false);
+                            latchInit = false;
+                            spaceStatus.setStatusCommunication(4);
+                        }
+                    }
+                }
+            }
         }
         return buffer;
+    }
+
+    public byte[] readArtix() {
+        bytesToSend = new byte[16];
+        bytesToCreateCRC = new byte[14];
+        bytesToSend[0] = ADDRESS_DEVICE;
+        bytesToSend[1] = READ;
+        boolean b = true;
+        while (b) {
+            if ((currentByte > -1) & (currentByte < 48)) {
+                if (spaceSetting.getInArrayList().get(currentByte).isEnable()) {
+                    bytesToSend[2] = (byte) spaceSetting.getInArrayList().get(currentByte).getRegister();
+                    b = false;
+                } else {
+                    if (currentByte < 47) currentByte++; else currentByte = 96;
+                }
+            } else if ((currentByte > 95) & (currentByte < 144)) {
+                if (spaceSetting.getAdcArrayList().get(currentByte - 96).isEnable()) {
+                    bytesToSend[2] = (byte) spaceSetting.getAdcArrayList().get(currentByte - 96).getRegister();
+                    b = false;
+                } else {
+                    if (currentByte < 143) currentByte++; else currentByte = 0;
+                }
+            }
+        }
+        bytesToSend[3] = 0;
+        bytesToSend[4] = 0;
+        bytesToSend[5] = 0;
+        for (int i = 0; i < bytesToCreateCRC.length; i++) {
+            bytesToCreateCRC[i] = bytesToSend[i];
+        }
+        int crc = (CRC16.getCRC4(bytesToCreateCRC));
+        int high = crc / 256;
+        bytesToSend[14] = (byte) (crc - high * 256);
+        bytesToSend[15] = (byte) high;
+        Log.i("LOG_TAG_1", "Номер регистра " + currentByte + " READ");
+        return bytesToSend;
     }
 
     public int communicationToARTIXint() {
