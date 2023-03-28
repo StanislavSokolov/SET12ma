@@ -426,22 +426,7 @@ public class FragmentUSB extends Fragment {
                             setStatus(status);
                         }
                         bytes = spaceStatus.getCommunication().communicationToARTIX();
-                        if (bytes != null) port.write(bytes, 0); else {
-                            if (!spaceAddress.isEmptyByteQueue()) {
-                                byte[] buffer = spaceAddress.getByteQueue();
-                                s = "";
-                                for (int i = 0; i < buffer.length; i++) {
-                                    s = s + buffer[i];
-                                    s = s + " ";
-                                }
-                            }
-                        }
-                        if (count < 10000) {
-                            count++;
-                        } else {
-                            count = 0;
-                            setValue(s);
-                        }
+                        if (bytes != null) port.write(bytes, 0);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -450,7 +435,7 @@ public class FragmentUSB extends Fragment {
                         int status = spaceStatus.getStatusCommunication();
                         if (prevStatus != status) {
                             prevStatus = status;
-//                            setStatus(status);
+                            setStatus(status);
                         }
                         bytes = spaceStatus.getCommunication().communication();
                         if (bytes != null) port.write(bytes, 0);

@@ -91,6 +91,8 @@ public class Communication {
 
         currentByte = 0;
 
+        countByte = 0;
+
         statusAnswer = false; // true - ответ получен
     }
 
@@ -103,10 +105,120 @@ public class Communication {
 //    }
 
     public byte[] communicationToARTIX() {
-        byte[] buffer = null;
+        byte[] buffer0 = null;
         if (!spaceAddress.isEmptyByteQueue()) {
-//            buffer = spaceAddress.getByteQueue();
+            statusError = false;
             statusAnswer = true;
+            byte[] buffer = spaceAddress.getByteQueue();
+            if (buffer != null) {
+                if (buffer.length == 16) {
+//                    if (!spaceStatus.isReadyFlagRecordingInitialValues()) {
+//                        int highByte = bufferByte[3];
+//                        int lowByte = bufferByte[2];
+//                        if (lowByte < 0) lowByte = bufferByte[2] + 256;
+//                        if (highByte < 0) lowByte = lowByte - 2 * lowByte;
+//                        spaceAddress.setAddressSpace(currentByte, lowByte + highByte*256);
+                        if (currentByte == 47) {
+                            nextByte = 96;
+                        }
+
+                        if (currentByte == 143) {
+                            nextByte = 0;
+                        }
+
+                        if ((currentByte == 47) || (currentByte == 143))
+                            currentByte = nextByte;
+                        else currentByte++;
+//                    } else {
+//                        currentByte = 48;
+//                    }
+                }
+            }
+//            currentByte = buffer.length;
+//            if (countByte == 0) {
+//                // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
+//                bufferByte = new byte[16];
+////                Log.i(LOG_TAG, "Начало сообщения");
+//                statusError = false;
+//                statusAnswer = true;
+//                currentByte = 5;
+//            }
+//
+//            if (buffer.length > 16 - countByte) {
+//                // получили избыточное количество байт в посылке
+//                // остаток положим во временный буфер
+////                Log.i(LOG_TAG, "Избыточное количество байт");
+//                currentByte = 100;
+//            } else {
+//                // получили байты
+//                for (int i = 0; i < buffer.length; i++) {
+//                    bufferByte[i + countByte] = buffer[i];
+//                }
+//                countByte = countByte + buffer.length;
+////                Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
+//            }
+//
+//            if (countByte == 16) {
+////                Log.i(LOG_TAG, "Получили нужное количество байт");
+//                answerTest = "";
+//                for (byte readByte : bufferByte) {
+//                    int bufInt;
+//                    if (readByte < 0) bufInt = readByte + 256;
+//                    else bufInt = readByte;
+//                    answerTest = answerTest + " " + bufInt;
+//                }
+////                Log.i(LOG_TAG, answerTest);
+//                countByte = 0;
+//                if ((bufferByte[0] == ADDRESS_DEVICE) & (bufferByte[1] == READ)) {
+////                    Log.i(LOG_TAG, "Идентификатор корректен");
+//                    // проверяем корректность сообщения по идентификатору
+//                    byte[] bytesToCreateCRC = new byte[bufferByte.length - 2];
+//                    for (int i = 0; i < bytesToCreateCRC.length; i++) {
+//                        bytesToCreateCRC[i] = bufferByte[i];
+//                    }
+//                    crc = (CRC16.getCRC4(bytesToCreateCRC));
+//                    high = crc / 256;
+////                                    answerTest = "";
+////                                    for (byte readByte: buffer) {
+////                                        int bufInt = 0;
+////                                        if (readByte < 0) bufInt = readByte + 256; else bufInt = readByte;
+////                                        answerTest = answerTest + " " + bufInt;
+////                                    }
+////                                    Log.i(LOG_TAG, answerTest);
+//                    if ((bufferByte[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (bufferByte[bytesToCreateCRC.length + 1] == (byte) high)) {
+////                        Log.i(LOG_TAG, "ЦРЦ в порядке");
+//                        if (!spaceStatus.isReadyFlagRecordingInitialValues()) {
+//                            int highByte = bufferByte[3];
+//                            int lowByte = bufferByte[2];
+//                            if (lowByte < 0) lowByte = bufferByte[2] + 256;
+//                            if (highByte < 0) lowByte = lowByte - 2 * lowByte;
+//                            Log.i(LOG_TAG, String.valueOf(lowByte + highByte*256));
+//                            spaceAddress.setAddressSpace(currentByte, lowByte + highByte*256);
+//                            if (currentByte == 47) {
+//                                nextByte = 96;
+//                            }
+//
+//                            if (currentByte == 143) {
+//                                nextByte = 0;
+//                            }
+//
+//                            if ((currentByte == 47) || (currentByte == 143))
+//                                currentByte = nextByte;
+//                            else currentByte++;
+//                        } else {
+//                            currentByte = 48;
+//                        }
+//                        statusError = false;
+//                    } else {
+////                        Log.i(LOG_TAG, "CRC не совпало");
+//                        statusError = true;
+//                    }
+//                } else {
+////                    Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
+//                    statusError = true;
+//                }
+//                statusAnswer = true;
+//            }
         } else {
             if (statusAnswer) {
                 countWaitConnection = 0;
@@ -126,7 +238,7 @@ public class Communication {
                     }
 
                     if (spaceStatus.isReadyFlagRecordingInitialValues()) {
-                        setCommand(WRITE);
+//                        setCommand(WRITE);
 //                        return writeArtix();
                         return readArtix();
                     } else {
@@ -144,7 +256,7 @@ public class Communication {
 //                                        }
 //                                        currentByte = currentByte + elementQueue.getId();
 //                                        currentByte = elementQueue.getRegister();
-                            setCommand(WRITE);
+//                            setCommand(WRITE);
 //                            return writeArtix(elementQueue.getRegister(), elementQueue.getData());
                             return readArtix();
                         } else {
@@ -171,7 +283,7 @@ public class Communication {
                         } else {
                             countWaitConnection = 0;
                             counterAttemptsToConection = counterAttemptsToConection + 1;
-                            buffer = readArtix();
+                            buffer0 = readArtix();
                         }
                     } else {
                         spaceStatus.setReadyFlagToExchangeData(false);
@@ -200,7 +312,7 @@ public class Communication {
                 }
             }
         }
-        return buffer;
+        return buffer0;
     }
 
     public byte[] readArtix() {
@@ -226,6 +338,8 @@ public class Communication {
                 }
             }
         }
+//        if (currentByte < 255) currentByte++; else currentByte = 0;
+        bytesToSend[2] = (byte) currentByte;
         bytesToSend[3] = 0;
         bytesToSend[4] = 0;
         bytesToSend[5] = 0;
