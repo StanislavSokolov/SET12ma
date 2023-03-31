@@ -29,6 +29,7 @@ public class Communication {
     }
 
     private final int ADDRESS_DEVICE = 10;
+    private final int INIT_ARTIX = 100;
     private final int READ = 56;
     private final int WRITE = 57;
     private final int INIT_LOAD = 58;
@@ -41,6 +42,8 @@ public class Communication {
 
 //    for Artix
     private final int BUFFER_SIZE = 16;
+
+    byte[] bytesToInitArtix = null;
 
     byte[] bytesToSend = null;
     byte[] bytesToCreateCRC = null;
@@ -75,8 +78,7 @@ public class Communication {
     boolean statusAnswer = false; // true - ответ получен
 
     public void prepare() {
-        setCommand(WRITE);
-//        setCommand(READ);
+        setCommand(INIT_ARTIX);
         statusError = true;
 
         answerTest = "";
@@ -114,6 +116,25 @@ public class Communication {
             byte[] buffer = spaceAddress.getByteQueue();
             if (buffer != null) {
                 switch (getCommand()) {
+                    case INIT_ARTIX:
+                        if (buffer.length == BUFFER_SIZE) {
+                            if ((buffer[0] == ADDRESS_DEVICE) & (buffer[1] == INIT_ARTIX)) {
+                                // проверяем корректность сообщения по идентификатору
+                                byte[] bytesToCreateCRC = new byte[buffer.length - 2];
+                                for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                                    bytesToCreateCRC[i] = buffer[i];
+                                }
+                                crc = (CRC16.getCRC4(bytesToCreateCRC));
+                                high = crc / 256;
+                                if ((buffer[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (buffer[bytesToCreateCRC.length + 1] == (byte) high)) {
+                                    statusError = false;
+                                    statusAnswer = true;
+                                } else {
+                                    statusError = true;
+                                }
+                            }
+                        }
+                    break;
                     case READ:
                         if (buffer.length == BUFFER_SIZE) {
                             if ((buffer[0] == ADDRESS_DEVICE) & (buffer[1] == READ)) {
@@ -125,12 +146,11 @@ public class Communication {
                                 crc = (CRC16.getCRC4(bytesToCreateCRC));
                                 high = crc / 256;
                                 if ((buffer[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (buffer[bytesToCreateCRC.length + 1] == (byte) high)) {
-                                    if (!spaceStatus.isReadyFlagRecordingInitialValues()) {
-                                        int highByte = bufferByte[3];
-                                        int lowByte = bufferByte[2];
-                                        if (lowByte < 0) lowByte = bufferByte[2] + 256;
+//                                    if (!spaceStatus.isReadyFlagRecordingInitialValues()) {
+                                        int highByte = buffer[3];
+                                        int lowByte = buffer[2];
+                                        if (lowByte < 0) lowByte = buffer[2] + 256;
                                         if (highByte < 0) lowByte = lowByte - 2 * lowByte;
-                                        Log.i(LOG_TAG, String.valueOf(lowByte + highByte * 256));
                                         spaceAddress.setAddressSpace(currentByte, lowByte + highByte * 256);
                                         if (currentByte == 47) {
                                             nextByte = 96;
@@ -143,9 +163,9 @@ public class Communication {
                                         if ((currentByte == 47) || (currentByte == 143))
                                             currentByte = nextByte;
                                         else currentByte++;
-                                    } else {
-                                        currentByte = 48;
-                                    }
+//                                    } else {
+//                                        currentByte = 48;
+//                                    }
                                     statusError = false;
                                 } else {
 //                                    Log.i(LOG_TAG, "CRC не совпало");
@@ -171,7 +191,7 @@ public class Communication {
                                 if ((buffer[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (buffer[bytesToCreateCRC.length + 1] == (byte) high)) {
                                     if (currentByte == 207) {
                                         spaceStatus.setReadyFlagRecordingInitialValues(false);
-                                        nextByte = 48;
+                                        nextByte = 0;
                                     }
                                     if (currentByte == 95) {
                                         nextByte = 144;
@@ -217,35 +237,32 @@ public class Communication {
                     if (spaceStatus.isReadyFlagRecordingInitialValues()) {
                         setCommand(WRITE);
                         return writeArtix();
-//                        return readArtix();
                     } else {
-                        setCommand(WRITE);
-                        return writeArtix();
-//                        if (!spaceAddress.isEmptyQueue()) {
-//                            if (!latchQueue) {
-//                                previousByte = currentByte;
-//                                latchQueue = true;
-//                            }
-//                            ElementQueue elementQueue = spaceAddress.getElementQueue();
-////                                        if (elementQueue.getSectionNumber() == 0) {
-////                                            currentByte = 48;
-////                                        }
-////                                        if (elementQueue.getSectionNumber() == 1) {
-////                                            currentByte = 144;
-////                                        }
-////                                        currentByte = currentByte + elementQueue.getId();
-////                                        currentByte = elementQueue.getRegister();
-//                            setCommand(WRITE);
-//                            return writeArtix(elementQueue.getRegister(), elementQueue.getData());
-////                            return readArtix();
-//                        } else {
-//                            if (latchQueue) {
-//                                latchQueue = false;
-//                                currentByte = previousByte;
-//                            }
-//                            setCommand(READ);
+                        if (!spaceAddress.isEmptyQueue()) {
+                            if (!latchQueue) {
+                                previousByte = currentByte;
+                                latchQueue = true;
+                            }
+                            ElementQueue elementQueue = spaceAddress.getElementQueue();
+//                                        if (elementQueue.getSectionNumber() == 0) {
+//                                            currentByte = 48;
+//                                        }
+//                                        if (elementQueue.getSectionNumber() == 1) {
+//                                            currentByte = 144;
+//                                        }
+//                                        currentByte = currentByte + elementQueue.getId();
+//                                        currentByte = elementQueue.getRegister();
+                            setCommand(WRITE);
+                            return writeArtix(elementQueue.getRegister(), elementQueue.getData());
 //                            return readArtix();
-//                        }
+                        } else {
+                            if (latchQueue) {
+                                latchQueue = false;
+                                currentByte = previousByte;
+                            }
+                            setCommand(READ);
+                            return readArtix();
+                        }
                     }
                 } else {
                     spaceStatus.setReadyFlagToExchangeData(false);
@@ -255,15 +272,14 @@ public class Communication {
                 }
             } else {
                 if (latchInit) {
-//                    setCommand(READ);
-                    if (counterAttemptsToConection < 10) {
-                        if (countWaitConnection < 5000000) {
+                    setCommand(INIT_ARTIX);
+                    if (counterAttemptsToConection < 30) {
+                        if (countWaitConnection < 500000) {
                             countWaitConnection = countWaitConnection + 1;
                         } else {
                             countWaitConnection = 0;
+                            buffer0 = initArtix(counterAttemptsToConection);
                             counterAttemptsToConection = counterAttemptsToConection + 1;
-                            buffer0 = writeArtix();
-//                            buffer0 = readArtix();
                         }
                     } else {
                         spaceStatus.setReadyFlagToExchangeData(false);
@@ -275,7 +291,7 @@ public class Communication {
                 } if (spaceStatus.isReadyFlagToExchangeData()) {
 //                    if (getCommand() == READ) {
                         if (counterAttemptsToConection < 10) {
-                            if (countWaitConnection < 5000000) {
+                            if (countWaitConnection < 500000) {
                                 countWaitConnection = countWaitConnection + 1;
                             } else {
                                 countWaitConnection = 0;
@@ -419,6 +435,30 @@ public class Communication {
         int high = crc / 256;
         bytesToSend[BUFFER_SIZE - 2] = (byte) (crc - high * 256);
         bytesToSend[BUFFER_SIZE - 1] = (byte) high;
+        return bytesToSend;
+    }
+
+    public byte[] initArtix(int counterAttemptsToConection) {
+        bytesToSend = null;
+        if (counterAttemptsToConection < 16) {
+            bytesToInitArtix = new byte[BUFFER_SIZE];
+            bytesToCreateCRC = new byte[BUFFER_SIZE - 2];
+
+            bytesToInitArtix[0] = ADDRESS_DEVICE;
+            bytesToInitArtix[1] = INIT_ARTIX;
+            bytesToInitArtix[2] = (byte) 48;
+
+            for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                bytesToCreateCRC[i] = bytesToInitArtix[i];
+            }
+            int crc = (CRC16.getCRC4(bytesToCreateCRC));
+            int high = crc / 256;
+            bytesToInitArtix[BUFFER_SIZE - 2] = (byte) (crc - high * 256);
+            bytesToInitArtix[BUFFER_SIZE - 1] = (byte) high;
+
+            bytesToSend = new byte[1];
+            bytesToSend[0] = bytesToInitArtix[counterAttemptsToConection];
+        }
         return bytesToSend;
     }
 
