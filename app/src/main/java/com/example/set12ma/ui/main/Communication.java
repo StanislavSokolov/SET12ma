@@ -29,6 +29,7 @@ public class Communication {
     }
 
     private final int ADDRESS_DEVICE = 10;
+    private final int INIT_ARTIX = 100;
     private final int READ = 56;
     private final int WRITE = 57;
     private final int INIT_LOAD = 58;
@@ -38,6 +39,11 @@ public class Communication {
     private int BYTE_UPLOAD = 2048;
     private final int ADDRESS_UPLOAD = 655360; // 000A0000
     private final int COUNT = 170;
+
+//    for Artix
+    private final int BUFFER_SIZE = 16;
+
+    byte[] bytesToInitArtix = null;
 
     byte[] bytesToSend = null;
     byte[] bytesToCreateCRC = null;
@@ -72,7 +78,7 @@ public class Communication {
     boolean statusAnswer = false; // true - ответ получен
 
     public void prepare() {
-        setCommand(READ);
+        setCommand(INIT_ARTIX);
         statusError = true;
 
         answerTest = "";
@@ -89,9 +95,383 @@ public class Communication {
         counterAttemptsToConection = 0;
         counterUnsuccessfulSending = 0;
 
-        currentByte = 0;
+        currentByte = 48;
+
+        countByte = 0;
 
         statusAnswer = false; // true - ответ получен
+    }
+
+//    public byte[] communicationToARTIX() {
+//        byte[] buffer = null;
+//        if (!spaceAddress.isEmptyByteQueue()) {
+//            buffer = spaceAddress.getByteQueue();
+//        }
+//        return buffer;
+//    }
+
+    public byte[] communicationToARTIX() {
+        byte[] buffer0 = null;
+        if (!spaceAddress.isEmptyByteQueue()) {
+            byte[] buffer = spaceAddress.getByteQueue();
+            if (buffer != null) {
+                switch (getCommand()) {
+                    case INIT_ARTIX:
+                        if (buffer.length == BUFFER_SIZE) {
+                            if (buffer[0] == ADDRESS_DEVICE) {
+                                // проверяем корректность сообщения по идентификатору
+                                byte[] bytesToCreateCRC = new byte[buffer.length - 2];
+                                for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                                    bytesToCreateCRC[i] = buffer[i];
+                                }
+                                crc = (CRC16.getCRC4(bytesToCreateCRC));
+                                high = crc / 256;
+                                if ((buffer[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (buffer[bytesToCreateCRC.length + 1] == (byte) high)) {
+                                    statusError = false;
+                                    statusAnswer = true;
+                                } else {
+                                    statusError = true;
+                                }
+                            }
+                        }
+                    break;
+                    case READ:
+                        if (buffer.length == BUFFER_SIZE) {
+                            if ((buffer[0] == ADDRESS_DEVICE) & (buffer[1] == READ)) {
+                                // проверяем корректность сообщения по идентификатору
+                                byte[] bytesToCreateCRC = new byte[buffer.length - 2];
+                                for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                                    bytesToCreateCRC[i] = buffer[i];
+                                }
+                                crc = (CRC16.getCRC4(bytesToCreateCRC));
+                                high = crc / 256;
+                                if ((buffer[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (buffer[bytesToCreateCRC.length + 1] == (byte) high)) {
+//                                    if (!spaceStatus.isReadyFlagRecordingInitialValues()) {
+                                        int highByte = buffer[3];
+                                        int lowByte = buffer[2];
+                                        if (lowByte < 0) lowByte = buffer[2] + 256;
+                                        if (highByte < 0) lowByte = lowByte - 2 * lowByte;
+                                        spaceAddress.setAddressSpace(currentByte, lowByte + highByte * 256);
+                                        if (currentByte == 47) {
+                                            nextByte = 96;
+                                        }
+
+                                        if (currentByte == 143) {
+                                            nextByte = 0;
+                                        }
+
+                                        if ((currentByte == 47) || (currentByte == 143))
+                                            currentByte = nextByte;
+                                        else currentByte++;
+//                                    } else {
+//                                        currentByte = 48;
+//                                    }
+                                    statusError = false;
+                                } else {
+//                                    Log.i(LOG_TAG, "CRC не совпало");
+                                    statusError = true;
+                                }
+                            } else {
+//                                Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
+                                statusError = true;
+                            }
+                            statusAnswer = true;
+                        }
+                        break;
+                    case WRITE:
+                        if (buffer.length == BUFFER_SIZE) {
+                            if ((buffer[0] == ADDRESS_DEVICE) & (buffer[1] == WRITE)) {
+                                // проверяем корректность сообщения по идентификатору
+                                byte[] bytesToCreateCRC = new byte[buffer.length - 2];
+                                for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                                    bytesToCreateCRC[i] = buffer[i];
+                                }
+                                crc = (CRC16.getCRC4(bytesToCreateCRC));
+                                high = crc / 256;
+                                if ((buffer[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (buffer[bytesToCreateCRC.length + 1] == (byte) high)) {
+                                    if (currentByte == 207) {
+                                        spaceStatus.setReadyFlagRecordingInitialValues(false);
+                                        nextByte = 0;
+                                    }
+                                    if (currentByte == 95) {
+                                        nextByte = 144;
+                                    }
+                                    if ((currentByte == 95) || (currentByte == 207)) currentByte = nextByte;
+                                    else currentByte++;
+                                    statusError = false;
+                                } else {
+//                                    Log.i(LOG_TAG, "CRC не совпало");
+                                    statusError = true;
+                                }
+                            } else {
+//                                Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
+                                statusError = true;
+                            }
+                            statusAnswer = true;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                statusError = true;
+            }
+        } else {
+            if (statusAnswer) {
+                countWaitConnection = 0;
+                counterAttemptsToConection = 0;
+                if (latchInit) {
+                    spaceStatus.setReadyFlagToExchangeData(true);
+                    spaceStatus.setStatusCommunication(1);
+                }
+                latchInit = false;
+                statusAnswer = false;
+
+                if (counterUnsuccessfulSending < maxValueUnsuccessfulSending) {
+                    if (statusError) {
+                        counterUnsuccessfulSending = counterUnsuccessfulSending + 1;
+                    } else {
+                        counterUnsuccessfulSending = 0;
+                    }
+
+                    if (spaceStatus.isReadyFlagRecordingInitialValues()) {
+                        setCommand(WRITE);
+                        return writeArtix();
+                    } else {
+                        if (!spaceAddress.isEmptyQueue()) {
+                            if (!latchQueue) {
+                                previousByte = currentByte;
+                                latchQueue = true;
+                            }
+                            ElementQueue elementQueue = spaceAddress.getElementQueue();
+//                                        if (elementQueue.getSectionNumber() == 0) {
+//                                            currentByte = 48;
+//                                        }
+//                                        if (elementQueue.getSectionNumber() == 1) {
+//                                            currentByte = 144;
+//                                        }
+//                                        currentByte = currentByte + elementQueue.getId();
+//                                        currentByte = elementQueue.getRegister();
+                            setCommand(WRITE);
+                            return writeArtix(elementQueue.getRegister(), elementQueue.getData());
+//                            return readArtix();
+                        } else {
+                            if (latchQueue) {
+                                latchQueue = false;
+                                currentByte = previousByte;
+                            }
+                            setCommand(READ);
+                            return readArtix();
+                        }
+                    }
+                } else {
+                    spaceStatus.setReadyFlagToExchangeData(false);
+                    spaceStatus.setDevice("");
+                    spaceStatus.setReadyFlagRecordingInitialValues(false);
+                    spaceStatus.setStatusCommunication(2);
+                }
+            } else {
+                if (latchInit) {
+//                    if (spaceStatus.getDevice().equals("Artix"))
+                    // надо добавить проверку о том, известно ли нам, с каким устройством мы общаемся, тогда не надо повторно использовать функцию initArtix.
+                    // иначе повторно к устройству подключиться не удается.
+                    setCommand(INIT_ARTIX);
+                    if (counterAttemptsToConection < 30) {
+                        if (countWaitConnection < 500000) {
+                            countWaitConnection = countWaitConnection + 1;
+                        } else {
+                            countWaitConnection = 0;
+                            buffer0 = initArtix(counterAttemptsToConection);
+                            counterAttemptsToConection = counterAttemptsToConection + 1;
+                        }
+                    } else {
+                        spaceStatus.setReadyFlagToExchangeData(false);
+                        spaceStatus.setDevice("");;
+                        spaceStatus.setReadyFlagRecordingInitialValues(false);
+                        spaceStatus.setStatusCommunication(3);
+                        latchInit = false;
+                    }
+                } if (spaceStatus.isReadyFlagToExchangeData()) {
+//                    if (getCommand() == READ) {
+                        if (counterAttemptsToConection < 10) {
+                            if (countWaitConnection < 500000) {
+                                countWaitConnection = countWaitConnection + 1;
+                            } else {
+                                countWaitConnection = 0;
+                                counterAttemptsToConection = counterAttemptsToConection + 1;
+                            }
+                        } else {
+                            spaceStatus.setReadyFlagToExchangeData(false);
+                            spaceStatus.setDevice("");
+                            spaceStatus.setReadyFlagRecordingInitialValues(false);
+                            latchInit = false;
+                            spaceStatus.setStatusCommunication(4);
+                        }
+//                    }
+                }
+            }
+        }
+        return buffer0;
+    }
+
+    public byte[] writeArtix() {
+        bytesToSend = new byte[BUFFER_SIZE];
+        bytesToCreateCRC = new byte[BUFFER_SIZE - 2];
+        bytesToSend[0] = ADDRESS_DEVICE;
+        bytesToSend[1] = WRITE;
+        boolean b = true;
+        while (b) {
+            if ((currentByte > 47) & (currentByte < 96)) {
+                if (spaceSetting.getOutArrayList().get(currentByte - 48).isEnable()) {
+                    bytesToSend[2] = (byte) spaceSetting.getOutArrayList().get(currentByte - 48).getRegister();
+                    b = false;
+                } else {
+                    if (currentByte < 95) currentByte++; else currentByte = 144;
+                }
+            } else if ((currentByte > 143) & (currentByte < 208)) {
+                if (spaceSetting.getTkArrayList().get(currentByte - 144).isEnable()) {
+                    bytesToSend[2] = (byte) spaceSetting.getTkArrayList().get(currentByte - 144).getRegister();
+                    b = false;
+                } else {
+                    // не сможем выйти из цикла;
+                    // здесь надо запрещать передачу данных, если cuttentByte == 207
+                    // и возвращаться в менеджер потоков и обнулить значения контролирующих
+                    // положение дел переменных, чтобы начать новую передачу.
+                    if (currentByte < 206) currentByte++; else currentByte = 48;
+                }
+            }
+        }
+        bytesToSend[2] = (byte) currentByte;
+        bytesToSend[3] = 0;
+        int data = spaceAddress.getAddressSpace(currentByte);
+        int high = data / 256;
+        bytesToSend[4] = (byte) high;
+        bytesToSend[5] = (byte) (data - high * 256);;
+        bytesToSend[6] = 0;
+        bytesToSend[7] = 0;
+        bytesToSend[8] = 0;
+        bytesToSend[9] = 0;
+        bytesToSend[10] = 0;
+        bytesToSend[11] = 0;
+        bytesToSend[12] = 0;
+        bytesToSend[13] = 0;
+
+        for (int i = 0; i < bytesToCreateCRC.length; i++) {
+            bytesToCreateCRC[i] = bytesToSend[i];
+        }
+        int crc = (CRC16.getCRC4(bytesToCreateCRC));
+        high = crc / 256;
+        bytesToSend[BUFFER_SIZE - 2] = (byte) (crc - high * 256);
+        bytesToSend[BUFFER_SIZE - 1] = (byte) high;
+        return bytesToSend;
+    }
+
+    public byte[] writeArtix(int register, int value) {
+        bytesToSend = new byte[BUFFER_SIZE];
+        bytesToCreateCRC = new byte[BUFFER_SIZE - 2];
+        bytesToSend[0] = ADDRESS_DEVICE;
+        bytesToSend[1] = WRITE;
+        bytesToSend[2] = (byte) register;
+        bytesToSend[3] = 0;
+        int high = value / 256;
+        bytesToSend[4] = (byte) high;
+        bytesToSend[5] = (byte) (value - high * 256);;
+        bytesToSend[6] = 0;
+        bytesToSend[7] = 0;
+        bytesToSend[8] = 0;
+        bytesToSend[9] = 0;
+        bytesToSend[10] = 0;
+        bytesToSend[11] = 0;
+        bytesToSend[12] = 0;
+        bytesToSend[13] = 0;
+
+        for (int i = 0; i < bytesToCreateCRC.length; i++) {
+            bytesToCreateCRC[i] = bytesToSend[i];
+        }
+        int crc = (CRC16.getCRC4(bytesToCreateCRC));
+        high = crc / 256;
+        bytesToSend[BUFFER_SIZE - 2] = (byte) (crc - high * 256);
+        bytesToSend[BUFFER_SIZE - 1] = (byte) high;
+        return bytesToSend;
+    }
+
+    public byte[] readArtix() {
+        bytesToSend = new byte[16];
+        bytesToCreateCRC = new byte[14];
+        bytesToSend[0] = ADDRESS_DEVICE;
+        bytesToSend[1] = READ;
+        boolean b = true;
+        while (b) {
+            if ((currentByte > -1) & (currentByte < 48)) {
+                if (spaceSetting.getInArrayList().get(currentByte).isEnable()) {
+                    bytesToSend[2] = (byte) spaceSetting.getInArrayList().get(currentByte).getRegister();
+                    b = false;
+                } else {
+                    if (currentByte < 47) currentByte++; else currentByte = 96;
+                }
+            } else if ((currentByte > 95) & (currentByte < 144)) {
+                if (spaceSetting.getAdcArrayList().get(currentByte - 96).isEnable()) {
+                    bytesToSend[2] = (byte) spaceSetting.getAdcArrayList().get(currentByte - 96).getRegister();
+                    b = false;
+                } else {
+                    if (currentByte < 143) currentByte++; else currentByte = 0;
+                }
+            }
+        }
+//        if (currentByte < 255) currentByte++; else currentByte = 0;
+        bytesToSend[2] = (byte) currentByte;
+        bytesToSend[3] = 0;
+        bytesToSend[4] = 0;
+        bytesToSend[5] = 0;
+        bytesToSend[6] = 0;
+        bytesToSend[7] = 0;
+        bytesToSend[8] = 0;
+        bytesToSend[9] = 0;
+        bytesToSend[10] = 0;
+        bytesToSend[11] = 0;
+        bytesToSend[12] = 0;
+        bytesToSend[13] = 0;
+        for (int i = 0; i < bytesToCreateCRC.length; i++) {
+            bytesToCreateCRC[i] = bytesToSend[i];
+        }
+        int crc = (CRC16.getCRC4(bytesToCreateCRC));
+        int high = crc / 256;
+        bytesToSend[BUFFER_SIZE - 2] = (byte) (crc - high * 256);
+        bytesToSend[BUFFER_SIZE - 1] = (byte) high;
+        return bytesToSend;
+    }
+
+    public byte[] initArtix(int counterAttemptsToConection) {
+        bytesToSend = null;
+        if (counterAttemptsToConection < 16) {
+            bytesToInitArtix = new byte[BUFFER_SIZE];
+            bytesToCreateCRC = new byte[BUFFER_SIZE - 2];
+
+            bytesToInitArtix[0] = ADDRESS_DEVICE;
+            bytesToInitArtix[1] = INIT_ARTIX;
+            bytesToInitArtix[2] = (byte) 48;
+
+            for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                bytesToCreateCRC[i] = bytesToInitArtix[i];
+            }
+            int crc = (CRC16.getCRC4(bytesToCreateCRC));
+            int high = crc / 256;
+            bytesToInitArtix[BUFFER_SIZE - 2] = (byte) (crc - high * 256);
+            bytesToInitArtix[BUFFER_SIZE - 1] = (byte) high;
+
+            bytesToSend = new byte[1];
+            bytesToSend[0] = bytesToInitArtix[counterAttemptsToConection];
+        }
+        return bytesToSend;
+    }
+
+    public int communicationToARTIXint() {
+        byte[] buffer = null;
+        if (!spaceAddress.isEmptyByteQueue()) {
+            buffer = spaceAddress.getByteQueue();
+            return buffer.length;
+        }
+        return 100;
     }
 
     public byte[] communication() {
@@ -779,14 +1159,10 @@ public class Communication {
         bytesToSend[1] = INIT_LOAD;
         byte[] bytesToSendBuf;
         bytesToSendBuf = determineDownloadMode();
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[0]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[1]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[2]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[3]));
-        bytesToSend[2] = bytesToSendBuf[0];
-        bytesToSend[3] = bytesToSendBuf[1];
-        bytesToSend[4] = bytesToSendBuf[2];
-        bytesToSend[5] = bytesToSendBuf[3];
+        bytesToSend[2] = 0;
+        bytesToSend[3] = 0;
+        bytesToSend[4] = 10;
+        bytesToSend[5] = 0;
         int i = (spaceMemory.getMemorySpaceArrayListSize() - 1)* spaceMemory.getMemorySpaceByteLength() + spaceMemory.getMemorySpaceByteLength(spaceMemory.getMemorySpaceArrayListSize() - 1);
         int highH = i/16777216;
         bytesToSend[9] = (byte) highH;
@@ -805,6 +1181,18 @@ public class Communication {
         bytesToSend[11] = (byte) high;
 
         Log.i("LOG_TAG_1", "START INIT LOAD");
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[0]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[1]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[2]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[3]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[4]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[5]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[6]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[7]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[8]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[9]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[10]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[11]));
         return bytesToSend;
     }
 
@@ -869,18 +1257,13 @@ public class Communication {
         bytesToSend[1] = EXTEND;
         byte[] bytesToSendBuf;
         bytesToSendBuf = determineDownloadMode();
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[0]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[1]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[2]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[3]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSendBuf[4]));
-        bytesToSend[2] = bytesToSendBuf[0];
-        bytesToSend[3] = bytesToSendBuf[1];
-        bytesToSend[4] = bytesToSendBuf[2];
-        bytesToSend[5] = bytesToSendBuf[3];
-        bytesToSend[6] = 0;
-        bytesToSend[7] = 0;
-        bytesToSend[8] = 0;
+        bytesToSend[2] = 0;
+        bytesToSend[3] = 0;
+        bytesToSend[4] = 10;
+        bytesToSend[5] = 0;
+        bytesToSend[6] = 124;
+        bytesToSend[7] = 50;
+        bytesToSend[8] = 15;
         bytesToSend[9] = 0;
         int i = (spaceMemory.getMemorySpaceArrayListSize() - 1)* spaceMemory.getMemorySpaceByteLength() + spaceMemory.getMemorySpaceByteLength(spaceMemory.getMemorySpaceArrayListSize() - 1);
         int highH = i/16777216;
@@ -900,6 +1283,24 @@ public class Communication {
         int high = crc / 256;
         bytesToSend[bytesToSend.length-2] = (byte) (crc - high * 256);
         bytesToSend[bytesToSend.length-1] = (byte) high;
+
+        Log.i("LOG_TAG_1", "START INIT LOAD");
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[0]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[1]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[2]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[3]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[4]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[5]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[6]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[7]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[8]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[9]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[10]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[11]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[12]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[13]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[14]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[15]));
         return bytesToSend;
     }
 
@@ -933,6 +1334,19 @@ public class Communication {
         bytesToSend[bytesToSend.length-1] = (byte) high;
 //            Log.i(LOG_TAG, "highH " + highH + "; highL " + highL + "; lowH " + lowH + "; lowL " + lowL + ";");
         Log.i("LOG_TAG_1", "DOWNLOAD");
+
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[0]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[1]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[2]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[3]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[4]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[5]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[6]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[7]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[8]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[9]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[10]));
+        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[11]));
         return bytesToSend;
     }
 }

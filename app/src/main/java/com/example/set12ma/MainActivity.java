@@ -2,7 +2,6 @@ package com.example.set12ma;
 
 import android.annotation.SuppressLint;
 import android.content.*;
-import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,18 +18,6 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.moxa.mxuportapi.*;
-import com.moxa.mxuportapi.MxException;
-import com.moxa.mxuportapi.MxUPort;
-import com.moxa.mxuportapi.MxException.ErrorCode;
-import com.moxa.mxuportapi.MxUPort.*;
-import com.moxa.mxuportapi.MxUPortService;
-import com.moxa.mxuportapi.Version;
-
-import java.util.Iterator;
-import java.util.List;
-
-import static com.moxa.mxuportapi.MxUPortService.getPortInfoList;
 
 public class MainActivity extends AppCompatActivity implements ResultReceiverAddressSpace, ResultReceiverMemorySpace, ResultReceiverStatusSpace, ResultReceiverFileLogsSpace, ResultReceiverSettingSpace {
 
@@ -56,14 +43,15 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 
     ViewPager viewPagerSetting;
 
+    ViewPager viewPagerDataExchange;
+
     MainActivitySectionsPagerAdapterDataInput sectionsPagerAdapterDataInput;
     MainActivitySectionsPagerAdapterDataOutput sectionsPagerAdapterDataOutput;
     MainActivitySectionsPagerAdapterLoadingSoftware sectionsPagerAdapterLoadingSoftware;
     MainActivitySectionsPagerAdapterLogging sectionsPagerAdapterLogging;
     MainActivitySectionsPagerAdapterConnecting sectionsPagerAdapterConnecting;
     MainActivitySectionsPagerAdapterSetting sectionsPagerAdapterSetting;
-
-    String selectedTabPosition = "selectedTabPosition";
+    MainActivitySectionsPagerAdapterDataExchange sectionsPagerAdapterDataExchange;
 
     int viewPagerNumber = 0;
 
@@ -87,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
         sectionsPagerAdapterLogging = new MainActivitySectionsPagerAdapterLogging(this, getSupportFragmentManager());
         sectionsPagerAdapterConnecting = new MainActivitySectionsPagerAdapterConnecting(this, getSupportFragmentManager());
         sectionsPagerAdapterSetting = new MainActivitySectionsPagerAdapterSetting(this, getSupportFragmentManager());
+        sectionsPagerAdapterDataExchange = new MainActivitySectionsPagerAdapterDataExchange(this, getSupportFragmentManager());
 
         // Terminal
         viewPagerDataInput = findViewById(R.id.view_pager_dataInput);
@@ -108,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
 //        viewPagerConnecting.setVisibility(View.INVISIBLE);
         viewPagerSetting = findViewById(R.id.view_pager_setting);
         viewPagerSetting.setAdapter(sectionsPagerAdapterSetting);
+        viewPagerDataExchange = findViewById(R.id.view_pager_dataExchange);
+        viewPagerDataExchange.setAdapter(sectionsPagerAdapterDataExchange);
 
         // main tab
         tabsSET12MA = findViewById(R.id.tabs_SET12MA);
@@ -193,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
                 for (int i = 0; i < 8; i++) {
                     editor.putString("tk_" + j + "_" + i + "_name", spaceSetting.getTkArrayList().get(i+j*8).getName());
                     editor.putInt("tk_" + j + "_" + i + "_register", spaceSetting.getTkArrayList().get(i+j*8).getRegister());
-                    editor.putBoolean("in_" + j + "_" + i + "_enable", spaceSetting.getInArrayList().get(i+j*16).isEnable());
+                    editor.putBoolean("in_" + j + "_" + i + "_enable", spaceSetting.getTkArrayList().get(i+j*8).isEnable());
                 }
             }
 
@@ -310,6 +301,9 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
             case R.id.menu_setting:
                 upDateViewPager(5);
                 return true;
+            case R.id.menu_dataExchange:
+                upDateViewPager(6);
+                return true;
         }
 //        headerView.setText(item.getTitle());
         return super.onOptionsItemSelected(item);
@@ -325,6 +319,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
             viewPagerDataInput.setVisibility(View.VISIBLE);
             viewPagerDataOutput.setVisibility(View.INVISIBLE);
             viewPagerSetting.setVisibility(View.INVISIBLE);
+            viewPagerDataExchange.setVisibility(View.INVISIBLE);
             getSupportActionBar().setTitle("Входы");
             viewPagerNumber = 1;
         }
@@ -337,6 +332,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
             viewPagerDataInput.setVisibility(View.INVISIBLE);
             viewPagerDataOutput.setVisibility(View.VISIBLE);
             viewPagerSetting.setVisibility(View.INVISIBLE);
+            viewPagerDataExchange.setVisibility(View.INVISIBLE);
             getSupportActionBar().setTitle("Выходы");
             viewPagerNumber = 2;
         }
@@ -349,6 +345,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
             viewPagerDataInput.setVisibility(View.INVISIBLE);
             viewPagerDataOutput.setVisibility(View.INVISIBLE);
             viewPagerSetting.setVisibility(View.INVISIBLE);
+            viewPagerDataExchange.setVisibility(View.INVISIBLE);
             getSupportActionBar().setTitle("Подключение");
             viewPagerNumber = 0;
         }
@@ -361,6 +358,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
             viewPagerDataInput.setVisibility(View.INVISIBLE);
             viewPagerDataOutput.setVisibility(View.INVISIBLE);
             viewPagerSetting.setVisibility(View.INVISIBLE);
+            viewPagerDataExchange.setVisibility(View.INVISIBLE);
             getSupportActionBar().setTitle("Логирование");
             viewPagerNumber = 3;
         }
@@ -373,6 +371,7 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
             viewPagerDataInput.setVisibility(View.INVISIBLE);
             viewPagerDataOutput.setVisibility(View.INVISIBLE);
             viewPagerSetting.setVisibility(View.INVISIBLE);
+            viewPagerDataExchange.setVisibility(View.INVISIBLE);
             getSupportActionBar().setTitle("Загрузка ПО");
             viewPagerNumber = 4;
         }
@@ -385,8 +384,22 @@ public class MainActivity extends AppCompatActivity implements ResultReceiverAdd
             viewPagerDataInput.setVisibility(View.INVISIBLE);
             viewPagerDataOutput.setVisibility(View.INVISIBLE);
             viewPagerSetting.setVisibility(View.VISIBLE);
+            viewPagerDataExchange.setVisibility(View.INVISIBLE);
             getSupportActionBar().setTitle("Настройки");
             viewPagerNumber = 5;
+        }
+        if (value == 6) {
+            tabsSET12MA.setupWithViewPager(viewPagerDataExchange);
+            tabsSET12MA.setVisibility(View.INVISIBLE);
+            viewPagerConnecting.setVisibility(View.INVISIBLE);
+            viewPagerLogging.setVisibility(View.INVISIBLE);
+            viewPagerLoadingSoftware.setVisibility(View.INVISIBLE);
+            viewPagerDataInput.setVisibility(View.INVISIBLE);
+            viewPagerDataOutput.setVisibility(View.INVISIBLE);
+            viewPagerSetting.setVisibility(View.INVISIBLE);
+            viewPagerDataExchange.setVisibility(View.VISIBLE);
+            getSupportActionBar().setTitle("Тест");
+            viewPagerNumber = 6;
         }
     }
 
