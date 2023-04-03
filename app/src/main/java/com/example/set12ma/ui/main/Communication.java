@@ -118,7 +118,7 @@ public class Communication {
                 switch (getCommand()) {
                     case INIT_ARTIX:
                         if (buffer.length == BUFFER_SIZE) {
-                            if ((buffer[0] == ADDRESS_DEVICE) & (buffer[1] == INIT_ARTIX)) {
+                            if (buffer[0] == ADDRESS_DEVICE) {
                                 // проверяем корректность сообщения по идентификатору
                                 byte[] bytesToCreateCRC = new byte[buffer.length - 2];
                                 for (int i = 0; i < bytesToCreateCRC.length; i++) {
@@ -272,6 +272,9 @@ public class Communication {
                 }
             } else {
                 if (latchInit) {
+//                    if (spaceStatus.getDevice().equals("Artix"))
+                    // надо добавить проверку о том, известно ли нам, с каким устройством мы общаемся, тогда не надо повторно использовать функцию initArtix.
+                    // иначе повторно к устройству подключиться не удается.
                     setCommand(INIT_ARTIX);
                     if (counterAttemptsToConection < 30) {
                         if (countWaitConnection < 500000) {
