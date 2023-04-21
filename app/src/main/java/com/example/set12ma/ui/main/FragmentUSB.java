@@ -374,6 +374,14 @@ public class FragmentUSB extends Fragment {
                 });
                 break;
             default:
+                textViewConnectedToDevice.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        textViewConnectedToDevice.setText(String.valueOf(status));
+                        getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+//                        setConnecting();
+                    }
+                });
                 break;
         }
     }
