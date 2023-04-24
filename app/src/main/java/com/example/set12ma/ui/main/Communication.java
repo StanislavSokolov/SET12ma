@@ -148,9 +148,9 @@ public class Communication {
                                 high = crc / 256;
                                 if ((buffer[bytesToCreateCRC.length] == (byte) (crc - high * 256)) & (buffer[bytesToCreateCRC.length + 1] == (byte) high)) {
 //                                    if (!spaceStatus.isReadyFlagRecordingInitialValues()) {
-                                        int highByte = 1;
-                                        int lowByte = buffer[2];
-                                        if (lowByte < 0) lowByte = buffer[2] + 256;
+                                        int highByte = buffer[4];
+                                        int lowByte = buffer[5];
+                                        if (lowByte < 0) lowByte = buffer[5] + 256;
                                         if (highByte < 0) lowByte = lowByte - 2 * lowByte;
                                         spaceAddress.setAddressSpace(currentByte, lowByte + highByte * 256);
                                         if (currentByte == 47) {
@@ -437,8 +437,8 @@ public class Communication {
             }
         }
 //        if (currentByte < 255) currentByte++; else currentByte = 0;
-        bytesToSend[2] = (byte) currentByte;
-        bytesToSend[3] = 0;
+        bytesToSend[2] = 0;
+        bytesToSend[3] = (byte) currentByte;
         bytesToSend[4] = 0;
         bytesToSend[5] = 0;
         bytesToSend[6] = 0;
