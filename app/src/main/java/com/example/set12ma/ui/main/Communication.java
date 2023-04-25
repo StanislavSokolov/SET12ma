@@ -244,6 +244,8 @@ public class Communication {
                             counterUnsuccessfulSending = 0;
                         }
                         statusAnswer = false;
+                        countWaitConnection = 0;
+                        counterAttemptsToConection = 0;
 
                         if (spaceStatus.isReadyFlagRecordingInitialValues()) {
                             setCommand(WRITE);
@@ -267,13 +269,10 @@ public class Communication {
                             }
                         }
                     } else {
-//                        countWaitConnection = 0;
-//                        counterAttemptsToConection = 0;
                         spaceStatus.setReadyFlagToExchangeData(false);
                         spaceStatus.setDevice("");
                         spaceStatus.setReadyFlagRecordingInitialValues(false);
                         spaceStatus.setStatusCommunication(2);
-//                        latchInit = false;
                     }
                 }
             } else {
@@ -299,10 +298,10 @@ public class Communication {
 //                        latchInit = false;
                     }
                 } else {
-//                    if (spaceStatus.isReadyFlagToExchangeData()) {
-////                    if (getCommand() == READ) {
-                        if (counterAttemptsToConection < 1000) {
-                            if (countWaitConnection < 1000000) {
+                    if (spaceStatus.isReadyFlagToExchangeData()) {
+                    if (getCommand() == READ) {
+                        if (counterAttemptsToConection < 10) {
+                            if (countWaitConnection < 100000) {
                                 countWaitConnection = countWaitConnection + 1;
                             } else {
                                 countWaitConnection = 0;
@@ -312,11 +311,10 @@ public class Communication {
                             spaceStatus.setReadyFlagToExchangeData(false);
                             spaceStatus.setDevice("");
                             spaceStatus.setReadyFlagRecordingInitialValues(false);
-//                            latchInit = false;
                             spaceStatus.setStatusCommunication(4);
                         }
-////                    }
-//                    }
+                    }
+                    }
                 }
 
 

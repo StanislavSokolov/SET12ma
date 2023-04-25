@@ -433,8 +433,10 @@ public class FragmentUSB extends Fragment {
                             prevStatus = status;
                             setStatus(status);
                         }
-                        bytes = spaceStatus.getCommunication().communicationToARTIX();
-                        if (bytes != null) port.write(bytes, 0);
+                        if (!((status == 2) || (status == 3) || (status == 4))) {
+                            bytes = spaceStatus.getCommunication().communicationToARTIX();
+                            if (bytes != null) port.write(bytes, 0);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
