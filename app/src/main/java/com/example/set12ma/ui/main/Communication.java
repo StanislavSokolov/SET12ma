@@ -280,7 +280,7 @@ public class Communication {
                     // надо добавить проверку о том, известно ли нам, с каким устройством мы общаемся, тогда не надо повторно использовать функцию initArtix.
                     // иначе повторно к устройству подключиться не удается.
                     setCommand(INIT_ARTIX);
-                    if (counterAttemptsToConection < 100) {
+                    if (counterAttemptsToConection < 20) {
                         if (countWaitConnection < 100000) {
                             countWaitConnection = countWaitConnection + 1;
                         } else {
@@ -296,7 +296,7 @@ public class Communication {
                     }
                 } else {
                     if (spaceStatus.isReadyFlagToExchangeData()) {
-                    if (getCommand() == READ) {
+//                    if (getCommand() == READ) {
                         if (counterAttemptsToConection < 10) {
                             if (countWaitConnection < 100000) {
                                 countWaitConnection = countWaitConnection + 1;
@@ -310,7 +310,7 @@ public class Communication {
                             spaceStatus.setReadyFlagRecordingInitialValues(false);
                             spaceStatus.setStatusCommunication(4);
                         }
-                    }
+//                    }
                     }
                 }
 
