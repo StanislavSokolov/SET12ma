@@ -289,13 +289,10 @@ public class Communication {
                             counterAttemptsToConection = counterAttemptsToConection + 1;
                         }
                     } else {
-//                        countWaitConnection = 0;
-//                        counterAttemptsToConection = 0;
                         spaceStatus.setReadyFlagToExchangeData(false);
                         spaceStatus.setDevice("");;
                         spaceStatus.setReadyFlagRecordingInitialValues(false);
                         spaceStatus.setStatusCommunication(3);
-//                        latchInit = false;
                     }
                 } else {
                     if (spaceStatus.isReadyFlagToExchangeData()) {

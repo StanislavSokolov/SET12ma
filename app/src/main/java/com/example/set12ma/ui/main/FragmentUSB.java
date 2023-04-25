@@ -254,6 +254,7 @@ public class FragmentUSB extends Fragment {
             spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(false);
             spaceStatus.setStatusProcessOfLoadingSoftware(false);
             spaceStatus.setStatusProcessOfUpdatingSoftware(false);
+            spaceStatus.setStatusCommunication(0);
 
             // Find all available drivers from attached devices.
             UsbManager manager = spaceStatus.getMgr();
@@ -358,6 +359,7 @@ public class FragmentUSB extends Fragment {
                     public void run() {
                         textViewConnectedToDevice.setText("Не удается связаться с процессорным модулем. Проверьте соединение.");
                         getActivity().findViewById(R.id.menu_indicator).setVisibility(View.VISIBLE);
+                        Toast.makeText(getContext(), "Не удается связаться с процессорным модулем. Проверьте соединение.", Toast.LENGTH_LONG).show();
                         setConnecting();
                     }
                 });
