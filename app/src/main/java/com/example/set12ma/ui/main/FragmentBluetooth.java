@@ -220,7 +220,7 @@ public class FragmentBluetooth extends Fragment {
                 spaceStatus.setStatusProcessOfLoadingSoftware(false);
                 spaceStatus.setStatusProcessOfUpdatingSoftware(false);
 
-                spaceStatus.getCommunication().prepare();
+                spaceStatus.getCommunication().prepare(1);
 
                 stringConnectedToDevice = arrayListConnectedDevices.get(itemSelectedFromConnectedDevices).getName();
                 bluetoothDevice = arrayListConnectedDevices.get(itemSelectedFromConnectedDevices);
@@ -239,7 +239,7 @@ public class FragmentBluetooth extends Fragment {
                 spaceStatus.setStatusProcessOfLoadingSoftware(false);
                 spaceStatus.setStatusProcessOfUpdatingSoftware(false);
 
-                spaceStatus.getCommunication().prepare();
+                spaceStatus.getCommunication().prepare(1);
 
                 buttonConnectToDevice.setText("Подключить");
                 textViewConnectedToDevice.setText("Отключено от " + stringConnectedToDevice);

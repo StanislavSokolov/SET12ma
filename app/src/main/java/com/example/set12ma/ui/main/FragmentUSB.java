@@ -303,7 +303,7 @@ public class FragmentUSB extends Fragment {
 
     private void openPort(UsbSerialDriver driver, List<UsbSerialDriver> availableDrivers, UsbDeviceConnection connection) {
         port = driver.getPorts().get(0); // Most devices have just one port (port 0)
-        spaceStatus.getCommunication().prepare();
+        spaceStatus.getCommunication().prepare(0);
 
         spaceStatus.setReadyFlagRecordingInitialValues(true);
 
@@ -433,9 +433,13 @@ public class FragmentUSB extends Fragment {
                         int status = spaceStatus.getStatusCommunication();
                         if (prevStatus != status) {
                             prevStatus = status;
-                            setStatus(status);
+                            if (status != 10) setStatus(status);
+                            else {
+                                deviceType = 1;
+                                spaceStatus.getCommunication().prepare(deviceType);
+                            }
                         }
-                        if (!((status == 2) || (status == 3) || (status == 4))) {
+                        if (!((status == 2) || (status == 3) || (status == 4) || (status == 10))) {
                             bytes = spaceStatus.getCommunication().communicationToARTIX();
                             if (bytes != null) port.write(bytes, 0);
                         }
@@ -449,8 +453,10 @@ public class FragmentUSB extends Fragment {
                             prevStatus = status;
                             setStatus(status);
                         }
-                        bytes = spaceStatus.getCommunication().communication();
-                        if (bytes != null) port.write(bytes, 0);
+                        if (!((status == 2) || (status == 3) || (status == 4))) {
+                            bytes = spaceStatus.getCommunication().communication();
+                            if (bytes != null) port.write(bytes, 0);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

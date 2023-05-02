@@ -79,8 +79,9 @@ public class Communication {
 
     int countTest = 0;
 
-    public void prepare() {
-        setCommand(INIT_ARTIX);
+    public void prepare(int deviceType) {
+        if (deviceType == 0) currentByte = 48; else currentByte = 0;
+
         statusError = true;
 
         answerTest = "";
@@ -97,7 +98,7 @@ public class Communication {
         counterAttemptsToConection = 0;
         counterUnsuccessfulSending = 0;
 
-        currentByte = 48;
+
 
         countByte = 0;
 
@@ -289,10 +290,10 @@ public class Communication {
                             counterAttemptsToConection = counterAttemptsToConection + 1;
                         }
                     } else {
-                        spaceStatus.setReadyFlagToExchangeData(false);
-                        spaceStatus.setDevice("");;
-                        spaceStatus.setReadyFlagRecordingInitialValues(false);
-                        spaceStatus.setStatusCommunication(3);
+//                        spaceStatus.setReadyFlagToExchangeData(false);
+//                        spaceStatus.setDevice("");;
+//                        spaceStatus.setReadyFlagRecordingInitialValues(false);
+                        spaceStatus.setStatusCommunication(10);
                     }
                 } else {
                     if (spaceStatus.isReadyFlagToExchangeData()) {
