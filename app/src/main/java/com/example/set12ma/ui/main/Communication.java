@@ -151,9 +151,22 @@ public class Communication {
 //                                    if (!spaceStatus.isReadyFlagRecordingInitialValues()) {
                                         int highByte = buffer[4];
                                         int lowByte = buffer[5];
-                                        if (lowByte < 0) lowByte = buffer[5] + 256;
-                                        if (highByte < 0) lowByte = lowByte - 2 * lowByte;
-                                        spaceAddress.setAddressSpace(currentByte, lowByte + highByte * 256);
+                                        if (highByte < 0) {
+                                            if (lowByte < 0) spaceAddress.setAddressSpace(currentByte, lowByte + 256 + highByte * 256);
+                                            else spaceAddress.setAddressSpace(currentByte, lowByte + highByte * 256);
+//                                            spaceAddress.setAddressSpace(currentByte, - lowByte);
+                                        } else {
+                                            if (lowByte < 0) lowByte = lowByte + 256;
+                                            spaceAddress.setAddressSpace(currentByte, lowByte + highByte * 256);
+//                                            spaceAddress.setAddressSpace(currentByte, 6);
+                                        }
+
+//                                        if (highByte < 0) lowByte = lowByte - 2 * lowByte;
+//                                        if (highByte < 0) spaceAddress.setAddressSpace(currentByte, -lowByte + highByte * 256);
+//                                        else if (lowByte < 0) spaceAddress.setAddressSpace(currentByte, lowByte);
+//                                        else spaceAddress.setAddressSpace(currentByte, lowByte + highByte * 256);
+//                                        spaceAddress.setAddressSpace(currentByte, lowByte + highByte * 256);
+//                                        spaceAddress.setAddressSpace(currentByte, lowByte);
                                         if (currentByte == 47) {
                                             nextByte = 96;
                                         }
