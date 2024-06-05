@@ -320,11 +320,11 @@ public class FragmentLoading extends Fragment {
             super.run();
             while (true) {
                 try {
-                    Log.i("LOG_TAG", "UpDateGraphicalDisplay");
+                    //Log.i("LOG_TAG", "UpDateGraphicalDisplay");
                     UpDateGraphicalDisplay.sleep(timer);
                     if (spaceStatus.isReadyFlagToExchangeData()) {
                         if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware())) {
-                            Log.i("LOG_TAG", "if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware())) {");
+                            //Log.i("LOG_TAG", "if (spaceStatus.isReadyFlagToLoadSoftware() || (spaceStatus.isStatusProcessOfLoadingSoftware())) {");
                             textViewTipChoiceDevices.post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -415,7 +415,7 @@ public class FragmentLoading extends Fragment {
                                 }
                             });
                         } else if (spaceStatus.isReadyFlagToFinishOfLoadingSoftware()) {
-                            Log.i("LOG_TAG", "spaceStatus.isReadyFlagToFinishOfLoadingSoftware()");
+                            //Log.i("LOG_TAG", "spaceStatus.isReadyFlagToFinishOfLoadingSoftware()");
                             textViewTipChoiceDevices.post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -472,20 +472,32 @@ public class FragmentLoading extends Fragment {
                             textViewTipChoiseAddressOfDevice.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    textViewTipChoiseAddressOfDevice.setVisibility(View.VISIBLE);
+                                    if (spaceStatus.getDevice().equals(DEVICE_0) || (spaceStatus.getDevice().equals(DEVICE_1))) {
+                                        textViewTipChoiseAddressOfDevice.setVisibility(View.INVISIBLE);
+                                    } else {
+                                        textViewTipChoiseAddressOfDevice.setVisibility(View.VISIBLE);
+                                    }
                                     textViewTipChoiseAddressOfDevice.setText("Выберите адрес устройства");
                                 }
                             });
                             spinnerAddressOfDevice.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+                                    if (spaceStatus.getDevice().equals(DEVICE_0) || (spaceStatus.getDevice().equals(DEVICE_1))) {
+                                        spinnerAddressOfDevice.setVisibility(View.INVISIBLE);
+                                    } else {
+                                        spinnerAddressOfDevice.setVisibility(View.VISIBLE);
+                                    }
                                 }
                             });
                             textViewInformationAboutDevice.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    textViewInformationAboutDevice.setVisibility(View.VISIBLE);
+                                    if (spaceStatus.getDevice().equals(DEVICE_0) || (spaceStatus.getDevice().equals(DEVICE_1))) {
+                                        textViewInformationAboutDevice.setVisibility(View.INVISIBLE);
+                                    } else {
+                                        textViewInformationAboutDevice.setVisibility(View.VISIBLE);
+                                    }
                                 }
                             });
                             buttonStartLoad.post(new Runnable() {

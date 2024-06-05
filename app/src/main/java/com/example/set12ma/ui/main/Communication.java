@@ -34,10 +34,10 @@ public class Communication {
     private final int WRITE = 57;
     private final int INIT_LOAD = 58;
     private final int LOAD = 51;
+    private final int TFLASH = 55;
     private final int EXTEND = 60;
     private final int UPLOAD = 52;
     private int BYTE_UPLOAD = 2048;
-    private final int ADDRESS_UPLOAD = 655360; // 000A0000
     private final int COUNT = 170;
 
 //    for Artix
@@ -825,6 +825,63 @@ public class Communication {
                             statusAnswer = true;
                         }
                         break;
+                    case TFLASH:
+
+                        Log.i(LOG_TAG, "count byte " + buffer.length + " TFLASH");
+
+                        if (countByte == 0) {
+                            // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
+                            bufferByte = new byte[6];
+                            Log.i(LOG_TAG, "Начало сообщения");
+                        }
+
+                        if (buffer.length > 6 - countByte) {
+                            // получили избыточное количество байт в посылке
+                            // остаток положим во временный буфер
+                            Log.i(LOG_TAG, "Избыточное количество байт");
+                        } else {
+                            // получили байты
+                            for (int i = 0; i < buffer.length; i++) {
+                                bufferByte[i + countByte] = buffer[i];
+                            }
+                            countByte = countByte + buffer.length;
+                            Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
+                        }
+
+                        if (countByte == 6) {
+                            Log.i(LOG_TAG, "Получили нужное количество байт");
+                            answerTest = "";
+                            for (byte readByte : bufferByte) {
+                                int bufInt;
+                                if (readByte < 0) bufInt = readByte + 256;
+                                else bufInt = readByte;
+                                answerTest = answerTest + " " + bufInt;
+                            }
+                            Log.i(LOG_TAG, answerTest);
+                            countByte = 0;
+                            if ((bufferByte[0] == ADDRESS_DEVICE) & (bufferByte[1] == TFLASH)) {
+                                Log.i(LOG_TAG, "Идентификатор корректен");
+                                // проверяем корректность сообщения по идентификатору
+                                byte[] bytesToCreateCRC = new byte[bufferByte.length - 4];
+                                for (int i = 0; i < bytesToCreateCRC.length; i++) {
+                                    bytesToCreateCRC[i] = bufferByte[i];
+                                }
+                                crc = (CRC16.getCRC4(bytesToCreateCRC));
+                                high = crc / 256;
+                                if ((bufferByte[bytesToCreateCRC.length] == (byte) (crc - high*256)) & (bufferByte[bytesToCreateCRC.length + 1] == (byte) high)) {
+                                    Log.i(LOG_TAG, "CRC is good from FinishLoad");
+                                    statusError = false;
+                                } else {
+                                    Log.i(LOG_TAG, "CRC is bed from FinishLoad");
+                                }
+                                spaceStatus.setReadyFlagToFinishOfUpdatingSoftware(true);
+                            } else {
+                                Log.i(LOG_TAG, "Не смогли идентифицировать сообщение");
+                                statusError = true;
+                            }
+                            statusAnswer = true;
+                        }
+                        break;
                     case UPLOAD:
 
                         Log.i(LOG_TAG, "count byte " + buffer.length + " UPLOAD");
@@ -926,7 +983,14 @@ public class Communication {
                         spaceStatus.setReadyFlagToFinishOfLoadingSoftware(false);
                         if (!latchFinish) {
                             spaceStatus.setStatusProcessOfUpdatingSoftware(true);
-                            setCommand(EXTEND);
+                            String deviceSelected = spaceStatus.getDevice();
+                            if (deviceSelected.equals("TMS2812")) {
+                                setCommand(TFLASH);
+                            } else if (deviceSelected.equals("SP2main")) {
+                                setCommand(TFLASH);
+                            } else {
+                                setCommand(EXTEND);
+                            }
                             latchFinish = true;
                             return startToLoad();
                         } else {
@@ -1200,49 +1264,53 @@ public class Communication {
         bytesToSend[10] = (byte) (crc - high * 256);
         bytesToSend[11] = (byte) high;
 
-        Log.i("LOG_TAG_1", "START INIT LOAD");
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[0]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[1]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[2]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[3]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[4]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[5]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[6]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[7]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[8]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[9]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[10]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[11]));
+        Log.i(LOG_TAG, "START INIT LOAD");
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[0]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[1]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[2]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[3]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[4]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[5]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[6]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[7]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[8]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[9]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[10]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[11]));
         return bytesToSend;
     }
 
     private byte[] determineDownloadMode() {
         String deviceSelected = spaceStatus.getDevice();
-        byte[] bytesToSendBuf = new byte[5];
+        byte[] bytesToSendBuf = new byte[6];
         if (deviceSelected.equals("TMS2812")) {
             bytesToSendBuf[0] = 0;
             bytesToSendBuf[1] = 0;
-            bytesToSendBuf[2] = 10;
+            bytesToSendBuf[2] = 17;
             bytesToSendBuf[3] = 0;
-            bytesToSendBuf[4] = 10;
+            bytesToSendBuf[4] = 0;
+            bytesToSendBuf[5] = TFLASH;
         } else if (deviceSelected.equals("SP2main")) {
             bytesToSendBuf[0] = 0;
             bytesToSendBuf[1] = 0;
-            bytesToSendBuf[2] = 10;
+            bytesToSendBuf[2] = 19;
             bytesToSendBuf[3] = 0;
-            bytesToSendBuf[4] = 1;
+            bytesToSendBuf[4] = 0;
+            bytesToSendBuf[5] = TFLASH;
         } else if (deviceSelected.equals("SP2")) {
             bytesToSendBuf[0] = 0;
             bytesToSendBuf[1] = 0;
-            bytesToSendBuf[2] = 10;
+            bytesToSendBuf[2] = 0;
             bytesToSendBuf[3] = 0;
             bytesToSendBuf[4] = 6;
+            bytesToSendBuf[5] = EXTEND;
         } else {
             bytesToSendBuf[0] = 0;
             bytesToSendBuf[1] = 0;
-            bytesToSendBuf[2] = 10;
+            bytesToSendBuf[2] = 0;
             bytesToSendBuf[3] = 0;
             bytesToSendBuf[4] = 10;
+            bytesToSendBuf[5] = EXTEND;
         }
         return bytesToSendBuf;
     }
@@ -1265,26 +1333,33 @@ public class Communication {
         int high = crc / 256;
         bytesToSend[bytesToSend.length-2] = (byte) (crc - high * 256);
         bytesToSend[bytesToSend.length-1] = (byte) high;
-        Log.i("LOG_TAG_1", "Загрузка в память");
+        Log.i(LOG_TAG, "Загрузка в память");
+        Log.i(LOG_TAG, String.valueOf(bytesToSend.length));
         return bytesToSend;
     }
 
     public byte[] startToLoad() {
-        Log.i("LOG_TAG_1", "startToLoad");
-        bytesToSend = new byte[18];
-        bytesToCreateCRC = new byte[16];
-        bytesToSend[0] = ADDRESS_DEVICE;
-        bytesToSend[1] = EXTEND;
         byte[] bytesToSendBuf;
         bytesToSendBuf = determineDownloadMode();
+        if (bytesToSendBuf[5] == EXTEND) {
+            bytesToSend = new byte[18];
+            bytesToCreateCRC = new byte[16];
+            bytesToSend[14] = bytesToSendBuf[4];
+            bytesToSend[15] = (byte) spaceStatus.getAddressOfDevice();
+        } else {
+            bytesToSend = new byte[16];
+            bytesToCreateCRC = new byte[14];
+        }
+        bytesToSend[0] = ADDRESS_DEVICE;
+        bytesToSend[1] = bytesToSendBuf[5];
         bytesToSend[2] = 0;
         bytesToSend[3] = 0;
         bytesToSend[4] = 10;
         bytesToSend[5] = 0;
-        bytesToSend[6] = 124;
-        bytesToSend[7] = 50;
-        bytesToSend[8] = 15;
-        bytesToSend[9] = 0;
+        bytesToSend[6] = bytesToSendBuf[0];
+        bytesToSend[7] = bytesToSendBuf[1];
+        bytesToSend[8] = bytesToSendBuf[2];
+        bytesToSend[9] = bytesToSendBuf[3];
         int i = (spaceMemory.getMemorySpaceArrayListSize() - 1)* spaceMemory.getMemorySpaceByteLength() + spaceMemory.getMemorySpaceByteLength(spaceMemory.getMemorySpaceArrayListSize() - 1);
         int highH = i/16777216;
         bytesToSend[13] = (byte) highH;
@@ -1294,8 +1369,6 @@ public class Communication {
         bytesToSend[11] = (byte) lowH;
         int lowL = i - (highH*16777216) - (highL*65536) - (lowH*256);
         bytesToSend[10] = (byte) lowL;
-        bytesToSend[14] = bytesToSendBuf[4];
-        bytesToSend[15] = (byte) spaceStatus.getAddressOfDevice();
         for (int j = 0; j < bytesToCreateCRC.length; j++) {
             bytesToCreateCRC[j] = bytesToSend[j];
         }
@@ -1304,23 +1377,24 @@ public class Communication {
         bytesToSend[bytesToSend.length-2] = (byte) (crc - high * 256);
         bytesToSend[bytesToSend.length-1] = (byte) high;
 
-        Log.i("LOG_TAG_1", "START INIT LOAD");
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[0]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[1]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[2]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[3]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[4]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[5]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[6]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[7]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[8]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[9]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[10]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[11]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[12]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[13]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[14]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[15]));
+        Log.i(LOG_TAG, "START TO LOAD");
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[0]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[1]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[2]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[3]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[4]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[5]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[6]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[7]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[8]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[9]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[10]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[11]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[12]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[13]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[14]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[15]));
+
         return bytesToSend;
     }
 
