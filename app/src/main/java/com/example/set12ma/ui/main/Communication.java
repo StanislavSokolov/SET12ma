@@ -888,7 +888,7 @@ public class Communication {
 
                         if (countByte == 0) {
                             // здесь нужно проверять не countByte, а было ли в буфере начало нового сообщения
-                            bufferByte = new byte[BYTE_UPLOAD + 8];
+                            bufferByte = new byte[BYTE_UPLOAD + 6];
                             Log.i(LOG_TAG, "Начало сообщения");
                         }
 
@@ -905,7 +905,7 @@ public class Communication {
                             Log.i(LOG_TAG, "Текущее количестов принятых байт " + countByte);
                         }
 
-                        if (countByte == BYTE_UPLOAD + 8) {
+                        if (countByte == BYTE_UPLOAD + 6) {
                             Log.i(LOG_TAG, "Получили нужное количество байт");
                             answerTest = "";
                             for (byte readByte : bufferByte) {
@@ -919,7 +919,7 @@ public class Communication {
                             if ((bufferByte[0] == ADDRESS_DEVICE) & (bufferByte[1] == UPLOAD)) {
                                 Log.i(LOG_TAG, "Идентификатор корректен");
                                 // проверяем корректность сообщения по идентификатору
-                                byte[] bytesToCreateCRC = new byte[bufferByte.length - 6];
+                                byte[] bytesToCreateCRC = new byte[bufferByte.length - 4];
                                 for (int i = 0; i < bytesToCreateCRC.length; i++) {
                                     bytesToCreateCRC[i] = bufferByte[i];
                                 }
@@ -1011,6 +1011,7 @@ public class Communication {
                             setCommand(UPLOAD);
                             latchDownloadLog = true;
                             BYTE_UPLOAD = spaceFileLogs.getSizeOfBlock();
+                            Log.i(LOG_TAG, String.valueOf(BYTE_UPLOAD));
                             return downloadLogs(spaceFileLogs.getStartOfRAM() + BYTE_UPLOAD*countReceivedMessage, BYTE_UPLOAD);
                         } else {
                             if (spaceStatus.isReadyFlagToFinishOfDownloadingLogs()) {
@@ -1399,6 +1400,7 @@ public class Communication {
     }
 
     public byte[] downloadLogs(int address, int length) {
+        Log.i(LOG_TAG, "ADDRESS: " + address);
         bytesToSend = new byte[12];
         bytesToCreateCRC = new byte[bytesToSend.length - 2];
         int highH = address/16777216;
@@ -1427,20 +1429,20 @@ public class Communication {
         bytesToSend[bytesToSend.length-2] = (byte) (crc - high * 256);
         bytesToSend[bytesToSend.length-1] = (byte) high;
 //            Log.i(LOG_TAG, "highH " + highH + "; highL " + highL + "; lowH " + lowH + "; lowL " + lowL + ";");
-        Log.i("LOG_TAG_1", "DOWNLOAD");
+        Log.i(LOG_TAG, "DOWNLOAD");
 
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[0]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[1]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[2]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[3]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[4]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[5]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[6]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[7]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[8]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[9]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[10]));
-        Log.i("LOG_TAG_1", String.valueOf(bytesToSend[11]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[0]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[1]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[2]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[3]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[4]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[5]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[6]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[7]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[8]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[9]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[10]));
+        Log.i(LOG_TAG, String.valueOf(bytesToSend[11]));
         return bytesToSend;
     }
 }
